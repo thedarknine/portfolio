@@ -36,6 +36,7 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
         {% block stylesheets %}
+        <script src="https://kit.fontawesome.com/e13f84fe9c.js" crossorigin="anonymous"></script>
         {% endblock %}
 
         {% block javascripts %}
@@ -48,7 +49,10 @@
         <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
         {% endif %}
 
-        {% block importmap %}{{ importmap('app') }}{% endblock %}
+        {% block importmap %}
+            {{ importmap('app') }}
+        {% endblock %}
+
     </head>
     <body>
         <div class="main">
@@ -209,13 +213,13 @@
                         <div class="flex flex-col lg:flex-row items-center lg:justify-between">
                             <p class="text-xs text-blue-gray-400 wow animate__animated animate__fadeInUp" data-wow-delay="1.5s"><b>©Nine | Copyright</b> 2006-{{ 'now'|date('Y') }} {# &bull; <a x-on:click="showPrivacyPolicy = true" class="" href="#"> View Privacy Policy </a> #}</p>
                             <div class="order-first lg:order-last -mx-2 mb-4 lg:mb-0 wow animate__animated animate__fadeInUp" data-wow-delay="1.8s">
-                                <ul class="list-inline">
-                                    <li class="list-inline-item"><a href="https://www.linkedin.com/in/carolinenoyer" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></li>
-                                    <li class="list-inline-item"><a href="https://instagram.com/caro.noyer/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
-                                    <li class="list-inline-item"><a href="https://open.spotify.com/playlist/3g3bePO9Jddljzgx5wS4IM?si=c4a65cd590b04b94" target="_blank" title="Spotify"><i class="fa-brands fa-spotify"></i></a></li>
-                                    <li class="list-inline-item"><a href="https://github.com/thedarknine" target="_blank" title="GitHub"><i class="fa fa-github-alt"></i></a></li>
-                                    <li class="list-inline-item"><a href="https://dribbble.com/TheDarkNine" target="_blank" title="Dribbble"><i class="fab fa-dribbble"></i></a></li>
-                                    <li class="list-inline-item"><a href="https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf" title="CV au format PDF"><span><i class="fa fa-file-pdf"></i></span></a></li>
+                                <ul class="nine-list-inline">
+                                    <li class="nine-list-inline-item"><a href="https://www.linkedin.com/in/carolinenoyer" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a></li>
+                                    <li class="nine-list-inline-item"><a href="https://instagram.com/caro.noyer/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+                                    <li class="nine-list-inline-item"><a href="https://open.spotify.com/playlist/3g3bePO9Jddljzgx5wS4IM?si=c4a65cd590b04b94" target="_blank" title="Spotify"><i class="fa-brands fa-spotify"></i></a></li>
+                                    <li class="nine-list-inline-item"><a href="https://github.com/thedarknine" target="_blank" title="GitHub"><i class="fa fa-github-alt"></i></a></li>
+                                    <li class="nine-list-inline-item"><a href="https://dribbble.com/TheDarkNine" target="_blank" title="Dribbble"><i class="fab fa-dribbble"></i></a></li>
+                                    <li class="nine-list-inline-item"><a href="https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf" title="CV au format PDF"><span><i class="fa fa-file-pdf"></i></span></a></li>
                                 </ul>
                             </div>
                         </div>

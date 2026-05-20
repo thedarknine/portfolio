@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
 
 /* stylelint-disable-next-line import-notation */
 @import "tailwindcss";
@@ -12,10 +13,15 @@
     --font-accent: "League Spartan", sans-serif;
     --color-nine-primary: oklch(33.74% 0.071 254.99);
     --color-nine-golden: oklch(96.81% 0.0074 80.72);
+    --color-nine-light: oklch(90.81% 0.008 253.86);
     --color-nine-blue-dark: oklch(24.83% 0.049 253.38);
     --color-nine-blue: oklch(35.22% 0.104 259.27);
     --color-nine-turquoise: oklch(61.25% 0.116 226.51);
     --color-nine-blue-gray: oklch(71.07% 0.035 256.79);
+    --color-nine-yellow: oklch(80.16% 0.171 73.27);
+    --color-nine-yellow-dark: oklch(78.59% 0.167 70.04);
+    --color-nine-gray: oklch(71.07% 0.035 256.79);
+    --color-nine-gray-light: oklch(90.97% 0.000 0);
 }
 
 @layer base {
@@ -35,6 +41,57 @@
     }
 }
 
+@keyframes jump {
+    0% {
+        transform: translate3d(0, 15px, 0);
+    }
+    
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.jump {
+    transform-origin: 0;
+    animation: jump 1s linear alternate infinite;
+}
+
+@keyframes slide-in {
+    100% { transform: translateX(0%); }
+}
+
+.container {
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+@media (width >=640px) {
+    .container {
+        max-width: 640px;
+    }
+}
+
+@media (width >=768px) {
+    .container {
+        max-width: 768px;
+    }
+}
+
+@media (width >=1024px) {
+    .container {
+        max-width: 1024px;
+    }
+}
+
+@media (width >=1200px) {
+    .container {
+        max-width: 1200px;
+    }
+}
+
 .nine-gradient {
     background: linear-gradient(to right bottom,
             var(--color-nine-blue-dark) 0%,
@@ -42,14 +99,39 @@
             var(--color-nine-blue-dark) 100%);
 }
 
+.nine-btn-primary {
+    display: inline-block;
+    padding: 0 38px;
+    font-family: var(--font-accent);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+    color: var(--color-nine-light);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    cursor: pointer;
+    outline: none !important;
+    background: linear-gradient(to right,
+            var(--color-nine-blue) 0%,
+            var(--color-nine-turquoise) 51%,
+            var(--color-nine-blue) 100%);
+    background-size: 200% auto;
+    border-radius: 5px;
+
+    &:hover {
+        color: var(--color-white);
+        background-position: right center;
+        box-shadow: 0 0 30px -15px rgb(46 54 78 / 0.2);
+    }
+}
+
 /* HEADER */
 .nine-sticky-bar {
     position: relative;
     z-index: 3;
     font-family: var(--font-accent);
-    color: var(--color-light);
-        transition: all 0.3s ease 0s;
-        animation: 700ms ease-in-out 0s normal none 1 running fadeInDown;
+    color: var(--color-nine-light);
 
     .nine-menu-item {
         font-size: 16px !important;
@@ -58,14 +140,14 @@
 
         &.nine-active {
             font-weight: 500;
-            color: var(--color-turquoise);
+            color: var(--color-nine-turquoise);
             text-transform: uppercase;
-            border-bottom: 2px solid var(--color-turquoise);
+            border-bottom: 2px solid var(--color-nine-turquoise);
         }
 
         &:hover:not(.nine-active) {
             background-color: rgb(106 106 106 / 0.3);
-            border-bottom: 4px solid var(--color-turquoise);
+            border-bottom: 4px solid var(--color-nine-turquoise);
             border-radius: 6px 6px 0 0;
             transition-delay: 0.3s;
             transition-timing-function: ease-out;
@@ -73,6 +155,7 @@
         }
     }
 
+    /* 2. Sticky state */
     &.nine-stick {
         position: fixed;
         top: 0;
@@ -80,29 +163,50 @@
         z-index: 999;
         width: 100%;
         margin-top: 0 !important;
-        color: var(--color-light);
+        color: var(--color-nine-light);
         background-color: rgb(15 34 56 / 0.94);
         box-shadow: 0 8px 10px 0 rgb(0 0 0 / 0.15);
-        transition: all 0.3s ease 0s;
-        animation: 700ms ease-in-out 0s normal none 1 running fadeInDown;
+        animation: fadeInDown 700ms ease-in-out both;
 
-        .nine-menu-item:hover {
-            color: var(--color-turquoise);
+        .nine-menu-item {
+            color: var(--color-nine-light);
+            
+            &:hover {
+                color: var(--color-nine-turquoise);
+            }
         }
     }
 
+    /* 3. Unstick state */
     &.nine-unstick {
-        position: relative;
-        color: var(--color-light);
-        background-color: transparent;
-        box-shadow: none;
-        transition: all 0.3s ease 0s;
-        animation: 700ms ease-in-out 0s normal none 1 running fadeOutUp;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 999;
+        width: 100%;
+        color: var(--color-nine-light);
+        background-color: rgb(15 34 56 / 0.94);
+        box-shadow: 0 8px 10px 0 rgb(0 0 0 / 0.15);
+        pointer-events: none; 
+        animation: fadeOutUp 700ms ease-in-out both;
     }
-
 }
 
 .nine-navbar-menu {
     animation: slide 700ms forwards;
     animation-delay: 2s;
+}
+
+.nine-list-inline {
+    padding-left: 0;
+    list-style: none;
+
+    .nine-list-inline-item {
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
 }
