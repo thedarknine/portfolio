@@ -107,16 +107,30 @@ nginx: ## Show docker logs for nginx
 
 # =====================================================================
 ##@ DEVELOPMENT
+.PHONY: watch
+watch: ## Watch Tailwind CSS changes and re-build
+	$(call display_title,Watching Tailwind CSS changes and re-building ...........,${ICON_BUILD})
+	php bin/console tailwind:build --watch
+
 .PHONY: cc
 cc: ## Run bin/console cache:clear from docker
 	$(call display_title,Clearing Symfony cache .................................,${ICON_CLEAN})
 	symfony console cache:clear
 
+.PHONY: cs-check
+cs-check: ## Check all coding standards (PHP, Twig, CSS)
+	$(call display_title,Checking coding standards .............................,${ICON_CS})
+	@make cs-php-check && make cs-twig-check
+
+.PHONY: cs
+cs: ## Fix all coding standards (PHP, Twig, CSS)
+	$(call display_title,Fixing coding standards ..............................,${ICON_CS})
+	@make cs-php && make cs-twig
 
 .PHONY: cs-php-check
 cs-php-check: ## PHP CS Fixer - Only show diff
 	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
-	./vendor/bin/php-cs-fixer check --verbose
+	- ./vendor/bin/php-cs-fixer check --verbose 
 	./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M
 
 .PHONY: cs-php
@@ -128,6 +142,13 @@ cs-php: ## PHP CS Fixer - Fix code
 cs-twig-check: ## Twig CS Fixer - Only show diff
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
 	./vendor/bin/twig-cs-fixer check --config=.twig-cs-fixer.php templates/
+
+.PHONY: cs-twig
+cs-twig: ## Twig CS Fixer - Fix code
+	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
+	./vendor/bin/twig-cs-fixer fix --config=.twig-cs-fixer.php templates/
+
+# LINTER bin/biome lint
 
 # =====================================================================
 ##@ HELP

@@ -16,11 +16,27 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class PagesController extends AbstractController
 {
+
+    private function getNbYearsExperience(): int
+    {
+        $startDate = new \DateTime('2006-10-01');
+        $currentDate = new \DateTime();
+
+        return $startDate->diff($currentDate)->y;
+    }
+
+    private function getImagesDir(): string
+    {
+        return $this->getParameter('kernel.project_dir').'/public/images/';
+    }
+    
     #[Route('/', name: 'index')]
     public function index(): Response
     {
         return $this->render('pages/index.html.twig', [
             'controller_name' => 'PagesController',
+            'page' => 'home',
+            'nbYearsExperience' => $this->getNbYearsExperience(),
         ]);
     }
 }

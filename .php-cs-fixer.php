@@ -10,8 +10,13 @@ HEADER;
 
 $finder = (new PhpCsFixer\Finder())
     ->in(__DIR__)
-    ->exclude('var')
-    ->exclude('config')
+    ->exclude([
+        'var', 
+        'vendor', 
+        'public/build', 
+        'config'
+    ])
+    ->notPath('importmap.php')
 ;
 
 return (new PhpCsFixer\Config())

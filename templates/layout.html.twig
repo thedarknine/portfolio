@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Caroline Noyer — {% block title %}Senior Backend Developer{% endblock %}</title>
+
+        <link rel="shortcut icon" type="image/x-icon" href="{{ absolute_url('images/global/favicon.ico') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ absolute_url('images/global/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ absolute_url('images/global/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ absolute_url('images/global/favicon-16x16.png') }}">
+
+        <meta name="title" content="Caroline Noyer — Technical Product Owner">
+        <meta name="description" content="Product owner depuis 6 ans sur des produits SaaS B2B, compétences UX et 15 ans de background technique dans le développement web. Dynamique, autonome et minutieuse.">
+        <meta name="keywords" content="CV,Design,Technical Product Owner,Product Owner,Développeur,Senior Backend Developer,PHP,Symfony">
+        <meta name="author" content="Caroline Noyer">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="index,follow">
+        <meta name="googlebot" content="index,follow">
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://carolinenoyer.fr/">
+        <meta property="og:title" content="Caroline Noyer — Technical Product Owner">
+        <meta property="og:description" content="Product owner depuis 6 ans sur des produits SaaS B2B, compétences UX et 15 ans de background technique dans le développement web. Dynamique, autonome et minutieuse.">
+        <meta property="og:image" content="https://carolinenoyer.fr/images/cnoyer-product-owner.jpg">
+        <meta property="og:site_name" content="Caroline Noyer Online Portfolio">
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://carolinenoyer.fr/">
+        <meta property="twitter:title" content="Caroline Noyer — Technical Product Owner">
+        <meta property="twitter:description" content="Product owner depuis 6 ans sur des produits SaaS B2B, compétences UX et 15 ans de background technique dans le développement web. Dynamique, autonome et minutieuse.">
+        <meta property="twitter:image" content="https://carolinenoyer.fr/images/cnoyer-product-owner.jpg">
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        {% block stylesheets %}
+        {% endblock %}
+
+        {% block javascripts %}
+        {% endblock %}
+
+        {% set frankenphpHotReload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
+        {% if frankenphpHotReload %}
+        <meta name="frankenphp-hot-reload:url" content="{{ frankenphpHotReload }}">
+        <script src="https://cdn.jsdelivr.net/npm/idiomorph"></script>
+        <script src="https://cdn.jsdelivr.net/npm/frankenphp-hot-reload/+esm" type="module"></script>
+        {% endif %}
+
+        {% block importmap %}{{ importmap('app') }}{% endblock %}
+    </head>
+    <body>
+        <div class="main">
+            <!--Header-->
+            <header class="bg-transparent nine-sticky-bar{% if page != 'home' %} nine-stick{% endif %}">
+                <div class="container bg-transparent">
+                    <nav class="bg-transparent flex justify-between items-center py-3">
+                        <a class="text-3xl font-semibold leading-none" href="/">
+                            <img id="logo" class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250-white.svg" alt="">
+                        </a>
+                        <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-5">
+                            <li class="p-4 nine-menu-item {% if page == 'experience' %}nine-active{% endif %}">
+                                <a class="" href="/experience">Expérience</a>
+                            </li>
+                            <li class="p-4 nine-menu-item {% if page == 'competences' %}nine-active{% endif %}">
+                                <a class="" href="/competences">Compétences</a>
+                            </li>
+                            <li class="p-4 nine-menu-item {% if page == 'formation' %}nine-active{% endif %}">
+                                <a class="" href="/formation">Formation</a>
+                            </li>
+                            <li class="p-4 nine-menu-item {% if page == 'projets' %}nine-active{% endif %}">
+                                <a class="" href="/projets">Projets</a>
+                            </li>
+                            <li class="p-4 nine-menu-item {% if page == 'arcade' %}nine-active{% endif %}">
+                                <a class="" href="/arcade">Arcade</a>
+                            </li>
+                        </ul>
+                        <div class="lg:hidden">
+                            <button class="nine-navbar-burger flex items-center py-2 px-3 text-nine-turquoise hover:text-nine-blue">
+                                <svg class="fill-current h-6 w-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
+                                    <title>Mobile menu</title>
+                                    <!--path d="M0 3h20v2H0V3zm0 6h10v2H0V9zm0 6h15v2H0v-2z"></path-->
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M 2 20 l 16 0 M 2 4 l 20 0 M 2 12 l 12 0"></path>
+                                </svg>
+                            </button>
+                        </div>
+                        {# <button id="themeToggle" class="text-lg">
+                            <span id="themeIcon">☀️</span>
+                        </button>
+
+
+                        <div class="grid grid-cols-1 max-sm:hidden">
+                            <div class="relative z-0 inline-grid grid-cols-2 gap-0.5 rounded-full bg-gray-950/5 p-0.75 text-gray-950 dark:bg-white/10 dark:text-white">
+                                <div class="relative rounded-full p-1.5 *:size-7 has-checked:bg-white has-checked:ring has-checked:inset-ring has-checked:ring-gray-950/10 has-checked:inset-ring-white/10 sm:p-0 dark:has-checked:bg-gray-600 dark:has-checked:text-white dark:has-checked:ring-transparent">
+                                    <input type="radio" class="absolute inset-0 appearance-none" name="theme-:r1:" aria-label="Light theme" value="light">
+                                    <svg viewBox="0 0 28 28" fill="none">
+                                        <circle cx="14" cy="14" r="3.5" stroke="currentColor"></circle>
+                                        <path d="M14 8.5V6.5" stroke="currentColor" stroke-linecap="round"></path>
+                                        <path d="M17.889 10.1115L19.3032 8.69727" stroke="currentColor" stroke-linecap="round"></path>
+                                        <path d="M19.5 14L21.5 14" stroke="currentColor" stroke-linecap="round"></path>
+                                        <path d="M17.889 17.8885L19.3032 19.3027" stroke="currentColor" stroke-linecap="round"></path>
+                                        <path d="M14 21.5V19.5" stroke="currentColor" stroke-linecap="round"></path>
+                                        <path d="M8.69663 19.3029L10.1108 17.8887" stroke="currentColor" stroke-linecap="round"></path>
+                                        <path d="M6.5 14L8.5 14" stroke="currentColor" stroke-linecap="round"></path>
+                                        <path d="M8.69663 8.69711L10.1108 10.1113" stroke="currentColor" stroke-linecap="round"></path>
+                                    </svg>
+                                </div>
+                                <div class="relative rounded-full p-1.5 *:size-7 has-checked:bg-white has-checked:ring has-checked:inset-ring has-checked:ring-gray-950/10 has-checked:inset-ring-white/10 sm:p-0 dark:has-checked:bg-gray-600 dark:has-checked:text-white dark:has-checked:ring-transparent">
+                                    <input type="radio" class="absolute inset-0 appearance-none" name="theme-:r1:" aria-label="Dark theme" value="dark" checked="">
+                                    <svg viewBox="0 0 28 28" fill="none">
+                                        <path d="M10.5 9.99914C10.5 14.1413 13.8579 17.4991 18 17.4991C19.0332 17.4991 20.0176 17.2902 20.9132 16.9123C19.7761 19.6075 17.109 21.4991 14 21.4991C9.85786 21.4991 6.5 18.1413 6.5 13.9991C6.5 10.8902 8.39167 8.22304 11.0868 7.08594C10.7089 7.98159 10.5 8.96597 10.5 9.99914Z" stroke="currentColor" stroke-linejoin="round"></path>
+                                        <path d="M16.3561 6.50754L16.5 5.5L16.6439 6.50754C16.7068 6.94752 17.0525 7.29321 17.4925 7.35607L18.5 7.5L17.4925 7.64393C17.0525 7.70679 16.7068 8.05248 16.6439 8.49246L16.5 9.5L16.3561 8.49246C16.2932 8.05248 15.9475 7.70679 15.5075 7.64393L14.5 7.5L15.5075 7.35607C15.9475 7.29321 16.2932 6.94752 16.3561 6.50754Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        <path d="M20.3561 11.5075L20.5 10.5L20.6439 11.5075C20.7068 11.9475 21.0525 12.2932 21.4925 12.3561L22.5 12.5L21.4925 12.6439C21.0525 12.7068 20.7068 13.0525 20.6439 13.4925L20.5 14.5L20.3561 13.4925C20.2932 13.0525 19.9475 12.7068 19.5075 12.6439L18.5 12.5L19.5075 12.3561C19.9475 12.2932 20.2932 11.9475 20.3561 11.5075Z" fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                        </div> #}
+                    </nav>
+                </div>
+            </header>
+
+            <!--Mobile menu-->
+            <div class="hidden nine-navbar-menu relative z-1000">
+                <div class="nine-navbar-backdrop fixed inset-0 bg-nine-blue-dark opacity-25"></div>
+                <nav class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto transition duration-300">
+                    <div class="flex items-center mb-8">
+                        <a class="mr-auto text-3xl font-semibold leading-none" href="https://carolinenoyer.fr/">
+                            <img class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250.svg" alt="">
+                        </a>
+                        <button class="nine-navbar-close">
+                            <svg class="h-6 w-6 text-blue-gray-400 cursor-pointer hover:text-turquoise" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div>
+                        <ul class="mobile-menu">
+                            <li class="mb-1">
+                                <a class="block p-4 text-blueGray-500" href="/experience">Expérience</a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="block p-4 text-blueGray-500" href="/competences">Compétences</a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="block p-4 text-blueGray-500" href="/formation">Formation</a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="block p-4 text-blueGray-500" href="/projets">Projets</a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="block p-4 text-blueGray-500" href="/arcade">Arcade</a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="block p-4 text-blueGray-500" href="/creations">Créations</a>
+                            </li>
+                            <li class="mb-1">
+                                <a class="block p-4 text-blueGray-500" href="/photos">Photos</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-auto">
+                        <a class="inline-block px-1" href="https://www.linkedin.com/in/carolinenoyer" title="LinkedIn"><i class="text-2xl text-turquoise fa fa-linkedin"></i></a>
+                        <a class="inline-block px-1" href="https://instagram.com/caro.noyer/" title="Instagram"><i class="text-2xl text-turquoise fa-brands fa-instagram"></i></a>
+                        <a class="inline-block px-2" href="https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf" title="CV format PDF"><i class="text-2xl text-turquoise fa fa-file-pdf"></i></a>
+                    </div>
+                </nav>
+            </div>
+
+            <main>
+                {% block body %}{% endblock %}
+            </main>
+        </div>
+
+        <!-- Footer start -->
+            <footer class="py-20">
+                <section class="py-20">
+                    <div class="container px-4 mx-auto">
+                        <div class="flex flex-wrap mb-12 lg:mb-20 -mx-3 text-center lg:text-left">
+                            <div class="w-full lg:w-2/5 px-3 mb-8 lg:mb-0 wow animate__animated animate__fadeInUp" data-wow-delay=".6s">
+                                <p class="max-w-md mx-auto lg:max-w-full lg:mx-0 lg:pr-32 text-blue-gray-400 text-sm leading-relaxed">
+                                De <strong>solides bases techniques</strong> et un intérêt particulier pour l’<strong>expérience utilisateur</strong>, me permettent de résoudre les
+                                problèmes à tous les niveaux avec une attention portée aux détails.
+                                </p>
+                            </div>
+                            <div class="w-full lg:w-1/5 px-3 mb-6 lg:mb-0 wow animate__animated animate__fadeInUp" data-wow-delay=".3s">
+                                <a class="inline-block mx-auto lg:mx-0 text-3xl font-semibold leading-none" href="https://carolinenoyer.fr/">
+                                    <img class="h-14 mx-auto" src="https://medias.carolinenoyer.fr/images/logo-2024-colored.png" alt="">
+                                </a>
+                            </div>
+                            <div class="w-full lg:w-1/5 px-3 mb-8 lg:mb-0 wow animate__animated animate__fadeInUp" data-wow-delay=".9s">
+                                <p class="mb-2 lg:mb-4 lg:text-lg text-smallcaps text-turquoise">Parcours</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><a href="/experience" class="text-blue-gray-400 text-sm">Expérience</a></li>
+                                    <li class="mb-2"><a href="/competences" class="text-blue-gray-400 text-sm">Compétences</a></li>
+                                    <li class="mb-2"><a href="/formation" class="text-blue-gray-400 text-sm">Formation</a></li>
+                                    <li class="mb-2"><a href="/projets" class="text-blue-gray-400 text-sm">Projets</a></li>
+                                </ul>
+                            </div>
+                            <div class="w-full lg:w-1/5 px-3 wow animate__animated animate__fadeInUp" data-wow-delay="1.2s">
+                                <p class="mb-2 lg:mb-4 lg:text-lg text-smallcaps text-turquoise">Centres d'intérêt</p>
+                                <ul class="list-unstyled mb-0">
+                                    <li class="mb-2"><a href="/creations" class="text-blue-gray-400 text-sm">Créations</a></li>
+                                    <li class="mb-2"><a href="/photos" class="text-blue-gray-400 text-sm">Photos</a></li>
+                                    <li class="mb-2"><a href="/arcade" class="text-blue-gray-400 text-sm">Arcade</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="flex flex-col lg:flex-row items-center lg:justify-between">
+                            <p class="text-xs text-blue-gray-400 wow animate__animated animate__fadeInUp" data-wow-delay="1.5s"><b>©Nine | Copyright</b> 2006-{{ 'now'|date('Y') }} {# &bull; <a x-on:click="showPrivacyPolicy = true" class="" href="#"> View Privacy Policy </a> #}</p>
+                            <div class="order-first lg:order-last -mx-2 mb-4 lg:mb-0 wow animate__animated animate__fadeInUp" data-wow-delay="1.8s">
+                                <ul class="list-inline">
+                                    <li class="list-inline-item"><a href="https://www.linkedin.com/in/carolinenoyer" target="_blank" title="LinkedIn"><i class="fa fa-linkedin"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://instagram.com/caro.noyer/" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://open.spotify.com/playlist/3g3bePO9Jddljzgx5wS4IM?si=c4a65cd590b04b94" target="_blank" title="Spotify"><i class="fa-brands fa-spotify"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://github.com/thedarknine" target="_blank" title="GitHub"><i class="fa fa-github-alt"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://dribbble.com/TheDarkNine" target="_blank" title="Dribbble"><i class="fab fa-dribbble"></i></a></li>
+                                    <li class="list-inline-item"><a href="https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf" title="CV au format PDF"><span><i class="fa fa-file-pdf"></i></span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </footer>
+        </div>
+
+    </body>
+</html>
