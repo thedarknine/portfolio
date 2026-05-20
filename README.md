@@ -39,6 +39,10 @@ Into docker :
 - symfony/asset-mapper
 - symfony/twig-pack
 - symfonycasts/tailwind-bundle
+- symfony/orm-pack
+- gedmo/doctrine-extensions
+- nesbot/carbon
+- doctrine/doctrine-migrations-bundle
 
 ### Dev
 
@@ -48,3 +52,5 @@ Into docker :
 - phpstan/phpstan
 - vincentlanglet/twig-cs-fixer
 - kocal/biome-js-bundle
+- doctrine/doctrine-fixtures-bundle
+- phpstan/phpstan-doctrine
