@@ -1,3 +1,9 @@
+.env
+.docker/mysql/data/*
+.docker/volumes/logs/mysql/*
+!.docker/mysql/data/.gitkeep
+!.docker/volumes/logs/mysql/.gitkeep
+
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
