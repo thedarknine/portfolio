@@ -104,6 +104,15 @@ nginx: ## Show docker logs for nginx
 	$(call display_title,Logs Nginx .............................................,${ICON_DEBUG})
 	docker compose logs engine
 
+
+# =====================================================================
+##@ DEVELOPMENT
+.PHONY: cc
+cc: ## Run bin/console cache:clear from docker
+	$(call display_title,Clearing Symfony cache .................................,${ICON_CLEAN})
+	symfony console cache:clear
+
+
 # =====================================================================
 ##@ HELP
 .PHONY: help
