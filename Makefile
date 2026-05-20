@@ -113,6 +113,22 @@ cc: ## Run bin/console cache:clear from docker
 	symfony console cache:clear
 
 
+.PHONY: cs-php-check
+cs-php-check: ## PHP CS Fixer - Only show diff
+	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
+	./vendor/bin/php-cs-fixer check --verbose
+	./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M
+
+.PHONY: cs-php
+cs-php: ## PHP CS Fixer - Fix code
+	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
+	./vendor/bin/php-cs-fixer fix --diff --verbose
+
+.PHONY: cs-twig-check
+cs-twig-check: ## Twig CS Fixer - Only show diff
+	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
+	./vendor/bin/twig-cs-fixer check --config=.twig-cs-fixer.php templates/
+
 # =====================================================================
 ##@ HELP
 .PHONY: help

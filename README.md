@@ -14,3 +14,20 @@ Into docker :
     symfony new tmp --version="8.0.*"
     mv tmp/* . # Think about hidden files (possibly to be merged)
 ```
+
+
+## Icons
+- [IconStack](https://iconstack.io/)
+- [HugeIcons](https://hugeicons.com/icons/stroke-rounded?search=inst)
+
+## Packages used
+### Standard
+- twig
+- symfony/twig-bundle
+
+### Dev
+- symfony/maker-bundle
+- phpunit/phpunit
+- friendsofphp/php-cs-fixer
+- phpstan/phpstan
+- vincentlanglet/twig-cs-fixer
