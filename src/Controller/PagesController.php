@@ -14,6 +14,7 @@ use App\Entity\ArcadeType;
 use App\Entity\CreationType;
 use App\Entity\Education;
 use App\Entity\Experience;
+use App\Entity\PhotoType;
 use App\Entity\Project;
 use App\Entity\Skill;
 use App\Entity\SkillType;
@@ -112,6 +113,29 @@ final class PagesController extends AbstractController
                 }
                 $data['creationTypesList'] = $creationTypesList;
                 $data['creationsList'] = $creationsList;
+                break;
+            case 'photos':
+                $photoTypesList = $this->doctrine->getRepository(PhotoType::class)->getPhotoTypes();
+                $photosList = [];
+                foreach ($photoTypesList as $type) {
+                    $photosList[$type->getLabel()] = [];
+                    $finder = new Finder();
+                    $finder->in($this->getImagesDir().'photos/'.$type->getLabel());
+                    foreach ($finder as $file) {
+                        $caption = explode('-', str_replace(['.JPG', '.jpg'], '', $file->getFileName()));
+                        $title = '';
+                        if (array_key_exists(1, $caption)) {
+                            $title = str_replace('_', ' ', $caption[1]);
+                        }
+                        $photosList[$type->getLabel()][] = [
+                            'filename' => $file->getFileName(),
+                            'caption' => $title,
+                        ];
+                    }
+                    shuffle($photosList[$type->getLabel()]);
+                }
+                $data['photoTypesList'] = $photoTypesList;
+                $data['photosList'] = $photosList;
                 break;
 
             default:
