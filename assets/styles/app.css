@@ -11,22 +11,22 @@
 @theme {
     --font-normal: "Oxygen", "Inter", sans-serif;
     --font-accent: "League Spartan", sans-serif;
-    --color-nine-primary: oklch(33.74% 0.071 254.99);
-    --color-nine-golden: oklch(96.81% 0.0074 80.72);
-    --color-nine-light: oklch(90.81% 0.008 253.86);
-    --color-nine-blue-dark: oklch(24.83% 0.049 253.38);
-    --color-nine-blue-darker: oklch(32.49% 0.0821 255.92);
-    --color-nine-blue: oklch(35.22% 0.104 259.27);
-    --color-nine-turquoise: oklch(61.25% 0.116 226.51);
-    --color-nine-blue-gray: oklch(71.07% 0.035 256.79);
-    --color-nine-yellow: oklch(80.16% 0.171 73.27);
-    --color-nine-yellow-dark: oklch(78.59% 0.167 70.04);
-    --color-nine-amber: oklch(85.95% 0.0594 82.95);
-    --color-nine-gray: oklch(71.07% 0.035 256.79);
-    --color-nine-gray-light: oklch(90.97% 0.000 0);
-    --color-leviia: oklch(73.20% 0.146 169.35);
-    --color-perfect: oklch(44.17% 0.102 251.28);
-    --color-coffreo: oklch(68.60% 0.210 41.14);
+    --color-nine-primary: oklch(33.74% 0.071 254.99);       /* #1c385b */
+    --color-nine-golden: oklch(96.81% 0.0074 80.72);        /* #f7f4ef */
+    --color-nine-light: oklch(90.81% 0.008 253.86);         /* #dde1e6 */
+    --color-nine-blue-dark: oklch(24.83% 0.049 253.38);     /* #0f2238 */
+    --color-nine-blue-darker: oklch(32.49% 0.0821 255.92);  /* #14345d */
+    --color-nine-blue: oklch(35.22% 0.104 259.27);          /* #163970 */
+    --color-nine-turquoise: oklch(61.25% 0.116 226.51);     /* #0a91b9 */
+    --color-nine-blue-gray: oklch(71.07% 0.035 256.79);     /* #94a3b8 */
+    --color-nine-yellow: oklch(80.16% 0.171 73.27);         /* #ffaa00 */
+    --color-nine-yellow-dark: oklch(78.59% 0.167 70.04);    /* #fca313 */
+    --color-nine-amber: oklch(85.95% 0.0594 82.95);         /* #e4cea5 */
+    --color-nine-gray: oklch(71.07% 0.035 256.79);          /* #94a3b8 */
+    --color-nine-gray-light: oklch(90.97% 0.000 0);         /* #e1e1e1 */
+    --color-leviia: oklch(73.20% 0.146 169.35);             /* #00c599 */
+    --color-perfect: oklch(44.17% 0.102 251.28);            /* #215589 */
+    --color-coffreo: oklch(68.60% 0.210 41.14);             /* #ff5e02 */
 }
 
 /* Safelist for Tailwind CSS classes used in templates */

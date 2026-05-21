@@ -1,0 +1,7 @@
+.skill {
+    @apply border-light border-solid;
+
+    border-width: 1px !important;
+
+    --tw-border-opacity: 0.5;
+}

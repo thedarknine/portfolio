@@ -103,7 +103,7 @@ shell: ## Run a shell in the PHP container
 .PHONY: nginx
 nginx: ## Show docker logs for nginx
 	$(call display_title,Logs Nginx .............................................,${ICON_DEBUG})
-	docker compose logs engine
+	docker compose logs -f engine
 
 
 # =====================================================================

@@ -11,6 +11,8 @@
 namespace App\Controller;
 
 use App\Entity\Experience;
+use App\Entity\Skill;
+use App\Entity\SkillType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -58,18 +60,24 @@ final class PagesController extends AbstractController
     public function page(string $slug): Response
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
+        $pageName = $slug;
 
         switch ($slug) {
             case 'experience':
                 $data['experiencesList'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(20);
                 break;
-            
+            case 'competences':
+                $pageName = 'skills';
+                $data['skillTypesList'] = $this->doctrine->getRepository(SkillType::class)->getSkillTypes();
+                $data['skillsList'] = $this->doctrine->getRepository(Skill::class)->getSkillsOrderByType();
+                break;
+
             default:
                 return $this->redirectToRoute('app_index');
         }
 
-        return $this->render("pages/{$slug}.html.twig", [
-            'page' => $slug,
+        return $this->render("pages/{$pageName}.html.twig", [
+            'page' => $pageName,
             'data' => $data,
         ]);
     }
