@@ -12,6 +12,7 @@ namespace App\Controller;
 
 use App\Entity\Education;
 use App\Entity\Experience;
+use App\Entity\Project;
 use App\Entity\Skill;
 use App\Entity\SkillType;
 use Doctrine\Persistence\ManagerRegistry;
@@ -75,6 +76,10 @@ final class PagesController extends AbstractController
             case 'formation':
                 $pageName = 'education';
                 $data['educationsList'] = $this->doctrine->getRepository(Education::class)->getEducationsWithSchool();
+                break;
+            case 'projets':
+                $pageName = 'projects';
+                $data['projectsList'] = $this->doctrine->getRepository(Project::class)->getProjects();
                 break;
 
             default:

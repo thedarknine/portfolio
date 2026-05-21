@@ -1,0 +1,54 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Projets{% endblock %}
+
+{% block page_hero %}
+    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Side projects', subtitle: 'Chaque projet est un terrain d’exploration', slug: 'projects' }) }}
+{% endblock %}
+
+{% block page_quote %}
+    {{ include('blocks/page_quote.html.twig', { quote: "Les side projects sont pour moi une façon d'explorer sans contrainte, d'apprendre en continu et d'expérimenter." }) }}
+{% endblock %}
+
+{% block body %}
+{% for project in data.projectsList %}
+    <section class="{% if loop.index is even %}bg-nine-gray-light{% else %}bg-white{% endif %} py-10">
+        <div class="container flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
+            <div class="flex flex-col sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 wow animate__animated animate__fadeInLeft" data-wow-delay="0.6s">
+                <h3 class="text-2xl text-nine-turquoise font-semibold mb-2">{{ project.name }}</h3>
+                <div class="line h-1"></div>
+                <h4 class="text-nine-blue text-xl mb-6">{{ project.period }}</h4>
+                <img src="{{ absolute_url('images/projects/' ~ project.logo) }}" alt="{{ project.name }}" class="w-24 mx-auto">
+            </div>
+
+            <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 wow animate__animated animate__fadeInRight" data-wow-delay="0.6s">
+                {{ project.description|raw }}
+
+                {% if project.screenshots is not empty %}
+                    {% set screenshotsList = project.screenshots|split('::') %}
+                    {% if screenshotsList is iterable %}
+                        <div class="content-center py-3">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8">
+                                {% for screenshot in screenshotsList %}
+                                    <div class="relative flex flex-wrap shadow-lg rounded-xl bg-white mb-10">
+                                        <a href="{{ absolute_url('images/projects/' ~ screenshot) }}" class="glightbox9" data-gallery="gallery{{ project.id }}">
+                                            <img class="rounded-md object-cover h-full" src="{{ absolute_url('images/projects/' ~ screenshot) }}" alt="{{ project.name }}" />
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="content-center">
+                            <div class="shadow-lg rounded-xl">
+                                <img class="rounded-md" src="{{ absolute_url('images/projects/' ~ project.screenshot) }}" alt="{{ project.name }}" />
+                            </div>
+                        </div>
+                    {% endif %}
+
+                {% endif %}
+            </div>
+        </div>
+    </section>
+{% endfor %}
+{% endblock %}
