@@ -13,7 +13,6 @@
 /public/bundles/
 /var/
 /vendor/
-/migrations/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -27,7 +26,7 @@
 ###< friendsofphp/php-cs-fixer ###
 
 ###> phpstan/phpstan ###
-phpstan.neon
+# phpstan.neon
 ###< phpstan/phpstan ###
 
 ###> vincentlanglet/twig-cs-fixer ###

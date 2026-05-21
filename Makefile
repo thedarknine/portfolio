@@ -157,7 +157,7 @@ cs-twig-check: ## Twig CS Fixer - Only show diff
 .PHONY: cs-twig
 cs-twig: ## Twig CS Fixer - Fix code
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
-	./vendor/bin/twig-cs-fixer fix --config=.twig-cs-fixer.php templates/
+	./vendor/bin/twig-cs-fixer fix --config=.twig-cs-fixer.php templates/ && php bin/console lint:twig templates/
 
 # LINTER bin/biome lint
 

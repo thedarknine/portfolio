@@ -10,18 +10,6 @@ import './styles/app.css';
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 $(document).ready(() => {
-    // Sticky header
-    var header = $('.nine-sticky-bar');
-    var win = $(window);
-    win.on('scroll', () => {
-        var scroll = win.scrollTop();
-        if (scroll < 40) {
-            header.removeClass('nine-stick');
-        } else {
-            header.addClass('nine-stick');
-        }
-    });
-
     // Menus Burger (Mobile)
     const burgers = document.querySelectorAll('.nine-navbar-burger');
     const menus = document.querySelectorAll('.nine-navbar-menu');

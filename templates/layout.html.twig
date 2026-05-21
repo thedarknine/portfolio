@@ -55,7 +55,7 @@
 
     </head>
     <body>
-        <div class="main">
+        <div class="main" id="{{ page }}">
             <!--Header-->
             <header class="bg-transparent nine-sticky-bar{% if page != 'home' %} nine-stick{% endif %}">
                 <div class="container bg-transparent">
@@ -64,19 +64,19 @@
                             <img id="logo" class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250-white.svg" alt="">
                         </a>
                         <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-5">
-                            <li class="p-4 nine-menu-item {% if page == 'experience' %}nine-active{% endif %}">
+                            <li class="p-4 nine-menu-item {% if page == 'experience' %}nine-active text-nine-turquoise{% endif %}">
                                 <a class="" href="/experience">Expérience</a>
                             </li>
-                            <li class="p-4 nine-menu-item {% if page == 'competences' %}nine-active{% endif %}">
+                            <li class="p-4 nine-menu-item {% if page == 'competences' %}nine-active text-nine-turquoise{% endif %}">
                                 <a class="" href="/competences">Compétences</a>
                             </li>
-                            <li class="p-4 nine-menu-item {% if page == 'formation' %}nine-active{% endif %}">
+                            <li class="p-4 nine-menu-item {% if page == 'formation' %}nine-active text-nine-turquoise{% endif %}">
                                 <a class="" href="/formation">Formation</a>
                             </li>
-                            <li class="p-4 nine-menu-item {% if page == 'projets' %}nine-active{% endif %}">
+                            <li class="p-4 nine-menu-item {% if page == 'projets' %}nine-active text-nine-turquoise{% endif %}">
                                 <a class="" href="/projets">Projets</a>
                             </li>
-                            <li class="p-4 nine-menu-item {% if page == 'arcade' %}nine-active{% endif %}">
+                            <li class="p-4 nine-menu-item {% if page == 'arcade' %}nine-active text-nine-turquoise{% endif %}">
                                 <a class="" href="/arcade">Arcade</a>
                             </li>
                         </ul>
@@ -133,7 +133,7 @@
                             <img class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250.svg" alt="">
                         </a>
                         <button class="nine-navbar-close">
-                            <svg class="h-6 w-6 text-blue-gray-400 cursor-pointer hover:text-turquoise" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <svg class="h-6 w-6 text-blue-gray-400 cursor-pointer hover:text-nine-turquoise" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                             </svg>
                         </button>
@@ -164,15 +164,19 @@
                         </ul>
                     </div>
                     <div class="mt-auto">
-                        <a class="inline-block px-1" href="https://www.linkedin.com/in/carolinenoyer" title="LinkedIn"><i class="text-2xl text-turquoise fa fa-linkedin"></i></a>
-                        <a class="inline-block px-1" href="https://instagram.com/caro.noyer/" title="Instagram"><i class="text-2xl text-turquoise fa-brands fa-instagram"></i></a>
-                        <a class="inline-block px-2" href="https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf" title="CV format PDF"><i class="text-2xl text-turquoise fa fa-file-pdf"></i></a>
+                        <a class="inline-block px-1" href="https://www.linkedin.com/in/carolinenoyer" title="LinkedIn"><i class="text-2xl text-nine-turquoise fa fa-linkedin"></i></a>
+                        <a class="inline-block px-1" href="https://instagram.com/caro.noyer/" title="Instagram"><i class="text-2xl text-nine-turquoise fa-brands fa-instagram"></i></a>
+                        <a class="inline-block px-2" href="https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf" title="CV format PDF"><i class="text-2xl text-nine-turquoise fa fa-file-pdf"></i></a>
                     </div>
                 </nav>
             </div>
 
             <main>
+                {% if page != 'home' %}{% block page_hero %}{% endblock %}{% endif %}
+
                 {% block body %}{% endblock %}
+
+                {% if page != 'home' %}{% block page_quote %}{% endblock %}{% endif %}
             </main>
         </div>
 

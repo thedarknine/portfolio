@@ -54,6 +54,7 @@ Into docker :
 - symfony/asset
 - symfony/asset-mapper
 - symfony/twig-pack
+- twig/intl-extra
 - symfonycasts/tailwind-bundle
 - symfony/orm-pack
 - gedmo/doctrine-extensions

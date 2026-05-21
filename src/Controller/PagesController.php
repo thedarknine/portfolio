@@ -35,7 +35,7 @@ final class PagesController extends AbstractController
         return $this->getParameter('kernel.project_dir').'/public/images/';
     }
 
-    #[Route('/', name: 'index')]
+    #[Route('/', name: 'app_index')]
     public function index(): Response
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
@@ -50,6 +50,26 @@ final class PagesController extends AbstractController
 
         return $this->render('pages/home.html.twig', [
             'page' => 'home',
+            'data' => $data,
+        ]);
+    }
+
+    #[Route('/{slug}', name: 'app_page')]
+    public function page(string $slug): Response
+    {
+        $data['nbYearsExperience'] = $this->getNbYearsExperience();
+
+        switch ($slug) {
+            case 'experience':
+                $data['experiencesList'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(20);
+                break;
+            
+            default:
+                return $this->redirectToRoute('app_index');
+        }
+
+        return $this->render("pages/{$slug}.html.twig", [
+            'page' => $slug,
             'data' => $data,
         ]);
     }

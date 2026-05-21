@@ -1,0 +1,49 @@
+{% block experience_details %}
+    <div class="text-sm font-normal uppercase pt-3 pl-3 text-gray-500"><span class="font-black">{{ experience.title }}</span></div>
+    <div class="p-3 text-3xl text-nine-blue font-bold">{{ experience.subtitle }}</div>
+    <p class="text-nine-blue-gray px-3"><i class="far fa-calendar-alt mr-1"></i>&nbsp;
+    {% if experience.endDate is empty %}
+        Depuis {{ experience.startDate|date('m/Y') }}
+    {% else %}
+        De {{ experience.startDate|date('m/Y') }} à {{ experience.endDate|date('m/Y') }}
+    {% endif %}
+    <i class="text-sm">
+        ({% if experience.duration.nbYears > 0 %}{{ experience.duration.nbYears }} an{% if experience.duration.nbYears > 1 %}s{% endif %}{% endif %}
+        {% if experience.duration.nbMonths != 0 %}{% if experience.duration.nbYears > 0 %}et {% endif %}{{ experience.duration.nbMonths }} mois{% endif %})
+    </i>
+    </p>
+    <p class="px-3 mb-4 text-nine-blue-gray">
+        <i class="fas fa-map-marker-alt mr-1"></i> {{ experience.company.name }}
+        - <span class="text-sm">{{ experience.company.city }} ({{ experience.company.department|format_number({ min_integer_digit: 2 }) }})</span>
+    </p>
+    <div class="px-3 pb-6">
+    {% if experience.items is not empty %}
+        <ul class="list-none">
+            {% for item in experience.items %}
+            <li class="flex">
+                <p class="h-lh w-5.5 shrink-0 pt-1">{{ item.picto }}</p>
+                <div class="pl-4 rounded-lg backdrop-blur">
+                    <h6 class="text-lg mb-0 font-semibold text-perfect">{{ item.title }}</h6>
+                    <p class="mb-2">
+                    {{ item.details }}
+                    </p>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>{{ experience.description|raw }}</p>
+    {% endif %}
+    </div>
+
+    {% if experience.skills is not empty %}
+    <p class="py-4 px-3"><strong class="text-nine-blue-gray font-semibold">Stack utilisée</strong></p>
+    <div class="w-full inline-flex">
+        <ul class="flex flex-wrap items-center justify-center md:justify-start [&_li]:mx-4 [&_img]:max-w-none">
+            {% for skill in experience.skills %}
+            <li><img src="{{ absolute_url('images/skills/' ~ skill.logo) }}" alt="{{ skill.name }}" width="40px" class="mb-4" /></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+{% endblock %}
