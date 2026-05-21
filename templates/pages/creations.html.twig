@@ -2,14 +2,6 @@
 
 {% block title %}Créations{% endblock %}
 
-{% block page_hero %}
-    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Créations', subtitle: 'Entre matière, patience et imagination', slug: 'creations' }) }}
-{% endblock %}
-
-{% block page_quote %}
-    {{ include('blocks/page_quote.html.twig', { quote: 'L’argile comme terrain d’expression.' }) }}
-{% endblock %}
-
 {% block body %}
 {% for type in data.creationTypesList %}
 <section class="{% if loop.index is even %}bg-nine-golden{% else %}bg-white{% endif %} py-10">

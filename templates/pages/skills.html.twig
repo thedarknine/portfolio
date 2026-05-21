@@ -2,14 +2,6 @@
 
 {% block title %}Compétences{% endblock %}
 
-{% block page_hero %}
-    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Compétences', subtitle: 'Un savoir-faire au service de solutions solides', slug: 'skills' }) }}
-{% endblock %}
-
-{% block page_quote %}
-    {{ include('blocks/page_quote.html.twig', { quote: "J'aime concevoir des produits utiles et durables, avec une approche humaine et responsable." }) }}
-{% endblock %}
-
 {% block body %}
 {% for type in data.skillTypesList %}
     <section class="{% if loop.index is even %}bg-color-nine-golden{% else %}bg-white{% endif %} py-10">

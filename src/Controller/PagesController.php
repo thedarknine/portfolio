@@ -66,26 +66,42 @@ final class PagesController extends AbstractController
     public function page(string $slug): Response
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
-        $pageName = $slug;
+        $pagename = $slug;
 
         switch ($slug) {
             case 'experience':
+                $pagetitle = 'Expérience';
+                $tagline = 'Construire';
+                $subtitle = 'Du code au réel : des expériences qui comptent';
+                $quote = 'Toujours motivée par l’envie d’apprendre, de concevoir et de faire évoluer les idées en expériences concrètes.';
                 $data['experiencesList'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(20);
                 break;
             case 'competences':
-                $pageName = 'skills';
+                $pagename = 'skills';
+                $tagline = 'Maîtriser';
+                $subtitle = 'Un savoir-faire au service de solutions solides';
+                $quote = 'J\'aime concevoir des produits utiles et durables, avec une approche humaine et responsable.';
                 $data['skillTypesList'] = $this->doctrine->getRepository(SkillType::class)->getSkillTypes();
                 $data['skillsList'] = $this->doctrine->getRepository(Skill::class)->getSkillsOrderByType();
                 break;
             case 'formation':
-                $pageName = 'education';
+                $pagename = 'education';
+                $tagline = 'Apprendre';
+                $subtitle = 'Là où tout a commencé... et évolué';
+                $quote = 'Je considère la formation comme un processus continu : observer, expérimenter, comprendre et faire évoluer sa pratique.';
                 $data['educationsList'] = $this->doctrine->getRepository(Education::class)->getEducationsWithSchool();
                 break;
             case 'projets':
-                $pageName = 'projects';
+                $pagename = 'projects';
+                $tagline = 'Expérimenter';
+                $subtitle = 'Chaque projet est un terrain d’exploration';
+                $quote = 'Les side projects sont pour moi une façon d\'explorer sans contrainte, d\'apprendre en continu et d\'expérimenter.';
                 $data['projectsList'] = $this->doctrine->getRepository(Project::class)->getProjects();
                 break;
             case 'arcade':
+                $tagline = 'Construire';
+                $subtitle = 'Un projet perso entre nostalgie et passion, pour le fun... et le défi';
+                $quote = 'Quand la passion rencontre la technique';
                 $arcadeTypesList = $this->doctrine->getRepository(ArcadeType::class)->getArcadeTypes();
                 $arcadeList = [];
                 foreach ($arcadeTypesList as $type) {
@@ -100,6 +116,9 @@ final class PagesController extends AbstractController
                 $data['arcadeList'] = $arcadeList;
                 break;
             case 'creations':
+                $tagline = 'Façonner';
+                $subtitle = 'Entre matière, patience et imagination';
+                $quote = 'L’argile comme terrain d’expression.';
                 $creationTypesList = $this->doctrine->getRepository(CreationType::class)->getCreationTypes();
                 $creationsList = [];
                 foreach ($creationTypesList as $type) {
@@ -115,6 +134,9 @@ final class PagesController extends AbstractController
                 $data['creationsList'] = $creationsList;
                 break;
             case 'photos':
+                $tagline = 'Observer';
+                $subtitle = 'Capturer des instants, des lumières, des détails';
+                $quote = 'Des fragments de moments figés.';
                 $photoTypesList = $this->doctrine->getRepository(PhotoType::class)->getPhotoTypes();
                 $photosList = [];
                 foreach ($photoTypesList as $type) {
@@ -142,8 +164,13 @@ final class PagesController extends AbstractController
                 return $this->redirectToRoute('app_index');
         }
 
-        return $this->render("pages/{$pageName}.html.twig", [
-            'page' => $pageName,
+        return $this->render("pages/{$pagename}.html.twig", [
+            'page' => $pagename,
+            'slug' => $slug,
+            'pagetitle' => $pagetitle ?? null,
+            'tagline' => $tagline ?? null,
+            'subtitle' => $subtitle ?? null,
+            'quote' => $quote ?? null,
             'data' => $data,
         ]);
     }

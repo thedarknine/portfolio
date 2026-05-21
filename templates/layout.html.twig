@@ -172,11 +172,15 @@
             </div>
 
             <main>
-                {% if page != 'home' %}{% block page_hero %}{% endblock %}{% endif %}
+                {% if page != 'home' %}
+                    {{ include('blocks/page_hero.html.twig', { tagline: tagline, subtitle: subtitle, slug: page }) }}
+                {% endif %}
 
                 {% block body %}{% endblock %}
 
-                {% if page != 'home' %}{% block page_quote %}{% endblock %}{% endif %}
+                {% if page != 'home' %}
+                    {{ include('blocks/page_quote.html.twig', { quote: quote }) }}
+                {% endif %}
             </main>
         </div>
 

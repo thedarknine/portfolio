@@ -7,14 +7,6 @@
     <link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
 {% endblock %}
 
-{% block page_hero %}
-    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Expérience', subtitle: 'Du code au réel : des expériences qui comptent', slug: 'experience' }) }}
-{% endblock %}
-
-{% block page_quote %}
-    {{ include('blocks/page_quote.html.twig', { quote: 'Toujours motivée par l’envie d’apprendre, de concevoir et de faire évoluer les idées en expériences concrètes.' }) }}
-{% endblock %}
-
 {% block body %}
     <section class="nine-experience-timeline">
         <div class="max-w-5xl mx-auto py-10">

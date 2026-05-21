@@ -2,14 +2,6 @@
 
 {% block title %}Projets{% endblock %}
 
-{% block page_hero %}
-    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Side projects', subtitle: 'Chaque projet est un terrain d’exploration', slug: 'projects' }) }}
-{% endblock %}
-
-{% block page_quote %}
-    {{ include('blocks/page_quote.html.twig', { quote: "Les side projects sont pour moi une façon d'explorer sans contrainte, d'apprendre en continu et d'expérimenter." }) }}
-{% endblock %}
-
 {% block body %}
 {% for project in data.projectsList %}
     <section class="{% if loop.index is even %}bg-nine-gray-light{% else %}bg-white{% endif %} py-10">

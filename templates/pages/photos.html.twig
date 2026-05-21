@@ -2,14 +2,6 @@
 
 {% block title %}Photos{% endblock %}
 
-{% block page_hero %}
-    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Photos', subtitle: 'Capturer des instants, des lumières, des détails', slug: 'photos' }) }}
-{% endblock %}
-
-{% block page_quote %}
-    {{ include('blocks/page_quote.html.twig', { quote: 'Des fragments de moments figés.' }) }}
-{% endblock %}
-
 {% block body %}
 {% for type in data.photoTypesList %}
 <section class="{% if loop.index is even %}bg-nine-golden{% else %}bg-white{% endif %} py-10">
