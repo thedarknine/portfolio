@@ -22,7 +22,18 @@
     --color-nine-yellow-dark: oklch(78.59% 0.167 70.04);
     --color-nine-gray: oklch(71.07% 0.035 256.79);
     --color-nine-gray-light: oklch(90.97% 0.000 0);
+    --color-leviia: oklch(73.20% 0.146 169.35);
+    --color-perfect: oklch(44.17% 0.102 251.28);
+    --color-coffreo: oklch(68.60% 0.210 41.14);
 }
+
+/* Safelist for Tailwind CSS classes used in templates */
+@source inline("fill-leviia");
+@source inline("fill-perfect");
+@source inline("fill-coffreo");
+@source inline("bg-leviia");
+@source inline("bg-perfect");
+@source inline("bg-coffreo");
 
 @layer base {
     body {
@@ -134,7 +145,7 @@
     color: var(--color-nine-light);
 
     .nine-menu-item {
-        font-size: 16px !important;
+        font-size: 1.2rem !important;
         font-weight: 500;
         border-bottom: 4px solid transparent;
 
