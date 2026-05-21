@@ -31,7 +31,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill0->setLabel('jira');
         $skill0->setLogo('jira.png');
         try {
-            $skill0->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill0->setSkillType($this->getReference('skillType_7', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -49,7 +49,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill1->setLabel('agile');
         $skill1->setLogo('agile.png');
         try {
-            $skill1->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill1->setSkillType($this->getReference('skillType_7', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -67,7 +67,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill2->setLabel('trello');
         $skill2->setLogo('trello.png');
         try {
-            $skill2->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill2->setSkillType($this->getReference('skillType_7', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -85,7 +85,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill3->setLabel('product-discovery');
         $skill3->setLogo('product-discovery.png');
         try {
-            $skill3->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill3->setSkillType($this->getReference('skillType_7', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -103,7 +103,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill4->setLabel('confluence');
         $skill4->setLogo('confluence.png');
         try {
-            $skill4->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill4->setSkillType($this->getReference('skillType_7', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -121,7 +121,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill5->setLabel('miro');
         $skill5->setLogo('miro.png');
         try {
-            $skill5->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill5->setSkillType($this->getReference('skillType_7', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -139,7 +139,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill6->setLabel('figma');
         $skill6->setLogo('figma.png');
         try {
-            $skill6->setSkillType($this->getReference('skillType_2', SkillType::class));
+            $skill6->setSkillType($this->getReference('skillType_8', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -157,7 +157,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill7->setLabel('moqups');
         $skill7->setLogo('moqups.png');
         try {
-            $skill7->setSkillType($this->getReference('skillType_2', SkillType::class));
+            $skill7->setSkillType($this->getReference('skillType_8', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -175,7 +175,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill8->setLabel('illustrator');
         $skill8->setLogo('illustrator.png');
         try {
-            $skill8->setSkillType($this->getReference('skillType_2', SkillType::class));
+            $skill8->setSkillType($this->getReference('skillType_8', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -193,7 +193,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill9->setLabel('photoshop');
         $skill9->setLogo('photoshop.png');
         try {
-            $skill9->setSkillType($this->getReference('skillType_2', SkillType::class));
+            $skill9->setSkillType($this->getReference('skillType_8', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -859,7 +859,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill46->setLabel('slack');
         $skill46->setLogo('slack.png');
         try {
-            $skill46->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill46->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -877,7 +877,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill47->setLabel('teams');
         $skill47->setLogo('teams.png');
         try {
-            $skill47->setSkillType($this->getReference('skillType_1', SkillType::class));
+            $skill47->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }

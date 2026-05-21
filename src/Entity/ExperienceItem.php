@@ -11,12 +11,15 @@
 namespace App\Entity;
 
 use App\Repository\ExperienceItemRepository;
+use App\Entity\Traits\TimeStampableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ExperienceItemRepository::class)]
 class ExperienceItem
 {
+    use TimeStampableTrait;
+    
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

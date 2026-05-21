@@ -9,6 +9,9 @@
             <div class="flex flex-col sticky content-center md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 wow animate__animated animate__fadeInLeft" data-wow-delay="0.6s">
                 <h3 class="text-2xl text-turquoise font-semibold mb-6">{{ type.name }}</h3>
                 <div class="line h-1"></div>
+                <div class="mb-6 text-nine-blue-gray">
+                    {{ type.description }}
+                </div>
                 <img src="{{ absolute_url('images/skills/' ~ type.logo) }}" alt="{{ type.name }}" width="250px">
             </div>
 

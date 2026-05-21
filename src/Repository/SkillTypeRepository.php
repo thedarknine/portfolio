@@ -31,6 +31,7 @@ class SkillTypeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('sklt')
             ->select('sklt')
+            ->andWhere('sklt.deleted = 0')
             ->orderBy('sklt.position', 'ASC')
             ->getQuery()
             ->getResult();

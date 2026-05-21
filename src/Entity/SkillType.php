@@ -16,6 +16,7 @@ use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\SkillTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'skill_type')]
@@ -41,6 +42,12 @@ class SkillType
     /** @var Collection<int, Skill> */
     #[ORM\OneToMany(mappedBy: 'skillType', targetEntity: Skill::class)]
     private Collection $skills;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private bool $deleted = false;
 
     public function __construct()
     {
@@ -102,6 +109,30 @@ class SkillType
                 $skill->setSkillType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): static
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }
