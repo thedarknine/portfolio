@@ -10,6 +10,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ArcadeType;
 use App\Entity\Education;
 use App\Entity\Experience;
 use App\Entity\Project;
@@ -17,6 +18,7 @@ use App\Entity\Skill;
 use App\Entity\SkillType;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -80,6 +82,20 @@ final class PagesController extends AbstractController
             case 'projets':
                 $pageName = 'projects';
                 $data['projectsList'] = $this->doctrine->getRepository(Project::class)->getProjects();
+                break;
+            case 'arcade':
+                $arcadeTypesList = $this->doctrine->getRepository(ArcadeType::class)->getArcadeTypes();
+                $arcadeList = [];
+                foreach ($arcadeTypesList as $type) {
+                    $arcadeList[$type->getLabel()] = [];
+                    $finder = new Finder();
+                    $finder->in($this->getImagesDir().'arcade/'.$type->getLabel());
+                    foreach ($finder as $file) {
+                        $arcadeList[$type->getLabel()][] = $file->getFileName();
+                    }
+                }
+                $data['arcadeTypesList'] = $arcadeTypesList;
+                $data['arcadeList'] = $arcadeList;
                 break;
 
             default:
