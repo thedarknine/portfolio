@@ -1,0 +1,33 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Créations{% endblock %}
+
+{% block page_hero %}
+    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Créations', subtitle: 'Entre matière, patience et imagination', slug: 'creations' }) }}
+{% endblock %}
+
+{% block page_quote %}
+    {{ include('blocks/page_quote.html.twig', { quote: "L’argile comme terrain d’expression." }) }}
+{% endblock %}
+
+{% block body %}
+{% for type in data.creationTypesList %}
+<section class="{% if loop.index is even %}bg-nine-golden{% else %}bg-white{% endif %} py-10">
+    <div class="container">
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise">{{ type.name }}</h3>
+        {% set listItemsCreations = data.creationsList[type.label] %}
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            {% for creation in listItemsCreations %}
+                <div class="shadow-lg mb-4">
+                    <div>
+                        <a href="{{ absolute_url('images/creations/' ~ type.label ~ '/' ~ creation) }}" class="glightbox9" data-gallery="gallery{{ type.id }}">
+                            <img src="{{ absolute_url('images/creations/' ~ type.label ~ '/' ~ creation) }}" alt="" class="rounded-lg">
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endfor %}
+{% endblock %}

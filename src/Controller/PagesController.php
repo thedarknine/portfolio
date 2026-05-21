@@ -11,6 +11,7 @@
 namespace App\Controller;
 
 use App\Entity\ArcadeType;
+use App\Entity\CreationType;
 use App\Entity\Education;
 use App\Entity\Experience;
 use App\Entity\Project;
@@ -96,6 +97,21 @@ final class PagesController extends AbstractController
                 }
                 $data['arcadeTypesList'] = $arcadeTypesList;
                 $data['arcadeList'] = $arcadeList;
+                break;
+            case 'creations':
+                $creationTypesList = $this->doctrine->getRepository(CreationType::class)->getCreationTypes();
+                $creationsList = [];
+                foreach ($creationTypesList as $type) {
+                    $creationsList[$type->getLabel()] = [];
+                    $finder = new Finder();
+                    $finder->in($this->getImagesDir().'creations/'.$type->getLabel());
+                    foreach ($finder as $file) {
+                        $creationsList[$type->getLabel()][] = $file->getFileName();
+                    }
+                    shuffle($creationsList[$type->getLabel()]);
+                }
+                $data['creationTypesList'] = $creationTypesList;
+                $data['creationsList'] = $creationsList;
                 break;
 
             default:
