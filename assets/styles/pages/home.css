@@ -6,16 +6,17 @@
 
     &::before {
         position: absolute;
-        inset:0;
+        inset: 0;
         z-index: -1;
-        content:"";
-        background: url("https://carolinenoyer.fr/images/volcans-cnoyer.png") no-repeat 50%;
+        content: '';
+        background: url('https://carolinenoyer.fr/images/volcans-cnoyer.png')
+            no-repeat 50%;
         background-size: cover;
     }
 }
 
 .nine-btn-social {
-    @apply text-nine-light text-shadow-lg rounded-full border-blue-gray-400 border-2;
+    @apply text-nine-light border-blue-gray-400 rounded-full border-2 text-shadow-lg;
 
     transition: 0.5s;
     transition-delay: 0.3s;
@@ -23,10 +24,12 @@
     &:hover {
         @apply rounded-full;
 
-        background: linear-gradient(to right bottom,
-                var(--color-nine-blue-dark) 0%,
-                var(--color-nine-turquoise) 51%,
-                var(--color-nine-blue-dark) 100%);
+        background: linear-gradient(
+            to right bottom,
+            var(--color-nine-blue-dark) 0%,
+            var(--color-nine-turquoise) 51%,
+            var(--color-nine-blue-dark) 100%
+        );
         border-color: var(--color-nine-turquoise);
     }
 }

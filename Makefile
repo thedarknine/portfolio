@@ -141,23 +141,37 @@ cs: ## Fix all coding standards (PHP, Twig, CSS)
 .PHONY: cs-php-check
 cs-php-check: ## PHP CS Fixer - Only show diff
 	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
-	- ./vendor/bin/php-cs-fixer check --verbose 
-	./vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=512M
+	- ./vendor/bin/php-cs-fixer check --verbose --config=.coding-standard-linters/.php-cs-fixer.php --cache-file=.coding-standard-linters/.php-cs-fixer.cache
+	- ./vendor/bin/phpstan analyse --memory-limit=512M --configuration=.coding-standard-linters/phpstan.neon
 
 .PHONY: cs-php
 cs-php: ## PHP CS Fixer - Fix code
 	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
-	./vendor/bin/php-cs-fixer fix --diff --verbose
+	./vendor/bin/php-cs-fixer fix --diff --verbose --config=.coding-standard-linters/.php-cs-fixer.php --cache-file=.coding-standard-linters/.php-cs-fixer.cache
+	
 
 .PHONY: cs-twig-check
 cs-twig-check: ## Twig CS Fixer - Only show diff
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
-	./vendor/bin/twig-cs-fixer check --config=.twig-cs-fixer.php templates/
+	./vendor/bin/twig-cs-fixer check --config=.coding-standard-linters/.twig-cs-fixer.php templates/
 
 .PHONY: cs-twig
 cs-twig: ## Twig CS Fixer - Fix code
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
-	./vendor/bin/twig-cs-fixer fix --config=.twig-cs-fixer.php templates/ && php bin/console lint:twig templates/
+	- ./vendor/bin/twig-cs-fixer fix --config=.coding-standard-linters/.twig-cs-fixer.php templates/
+	- php bin/console lint:twig templates/
+
+.PHONY: cs-front
+cs-front: ## Run linters for CSS and JS
+	$(call display_title,Running linters for CSS and JS ........................,${ICON_CS})
+	@echo "Running ESLint..."
+	-@npx eslint --config .coding-standard-linters/eslint.config.mjs assets/scripts/
+
+	@echo "Running Stylelint..."
+	-@npx stylelint --config .coding-standard-linters/.stylelintrc.json assets/styles/
+
+	@echo "Running Prettier..."
+	-@npx npx prettier --config .coding-standard-linters/.prettierrc assets/ --check
 
 # LINTER bin/biome lint
 

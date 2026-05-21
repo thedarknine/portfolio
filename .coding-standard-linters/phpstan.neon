@@ -1,0 +1,13 @@
+includes:
+    - %currentWorkingDirectory%/vendor/phpstan/phpstan-doctrine/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - %currentWorkingDirectory%/bin/
+        - %currentWorkingDirectory%/config/
+        - %currentWorkingDirectory%/public/
+        - %currentWorkingDirectory%/src/
+
+    excludePaths:
+        - %currentWorkingDirectory%/src/DataFixtures/*

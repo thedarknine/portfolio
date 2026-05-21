@@ -17,18 +17,18 @@ $(document).ready(() => {
     const backdrops = document.querySelectorAll('.nine-navbar-backdrop');
 
     const toggleMenu = () => {
-        menus.forEach(menu => menu.classList.toggle('hidden'));
+        menus.forEach((menu) => menu.classList.toggle('hidden'));
     };
     if (burgers.length && menus.length) {
         // Applying the 'click' event on each burger button
-        burgers.forEach(burger => {
+        burgers.forEach((burger) => {
             burger.addEventListener('click', toggleMenu);
         });
 
         // Grouping all elements that trigger the closure (close buttons + dark backdrop)
         const closeElements = [...closeButtons, ...backdrops];
-        
-        closeElements.forEach(element => {
+
+        closeElements.forEach((element) => {
             element.addEventListener('click', toggleMenu);
         });
     }

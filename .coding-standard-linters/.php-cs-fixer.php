@@ -9,15 +9,18 @@ with this source code in the file LICENSE.
 HEADER;
 
 $finder = (new PhpCsFixer\Finder())
-    ->in(__DIR__)
+    ->in(__DIR__ . '/..') 
+    
     ->exclude([
         'var', 
         'vendor', 
         'public/build', 
-        'config'
+        'config',
+        'node_modules',
+        '.coding-standard-linters', 
     ])
-    ->notPath('importmap.php')
-;
+    
+    ->notPath('importmap.php');
 
 return (new PhpCsFixer\Config())
     ->setRules([

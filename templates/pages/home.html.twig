@@ -7,11 +7,6 @@
     <link rel="stylesheet" href="{{ asset('styles/pages/home.css') }}">
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-{% endblock %}
-
 {% block importmap %}
     {{ importmap(['app', 'home']) }}
 {% endblock %}
@@ -242,7 +237,7 @@
         <div class="lg:col-span-5">
             <div class="mb-16 lg:mb-0 xl:mt-16 wow animate__animated animate__fadeInLeft">
                 <div class="w-10/12 sm:w-12/12 mx-auto">
-                    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-{{ experience.company.label }}">
+                    <div class="relative flex flex-col min-w-0 wrap-break-words w-full mb-6 shadow-lg rounded-lg bg-{{ experience.company.label }}">
                         <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.label ~ '.png') }}" class="w-full align-middle rounded-t-lg">
                         <blockquote class="relative p-8 mb-4">
                             <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px"><polygon points="-30,95 583,95 583,65" class="fill-{{ experience.company.label }}"></polygon></svg>

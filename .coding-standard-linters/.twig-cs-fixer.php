@@ -16,4 +16,6 @@ $ruleset->overrideRule(new TwigCsFixer\Rules\Punctuation\PunctuationSpacingRule(
 $config = new TwigCsFixer\Config\Config();
 $config->setRuleset($ruleset);
 
+$config->setCacheFile(__DIR__ . '/.twig-cs-fixer.cache');
+
 return $config;

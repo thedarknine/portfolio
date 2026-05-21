@@ -71,3 +71,22 @@ Into docker :
 - kocal/biome-js-bundle
 - doctrine/doctrine-fixtures-bundle
 - phpstan/phpstan-doctrine
+
+### Front-end librairies
+
+- npm install typed.js
+
+### Front-end linters
+
+- ESLint → JS
+- Stylelint → CSS/Tailwind
+- Prettier → formatage global
+
+```bash
+    npm install -D eslint @eslint/js globals
+    npm install -D eslint-config-prettier
+    npm init @eslint/config
+    npm install -D stylelint stylelint-config-standard stylelint-config-tailwindcss
+    #npm install -D prettier prettier-plugin-tailwindcss prettier-plugin-twig-melody
+    
+```

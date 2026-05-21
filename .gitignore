@@ -4,6 +4,7 @@
 .docker/volumes/logs/mysql/*
 !.docker/mysql/data/.gitkeep
 !.docker/volumes/logs/mysql/.gitkeep
+/node_modules/*
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -22,15 +23,11 @@
 
 ###> friendsofphp/php-cs-fixer ###
 # /.php-cs-fixer.php
-/.php-cs-fixer.cache
+/.coding-standard-linters/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
-###> phpstan/phpstan ###
-# phpstan.neon
-###< phpstan/phpstan ###
-
 ###> vincentlanglet/twig-cs-fixer ###
-/.twig-cs-fixer.cache
+/.coding-standard-linters/.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
 
 ###> symfony/asset-mapper ###

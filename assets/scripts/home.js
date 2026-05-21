@@ -1,6 +1,7 @@
 import $ from 'jquery';
+import Typed from 'typed.js';
 
-// STICKY HEADER 
+// STICKY HEADER
 const header = $('.nine-sticky-bar');
 const win = $(window);
 
@@ -9,14 +10,14 @@ win.on('scroll', () => {
     if (scroll < 40) {
         if (header.hasClass('nine-stick')) {
             header.removeClass('nine-stick');
-        } 
+        }
     } else {
         header.addClass('nine-stick');
     }
 });
 
 // TYPED.JS
-const _typed = new Typed('#typedtext', {
+new Typed('#typedtext', {
     strings: ['Product Ownership', 'UX Design', 'Web development'],
     startDelay: 500,
     typeSpeed: 50,
