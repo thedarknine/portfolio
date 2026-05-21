@@ -59,6 +59,7 @@ ICON_COVERAGE := 📊
 ICON_SHELL := 🐚
 ICON_BUILD := 🏗️
 ICON_INSTALL := 📦
+ICON_DATA := 💾
 ICON_CLEAN := 🧹
 ICON_HELP := ❓
 ICON_DEBUG := 🪲
@@ -111,6 +112,16 @@ nginx: ## Show docker logs for nginx
 watch: ## Watch Tailwind CSS changes and re-build
 	$(call display_title,Watching Tailwind CSS changes and re-building ...........,${ICON_BUILD})
 	php bin/console tailwind:build --watch
+
+.PHONY: migrations
+migrations: ## Run Doctrine migrations
+	$(call display_title,Running Doctrine migrations ..........................,${ICON_DATA})
+	php bin/console make:migration && php bin/console doctrine:migrations:migrate
+
+.PHONY: fixtures
+fixtures: ## Load Doctrine fixtures
+	$(call display_title,Loading Doctrine fixtures ............................,${ICON_DATA})
+	php bin/console doctrine:fixtures:load
 
 .PHONY: cc
 cc: ## Run bin/console cache:clear from docker

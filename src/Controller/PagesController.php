@@ -10,12 +10,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Experience;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class PagesController extends AbstractController
 {
+    public function __construct(private ManagerRegistry $doctrine)
+    {
+    }
+
     private function getNbYearsExperience(): int
     {
         $startDate = new \DateTime('2006-10-01');
@@ -40,6 +46,7 @@ final class PagesController extends AbstractController
             'auvergne' => ['image' => 'images/home/auvergne.jpg', 'alt' => 'Auvergne', 'big' => false],
             'equipe' => ['image' => 'images/home/equipe.jpg', 'alt' => 'Equipe', 'big' => false],
         ];
+        $data['lastExperiences'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(3);
 
         return $this->render('pages/home.html.twig', [
             'page' => 'home',

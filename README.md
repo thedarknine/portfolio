@@ -7,6 +7,22 @@ My Portfolio based on Symfony framework
     php bin/console asset-map:compile
 ```
 
+## Update database
+
+```bash
+    php bin/console make:migration
+    php bin/console doctrine:migrations:migrate
+```
+
+### Reset fixtures
+
+```bash
+php bin/console doctrine:database:drop --force
+php bin/console doctrine:database:create
+php bin/console doctrine:schema:update --force
+php bin/console doctrine:fixtures:load
+```
+
 ## Initialize
 
 Into docker :
