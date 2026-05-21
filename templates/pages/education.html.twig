@@ -1,0 +1,87 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Formation{% endblock %}
+
+{% block page_hero %}
+    {{ include('blocks/page_hero.html.twig', { pagetitle: 'Formation', subtitle: 'Là où tout a commencé... et évolué', slug: 'education' }) }}
+{% endblock %}
+
+{% block page_quote %}
+    {{ include('blocks/page_quote.html.twig', { quote: 'Je considère la formation comme un processus continu : observer, expérimenter, comprendre et faire évoluer sa pratique.' }) }}
+{% endblock %}
+
+{% block body %}
+<section class="bg-white py-10">
+    <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
+        <div class="sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 wow animate__animated animate__fadeInLeft" data-wow-delay="0.6s">
+            <h3 class="text-2xl text-nine-turquoise font-semibold mb-6">Formation professionnelle</h3>
+            <div class="line h-1"></div>
+            <img src="{{ absolute_url('images/education/formation-professionnelle.png') }}" alt="Formation professionnelle" width="250px" />
+        </div>
+
+        <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 wow animate__animated animate__fadeInRight" data-wow-delay="0.6s">
+            {% for education in data.educationsList %}
+                {% if education.type == 'pro' %}
+                <div class="bg-white mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
+                    <div class="px-4 py-5 flex-auto w-full">
+                        <h3 class="text-2xl font-accent font-semibold text-nine-turquoise">{{ education.year }}</h3>
+                        <h6 class="text-xl font-accent font-semibold text-perfect">{{ education.title }}</h6>
+                        <div class="align-middle content-center w-full">
+                            <img src="{{ absolute_url('images/education/' ~ education.school.logo) }}" class="w-20 mx-auto my-3" alt="{{ education.school.name }}">
+                        </div>
+                        <p class="mt-2 mb-2 text-[#374151]">
+                            {{ education.school.name }}
+                            - <span class="text-sm">{{ education.school.city }} ({{ education.school.department|format_number({ min_integer_digit: '2' }) }})</span>
+                        </p>
+
+                        <p class="mt-0"><strong>{{ education.details }}</strong></p>
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<section class="bg-gray-light-nine py-10">
+    <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
+        <div class="sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 wow animate__animated animate__fadeInLeft" data-wow-delay="0.6s">
+            <h3 class="text-2xl text-nine-turquoise font-semibold mb-6">Formation universitaire</h3>
+            <div class="line h-1"></div>
+            <img src="{{ absolute_url('images/education/formation-universitaire.png') }}" alt="Formation universitaire " width="250px" />
+        </div>
+
+        <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 wow animate__animated animate__fadeInRight" data-wow-delay="0.6s">
+            {% for education in data.educationsList %}
+                {% if education.type == 'univ' %}
+                <div class="bg-white mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
+                    <div class="px-4 py-5 flex-auto w-full">
+                        <h3 class="text-2xl font-accent font-semibold text-nine-turquoise">{{ education.year }}</h3>
+                        <h6 class="text-xl font-accent font-semibold text-perfect">{{ education.title }}</h6>
+                        <div class="align-middle content-center w-full">
+                            <img src="{{ absolute_url('images/education/' ~ education.school.logo) }}" class="w-20 mx-auto my-3" alt="{{ education.school.name }}">
+                        </div>
+                        <p class="mt-2 mb-2 text-[#374151]">
+                            {{ education.school.name }}
+                            - <span class="text-sm">{{ education.school.city }} ({{ education.school.department|format_number({ min_integer_digit: '2' }) }})</span>
+                        </p>
+
+                        <p class="mt-0"><strong>{{ education.details }}</strong></p>
+                        {% if education.speciality is not empty %}
+                            <p class="mt-0">
+                                Option : <b>{{ education.speciality }}</b>
+                                <br>
+                                {% if education.mention is not empty %}
+                                    Mention : <b>{{ education.mention }}</b>
+                                    <br>
+                                {% endif %}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

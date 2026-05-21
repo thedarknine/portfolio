@@ -10,6 +10,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Education;
 use App\Entity\Experience;
 use App\Entity\Skill;
 use App\Entity\SkillType;
@@ -70,6 +71,10 @@ final class PagesController extends AbstractController
                 $pageName = 'skills';
                 $data['skillTypesList'] = $this->doctrine->getRepository(SkillType::class)->getSkillTypes();
                 $data['skillsList'] = $this->doctrine->getRepository(Skill::class)->getSkillsOrderByType();
+                break;
+            case 'formation':
+                $pageName = 'education';
+                $data['educationsList'] = $this->doctrine->getRepository(Education::class)->getEducationsWithSchool();
                 break;
 
             default:
