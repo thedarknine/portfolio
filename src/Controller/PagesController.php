@@ -72,15 +72,15 @@ final class PagesController extends AbstractController
             case 'experience':
                 $pagetitle = 'Expérience';
                 $tagline = 'Construire';
-                $subtitle = 'Du code au réel : des expériences qui comptent';
-                $quote = 'Toujours motivée par l’envie d’apprendre, de concevoir et de faire évoluer les idées en expériences concrètes.';
+                $subtitle = 'Du code au réel, des expériences qui prennent forme';
+                $quote = "J’aime transformer des idées en réalisations concrètes, apprendre en faisant et faire évoluer ce que je construis.";
                 $data['experiencesList'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(20);
                 break;
             case 'competences':
                 $pagename = 'skills';
                 $tagline = 'Maîtriser';
-                $subtitle = 'Un savoir-faire au service de solutions solides';
-                $quote = 'J\'aime concevoir des produits utiles et durables, avec une approche humaine et responsable.';
+                $subtitle = 'Des outils au service de solutions fiables et utiles';
+                $quote = "Je cherche à concevoir des produits simples, utiles et durables, avec une approche pragmatique et humaine.";
                 $data['skillTypesList'] = $this->doctrine->getRepository(SkillType::class)->getSkillTypes();
                 $data['skillsList'] = $this->doctrine->getRepository(Skill::class)->getSkillsOrderByType();
                 break;
@@ -88,20 +88,20 @@ final class PagesController extends AbstractController
                 $pagename = 'education';
                 $tagline = 'Apprendre';
                 $subtitle = 'Là où tout a commencé... et évolué';
-                $quote = 'Je considère la formation comme un processus continu : observer, expérimenter, comprendre et faire évoluer sa pratique.';
+                $quote = "J’apprends en permanence, en combinant observation, pratique et retour d’expérience.";
                 $data['educationsList'] = $this->doctrine->getRepository(Education::class)->getEducationsWithSchool();
                 break;
             case 'projets':
                 $pagename = 'projects';
                 $tagline = 'Expérimenter';
                 $subtitle = 'Chaque projet est un terrain d’exploration';
-                $quote = 'Les side projects sont pour moi une façon d\'explorer sans contrainte, d\'apprendre en continu et d\'expérimenter.';
+                $quote = "Les side projects me permettent d’essayer de nouvelles idées, sans contrainte, et de progresser en continu.";
                 $data['projectsList'] = $this->doctrine->getRepository(Project::class)->getProjects();
                 break;
             case 'arcade':
                 $tagline = 'Construire';
-                $subtitle = 'Un projet perso entre nostalgie et passion, pour le fun... et le défi';
-                $quote = 'Quand la passion rencontre la technique';
+                $subtitle = 'Un projet personnel entre nostalgie, technique et plaisir';
+                $quote = "Un projet né pour le fun, où la technique sert surtout à se faire plaisir.";
                 $arcadeTypesList = $this->doctrine->getRepository(ArcadeType::class)->getArcadeTypes();
                 $arcadeList = [];
                 foreach ($arcadeTypesList as $type) {
@@ -117,8 +117,8 @@ final class PagesController extends AbstractController
                 break;
             case 'creations':
                 $tagline = 'Façonner';
-                $subtitle = 'Entre matière, patience et imagination';
-                $quote = 'L’argile comme terrain d’expression.';
+                $subtitle = 'Entre matière, patience et intuition';
+                $quote = "Travailler l’argile comme un moyen d’expression simple et concret.";
                 $creationTypesList = $this->doctrine->getRepository(CreationType::class)->getCreationTypes();
                 $creationsList = [];
                 foreach ($creationTypesList as $type) {
@@ -136,7 +136,7 @@ final class PagesController extends AbstractController
             case 'photos':
                 $tagline = 'Observer';
                 $subtitle = 'Capturer des instants, des lumières, des détails';
-                $quote = 'Des fragments de moments figés.';
+                $quote = "Des moments simples, saisis sur le vif.";
                 $photoTypesList = $this->doctrine->getRepository(PhotoType::class)->getPhotoTypes();
                 $photosList = [];
                 foreach ($photoTypesList as $type) {
