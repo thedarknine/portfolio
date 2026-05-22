@@ -5,11 +5,11 @@
 {% block body %}
 <section class="bg-white py-10">
     <div class="container">
-        <img src="{{ absolute_url('images/arcade/cnoyer-arcade.png') }}" class="sm:float-right sm:ml-14 mx-auto w-48 wow animate__animated animate__fadeInTopRight animate__slow" data-wow-delay="0.6s">
-        <div class="mb-10 wow animate__animated animate__fadeInBottomLeft" data-wow-delay="0.6s">
+        <img src="{{ absolute_url('images/arcade/cnoyer-arcade.png') }}" class="sm:float-right sm:ml-14 mx-auto w-48 animate__animated" data-animate="animate__fadeInTopRight" data-delay="600">
+        <div class="mb-10 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="600">
             Tout est parti d’un magazine qui trainait sur une table au boulot, et hop pourquoi pas nous lancer dans la réalisation d’une borne. Ah oui ! Mais d’en avoir une à la maison ce serait encore mieux.
         </div>
-        <div class="wow animate__animated animate__fadeInBottomLeft" data-wow-delay="0.6s">
+        <div class="animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="600">
             Pour mon arcade perso, j’étais d’abord partie sur l’idée d’acheter un kit bartop prêt à monter. Cependant ceux de base, permettant de recevoir un écran jusqu’à 19", me paraissent insuffisamment larges pour jouer à deux. Quant aux versions XXL, les différents tarifs sont rédhibitoires.  Je pèse le pour et le contre, j’évalue les budgets selon les modèles et le matériel que j’aimerais intégrer. Puis se rappellent à moi mes années de bricolage, et quoi de plus challengeant que de faire tout moi-même ! Le défi est lancé.
         </div>
     </div>
@@ -17,9 +17,9 @@
 
 <section class="bg-nine-gray-light py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise wow animate__animated animate__fadeInDown">This is it!</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">This is it!</h3>
         {% set listItemsArcade = data.arcadeList['final'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn animate__slow">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn animate__slow">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <a href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-final">
@@ -33,14 +33,14 @@
 
 <section class="bg-white py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise wow animate__animated animate__fadeInDown">Step#1: les plans.</h3>
-        <p class="mb-10 wow animate__animated animate__fadeIn">Je regarde ce qu’il se fait... Les plans pour bartop n’envahissent pas le web, et ne
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#1: les plans.</h3>
+        <p class="mb-10 animate__animated" data-animate="animate__fadeIn">Je regarde ce qu’il se fait... Les plans pour bartop n’envahissent pas le web, et ne
             correspondent pas entièrement à ce que j’ai en tête. Ok, alors allons-y pour un plan
             personnalisé. Je suis partie des plans mis à dispo par
             <a href="http://forum.hfsplay.fr/plans-prets-emploi/bartop-frankeez-version-t8468.html" alt="Frankeezz" target="_blank">Frankeezz</a>.
             Je souhaite limiter au max la hauteur du control panel, tout en y insérant un tiroir pour un clavier.</p>
         {% set listItemsArcade = data.arcadeList['at-the-beginning'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
@@ -56,12 +56,12 @@
 
 <section class="bg-nine-gray-light py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise wow animate__animated animate__fadeInDown">Step#2 : la découpe.</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#2 : la découpe.</h3>
         <p class="mb-10">L'étape la plus importante, et aussi la plus délicate quand on est perfectionniste !</p>
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h4>
         {% set listItemsArcade = data.arcadeList['side-panels'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
@@ -75,7 +75,7 @@
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h4>
         {% set listItemsArcade = data.arcadeList['control-panel'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
@@ -89,7 +89,7 @@
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h4>
         {% set listItemsArcade = data.arcadeList['upper-part'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
@@ -103,7 +103,7 @@
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h4>
         {% set listItemsArcade = data.arcadeList['back-side'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
@@ -119,11 +119,11 @@
 
 <section class="bg-white py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise wow animate__animated animate__fadeInDown">Step#3 : l’assemblage.</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#3 : l’assemblage.</h3>
         <p class="mb-10">Les différentes pièces se finalisent petit à petit, on monte et on redémonte histoire de
             contrôler que tout est ok. Au passage un petit coup de peinture. Ca se précise !</p>
         {% set listItemsArcade = data.arcadeList['assembling'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
@@ -139,12 +139,12 @@
 
 <section class="bg-nine-gray-light py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise wow animate__animated animate__fadeInDown">Step#4 : le design.</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#4 : le design.</h3>
         <p class="mb-10">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario
             et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez
             modernes malgré tout.</p>
         {% set listItemsArcade = data.arcadeList['design'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <a href="{{ absolute_url('images/arcade/design/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-design">
@@ -159,12 +159,12 @@
 
     <section class="bg-white py-10">
         <div class="container">
-            <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise wow animate__animated animate__fadeInDown">Step#5 : l’émulateur.</h3>
+            <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#5 : l’émulateur.</h3>
             <p class="mb-10">Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
                 <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
                 s’installer dans ma borne.</p>
             {% set listItemsArcade = data.arcadeList['recalbox'] %}
-            <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 wow animate__animated animate__fadeIn">
+            <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
                 {% for arcade in listItemsArcade %}
                     <div class="shadow-lg mb-4">
                         <div>

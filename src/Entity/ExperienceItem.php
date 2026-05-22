@@ -10,8 +10,8 @@
 
 namespace App\Entity;
 
-use App\Repository\ExperienceItemRepository;
 use App\Entity\Traits\TimeStampableTrait;
+use App\Repository\ExperienceItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -19,7 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
 class ExperienceItem
 {
     use TimeStampableTrait;
-    
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]

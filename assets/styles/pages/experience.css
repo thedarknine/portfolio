@@ -56,7 +56,7 @@
         }
 
         article:not(:first-child) {
-            border-left: 1px solid rgb(255 255 255 / 0.15);
+            border-left: 1px solid rgb(255 255 255 / 15%);
         }
     }
 }
@@ -64,22 +64,22 @@
 .fade-up {
     opacity: 0;
     transform: translateY(40px);
-    animation: fadeUp 1s ease forwards;
+    animation: fade-up 1s ease forwards;
 }
 
 .fade-in {
     opacity: 0;
-    animation: fadeIn 1.2s ease forwards;
+    animation: fade-in 1.2s ease forwards;
 }
 
-@keyframes fadeUp {
+@keyframes fade-up {
     to {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
     to {
         opacity: 1;
     }

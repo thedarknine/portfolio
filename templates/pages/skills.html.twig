@@ -6,7 +6,7 @@
 {% for type in data.skillTypesList %}
     <section class="{% if loop.index is even %}bg-color-nine-golden{% else %}bg-white{% endif %} py-10">
         <div class="container items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
-            <div class="flex flex-col sticky content-center md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 wow animate__animated animate__fadeInLeft" data-wow-delay="0.6s">
+            <div class="flex flex-col sticky content-center md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600">
                 <h3 class="text-2xl text-turquoise font-semibold mb-6">{{ type.name }}</h3>
                 <div class="line h-1"></div>
                 <div class="mb-6 text-nine-blue-gray">
@@ -15,7 +15,7 @@
                 <img src="{{ absolute_url('images/skills/' ~ type.logo) }}" alt="{{ type.name }}" width="250px">
             </div>
 
-            <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 wow animate__animated animate__fadeInRight" data-wow-delay="0.6s">
+            <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
                 {% set skills = data.skillsList[type.label] %}
                 <div class="grid max-w-4xl lg:max-w-6xl grid-cols-2 mx-auto text-center gap-y-4 sm:gap-x-8 sm:grid-cols-2 lg:grid-cols-3 sm:text-left">
                     {% for skill in skills %}
