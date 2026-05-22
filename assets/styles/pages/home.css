@@ -33,3 +33,14 @@
         border-color: var(--color-nine-turquoise);
     }
 }
+
+.nine-border-gradient {
+    border-radius: 100%;
+    border: 6px solid transparent;
+    background: linear-gradient(
+            45deg,
+            var(--color-nine-blue),
+            var(--color-nine-turquoise)
+        )
+        border-box;
+}

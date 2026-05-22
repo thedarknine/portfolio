@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css');
+@import 'animate.css';
 
 /* stylelint-disable-next-line import-notation */
 @import 'tailwindcss';
@@ -24,6 +24,7 @@
     --color-nine-amber: oklch(85.95% 0.0594 82.95); /* #e4cea5 */
     --color-nine-gray: oklch(71.07% 0.035 256.79); /* #94a3b8 */
     --color-nine-gray-light: oklch(90.97% 0 0); /* #e1e1e1 */
+    --color-nine-gray-dark: oklch(50.97% 0.035 256.79); /* #64748b */
     --color-leviia: oklch(73.2% 0.146 169.35); /* #00c599 */
     --color-perfect: oklch(44.17% 0.102 251.28); /* #215589 */
     --color-coffreo: oklch(68.6% 0.21 41.14); /* #ff5e02 */
@@ -132,6 +133,15 @@
         background-position: right center;
         box-shadow: 0 0 30px -15px rgb(46 54 78 / 0.2);
     }
+}
+
+.nine-smallcaps {
+    font-variant: small-caps;
+}
+
+[data-animate] {
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 /* -------------------------------------------------------------------------------------------- */

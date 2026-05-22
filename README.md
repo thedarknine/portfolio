@@ -74,7 +74,13 @@ Into docker :
 
 ### Front-end librairies
 
-- npm install typed.js
+```bash
+    npm install animate.css --save
+    php bin/console importmap:require animate.css
+
+    npm install typed.js
+    php bin/console importmap:require typed.js
+```
 
 ### Front-end linters
 

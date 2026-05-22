@@ -12,6 +12,7 @@
     "stylelint-config-tailwindcss": "^1.0.1"
   },
   "dependencies": {
+    "animate.css": "^4.1.1",
     "typed.js": "^3.0.0"
   }
 }

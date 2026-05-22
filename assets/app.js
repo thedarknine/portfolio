@@ -10,6 +10,36 @@ import './styles/app.css';
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
 $(document).ready(() => {
+    // Display animations from animate.css on element visible
+    const options = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const element = entry.target;
+                const animationClass = element.getAttribute('data-animate');
+
+                // On récupère le délai (on met 0 par défaut si l'attribut n'existe pas)
+                const delay = parseInt(element.getAttribute('data-delay')) || 0;
+
+                // On arrête d'observer l'élément immédiatement pour éviter les doublons
+                observer.unobserve(element);
+
+                setTimeout(() => {
+                    element.classList.add('animate__animated', animationClass);
+                    element.removeAttribute('data-animate');
+                }, delay);
+            }
+        });
+    }, options);
+
+    const elementsToAnimate = document.querySelectorAll('[data-animate]');
+    elementsToAnimate.forEach((el) => observer.observe(el));
+
     // Menus Burger (Mobile)
     const burgers = document.querySelectorAll('.nine-navbar-burger');
     const menus = document.querySelectorAll('.nine-navbar-menu');
