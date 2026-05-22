@@ -3,44 +3,55 @@
 {% block title %}Projets{% endblock %}
 
 {% block body %}
+<section class=" bg-white">
+    <div class="max-w-6xl mx-auto px-4 py-16 text-[14px] font-normal">
+    <div class="text-center mb-16 animate__animated animate__fadeIn">
+        <p class="mt-6 text-nine-blue max-w-2xl mx-auto text-lg">
+            Un aperçu de mes travaux, mêlant génie logiciel et création graphique à travers les années.
+        </p>
+    </div>
+
+    <!-- Grille Principale (Style Bento / Asymétrique) -->
+    <div class="grid grid-cols-1 md:grid-cols-6 gap-12 animate__animated animate__fadeInUp">
+
 {% for project in data.projectsList %}
-    <section class="{% if loop.index is even %}bg-nine-gray-light{% else %}bg-white{% endif %} py-10">
-        <div class="container flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
-            <div class="flex flex-col sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 wow animate__animated animate__fadeInLeft" data-wow-delay="0.6s">
-                <h3 class="text-2xl text-nine-turquoise font-semibold mb-2">{{ project.name }}</h3>
-                <div class="line h-1"></div>
-                <h4 class="text-nine-blue text-xl mb-6">{{ project.period }}</h4>
-                <img src="{{ absolute_url('images/projects/' ~ project.logo) }}" alt="{{ project.name }}" class="w-24 mx-auto">
+    <div class="md:col-span-3 group bg-white rounded-xl p-6 my-4 shadow-md hover:translate-x-2 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+        <div>
+            <div class="flex items-start justify-between gap-4 mb-4">
+                <div class="flex items-center gap-3">
+                    <img src="{{ absolute_url('images/projects/' ~ project.logo) }}" alt="Logo {{ project.name }}" class="w-12 h-12 rounded-xl object-cover " />
+                    <div>
+                        <h3 class="font-accent text-xl font-medium text-nine-turquoise group-hover:text-nine-primary transition-colors">{{ project.name }}</h3>
+                        <p class="text-xs text-nine-blue-gray font-medium uppercase tracking-wider">{{ project.period }}</p>
+                    </div>
+                </div>
+                <span class="text-[11px] font-bold px-2 py-0.5 bg-nine-yellow/60 text-nine-primary rounded">{{ project.category }}</span>
             </div>
-
-            <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 wow animate__animated animate__fadeInRight" data-wow-delay="0.6s">
+            <p class="text-nine-blue/90 leading-relaxed">
                 {{ project.description|raw }}
-
-                {% if project.screenshots is not empty %}
-                    {% set screenshotsList = project.screenshots|split('::') %}
-                    {% if screenshotsList is iterable %}
-                        <div class="content-center py-3">
-                            <div class="grid grid-cols-1 sm:grid-cols-2 sm:gap-x-8">
-                                {% for screenshot in screenshotsList %}
-                                    <div class="relative flex flex-wrap shadow-lg rounded-xl bg-white mb-10">
-                                        <a href="{{ absolute_url('images/projects/' ~ screenshot) }}" class="glightbox9" data-gallery="gallery{{ project.id }}">
-                                            <img class="rounded-md object-cover h-full" src="{{ absolute_url('images/projects/' ~ screenshot) }}" alt="{{ project.name }}" />
-                                        </a>
-                                    </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% else %}
-                        <div class="content-center">
-                            <div class="shadow-lg rounded-xl">
-                                <img class="rounded-md" src="{{ absolute_url('images/projects/' ~ project.screenshot) }}" alt="{{ project.name }}" />
-                            </div>
-                        </div>
-                    {% endif %}
-
+            </p>
+        </div>
+        
+        <div class="mt-6 pt-4 border-t border-nine-light/50 flex flex-wrap justify-between items-center gap-4">
+            <!-- Zone screenshots -->
+            <div class="flex flex-wrap gap-1.5 text-[11px]">
+                {% set tagsList = project.tags|split('::') %}
+                {% if tagsList is iterable %}
+                    {% for tag in tagsList %}
+                    <span class="px-2 py-0.5 bg-nine-golden text-nine-gray-dark rounded">{{ tag }}</span>
+                    {% endfor %}
                 {% endif %}
             </div>
+            {% if project.screenshots is not empty %}
+            <div class="flex items-center gap-1.5 text-xs text-nine-primary/80">
+                <svg class="w-4 h-4 text-nine-turquoise" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375 0 11-.75 0 .375 0 01.75 0z"/></svg>
+                <span class="font-semibold text-nine-primary">{{ project.screenshots|split('::')|length }} screenshot{{ project.screenshots|split('::')|length > 1 ? 's' : '' }}</span>
+            </div>
+            {% endif %}
         </div>
-    </section>
+    </div>
 {% endfor %}
+    </div>
+    </div>
+</section>
 {% endblock %}
