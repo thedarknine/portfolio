@@ -148,10 +148,19 @@ class GenerateFixturesCommand extends Command
                     }
 
                     $getter = 'get'.ucfirst($fieldName);
+                    $booleanGetter = 'is'.ucfirst($fieldName); // Standard Symfony naming pattern for booleans
                     $setter = 'set'.ucfirst($fieldName);
 
-                    if (method_exists($record, $getter) && method_exists($record, $setter)) {
-                        $value = $record->$getter();
+                    // Choose the right getter method depending on availability
+                    $chosenGetter = null;
+                    if (method_exists($record, $getter)) {
+                        $chosenGetter = $getter;
+                    } elseif (method_exists($record, $booleanGetter)) {
+                        $chosenGetter = $booleanGetter;
+                    }
+
+                    if (null !== $chosenGetter && method_exists($record, $setter)) {
+                        $value = $record->$chosenGetter();
 
                         if (is_null($value)) {
                             $formattedValue = 'null';

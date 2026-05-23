@@ -22,8 +22,8 @@ class SchoolAutoFixture extends Fixture
         $school0->setName('Université d\'Orléans');
         $school0->setCity('Bourges');
         $school0->setDepartment(18);
-        $school0->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $school0->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $school0->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $school0->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $school0->setLabel('univ-orleans');
         $school0->setLogo('univ-orleans.png');
         $manager->persist($school0);
@@ -33,8 +33,8 @@ class SchoolAutoFixture extends Fixture
         $school1->setName('Université Blaise Pascal');
         $school1->setCity('Aubière');
         $school1->setDepartment(63);
-        $school1->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $school1->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $school1->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $school1->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $school1->setLabel('ubp-clermont');
         $school1->setLogo('ubp.png');
         $manager->persist($school1);
@@ -44,8 +44,8 @@ class SchoolAutoFixture extends Fixture
         $school2->setName('Université Blaise Pascal - Pôle Universitaire Vichy ');
         $school2->setCity('Vichy');
         $school2->setDepartment(3);
-        $school2->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $school2->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $school2->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $school2->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $school2->setLabel('ubp-vichy');
         $school2->setLogo('pole-ubp-vichy.png');
         $manager->persist($school2);
@@ -55,8 +55,8 @@ class SchoolAutoFixture extends Fixture
         $school3->setName('Actinuum');
         $school3->setCity('Paris');
         $school3->setDepartment(75);
-        $school3->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $school3->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $school3->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $school3->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $school3->setLabel('actinuum');
         $school3->setLogo('actinuum.png');
         $manager->persist($school3);
@@ -66,8 +66,8 @@ class SchoolAutoFixture extends Fixture
         $school4->setName('The Design Crew');
         $school4->setCity('Paris');
         $school4->setDepartment(75);
-        $school4->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $school4->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $school4->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $school4->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $school4->setLabel('design-crew');
         $school4->setLogo('the-design-crew.png');
         $manager->persist($school4);

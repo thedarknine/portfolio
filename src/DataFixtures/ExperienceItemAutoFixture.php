@@ -25,6 +25,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem0->setDetails('Product Owner d’une plateforme SaaS collaborative, interface entre produit, développement et infrastructure, avec pilotage d’une équipe transverse.');
         $experienceItem0->setPosition(1);
         $experienceItem0->setPicto('🔗');
+        $experienceItem0->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem0->setUpdatedAt(null);
         try {
             $experienceItem0->setExperience($this->getReference('experience_10', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -38,6 +40,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem1->setDetails('Mise en place d’un backlog produit structuré, permettant de clarifier les priorités et d’aligner les équipes sur les enjeux métier et techniques.');
         $experienceItem1->setPosition(2);
         $experienceItem1->setPicto('🧩');
+        $experienceItem1->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem1->setUpdatedAt(null);
         try {
             $experienceItem1->setExperience($this->getReference('experience_10', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -51,6 +55,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem2->setDetails('Automatisation de tâches via n8n et amélioration des workflows, réduisant les opérations manuelles et augmentant l’efficacité globale.');
         $experienceItem2->setPosition(3);
         $experienceItem2->setPicto('⚙️');
+        $experienceItem2->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem2->setUpdatedAt(null);
         try {
             $experienceItem2->setExperience($this->getReference('experience_10', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -64,6 +70,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem3->setDetails('Contribution active à la qualité technique des livrables et fluidification de la collaboration entre développeurs et sysadmins.');
         $experienceItem3->setPosition(4);
         $experienceItem3->setPicto('🚀');
+        $experienceItem3->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem3->setUpdatedAt(null);
         try {
             $experienceItem3->setExperience($this->getReference('experience_10', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -77,6 +85,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem4->setDetails('Mise en place d’un cadre structurant pour un pôle produit en création, incluant un référentiel centralisé des fonctionnalités et une organisation claire des squads.');
         $experienceItem4->setPosition(1);
         $experienceItem4->setPicto('🧠');
+        $experienceItem4->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem4->setUpdatedAt(null);
         try {
             $experienceItem4->setExperience($this->getReference('experience_9', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -90,6 +100,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem5->setDetails('Déploiement d’un outil de discovery et de priorisation (Jira Product Discovery), avec plus de 300 idées collectées auprès des clients, prospects et équipes internes.');
         $experienceItem5->setPosition(2);
         $experienceItem5->setPicto('🎯');
+        $experienceItem5->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem5->setUpdatedAt(null);
         try {
             $experienceItem5->setExperience($this->getReference('experience_9', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -103,6 +115,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem6->setDetails('Plus de 100 idées priorisées et mises en production en 8 mois, contribuant directement à l’évolution et à l’enrichissement de l’offre produit.');
         $experienceItem6->setPosition(3);
         $experienceItem6->setPicto('📈');
+        $experienceItem6->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem6->setUpdatedAt(null);
         try {
             $experienceItem6->setExperience($this->getReference('experience_9', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -116,6 +130,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem7->setDetails('Participation à la conception d’un produit B2B basé sur l’asset management et l’IA, avec définition du MVP et mise en production pour un acteur national.');
         $experienceItem7->setPosition(4);
         $experienceItem7->setPicto('🚀');
+        $experienceItem7->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem7->setUpdatedAt(null);
         try {
             $experienceItem7->setExperience($this->getReference('experience_9', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -129,6 +145,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem8->setDetails('Conception et lancement d’un produit de relevé d’heures digitalisé, remplaçant des processus manuels et permettant d’accélérer la facturation et la paie.');
         $experienceItem8->setPosition(1);
         $experienceItem8->setPicto('🚀');
+        $experienceItem8->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem8->setUpdatedAt(null);
         try {
             $experienceItem8->setExperience($this->getReference('experience_8', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -142,6 +160,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem9->setDetails('Pilotage d’une équipe de 4 développeurs en tant que Squad Leader, avec responsabilité sur l’architecture, le delivery et l’évolution produit.');
         $experienceItem9->setPosition(2);
         $experienceItem9->setPicto('👥');
+        $experienceItem9->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem9->setUpdatedAt(null);
         try {
             $experienceItem9->setExperience($this->getReference('experience_8', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -155,6 +175,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem10->setDetails('Cadrage, développement, pilotage des versions, phase pilote avec clients et mise en production, avec accompagnement des utilisateurs et amélioration continue.');
         $experienceItem10->setPosition(3);
         $experienceItem10->setPicto('📈');
+        $experienceItem10->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem10->setUpdatedAt(null);
         try {
             $experienceItem10->setExperience($this->getReference('experience_8', Experience::class));
         } catch (\OutOfBoundsException $e) {
@@ -168,6 +190,8 @@ class ExperienceItemAutoFixture extends Fixture implements DependentFixtureInter
         $experienceItem11->setDetails('Refonte complète d’une application mobile (500k visites/mois), avec amélioration de l’engagement utilisateur, réduction des tickets support et hausse des notes sur les stores.');
         $experienceItem11->setPosition(4);
         $experienceItem11->setPicto('📱');
+        $experienceItem11->setCreatedAt(new \DateTime('2026-05-21 19:38:39'));
+        $experienceItem11->setUpdatedAt(null);
         try {
             $experienceItem11->setExperience($this->getReference('experience_8', Experience::class));
         } catch (\OutOfBoundsException $e) {

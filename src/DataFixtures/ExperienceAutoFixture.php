@@ -38,8 +38,8 @@ class ExperienceAutoFixture extends Fixture implements DependentFixtureInterface
 </div>');
         $experience0->setStartDate(new \DateTime('2005-02-01 00:00:00'));
         $experience0->setEndDate(new \DateTime('2005-07-31 00:00:00'));
-        $experience0->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience0->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience0->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience0->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience0->setLabel('stage-limos');
         try {
             $experience0->setCompany($this->getReference('company_1', Company::class));
@@ -77,8 +77,8 @@ L\'une des dernières étapes avant la mise en production consiste à réaliser 
 ce n\'est qu\'ensuite que le directeur artistique pourra réaliser la maquette du site.</p>');
         $experience1->setStartDate(new \DateTime('2006-02-01 00:00:00'));
         $experience1->setEndDate(new \DateTime('2006-06-30 00:00:00'));
-        $experience1->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience1->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience1->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience1->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience1->setLabel('stage-periscope');
         try {
             $experience1->setCompany($this->getReference('company_2', Company::class));
@@ -103,8 +103,8 @@ Ce projet nécessite donc plusieurs documents : le cahier des charges, le devis 
 Cet outil doit donc proposer une rédaction semi-automatique de ces documents à partir de questionnaires précis. Ainsi, mon projet permet de répondre à la mise en place d\'une organisation du travail tout en respectant la contrainte de coût.</p>');
         $experience2->setStartDate(new \DateTime('2006-07-01 00:00:00'));
         $experience2->setEndDate(new \DateTime('2006-09-30 00:00:00'));
-        $experience2->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience2->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience2->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience2->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience2->setLabel('stage-actifdesign');
         try {
             $experience2->setCompany($this->getReference('company_3', Company::class));
@@ -153,8 +153,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience3->setStartDate(new \DateTime('2006-10-01 00:00:00'));
         $experience3->setEndDate(new \DateTime('2008-07-15 00:00:00'));
-        $experience3->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience3->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience3->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience3->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience3->setLabel('dev-web');
         try {
             $experience3->setCompany($this->getReference('company_3', Company::class));
@@ -209,8 +209,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience4->setStartDate(new \DateTime('2008-07-16 00:00:00'));
         $experience4->setEndDate(new \DateTime('2012-04-30 00:00:00'));
-        $experience4->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience4->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience4->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience4->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience4->setLabel('inge-dev');
         try {
             $experience4->setCompany($this->getReference('company_4', Company::class));
@@ -291,8 +291,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience5->setStartDate(new \DateTime('2015-05-04 00:00:00'));
         $experience5->setEndDate(new \DateTime('2017-07-16 00:00:00'));
-        $experience5->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience5->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience5->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience5->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience5->setLabel('dev-mfpdd');
         try {
             $experience5->setCompany($this->getReference('company_5', Company::class));
@@ -388,8 +388,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience6->setStartDate(new \DateTime('2017-07-17 00:00:00'));
         $experience6->setEndDate(new \DateTime('2019-11-03 00:00:00'));
-        $experience6->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience6->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience6->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience6->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience6->setLabel('dev-coffreo');
         try {
             $experience6->setCompany($this->getReference('company_6', Company::class));
@@ -494,8 +494,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience7->setStartDate(new \DateTime('2019-11-04 00:00:00'));
         $experience7->setEndDate(new \DateTime('2022-07-17 00:00:00'));
-        $experience7->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience7->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience7->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience7->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience7->setLabel('po-coffreo');
         try {
             $experience7->setCompany($this->getReference('company_6', Company::class));
@@ -574,8 +574,8 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
 </ul>');
         $experience8->setStartDate(new \DateTime('2022-07-18 00:00:00'));
         $experience8->setEndDate(new \DateTime('2024-04-22 00:00:00'));
-        $experience8->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience8->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience8->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience8->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience8->setLabel('po-perfect');
         try {
             $experience8->setCompany($this->getReference('company_7', Company::class));
@@ -623,8 +623,8 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
 </ul>');
         $experience9->setStartDate(new \DateTime('2024-08-21 00:00:00'));
         $experience9->setEndDate(null);
-        $experience9->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $experience9->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $experience9->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience9->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $experience9->setLabel('po-leviia');
         try {
             $experience9->setCompany($this->getReference('company_8', Company::class));

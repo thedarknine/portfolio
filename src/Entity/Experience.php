@@ -64,10 +64,17 @@ class Experience
     #[ORM\OneToMany(targetEntity: ExperienceItem::class, mappedBy: 'experience')]
     private Collection $items;
 
+    /**
+     * @var Collection<int, ExperienceLink>
+     */
+    #[ORM\OneToMany(targetEntity: ExperienceLink::class, mappedBy: 'experience')]
+    private Collection $links;
+
     public function __construct()
     {
         $this->skills = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->links = new ArrayCollection();
     }
 
     public function getId(): int
@@ -231,6 +238,36 @@ class Experience
             // set the owning side to null (unless already changed)
             if ($item->getExperience() === $this) {
                 $item->setExperience(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ExperienceLink>
+     */
+    public function getLinks(): Collection
+    {
+        return $this->links;
+    }
+
+    public function addLink(ExperienceLink $link): static
+    {
+        if (!$this->links->contains($link)) {
+            $this->links->add($link);
+            $link->setExperience($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLink(ExperienceLink $link): static
+    {
+        if ($this->links->removeElement($link)) {
+            // set the owning side to null (unless already changed)
+            if ($link->getExperience() === $this) {
+                $link->setExperience(null);
             }
         }
 

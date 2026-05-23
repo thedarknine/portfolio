@@ -27,8 +27,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface
         $education0->setSpeciality(null);
         $education0->setMention(null);
         $education0->setType('pro');
-        $education0->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $education0->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $education0->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $education0->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $education0->setLabel('design');
         try {
             $education0->setSchool($this->getReference('school_5', School::class));
@@ -45,8 +45,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface
         $education1->setSpeciality(null);
         $education1->setMention(null);
         $education1->setType('pro');
-        $education1->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $education1->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $education1->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $education1->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $education1->setLabel('agile');
         try {
             $education1->setSchool($this->getReference('school_4', School::class));
@@ -63,8 +63,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface
         $education2->setSpeciality('Informatique');
         $education2->setMention('Très bien');
         $education2->setType('univ');
-        $education2->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $education2->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $education2->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $education2->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $education2->setLabel('m2-pro');
         try {
             $education2->setSchool($this->getReference('school_3', School::class));
@@ -81,8 +81,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface
         $education3->setSpeciality('Systèmes d\'information et de communication');
         $education3->setMention(null);
         $education3->setType('univ');
-        $education3->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $education3->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $education3->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $education3->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $education3->setLabel('m2-rech');
         try {
             $education3->setSchool($this->getReference('school_2', School::class));
@@ -99,8 +99,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface
         $education4->setSpeciality('Classification, data-mining et algorithmique pour les grandes bases');
         $education4->setMention('Bien');
         $education4->setType('univ');
-        $education4->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $education4->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $education4->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $education4->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $education4->setLabel('maitrise');
         try {
             $education4->setSchool($this->getReference('school_2', School::class));
@@ -117,8 +117,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface
         $education5->setSpeciality('Optimisation et technologies de l\'information');
         $education5->setMention('Assez bien');
         $education5->setType('univ');
-        $education5->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $education5->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $education5->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $education5->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $education5->setLabel('licence');
         try {
             $education5->setSchool($this->getReference('school_2', School::class));
@@ -135,8 +135,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface
         $education6->setSpeciality('Sciences de la Vie et de la Terre');
         $education6->setMention(null);
         $education6->setType('univ');
-        $education6->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $education6->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $education6->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $education6->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $education6->setLabel('deug');
         try {
             $education6->setSchool($this->getReference('school_1', School::class));

@@ -22,12 +22,12 @@ class ProjectAutoFixture extends Fixture
         $project0->setName('Fouille de données interactive par navigation');
         $project0->setPeriod('De avril 2004 à juillet 2004');
         $project0->setYear(2004);
-        $project0->setDescription('
-Réalisation d\'une bibliothèque <b>C++</b> à l\'aide de la <b>STL</b> afin de l\'interfacer avec l\'outil de navigation.
-<p class="center-align pt-20"><a class="btn btn-flat btn-nine waves-effect waves-light hvr-grow-shadow" href="https://web.archive.org/web/20230205074712/http://docs.carolinenoyer.fr/pdf/cnoyer-rapportdestage-maitrise-2004.pdf" title="Rapport de stage"><i class="fas fa-paperclip mr-5" aria-hidden="true"></i> Rapport de stage</a></p>');
+        $project0->setDescription('Projet orienté recherche et structures de données complexes : modélisation et implémentation d\'une bibliothèque bas niveau interconnectée avec un outil de data-mining.<p class="text-center mt-5"><a class="btn btn-flat btn-nine waves-effect waves-light hvr-grow-shadow" href="https://docs.carolinenoyer.fr/pdf/cnoyer-rapportdestage-maitrise-2004.pdf" title="Rapport de stage"><i class="fas fa-paperclip mr-5" aria-hidden="true"></i> Rapport de stage</a></p>');
         $project0->setScreenshots('');
-        $project0->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $project0->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $project0->setCategory('R&D');
+        $project0->setTags('C++::Standard Template Library (STL)::Data Mining');
+        $project0->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $project0->setUpdatedAt(new \DateTime('2026-05-21 22:29:03'));
         $project0->setLabel('datamining');
         $project0->setLogo('stagemaitrise.png');
         $manager->persist($project0);
@@ -37,18 +37,12 @@ Réalisation d\'une bibliothèque <b>C++</b> à l\'aide de la <b>STL</b> afin de
         $project1->setName('Génération de sites Internet valides W3C');
         $project1->setPeriod('De novembre 2006 à avril 2007');
         $project1->setYear(2006);
-        $project1->setDescription('
-<p><strong>Framework de génération de sites Internet permettant de produire des pages valides XHTML.</strong>
-    <br>
-    Projet professionnel réalisé pour la société Actifdesign.</p>
-<ul class="missions">
-    <li>Utilisation du langage <b>Java</b> pour la partie métier</li>
-    <li>Utilisation de la spécification <b>J2ee</b> pour la génération des pages HTML</li>
-    <li>Utilisation du langage <b>XML</b> pour le stockage des données</li>
-</ul>');
+        $project1->setDescription('Réalisation d\'un framework industriel pour la société Actifdesign permettant la génération automatisée et modulaire de plateformes web conformes aux strictes spécifications XHTML du W3C.');
         $project1->setScreenshots('');
-        $project1->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $project1->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $project1->setCategory('R&D Pro');
+        $project1->setTags('Java / J2EE::XML::XHTML Compliance');
+        $project1->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $project1->setUpdatedAt(new \DateTime('2026-05-21 22:19:32'));
         $project1->setLabel('nevotec');
         $project1->setLogo('nevotec.png');
         $manager->persist($project1);
@@ -58,18 +52,12 @@ Réalisation d\'une bibliothèque <b>C++</b> à l\'aide de la <b>STL</b> afin de
         $project2->setName('Génération de fichiers PDF haute définition');
         $project2->setPeriod('De février à novembre 2007');
         $project2->setYear(2007);
-        $project2->setDescription('
-<p><strong>Framework de génération de produits imprimés haute définition au format PDF.</strong>
-    <br>
-    Projet professionnel réalisé pour la société Actifdesign.</p>
-<ul class="missions">
-    <li>Utilisation du langage <b>Java</b> pour la partie métier</li>
-    <li>Utilisation du langage <b>XML</b> pour le stockage des données</li>
-    <li>Génération de documents PDF haute définition à l\'aide de bibliothèques Java</li>
-</ul>');
+        $project2->setDescription('Conception d\'un framework d\'ingénierie pour la société Actifdesign. Développement du moteur métier pour générer dynamiquement des maquettes de produits imprimés HD.');
         $project2->setScreenshots('');
-        $project2->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $project2->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $project2->setCategory('R&D Pro');
+        $project2->setTags('Java (Métier)::XML (Stockage)::Librairies PDF');
+        $project2->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $project2->setUpdatedAt(new \DateTime('2026-05-21 22:18:39'));
         $project2->setLabel('nevoprint');
         $project2->setLogo('nevoprint.png');
         $manager->persist($project2);
@@ -79,11 +67,12 @@ Réalisation d\'une bibliothèque <b>C++</b> à l\'aide de la <b>STL</b> afin de
         $project3->setName('Création graphique et développement');
         $project3->setPeriod('Novembre 2007');
         $project3->setYear(2008);
-        $project3->setDescription('Ce projet a pour but de valoriser les randonnées en Auvergne, en proposant des circuits de randonnées par le biais de photos, d\'un bref résumé et d\'avis sur les parcours.<br><br>
-<em>Adobe Illustrator &bull; HTML &bull; CSS &bull; PHP &bull; MySQL</em>');
+        $project3->setDescription('Plateforme complète visant à valoriser les circuits de randonnées en Auvergne. Intégration de topo-guides enrichis par le biais de photographies terrain, de résumés techniques et d\'un système collaboratif d\'avis sur les parcours.');
         $project3->setScreenshots('website-randos.png');
-        $project3->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $project3->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $project3->setCategory('Web & Dev');
+        $project3->setTags('PHP::MySQL::HTML / CSS::Illustrator');
+        $project3->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $project3->setUpdatedAt(new \DateTime('2026-05-21 22:19:07'));
         $project3->setLabel('randos');
         $project3->setLogo('randos.png');
         $manager->persist($project3);
@@ -93,12 +82,12 @@ Réalisation d\'une bibliothèque <b>C++</b> à l\'aide de la <b>STL</b> afin de
         $project4->setName('Création graphique et Site Internet');
         $project4->setPeriod('Octobre 2010');
         $project4->setYear(2010);
-        $project4->setDescription('Création graphique du site Internet du BDE TeamTanesC.
-<br><br>
-<em>Adobe Illustrator &bull; PHP &bull; HTML &bull; CSS</em>');
+        $project4->setDescription('Conception graphique globale et intégration du site Internet officiel de l\'association étudiante.');
         $project4->setScreenshots('website-teamtanesc.png');
-        $project4->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $project4->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $project4->setCategory('Web & Dev');
+        $project4->setTags('PHP::HTML/CSS');
+        $project4->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $project4->setUpdatedAt(new \DateTime('2026-05-21 22:26:16'));
         $project4->setLabel('ttc');
         $project4->setLogo('ttc.png');
         $manager->persist($project4);
@@ -108,11 +97,12 @@ Réalisation d\'une bibliothèque <b>C++</b> à l\'aide de la <b>STL</b> afin de
         $project5->setName('Création graphique');
         $project5->setPeriod('Depuis 2012');
         $project5->setYear(2012);
-        $project5->setDescription('Réalisation de créations graphiques pour mon entourage : faire-parts, cartes de visite, logos<br><br>
-<em>Adobe Illustrator &bull; Figma &bull; Canva</em>');
+        $project5->setDescription('Réalisation de créations graphiques sur-mesure pour mon entourage : faire-parts personnalisés, cartes de visite professionnelles et identités visuelles.');
         $project5->setScreenshots('fairepart-gus.jpg::fairepart-elea.jpg::fairepart-cf.jpg::plu2cloud-logo-verti.png::plugeekit-logo-verti.png::tradee-logo-vert.png');
-        $project5->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $project5->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $project5->setCategory('Print & Digital');
+        $project5->setTags('Adobe Illustrator::Figma::Canva');
+        $project5->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $project5->setUpdatedAt(new \DateTime('2026-05-21 22:15:15'));
         $project5->setLabel('creations');
         $project5->setLogo('nine.png');
         $manager->persist($project5);
@@ -122,12 +112,12 @@ Réalisation d\'une bibliothèque <b>C++</b> à l\'aide de la <b>STL</b> afin de
         $project6->setName('Montage vidéo');
         $project6->setPeriod('Depuis 2014');
         $project6->setYear(2014);
-        $project6->setDescription('Montage vidéo pour des occasions particulières (mariage, anniversaire...)
-<br><br>
-<em>Adobe Premiere &bull; iMovie</em>');
+        $project6->setDescription('Création et montage de formats vidéos rythmés pour des occasions particulières (mariages, anniversaires, fêtes). Travail sur le storytelling, le rythme et la colorimétrie.');
         $project6->setScreenshots('');
-        $project6->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $project6->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $project6->setCategory('Vidéo');
+        $project6->setTags('Adobe Premiere::iMovie');
+        $project6->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $project6->setUpdatedAt(new \DateTime('2026-05-21 22:17:33'));
         $project6->setLabel('montages');
         $project6->setLogo('nine.png');
         $manager->persist($project6);

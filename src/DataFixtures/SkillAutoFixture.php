@@ -26,8 +26,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill0->setEndYear(2024);
         $skill0->setLevel(8);
         $skill0->setPosition(1);
-        $skill0->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill0->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill0->setDisplay(true);
+        $skill0->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill0->setUpdatedAt(new \DateTime('2026-05-21 19:57:04'));
         $skill0->setLabel('jira');
         $skill0->setLogo('jira.png');
         try {
@@ -44,8 +45,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill1->setEndYear(null);
         $skill1->setLevel(6);
         $skill1->setPosition(2);
-        $skill1->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill1->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill1->setDisplay(true);
+        $skill1->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill1->setUpdatedAt(new \DateTime('2026-05-21 19:58:02'));
         $skill1->setLabel('agile');
         $skill1->setLogo('agile.png');
         try {
@@ -62,8 +64,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill2->setEndYear(2022);
         $skill2->setLevel(7);
         $skill2->setPosition(3);
-        $skill2->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill2->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill2->setDisplay(false);
+        $skill2->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill2->setUpdatedAt(new \DateTime('2026-05-21 19:58:07'));
         $skill2->setLabel('trello');
         $skill2->setLogo('trello.png');
         try {
@@ -80,8 +83,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill3->setEndYear(2024);
         $skill3->setLevel(6);
         $skill3->setPosition(4);
-        $skill3->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill3->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill3->setDisplay(false);
+        $skill3->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill3->setUpdatedAt(new \DateTime('2026-05-21 19:58:11'));
         $skill3->setLabel('product-discovery');
         $skill3->setLogo('product-discovery.png');
         try {
@@ -98,8 +102,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill4->setEndYear(2024);
         $skill4->setLevel(6);
         $skill4->setPosition(5);
-        $skill4->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill4->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill4->setDisplay(true);
+        $skill4->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill4->setUpdatedAt(new \DateTime('2026-05-21 19:58:14'));
         $skill4->setLabel('confluence');
         $skill4->setLogo('confluence.png');
         try {
@@ -116,8 +121,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill5->setEndYear(2022);
         $skill5->setLevel(7);
         $skill5->setPosition(6);
-        $skill5->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill5->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill5->setDisplay(true);
+        $skill5->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill5->setUpdatedAt(new \DateTime('2026-05-21 19:58:19'));
         $skill5->setLabel('miro');
         $skill5->setLogo('miro.png');
         try {
@@ -134,8 +140,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill6->setEndYear(null);
         $skill6->setLevel(7);
         $skill6->setPosition(1);
-        $skill6->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill6->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill6->setDisplay(true);
+        $skill6->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill6->setUpdatedAt(new \DateTime('2026-05-21 19:59:28'));
         $skill6->setLabel('figma');
         $skill6->setLogo('figma.png');
         try {
@@ -152,8 +159,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill7->setEndYear(2021);
         $skill7->setLevel(6);
         $skill7->setPosition(2);
-        $skill7->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill7->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill7->setDisplay(true);
+        $skill7->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill7->setUpdatedAt(new \DateTime('2026-05-21 19:59:34'));
         $skill7->setLabel('moqups');
         $skill7->setLogo('moqups.png');
         try {
@@ -170,8 +178,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill8->setEndYear(2022);
         $skill8->setLevel(5);
         $skill8->setPosition(3);
-        $skill8->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill8->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill8->setDisplay(true);
+        $skill8->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill8->setUpdatedAt(new \DateTime('2026-05-21 19:59:40'));
         $skill8->setLabel('illustrator');
         $skill8->setLogo('illustrator.png');
         try {
@@ -188,8 +197,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill9->setEndYear(2017);
         $skill9->setLevel(3);
         $skill9->setPosition(4);
-        $skill9->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill9->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill9->setDisplay(true);
+        $skill9->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill9->setUpdatedAt(new \DateTime('2026-05-21 19:59:44'));
         $skill9->setLabel('photoshop');
         $skill9->setLogo('photoshop.png');
         try {
@@ -206,12 +216,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill10->setEndYear(null);
         $skill10->setLevel(8);
         $skill10->setPosition(1);
-        $skill10->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill10->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill10->setDisplay(true);
+        $skill10->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill10->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill10->setLabel('mysql');
         $skill10->setLogo('mysql.png');
         try {
-            $skill10->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill10->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -224,12 +235,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill11->setEndYear(2022);
         $skill11->setLevel(7);
         $skill11->setPosition(2);
-        $skill11->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill11->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill11->setDisplay(true);
+        $skill11->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill11->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill11->setLabel('mongodb');
         $skill11->setLogo('mongodb.png');
         try {
-            $skill11->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill11->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -242,12 +254,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill12->setEndYear(2023);
         $skill12->setLevel(2);
         $skill12->setPosition(3);
-        $skill12->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill12->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill12->setDisplay(false);
+        $skill12->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill12->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill12->setLabel('graphdb');
         $skill12->setLogo('graphdb.png');
         try {
-            $skill12->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill12->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -260,12 +273,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill13->setEndYear(null);
         $skill13->setLevel(6);
         $skill13->setPosition(4);
-        $skill13->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill13->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill13->setDisplay(true);
+        $skill13->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill13->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill13->setLabel('symfony');
         $skill13->setLogo('symfony.png');
         try {
-            $skill13->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill13->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -278,12 +292,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill14->setEndYear(null);
         $skill14->setLevel(9);
         $skill14->setPosition(5);
-        $skill14->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill14->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill14->setDisplay(true);
+        $skill14->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill14->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill14->setLabel('php');
         $skill14->setLogo('php.png');
         try {
-            $skill14->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill14->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -296,12 +311,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill15->setEndYear(2025);
         $skill15->setLevel(6);
         $skill15->setPosition(6);
-        $skill15->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill15->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill15->setDisplay(true);
+        $skill15->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill15->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill15->setLabel('python');
         $skill15->setLogo('python.png');
         try {
-            $skill15->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill15->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -314,12 +330,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill16->setEndYear(2022);
         $skill16->setLevel(5);
         $skill16->setPosition(7);
-        $skill16->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill16->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill16->setDisplay(true);
+        $skill16->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill16->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill16->setLabel('rabbitmq');
         $skill16->setLogo('rabbitmq.png');
         try {
-            $skill16->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill16->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -332,12 +349,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill17->setEndYear(2021);
         $skill17->setLevel(6);
         $skill17->setPosition(8);
-        $skill17->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill17->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill17->setDisplay(false);
+        $skill17->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill17->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill17->setLabel('webservices');
         $skill17->setLogo('webservices.png');
         try {
-            $skill17->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill17->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -350,12 +368,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill18->setEndYear(2019);
         $skill18->setLevel(7);
         $skill18->setPosition(9);
-        $skill18->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill18->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill18->setDisplay(false);
+        $skill18->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill18->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill18->setLabel('mvc');
         $skill18->setLogo('mvc.png');
         try {
-            $skill18->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill18->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -368,12 +387,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill19->setEndYear(2022);
         $skill19->setLevel(8);
         $skill19->setPosition(10);
-        $skill19->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill19->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill19->setDisplay(true);
+        $skill19->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill19->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill19->setLabel('phpstorm');
         $skill19->setLogo('phpstorm.png');
         try {
-            $skill19->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill19->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -386,12 +406,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill20->setEndYear(2012);
         $skill20->setLevel(5);
         $skill20->setPosition(11);
-        $skill20->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill20->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill20->setDisplay(false);
+        $skill20->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill20->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill20->setLabel('zend');
         $skill20->setLogo('zend.png');
         try {
-            $skill20->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill20->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -404,12 +425,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill21->setEndYear(2006);
         $skill21->setLevel(6);
         $skill21->setPosition(12);
-        $skill21->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill21->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill21->setDisplay(false);
+        $skill21->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill21->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill21->setLabel('cplus');
         $skill21->setLogo('cplus.png');
         try {
-            $skill21->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill21->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -422,12 +444,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill22->setEndYear(null);
         $skill22->setLevel(9);
         $skill22->setPosition(1);
-        $skill22->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill22->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill22->setDisplay(true);
+        $skill22->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill22->setUpdatedAt(new \DateTime('2026-05-21 20:06:09'));
         $skill22->setLabel('html');
         $skill22->setLogo('html.png');
         try {
-            $skill22->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill22->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -440,12 +463,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill23->setEndYear(null);
         $skill23->setLevel(9);
         $skill23->setPosition(2);
-        $skill23->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill23->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill23->setDisplay(true);
+        $skill23->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill23->setUpdatedAt(new \DateTime('2026-05-21 20:06:11'));
         $skill23->setLabel('css');
         $skill23->setLogo('css.png');
         try {
-            $skill23->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill23->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -458,12 +482,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill24->setEndYear(null);
         $skill24->setLevel(7);
         $skill24->setPosition(3);
-        $skill24->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill24->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill24->setDisplay(false);
+        $skill24->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill24->setUpdatedAt(new \DateTime('2026-05-21 20:06:14'));
         $skill24->setLabel('sass');
         $skill24->setLogo('sass.png');
         try {
-            $skill24->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill24->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -476,12 +501,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill25->setEndYear(null);
         $skill25->setLevel(8);
         $skill25->setPosition(4);
-        $skill25->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill25->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill25->setDisplay(true);
+        $skill25->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill25->setUpdatedAt(new \DateTime('2026-05-21 20:05:44'));
         $skill25->setLabel('twig');
         $skill25->setLogo('twig.png');
         try {
-            $skill25->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill25->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -494,12 +520,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill26->setEndYear(2022);
         $skill26->setLevel(4);
         $skill26->setPosition(5);
-        $skill26->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill26->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill26->setDisplay(false);
+        $skill26->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill26->setUpdatedAt(new \DateTime('2026-05-21 20:05:42'));
         $skill26->setLabel('webpack');
         $skill26->setLogo('webpack.png');
         try {
-            $skill26->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill26->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -512,12 +539,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill27->setEndYear(2020);
         $skill27->setLevel(6);
         $skill27->setPosition(6);
-        $skill27->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill27->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill27->setDisplay(true);
+        $skill27->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill27->setUpdatedAt(new \DateTime('2026-05-21 20:05:40'));
         $skill27->setLabel('jquery');
         $skill27->setLogo('jquery.png');
         try {
-            $skill27->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill27->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -530,12 +558,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill28->setEndYear(2018);
         $skill28->setLevel(5);
         $skill28->setPosition(7);
-        $skill28->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill28->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill28->setDisplay(false);
+        $skill28->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill28->setUpdatedAt(new \DateTime('2026-05-21 20:05:37'));
         $skill28->setLabel('ajax');
         $skill28->setLogo('ajax.png');
         try {
-            $skill28->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill28->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -548,12 +577,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill29->setEndYear(2021);
         $skill29->setLevel(7);
         $skill29->setPosition(8);
-        $skill29->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill29->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill29->setDisplay(false);
+        $skill29->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill29->setUpdatedAt(new \DateTime('2026-05-21 20:05:34'));
         $skill29->setLabel('materialize');
         $skill29->setLogo('materialize.png');
         try {
-            $skill29->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill29->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -566,12 +596,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill30->setEndYear(2017);
         $skill30->setLevel(6);
         $skill30->setPosition(9);
-        $skill30->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill30->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill30->setDisplay(true);
+        $skill30->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill30->setUpdatedAt(new \DateTime('2026-05-21 20:05:31'));
         $skill30->setLabel('bootstrap');
         $skill30->setLogo('bootstrap.png');
         try {
-            $skill30->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill30->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -584,12 +615,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill31->setEndYear(null);
         $skill31->setLevel(7);
         $skill31->setPosition(10);
-        $skill31->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill31->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill31->setDisplay(false);
+        $skill31->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill31->setUpdatedAt(new \DateTime('2026-05-21 20:06:16'));
         $skill31->setLabel('responsive');
         $skill31->setLogo('responsive.png');
         try {
-            $skill31->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill31->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -602,12 +634,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill32->setEndYear(2008);
         $skill32->setLevel(8);
         $skill32->setPosition(11);
-        $skill32->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill32->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill32->setDisplay(false);
+        $skill32->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill32->setUpdatedAt(new \DateTime('2026-05-21 20:06:19'));
         $skill32->setLabel('xhtmlcss');
         $skill32->setLogo('xhtmlcss.png');
         try {
-            $skill32->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill32->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -620,12 +653,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill33->setEndYear(2017);
         $skill33->setLevel(5);
         $skill33->setPosition(1);
-        $skill33->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill33->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill33->setDisplay(false);
+        $skill33->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill33->setUpdatedAt(new \DateTime('2026-05-21 20:06:21'));
         $skill33->setLabel('apache');
         $skill33->setLogo('apache.png');
         try {
-            $skill33->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill33->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -638,12 +672,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill34->setEndYear(null);
         $skill34->setLevel(7);
         $skill34->setPosition(2);
-        $skill34->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill34->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill34->setDisplay(true);
+        $skill34->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill34->setUpdatedAt(new \DateTime('2026-05-21 20:06:40'));
         $skill34->setLabel('git');
         $skill34->setLogo('git.png');
         try {
-            $skill34->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill34->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -656,12 +691,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill35->setEndYear(null);
         $skill35->setLevel(7);
         $skill35->setPosition(3);
-        $skill35->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill35->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill35->setDisplay(true);
+        $skill35->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill35->setUpdatedAt(new \DateTime('2026-05-21 20:06:26'));
         $skill35->setLabel('composer');
         $skill35->setLogo('composer.png');
         try {
-            $skill35->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill35->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -674,12 +710,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill36->setEndYear(null);
         $skill36->setLevel(4);
         $skill36->setPosition(4);
-        $skill36->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill36->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill36->setDisplay(true);
+        $skill36->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill36->setUpdatedAt(new \DateTime('2026-05-21 20:06:30'));
         $skill36->setLabel('docker');
         $skill36->setLogo('docker.png');
         try {
-            $skill36->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill36->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -692,12 +729,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill37->setEndYear(2012);
         $skill37->setLevel(6);
         $skill37->setPosition(5);
-        $skill37->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill37->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill37->setDisplay(false);
+        $skill37->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill37->setUpdatedAt(new \DateTime('2026-05-21 20:06:46'));
         $skill37->setLabel('svn');
         $skill37->setLogo('svn.png');
         try {
-            $skill37->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill37->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -710,8 +748,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill38->setEndYear(null);
         $skill38->setLevel(8);
         $skill38->setPosition(6);
-        $skill38->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill38->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill38->setDisplay(true);
+        $skill38->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill38->setUpdatedAt(new \DateTime('2026-05-21 15:01:36'));
         $skill38->setLabel('macos');
         $skill38->setLogo('mac.png');
         try {
@@ -728,8 +767,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill39->setEndYear(null);
         $skill39->setLevel(7);
         $skill39->setPosition(7);
-        $skill39->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill39->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill39->setDisplay(true);
+        $skill39->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill39->setUpdatedAt(new \DateTime('2026-05-21 15:01:41'));
         $skill39->setLabel('linux');
         $skill39->setLogo('linux.png');
         try {
@@ -746,8 +786,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill40->setEndYear(2010);
         $skill40->setLevel(5);
         $skill40->setPosition(8);
-        $skill40->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill40->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill40->setDisplay(false);
+        $skill40->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill40->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $skill40->setLabel('windows');
         $skill40->setLogo('windows.png');
         try {
@@ -764,8 +805,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill41->setEndYear(2012);
         $skill41->setLevel(3);
         $skill41->setPosition(9);
-        $skill41->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill41->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill41->setDisplay(false);
+        $skill41->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill41->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
         $skill41->setLabel('drupal');
         $skill41->setLogo('drupal.png');
         try {
@@ -782,12 +824,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill42->setEndYear(2022);
         $skill42->setLevel(3);
         $skill42->setPosition(11);
-        $skill42->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill42->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill42->setDisplay(true);
+        $skill42->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill42->setUpdatedAt(new \DateTime('2026-05-21 20:04:46'));
         $skill42->setLabel('kibana');
         $skill42->setLogo('kibana.png');
         try {
-            $skill42->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill42->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -800,12 +843,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill43->setEndYear(2022);
         $skill43->setLevel(4);
         $skill43->setPosition(12);
-        $skill43->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill43->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill43->setDisplay(false);
+        $skill43->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill43->setUpdatedAt(new \DateTime('2026-05-21 20:04:43'));
         $skill43->setLabel('zendesk');
         $skill43->setLogo('zendesk.png');
         try {
-            $skill43->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill43->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -818,12 +862,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill44->setEndYear(2022);
         $skill44->setLevel(4);
         $skill44->setPosition(10);
-        $skill44->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill44->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill44->setDisplay(true);
+        $skill44->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill44->setUpdatedAt(new \DateTime('2026-05-21 20:04:36'));
         $skill44->setLabel('mailchimp');
         $skill44->setLogo('mailchimp.png');
         try {
-            $skill44->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill44->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -836,12 +881,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill45->setEndYear(null);
         $skill45->setLevel(5);
         $skill45->setPosition(13);
-        $skill45->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill45->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill45->setDisplay(true);
+        $skill45->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill45->setUpdatedAt(new \DateTime('2026-05-21 20:04:39'));
         $skill45->setLabel('postman');
         $skill45->setLogo('postman.png');
         try {
-            $skill45->setSkillType($this->getReference('skillType_5', SkillType::class));
+            $skill45->setSkillType($this->getReference('skillType_9', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -854,8 +900,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill46->setEndYear(null);
         $skill46->setLevel(7);
         $skill46->setPosition(7);
-        $skill46->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill46->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill46->setDisplay(false);
+        $skill46->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill46->setUpdatedAt(new \DateTime('2026-05-21 19:57:36'));
         $skill46->setLabel('slack');
         $skill46->setLogo('slack.png');
         try {
@@ -872,8 +919,9 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill47->setEndYear(2024);
         $skill47->setLevel(4);
         $skill47->setPosition(8);
-        $skill47->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill47->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill47->setDisplay(false);
+        $skill47->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill47->setUpdatedAt(new \DateTime('2026-05-21 19:57:42'));
         $skill47->setLabel('teams');
         $skill47->setLogo('teams.png');
         try {
@@ -890,12 +938,13 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill48->setEndYear(2006);
         $skill48->setLevel(8);
         $skill48->setPosition(9);
-        $skill48->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill48->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill48->setDisplay(false);
+        $skill48->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill48->setUpdatedAt(new \DateTime('2026-05-21 20:02:58'));
         $skill48->setLabel('latex');
         $skill48->setLogo('latex.png');
         try {
-            $skill48->setSkillType($this->getReference('skillType_3', SkillType::class));
+            $skill48->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
@@ -908,17 +957,75 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         $skill49->setEndYear(null);
         $skill49->setLevel(6);
         $skill49->setPosition(5);
-        $skill49->setCreatedAt(new \DateTime('2026-05-20 22:32:22'));
-        $skill49->setUpdatedAt(new \DateTime('2026-05-20 22:32:22'));
+        $skill49->setDisplay(true);
+        $skill49->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $skill49->setUpdatedAt(new \DateTime('2026-05-21 20:04:59'));
         $skill49->setLabel('tailwind');
         $skill49->setLogo('tailwind.png');
         try {
-            $skill49->setSkillType($this->getReference('skillType_4', SkillType::class));
+            $skill49->setSkillType($this->getReference('skillType_6', SkillType::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         $manager->persist($skill49);
         $this->addReference('skill_50', $skill49);
+
+        $skill50 = new Skill();
+        $skill50->setName('n8n');
+        $skill50->setStartYear(2025);
+        $skill50->setEndYear(null);
+        $skill50->setLevel(6);
+        $skill50->setPosition(3);
+        $skill50->setDisplay(true);
+        $skill50->setCreatedAt(new \DateTime('2026-05-22 22:31:39'));
+        $skill50->setUpdatedAt(null);
+        $skill50->setLabel('n8n');
+        $skill50->setLogo('n8n.png');
+        try {
+            $skill50->setSkillType($this->getReference('skillType_9', SkillType::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        $manager->persist($skill50);
+        $this->addReference('skill_53', $skill50);
+
+        $skill51 = new Skill();
+        $skill51->setName('NocoDB');
+        $skill51->setStartYear(2025);
+        $skill51->setEndYear(null);
+        $skill51->setLevel(6);
+        $skill51->setPosition(4);
+        $skill51->setDisplay(true);
+        $skill51->setCreatedAt(new \DateTime('2026-05-22 22:32:31'));
+        $skill51->setUpdatedAt(null);
+        $skill51->setLabel('nocodb');
+        $skill51->setLogo('nocodb.png');
+        try {
+            $skill51->setSkillType($this->getReference('skillType_9', SkillType::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        $manager->persist($skill51);
+        $this->addReference('skill_54', $skill51);
+
+        $skill52 = new Skill();
+        $skill52->setName('Nextcloud');
+        $skill52->setStartYear(2024);
+        $skill52->setEndYear(null);
+        $skill52->setLevel(7);
+        $skill52->setPosition(4);
+        $skill52->setDisplay(true);
+        $skill52->setCreatedAt(new \DateTime('2026-05-22 22:33:10'));
+        $skill52->setUpdatedAt(null);
+        $skill52->setLabel('nextcloud');
+        $skill52->setLogo('nextcloud.png');
+        try {
+            $skill52->setSkillType($this->getReference('skillType_9', SkillType::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        $manager->persist($skill52);
+        $this->addReference('skill_55', $skill52);
 
         $manager->flush();
     }

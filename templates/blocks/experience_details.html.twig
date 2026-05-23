@@ -1,21 +1,62 @@
 {% block experience_details %}
     <div class="text-sm font-normal uppercase pt-3 pl-3 text-gray-500"><span class="font-black">{{ experience.title }}</span></div>
     <div class="p-3 text-3xl text-nine-blue font-bold">{{ experience.subtitle }}</div>
-    <p class="text-nine-blue-gray px-3"><i class="far fa-calendar-alt mr-1"></i>&nbsp;
-    {% if experience.endDate is empty %}
-        Depuis {{ experience.startDate|date('m/Y') }}
-    {% else %}
-        De {{ experience.startDate|date('m/Y') }} à {{ experience.endDate|date('m/Y') }}
-    {% endif %}
-    <i class="text-sm">
-        ({% if experience.duration.nbYears > 0 %}{{ experience.duration.nbYears }} an{% if experience.duration.nbYears > 1 %}s{% endif %}{% endif %}
-        {% if experience.duration.nbMonths != 0 %}{% if experience.duration.nbYears > 0 %}et {% endif %}{{ experience.duration.nbMonths }} mois{% endif %})
-    </i>
-    </p>
-    <p class="px-3 mb-4 text-nine-blue-gray">
-        <i class="fas fa-map-marker-alt mr-1"></i> {{ experience.company.name }}
-        - <span class="text-sm">{{ experience.company.city }} ({{ experience.company.department|format_number({ min_integer_digit: 2 }) }})</span>
-    </p>
+    <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 px-3 mb-4">
+        <div class="space-y-1">
+            <p class="text-nine-blue-gray"><i class="far fa-calendar-alt mr-1"></i>&nbsp;
+            {% if experience.endDate is empty %}
+                Depuis {{ experience.startDate|date('m/Y') }}
+            {% else %}
+                De {{ experience.startDate|date('m/Y') }} à {{ experience.endDate|date('m/Y') }}
+            {% endif %}
+            <i class="text-sm font-normal">
+                ({% if experience.duration.nbYears > 0 %}{{ experience.duration.nbYears }} an{% if experience.duration.nbYears > 1 %}s{% endif %}{% endif %}
+                {% if experience.duration.nbMonths != 0 %}{% if experience.duration.nbYears > 0 %}et {% endif %}{{ experience.duration.nbMonths }} mois{% endif %})
+            </i>
+            </p>
+
+            <p class="text-nine-blue-gray">
+                <i class="fas fa-map-marker-alt mr-1"></i>&nbsp; {{ experience.company.name }}
+                - <span class="text-sm">{{ experience.company.city }} ({{ experience.company.department|format_number({ min_integer_digit: 2 }) }})</span>
+            </p>
+        </div>
+
+        {% if experience.links is not empty %}
+        <div class="shrink-0">
+            <ul class="flex flex-wrap md:justify-end gap-2">
+            {% for link in experience.links %}
+                {% if link.type.value == 'pdf' %}
+            <li>
+                <a href="http://docs.carolinenoyer.fr/{{ link.url }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-blue-gray shadow-sm hover:shadow hover:text-perfect hover:border-perfect/30 hover:bg-white transition-all duration-200 group">
+
+                    <i class="far fa-file-pdf text-red-500 text-base transition-transform group-hover:scale-110"></i>
+                    <span>{{ link.title }}</span>
+
+                    <i class="fas fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-perfect transition-all"></i>
+                </a>
+            </li>
+                {% elseif link.type.value == 'external' %}
+            <li>
+                <a href="{{ link.url }}"
+                   target="_blank"
+                   rel="noopener noreferrer"
+                   class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-blue-gray shadow-sm hover:shadow hover:text-perfect hover:border-perfect/30 hover:bg-white transition-all duration-200 group">
+                    <i class="fa-solid fa-globe text-base transition-transform group-hover:scale-110"></i>
+                    <span>{{ link.title }}</span>
+
+                    <i class="fas fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-perfect transition-all"></i>
+                </a>
+            </li>
+                {% endif %}
+            {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
     <div class="px-3 pb-6">
     {% if experience.items is not empty %}
         <ul class="list-none">
@@ -41,7 +82,7 @@
     <div class="w-full inline-flex">
         <ul class="flex flex-wrap items-center justify-center md:justify-start [&_li]:mx-4 [&_img]:max-w-none">
             {% for skill in experience.skills %}
-            <li><img src="{{ absolute_url('images/skills/' ~ skill.logo) }}" alt="{{ skill.name }}" width="40px" class="mb-4" /></li>
+            <li><img src="{{ absolute_url('images/skills/' ~ skill.logo) }}" alt="{{ skill.name }}" width="40px" class="mb-4 rounded-sm" /></li>
             {% endfor %}
         </ul>
     </div>
