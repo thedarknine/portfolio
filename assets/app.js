@@ -6,6 +6,7 @@
  */
 import $ from 'jquery';
 import './styles/app.css';
+import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
@@ -62,4 +63,21 @@ $(document).ready(() => {
             element.addEventListener('click', toggleMenu);
         });
     }
+
+    // Lightbox
+    const myPhotoSwipe = function () {
+        const galleryElement = document.querySelector('.pswp9-lightbox');
+
+        if (galleryElement != null) {
+            const lightbox = new PhotoSwipeLightbox({
+                gallery: '.pswp9-lightbox',
+                // Finding the 'a' element inside the grid items
+                children: 'div > a',
+
+                pswpModule: () => import('photoswipe'),
+            });
+            lightbox.init();
+        }
+    };
+    myPhotoSwipe();
 });

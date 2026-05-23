@@ -80,6 +80,10 @@ Into docker :
 
     npm install typed.js
     php bin/console importmap:require typed.js
+
+    npm install photoswipe --save
+    php bin/console importmap:require photoswipe
+    php bin/console importmap:require photoswipe/lightbox
 ```
 
 ### Front-end linters

@@ -4,45 +4,82 @@
 
 {% block body %}
 {% for type in data.skillTypesList %}
-    <section class="{% if loop.index is even %}bg-color-nine-golden{% else %}bg-white{% endif %} py-10">
-        <div class="container items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
-            <div class="flex flex-col sticky content-center md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600">
-                <h3 class="text-2xl text-turquoise font-semibold mb-6">{{ type.name }}</h3>
-                <div class="line h-1"></div>
-                <div class="mb-6 text-nine-blue-gray">
-                    {{ type.description }}
+    <section class="{% if loop.index is even %}bg-white{% else %}bg-nine-golden/30{% endif %} py-16 border-b border-nine-light/30 overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row gap-12 items-start">
+
+            <!-- LEFT BLOCK -->
+            <div class="w-full lg:w-1/4 lg:sticky lg:top-20 flex flex-col justify-between group animate__animated" data-animate="animate__fadeInLeft" data-delay="600">
+                <div>
+                    <h3 class="font-accent text-2xl md:text-3xl font-bold text-nine-primary tracking-tight  mb-4 group-hover:text-nine-turquoise transition-colors">
+                        {{ type.name }}
+                    </h3>
+                    <div class="h-1 w-12 bg-nine-turquoise mb-6 rounded-full transition-all duration-300 group-hover:w-20"></div>
+                    <p class="text-nine-blue/90 leading-relaxed font-normal text-sm mb-6">
+                        {{ type.description }}
+                    </p>
                 </div>
-                <img src="{{ absolute_url('images/skills/' ~ type.logo) }}" alt="{{ type.name }}" width="250px">
+
+                <div class="hidden lg:block mt-4 opacity-40 group-hover:opacity-80 transition-opacity duration-500 transform -rotate-6 group-hover:rotate-0">
+                    <img src="{{ absolute_url('images/skills/' ~ type.logo) }}" alt="{{ type.name }}" class="max-w-[160px] h-auto object-contain">
+                </div>
             </div>
 
-            <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
+            <!-- RIGHT BLOCK : The skills grid -->
+            <div class="w-full lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
                 {% set skills = data.skillsList[type.label] %}
-                <div class="grid max-w-4xl lg:max-w-6xl grid-cols-2 mx-auto text-center gap-y-4 sm:gap-x-8 sm:grid-cols-2 lg:grid-cols-3 sm:text-left">
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {% for skill in skills %}
-                    <div class="skill relative flex flex-wrap gap-4 bg-white mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
-                        <div class="px-4 py-5 flex-auto w-full">
-                            <h6 class="text-xl font-semibold">{{ skill.name|raw }}</h6>
-                            <div class="skill-level align-middle content-center w-full">
-                                <img src="{{ absolute_url('images/skills/' ~ skill.label ~ '.png') }}" class="w-20 mx-auto my-3" alt="{{ skill.name }}" />
-                                <div class=" pt-1">
-                                    <div class="overflow-hidden h-2 mb-4 text-xs flex rounded bg-[#fde68a]">
-                                        <div style="width:{{ skill.level * 10 }}%" class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-[#f59e0b]"></div>
-                                    </div>
+                    <div class="group/card bg-white rounded-lg p-5 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+
+                        <div>
+                            <div class="flex items-center gap-3.5 mb-4">
+                                <div class="w-12 h-12 shrink-0 p-2 rounded-lg flex items-center justify-center group-hover/card:bg-white group-hover/card:border-nine-turquoise/40 transition-colors duration-300">
+                                    <img src="{{ absolute_url('images/skills/' ~ skill.label ~ '.png') }}" class="w-full h-full object-contain" alt="{{ skill.name }}" />
+                                </div>
+                                <div>
+                                    <h6 class="font-accent text-xl font-medium text-nine-turquoise transition-colors duration-300">
+                                        {{ skill.name|raw }}
+                                    </h6>
+
+                                    <span class="text-[10px] font-bold uppercase tracking-wider text-nine-blue-gray">
+                                        {% if skill.level >= 8 %}
+                                            Expert
+                                        {% elseif skill.level >= 6 %}
+                                            Avancé
+                                        {% else %}
+                                            Maîtrisé
+                                        {% endif %}
+                                    </span>
                                 </div>
                             </div>
-                            <p class="mt-2 mb-2 text-nine-blue-gray">
-                                {% if skill.duration is not empty %}
-                                    XP  {{ skill.duration }}
-                                {% else %}
-                                    <em>En cours...</em>
-                                {% endif %}
-                            </p>
+
+                            <div class="w-full bg-nine-light h-1 rounded-full overflow-hidden mb-2">
+                                <div style="width: {{ skill.level * 10 }}%" class="h-full bg-gradient-to-r from-nine-yellow to-[#f59e0b] transition-all duration-1000 group-hover/card:bg-nine-turquoise"></div>
+                            </div>
                         </div>
+
+                        <div class="mt-4 pt-3 border-t border-nine-light/50 flex items-center justify-between text-[11px] text-nine-blue-gray">
+                            <span class="font-medium inline-flex items-center gap-1">
+                                <svg class="w-3.5 h-3.5 text-nine-blue-gray/60" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                                Pratique
+                            </span>
+                            <span class="font-bold text-perfect uppercase tracking-wide">
+                                {% if skill.duration is not empty %}
+                                    {{ skill.duration }}
+                                {% else %}
+                                    <span class="text-perfect italic font-normal normal-case">En cours...</span>
+                                {% endif %}
+                            </span>
+                        </div>
+
                     </div>
                     {% endfor %}
                 </div>
+
             </div>
         </div>
     </section>
 {% endfor %}
+
 {% endblock %}

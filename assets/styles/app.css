@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.min.css');
 @import 'animate.css';
 
 /* stylelint-disable-next-line import-notation */
@@ -238,15 +239,6 @@
     color: var(--color-nine-light);
     background: var(--color-nine-blue-darker);
 
-    .nine-hero-grid {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 4rem;
-        align-items: center;
-        padding-right: 0;
-        margin-right: 0;
-    }
-
     .nine-section-label {
         display: inline-block;
         margin-bottom: 1rem;
@@ -332,9 +324,5 @@
 @media screen and (width <= 992px) {
     .nine-page-hero {
         padding: 5rem 0;
-    }
-
-    .nine-page-hero .nine-hero-grid {
-        grid-template-columns: 1fr;
     }
 }

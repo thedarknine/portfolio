@@ -33,4 +33,14 @@ return [
         'version' => '4.1.1',
         'type' => 'css',
     ],
+    'photoswipe' => [
+        'version' => '5.4.4',
+    ],
+    'photoswipe/dist/photoswipe.min.css' => [
+        'version' => '5.4.4',
+        'type' => 'css',
+    ],
+    'photoswipe/lightbox' => [
+        'version' => '5.4.4',
+    ],
 ];

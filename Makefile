@@ -171,7 +171,7 @@ cs-front: ## Run linters for CSS and JS
 	-@npx stylelint --config .coding-standard-linters/.stylelintrc.json assets/styles/
 
 	@echo "Running Prettier..."
-	-@npx npx prettier --config .coding-standard-linters/.prettierrc assets/ --check
+	-@npx prettier --config .coding-standard-linters/.prettierrc assets/ --check
 
 # LINTER bin/biome lint
 

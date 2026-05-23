@@ -19,13 +19,13 @@
     <div class="container">
         <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">This is it!</h3>
         {% set listItemsArcade = data.arcadeList['final'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn animate__slow">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <a href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-final">
-                        <img src="{{ absolute_url('images/arcade/final/' ~ arcade) }}" alt="" class="rounded-lg" />
-                    </a>
-                </div>
+            <div class="w-full h-full rounded overflow-hidden shadow-lg animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
+                <a href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                    <img src="{{ absolute_url('images/arcade/final/' ~ arcade) }}" alt="" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -40,11 +40,11 @@
             <a href="http://forum.hfsplay.fr/plans-prets-emploi/bartop-frankeez-version-t8468.html" alt="Frankeezz" target="_blank">Frankeezz</a>.
             Je souhaite limiter au max la hauteur du control panel, tout en y insérant un tiroir pour un clavier.</p>
         {% set listItemsArcade = data.arcadeList['at-the-beginning'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-beginning">
+                        <a href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -61,11 +61,11 @@
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h4>
         {% set listItemsArcade = data.arcadeList['side-panels'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-side">
+                        <a href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -75,11 +75,11 @@
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h4>
         {% set listItemsArcade = data.arcadeList['control-panel'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-control">
+                        <a href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -89,11 +89,11 @@
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h4>
         {% set listItemsArcade = data.arcadeList['upper-part'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-upper">
+                        <a href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -103,11 +103,11 @@
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h4>
         {% set listItemsArcade = data.arcadeList['back-side'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-back">
+                        <a href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -123,11 +123,11 @@
         <p class="mb-10">Les différentes pièces se finalisent petit à petit, on monte et on redémonte histoire de
             contrôler que tout est ok. Au passage un petit coup de peinture. Ca se précise !</p>
         {% set listItemsArcade = data.arcadeList['assembling'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-assembling">
+                        <a href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -144,10 +144,10 @@
             et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez
             modernes malgré tout.</p>
         {% set listItemsArcade = data.arcadeList['design'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
-                    <a href="{{ absolute_url('images/arcade/design/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-design">
+                    <a href="{{ absolute_url('images/arcade/design/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                         <img src="{{ absolute_url('images/arcade/design/' ~ arcade) }}" alt="" class="rounded-lg" />
                     </a>
                 </div>
@@ -164,11 +164,11 @@
                 <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
                 s’installer dans ma borne.</p>
             {% set listItemsArcade = data.arcadeList['recalbox'] %}
-            <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 animate__animated" data-animate="animate__fadeIn">
+            <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
                 {% for arcade in listItemsArcade %}
                     <div class="shadow-lg mb-4">
                         <div>
-                            <a href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" class="glightbox9" data-gallery="gallery-recalbox">
+                            <a href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                                 <img src="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" alt="" class="rounded-lg">
                             </a>
                         </div>

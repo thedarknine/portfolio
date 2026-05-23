@@ -86,7 +86,7 @@
 }
 
 @media screen and (width <= 992px) {
-    .nine-page-hero .nine-hero-grid,
+    .nine-page-hero,
     .nine-skills-overview .cards-grid,
     .nine-work-approach .nine-approach-grid,
     .nine-experience-timeline .nine-timeline-item {
