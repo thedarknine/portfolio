@@ -1,17 +1,9 @@
 <?php
 
-/**
- * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\DataFixtures;
 
-use App\Entity\Company;
 use App\Entity\Experience;
+use App\Entity\Company;
 use App\Entity\Skill;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -23,7 +15,7 @@ class ExperienceAutoFixture extends Fixture implements DependentFixtureInterface
     {
         $experience0 = new Experience();
         $experience0->setTitle('Stagiaire en milieu de recherche');
-        $experience0->setSubtitle('Stage de recherche au sein de l\'équipe Algorithmique au LIMOS');
+        $experience0->setSubtitle('Étude algorithmique autour des symétries dans les familles d’ensembles');
         $experience0->setSummary(null);
         $experience0->setDescription('
 <p>Sujet : <em>Symétrie dans les familles d\'ensembles : une étude algorithmique</em></p>
@@ -38,30 +30,30 @@ class ExperienceAutoFixture extends Fixture implements DependentFixtureInterface
 </div>');
         $experience0->setStartDate(new \DateTime('2005-02-01 00:00:00'));
         $experience0->setEndDate(new \DateTime('2005-07-31 00:00:00'));
-        $experience0->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience0->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience0->setUpdatedAt(new \DateTime('2026-05-23 20:25:20'));
         $experience0->setLabel('stage-limos');
         try {
-            $experience0->setCompany($this->getReference('company_1', Company::class));
+            $experience0->setCompany($this->getReference('company_9', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience0->addSkill($this->getReference('skill_22', Skill::class));
+            $experience0->addSkill($this->getReference('skill_77', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience0->addSkill($this->getReference('skill_49', Skill::class));
+            $experience0->addSkill($this->getReference('skill_104', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience0);
-        $this->addReference('experience_1', $experience0);
+        $this->addReference('experience_11', $experience0);
 
         $experience1 = new Experience();
         $experience1->setTitle('Stagiaire études de projets Internet');
-        $experience1->setSubtitle('Stage en entreprise dans le cadre du Master Professionnel SIPPE 2ème année');
+        $experience1->setSubtitle('Analyse web et accompagnement stratégique digital');
         $experience1->setSummary(null);
         $experience1->setDescription('
 <ul class="missions">
@@ -77,20 +69,20 @@ L\'une des dernières étapes avant la mise en production consiste à réaliser 
 ce n\'est qu\'ensuite que le directeur artistique pourra réaliser la maquette du site.</p>');
         $experience1->setStartDate(new \DateTime('2006-02-01 00:00:00'));
         $experience1->setEndDate(new \DateTime('2006-06-30 00:00:00'));
-        $experience1->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience1->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience1->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience1->setUpdatedAt(new \DateTime('2026-05-23 20:21:05'));
         $experience1->setLabel('stage-periscope');
         try {
-            $experience1->setCompany($this->getReference('company_2', Company::class));
+            $experience1->setCompany($this->getReference('company_10', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         $manager->persist($experience1);
-        $this->addReference('experience_2', $experience1);
+        $this->addReference('experience_12', $experience1);
 
         $experience2 = new Experience();
         $experience2->setTitle('Stagiaire analyse et développement');
-        $experience2->setSubtitle('Stage en entreprise dans le cadre du Master Professionnel SIPPE 2ème année');
+        $experience2->setSubtitle('Conception d’un assistant de rédaction documentaire');
         $experience2->setSummary(null);
         $experience2->setDescription('
 <ul class="missions">
@@ -103,44 +95,44 @@ Ce projet nécessite donc plusieurs documents : le cahier des charges, le devis 
 Cet outil doit donc proposer une rédaction semi-automatique de ces documents à partir de questionnaires précis. Ainsi, mon projet permet de répondre à la mise en place d\'une organisation du travail tout en respectant la contrainte de coût.</p>');
         $experience2->setStartDate(new \DateTime('2006-07-01 00:00:00'));
         $experience2->setEndDate(new \DateTime('2006-09-30 00:00:00'));
-        $experience2->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience2->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience2->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience2->setUpdatedAt(new \DateTime('2026-05-23 20:17:18'));
         $experience2->setLabel('stage-actifdesign');
         try {
-            $experience2->setCompany($this->getReference('company_3', Company::class));
+            $experience2->setCompany($this->getReference('company_11', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience2->addSkill($this->getReference('skill_10', Skill::class));
+            $experience2->addSkill($this->getReference('skill_65', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience2->addSkill($this->getReference('skill_11', Skill::class));
+            $experience2->addSkill($this->getReference('skill_66', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience2->addSkill($this->getReference('skill_15', Skill::class));
+            $experience2->addSkill($this->getReference('skill_70', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience2->addSkill($this->getReference('skill_33', Skill::class));
+            $experience2->addSkill($this->getReference('skill_88', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience2->addSkill($this->getReference('skill_40', Skill::class));
+            $experience2->addSkill($this->getReference('skill_95', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience2);
-        $this->addReference('experience_3', $experience2);
+        $this->addReference('experience_13', $experience2);
 
         $experience3 = new Experience();
-        $experience3->setTitle('Développeur web et chargée de projets');
+        $experience3->setTitle('Développeur web');
         $experience3->setSubtitle('Développement de sites Internet et de solutions innovantes');
         $experience3->setSummary(null);
         $experience3->setDescription('
@@ -153,46 +145,46 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience3->setStartDate(new \DateTime('2006-10-01 00:00:00'));
         $experience3->setEndDate(new \DateTime('2008-07-15 00:00:00'));
-        $experience3->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience3->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience3->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience3->setUpdatedAt(new \DateTime('2026-05-23 20:13:46'));
         $experience3->setLabel('dev-web');
         try {
-            $experience3->setCompany($this->getReference('company_3', Company::class));
+            $experience3->setCompany($this->getReference('company_11', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience3->addSkill($this->getReference('skill_10', Skill::class));
+            $experience3->addSkill($this->getReference('skill_65', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience3->addSkill($this->getReference('skill_11', Skill::class));
+            $experience3->addSkill($this->getReference('skill_66', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience3->addSkill($this->getReference('skill_15', Skill::class));
+            $experience3->addSkill($this->getReference('skill_70', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience3->addSkill($this->getReference('skill_33', Skill::class));
+            $experience3->addSkill($this->getReference('skill_88', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience3->addSkill($this->getReference('skill_34', Skill::class));
+            $experience3->addSkill($this->getReference('skill_89', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience3->addSkill($this->getReference('skill_40', Skill::class));
+            $experience3->addSkill($this->getReference('skill_95', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience3);
-        $this->addReference('experience_4', $experience3);
+        $this->addReference('experience_14', $experience3);
 
         $experience4 = new Experience();
         $experience4->setTitle('Ingénieur de développement');
@@ -209,71 +201,71 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience4->setStartDate(new \DateTime('2008-07-16 00:00:00'));
         $experience4->setEndDate(new \DateTime('2012-04-30 00:00:00'));
-        $experience4->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience4->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience4->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience4->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience4->setLabel('inge-dev');
         try {
-            $experience4->setCompany($this->getReference('company_4', Company::class));
+            $experience4->setCompany($this->getReference('company_12', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience4->addSkill($this->getReference('skill_9', Skill::class));
+            $experience4->addSkill($this->getReference('skill_64', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_10', Skill::class));
+            $experience4->addSkill($this->getReference('skill_65', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_11', Skill::class));
+            $experience4->addSkill($this->getReference('skill_66', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_15', Skill::class));
+            $experience4->addSkill($this->getReference('skill_70', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_19', Skill::class));
+            $experience4->addSkill($this->getReference('skill_74', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_21', Skill::class));
+            $experience4->addSkill($this->getReference('skill_76', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_33', Skill::class));
+            $experience4->addSkill($this->getReference('skill_88', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_38', Skill::class));
+            $experience4->addSkill($this->getReference('skill_93', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_40', Skill::class));
+            $experience4->addSkill($this->getReference('skill_95', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_41', Skill::class));
+            $experience4->addSkill($this->getReference('skill_96', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience4->addSkill($this->getReference('skill_42', Skill::class));
+            $experience4->addSkill($this->getReference('skill_97', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience4);
-        $this->addReference('experience_5', $experience4);
+        $this->addReference('experience_15', $experience4);
 
         $experience5 = new Experience();
         $experience5->setTitle('Développeur web fullstack');
@@ -291,86 +283,86 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience5->setStartDate(new \DateTime('2015-05-04 00:00:00'));
         $experience5->setEndDate(new \DateTime('2017-07-16 00:00:00'));
-        $experience5->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience5->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience5->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience5->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience5->setLabel('dev-mfpdd');
         try {
-            $experience5->setCompany($this->getReference('company_5', Company::class));
+            $experience5->setCompany($this->getReference('company_13', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience5->addSkill($this->getReference('skill_11', Skill::class));
+            $experience5->addSkill($this->getReference('skill_66', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_15', Skill::class));
+            $experience5->addSkill($this->getReference('skill_70', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_16', Skill::class));
+            $experience5->addSkill($this->getReference('skill_71', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_18', Skill::class));
+            $experience5->addSkill($this->getReference('skill_73', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_19', Skill::class));
+            $experience5->addSkill($this->getReference('skill_74', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_23', Skill::class));
+            $experience5->addSkill($this->getReference('skill_78', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_24', Skill::class));
+            $experience5->addSkill($this->getReference('skill_79', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_26', Skill::class));
+            $experience5->addSkill($this->getReference('skill_81', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_28', Skill::class));
+            $experience5->addSkill($this->getReference('skill_83', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_29', Skill::class));
+            $experience5->addSkill($this->getReference('skill_84', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_31', Skill::class));
+            $experience5->addSkill($this->getReference('skill_86', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_32', Skill::class));
+            $experience5->addSkill($this->getReference('skill_87', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_35', Skill::class));
+            $experience5->addSkill($this->getReference('skill_90', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience5->addSkill($this->getReference('skill_36', Skill::class));
+            $experience5->addSkill($this->getReference('skill_91', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience5);
-        $this->addReference('experience_6', $experience5);
+        $this->addReference('experience_16', $experience5);
 
         $experience6 = new Experience();
         $experience6->setTitle('Développeur PHP Senior');
@@ -388,96 +380,96 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience6->setStartDate(new \DateTime('2017-07-17 00:00:00'));
         $experience6->setEndDate(new \DateTime('2019-11-03 00:00:00'));
-        $experience6->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience6->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience6->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience6->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience6->setLabel('dev-coffreo');
         try {
-            $experience6->setCompany($this->getReference('company_6', Company::class));
+            $experience6->setCompany($this->getReference('company_14', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience6->addSkill($this->getReference('skill_12', Skill::class));
+            $experience6->addSkill($this->getReference('skill_67', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_14', Skill::class));
+            $experience6->addSkill($this->getReference('skill_69', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_15', Skill::class));
+            $experience6->addSkill($this->getReference('skill_70', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_17', Skill::class));
+            $experience6->addSkill($this->getReference('skill_72', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_23', Skill::class));
+            $experience6->addSkill($this->getReference('skill_78', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_26', Skill::class));
+            $experience6->addSkill($this->getReference('skill_81', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_30', Skill::class));
+            $experience6->addSkill($this->getReference('skill_85', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_32', Skill::class));
+            $experience6->addSkill($this->getReference('skill_87', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_35', Skill::class));
+            $experience6->addSkill($this->getReference('skill_90', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_36', Skill::class));
+            $experience6->addSkill($this->getReference('skill_91', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_37', Skill::class));
+            $experience6->addSkill($this->getReference('skill_92', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_40', Skill::class));
+            $experience6->addSkill($this->getReference('skill_95', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_43', Skill::class));
+            $experience6->addSkill($this->getReference('skill_98', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_45', Skill::class));
+            $experience6->addSkill($this->getReference('skill_100', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_46', Skill::class));
+            $experience6->addSkill($this->getReference('skill_101', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience6->addSkill($this->getReference('skill_47', Skill::class));
+            $experience6->addSkill($this->getReference('skill_102', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience6);
-        $this->addReference('experience_7', $experience6);
+        $this->addReference('experience_17', $experience6);
 
         $experience7 = new Experience();
         $experience7->setTitle('Product Owner');
@@ -494,71 +486,71 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 </ul>');
         $experience7->setStartDate(new \DateTime('2019-11-04 00:00:00'));
         $experience7->setEndDate(new \DateTime('2022-07-17 00:00:00'));
-        $experience7->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience7->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience7->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience7->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience7->setLabel('po-coffreo');
         try {
-            $experience7->setCompany($this->getReference('company_6', Company::class));
+            $experience7->setCompany($this->getReference('company_14', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience7->addSkill($this->getReference('skill_1', Skill::class));
+            $experience7->addSkill($this->getReference('skill_56', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_2', Skill::class));
+            $experience7->addSkill($this->getReference('skill_57', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_3', Skill::class));
+            $experience7->addSkill($this->getReference('skill_58', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_5', Skill::class));
+            $experience7->addSkill($this->getReference('skill_60', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_7', Skill::class));
+            $experience7->addSkill($this->getReference('skill_62', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_8', Skill::class));
+            $experience7->addSkill($this->getReference('skill_63', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_16', Skill::class));
+            $experience7->addSkill($this->getReference('skill_71', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_43', Skill::class));
+            $experience7->addSkill($this->getReference('skill_98', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_45', Skill::class));
+            $experience7->addSkill($this->getReference('skill_100', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_46', Skill::class));
+            $experience7->addSkill($this->getReference('skill_101', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience7->addSkill($this->getReference('skill_47', Skill::class));
+            $experience7->addSkill($this->getReference('skill_102', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience7);
-        $this->addReference('experience_8', $experience7);
+        $this->addReference('experience_18', $experience7);
 
         $experience8 = new Experience();
         $experience8->setTitle('Product Owner');
@@ -574,41 +566,41 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
 </ul>');
         $experience8->setStartDate(new \DateTime('2022-07-18 00:00:00'));
         $experience8->setEndDate(new \DateTime('2024-04-22 00:00:00'));
-        $experience8->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience8->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience8->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience8->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience8->setLabel('po-perfect');
         try {
-            $experience8->setCompany($this->getReference('company_7', Company::class));
+            $experience8->setCompany($this->getReference('company_15', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
         try {
-            $experience8->addSkill($this->getReference('skill_1', Skill::class));
+            $experience8->addSkill($this->getReference('skill_56', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience8->addSkill($this->getReference('skill_2', Skill::class));
+            $experience8->addSkill($this->getReference('skill_57', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience8->addSkill($this->getReference('skill_4', Skill::class));
+            $experience8->addSkill($this->getReference('skill_59', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience8->addSkill($this->getReference('skill_5', Skill::class));
+            $experience8->addSkill($this->getReference('skill_60', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         try {
-            $experience8->addSkill($this->getReference('skill_48', Skill::class));
+            $experience8->addSkill($this->getReference('skill_103', Skill::class));
         } catch (\OutOfBoundsException $e) {
             // Reference target does not exist yet
         }
         $manager->persist($experience8);
-        $this->addReference('experience_9', $experience8);
+        $this->addReference('experience_19', $experience8);
 
         $experience9 = new Experience();
         $experience9->setTitle('Technical Product Owner');
@@ -623,16 +615,41 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
 </ul>');
         $experience9->setStartDate(new \DateTime('2024-08-21 00:00:00'));
         $experience9->setEndDate(null);
-        $experience9->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $experience9->setUpdatedAt(new \DateTime('2026-05-20 22:46:52'));
+        $experience9->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience9->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience9->setLabel('po-leviia');
         try {
-            $experience9->setCompany($this->getReference('company_8', Company::class));
+            $experience9->setCompany($this->getReference('company_16', Company::class));
         } catch (\OutOfBoundsException $e) {
             // Reference does not exist yet or target entity was skipped
         }
+        try {
+            $experience9->addSkill($this->getReference('skill_70', Skill::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference target does not exist yet
+        }
+        try {
+            $experience9->addSkill($this->getReference('skill_101', Skill::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference target does not exist yet
+        }
+        try {
+            $experience9->addSkill($this->getReference('skill_106', Skill::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference target does not exist yet
+        }
+        try {
+            $experience9->addSkill($this->getReference('skill_107', Skill::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference target does not exist yet
+        }
+        try {
+            $experience9->addSkill($this->getReference('skill_108', Skill::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference target does not exist yet
+        }
         $manager->persist($experience9);
-        $this->addReference('experience_10', $experience9);
+        $this->addReference('experience_20', $experience9);
 
         $manager->flush();
     }

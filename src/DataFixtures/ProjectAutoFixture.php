@@ -1,13 +1,5 @@
 <?php
 
-/**
- * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
- *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
- */
-
 namespace App\DataFixtures;
 
 use App\Entity\Project;
@@ -26,12 +18,12 @@ class ProjectAutoFixture extends Fixture
         $project0->setScreenshots('');
         $project0->setCategory('R&D');
         $project0->setTags('C++::Standard Template Library (STL)::Data Mining');
-        $project0->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $project0->setUpdatedAt(new \DateTime('2026-05-21 22:29:03'));
+        $project0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project0->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $project0->setLabel('datamining');
         $project0->setLogo('stagemaitrise.png');
         $manager->persist($project0);
-        $this->addReference('project_1', $project0);
+        $this->addReference('project_8', $project0);
 
         $project1 = new Project();
         $project1->setName('Génération de sites Internet valides W3C');
@@ -41,12 +33,12 @@ class ProjectAutoFixture extends Fixture
         $project1->setScreenshots('');
         $project1->setCategory('R&D Pro');
         $project1->setTags('Java / J2EE::XML::XHTML Compliance');
-        $project1->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $project1->setUpdatedAt(new \DateTime('2026-05-21 22:19:32'));
+        $project1->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project1->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $project1->setLabel('nevotec');
         $project1->setLogo('nevotec.png');
         $manager->persist($project1);
-        $this->addReference('project_2', $project1);
+        $this->addReference('project_9', $project1);
 
         $project2 = new Project();
         $project2->setName('Génération de fichiers PDF haute définition');
@@ -56,12 +48,12 @@ class ProjectAutoFixture extends Fixture
         $project2->setScreenshots('');
         $project2->setCategory('R&D Pro');
         $project2->setTags('Java (Métier)::XML (Stockage)::Librairies PDF');
-        $project2->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $project2->setUpdatedAt(new \DateTime('2026-05-21 22:18:39'));
+        $project2->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project2->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $project2->setLabel('nevoprint');
         $project2->setLogo('nevoprint.png');
         $manager->persist($project2);
-        $this->addReference('project_3', $project2);
+        $this->addReference('project_10', $project2);
 
         $project3 = new Project();
         $project3->setName('Création graphique et développement');
@@ -71,12 +63,12 @@ class ProjectAutoFixture extends Fixture
         $project3->setScreenshots('website-randos.png');
         $project3->setCategory('Web & Dev');
         $project3->setTags('PHP::MySQL::HTML / CSS::Illustrator');
-        $project3->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $project3->setUpdatedAt(new \DateTime('2026-05-21 22:19:07'));
+        $project3->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project3->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $project3->setLabel('randos');
         $project3->setLogo('randos.png');
         $manager->persist($project3);
-        $this->addReference('project_4', $project3);
+        $this->addReference('project_11', $project3);
 
         $project4 = new Project();
         $project4->setName('Création graphique et Site Internet');
@@ -86,12 +78,12 @@ class ProjectAutoFixture extends Fixture
         $project4->setScreenshots('website-teamtanesc.png');
         $project4->setCategory('Web & Dev');
         $project4->setTags('PHP::HTML/CSS');
-        $project4->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $project4->setUpdatedAt(new \DateTime('2026-05-21 22:26:16'));
+        $project4->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project4->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $project4->setLabel('ttc');
         $project4->setLogo('ttc.png');
         $manager->persist($project4);
-        $this->addReference('project_5', $project4);
+        $this->addReference('project_12', $project4);
 
         $project5 = new Project();
         $project5->setName('Création graphique');
@@ -101,12 +93,12 @@ class ProjectAutoFixture extends Fixture
         $project5->setScreenshots('fairepart-gus.jpg::fairepart-elea.jpg::fairepart-cf.jpg::plu2cloud-logo-verti.png::plugeekit-logo-verti.png::tradee-logo-vert.png');
         $project5->setCategory('Print & Digital');
         $project5->setTags('Adobe Illustrator::Figma::Canva');
-        $project5->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $project5->setUpdatedAt(new \DateTime('2026-05-21 22:15:15'));
+        $project5->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project5->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $project5->setLabel('creations');
         $project5->setLogo('nine.png');
         $manager->persist($project5);
-        $this->addReference('project_6', $project5);
+        $this->addReference('project_13', $project5);
 
         $project6 = new Project();
         $project6->setName('Montage vidéo');
@@ -116,12 +108,12 @@ class ProjectAutoFixture extends Fixture
         $project6->setScreenshots('');
         $project6->setCategory('Vidéo');
         $project6->setTags('Adobe Premiere::iMovie');
-        $project6->setCreatedAt(new \DateTime('2026-05-20 22:46:52'));
-        $project6->setUpdatedAt(new \DateTime('2026-05-21 22:17:33'));
+        $project6->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project6->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $project6->setLabel('montages');
         $project6->setLogo('nine.png');
         $manager->persist($project6);
-        $this->addReference('project_7', $project6);
+        $this->addReference('project_14', $project6);
 
         $manager->flush();
     }
