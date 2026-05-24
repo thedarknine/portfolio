@@ -14,6 +14,7 @@ use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ExperienceItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: ExperienceItemRepository::class)]
 class ExperienceItem
@@ -32,6 +33,7 @@ class ExperienceItem
     private ?string $details = null;
 
     #[ORM\Column]
+    #[Gedmo\SortablePosition]
     private ?int $position = null;
 
     #[ORM\Column(length: 255)]

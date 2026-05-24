@@ -44,6 +44,8 @@ class DashboardController extends AbstractDashboardController
 
             MenuItem::section('Parcours'),
             MenuItem::linkTo(ExperienceCrudController::class, 'Expériences', 'fas fa-briefcase'),
+            MenuItem::linkTo(ExperienceItemCrudController::class, 'Livrables', 'fa fa-list-check'),
+            MenuItem::linkTo(ExperienceLinkCrudController::class, 'Liens', 'fa fa-link'),
             MenuItem::linkTo(SkillTypeCrudController::class, 'Types de compétences', 'fa fa-tags'),
             MenuItem::linkTo(SkillCrudController::class, 'Compétences', 'fa fa-code'),
 
