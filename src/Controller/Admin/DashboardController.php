@@ -56,6 +56,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkTo(SchoolCrudController::class, 'Établissements', 'fa fa-building'),
             MenuItem::linkTo(EducationCrudController::class, 'Diplômes', 'fa fa-graduation-cap'),
 
+            MenuItem::section('Arcade'),
+            MenuItem::linkTo(ArcadeTypeCrudController::class, 'Catégories', 'fa-solid fa-gamepad'),
+
             MenuItem::section('Retour'),
             MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_index'),
         ];
