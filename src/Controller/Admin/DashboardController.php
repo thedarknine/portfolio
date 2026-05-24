@@ -49,6 +49,9 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkTo(SkillTypeCrudController::class, 'Types de compétences', 'fa fa-tags'),
             MenuItem::linkTo(SkillCrudController::class, 'Compétences', 'fa fa-code'),
 
+            MenuItem::section('Réalisations'),
+            MenuItem::linkTo(ProjectCrudController::class, 'Projets', 'fa fa-diagram-project'),
+
             MenuItem::section('Cursus & Formations'),
             MenuItem::linkTo(SchoolCrudController::class, 'Établissements', 'fa fa-building'),
             MenuItem::linkTo(EducationCrudController::class, 'Diplômes', 'fa fa-graduation-cap'),
