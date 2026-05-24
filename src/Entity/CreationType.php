@@ -14,6 +14,7 @@ use App\Entity\Traits\LabelTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\CreationTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'creation_type')]
 #[ORM\Entity(repositoryClass: CreationTypeRepository::class)]
@@ -31,6 +32,7 @@ class CreationType
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Gedmo\SortablePosition]
     private ?int $position = null;
 
     public function getId(): int

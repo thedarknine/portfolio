@@ -51,6 +51,8 @@ class DashboardController extends AbstractDashboardController
 
             MenuItem::section('Réalisations'),
             MenuItem::linkTo(ProjectCrudController::class, 'Projets', 'fa fa-diagram-project'),
+            MenuItem::linkTo(CreationTypeCrudController::class, 'Types Créations', 'fa fa-brush'),
+            MenuItem::linkTo(PhotoTypeCrudController::class, 'Thématiques Photos', 'fa fa-camera'),
 
             MenuItem::section('Cursus & Formations'),
             MenuItem::linkTo(SchoolCrudController::class, 'Établissements', 'fa fa-building'),
