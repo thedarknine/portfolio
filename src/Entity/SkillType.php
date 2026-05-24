@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'skill_type')]
 #[ORM\Entity(repositoryClass: SkillTypeRepository::class)]
@@ -37,6 +38,7 @@ class SkillType
     private ?string $name = null;
 
     #[ORM\Column]
+    #[Gedmo\SortablePosition]
     private ?int $position = null;
 
     /** @var Collection<int, Skill> */
@@ -135,5 +137,10 @@ class SkillType
         $this->deleted = $deleted;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
     }
 }

@@ -62,7 +62,7 @@ final class PagesController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_page')]
+    #[Route('/{slug}', name: 'app_page', requirements: ['slug' => '^(?!admin|login|logout).*$'])]
     public function page(string $slug): Response
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
@@ -161,7 +161,7 @@ final class PagesController extends AbstractController
                 break;
 
             default:
-                return $this->redirectToRoute('app_index');
+                throw $this->createNotFoundException('Cette page n\'existe pas.');
         }
 
         return $this->render("pages/{$pagename}.html.twig", [

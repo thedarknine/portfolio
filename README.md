@@ -100,3 +100,18 @@ Into docker :
     #npm install -D prettier prettier-plugin-tailwindcss prettier-plugin-twig-melody
     
 ```
+
+### Admin
+
+```bash
+    composer require easycorp/easyadmin-bundle
+    php bin/console make:admin:dashboard
+    php bin/console make:admin:crud
+
+    # Update security
+    php bin/console make:user
+    php bin/console make:security:form-login
+
+    # Sortable fields
+    composer require stof/doctrine-extensions-bundle
+```

@@ -113,6 +113,11 @@ watch: ## Watch Tailwind CSS changes and re-build
 	$(call display_title,Watching Tailwind CSS changes and re-building ...........,${ICON_BUILD})
 	php bin/console tailwind:build --watch
 
+.PHONY: secret
+secret: ## Generate a new Symfony secret and update .env
+	$(call display_title,Generating new Symfony secret ........................,${ICON_INSTALL})
+	openssl rand -hex 32
+
 .PHONY: migrations
 migrations: ## Run Doctrine migrations
 	$(call display_title,Running Doctrine migrations ..........................,${ICON_DATA})
@@ -173,7 +178,20 @@ cs-front: ## Run linters for CSS and JS
 	@echo "Running Prettier..."
 	-@npx prettier --config .coding-standard-linters/.prettierrc assets/ --check
 
-# LINTER bin/biome lint
+	@echo "Running Biome..."
+	-@bin/biome lint
+
+.PHONY: cs-stylelint-fix
+cs-stylelint-fix: ## Run Stylelint and fix issues
+	$(call display_title,Running Stylelint and fixing issues .................,${ICON_CS})
+	@echo "Running Stylelint..."
+	-@npx stylelint --config .coding-standard-linters/.stylelintrc.json assets/styles/ --fix
+
+.PHONY: cs-prettier-fix
+cs-prettier-fix: ## Run Prettier and fix issues
+	$(call display_title,Running Prettier and fixing issues ................,${ICON_CS})
+	@echo "Running Prettier..."
+	-@npx prettier --config .coding-standard-linters/.prettierrc assets/ --write
 
 # =====================================================================
 ##@ HELP

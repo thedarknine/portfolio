@@ -65,7 +65,7 @@ $(document).ready(() => {
     }
 
     // Lightbox
-    const myPhotoSwipe = function () {
+    const myPhotoSwipe = () => {
         const galleryElement = document.querySelector('.pswp9-lightbox');
 
         if (galleryElement != null) {

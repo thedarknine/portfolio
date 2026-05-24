@@ -17,6 +17,7 @@ use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'skill')]
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
@@ -45,6 +46,7 @@ class Skill
     private ?int $level = null;
 
     #[ORM\Column]
+    #[Gedmo\SortablePosition]
     private ?int $position = null;
 
     #[ORM\Column]
@@ -196,5 +198,10 @@ class Skill
         }
 
         return strval($duration).' ans';
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }
