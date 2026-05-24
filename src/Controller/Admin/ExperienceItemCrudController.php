@@ -53,7 +53,7 @@ class ExperienceItemCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnForm();
 
-        // Liaison avec l'entité parente Experience
+        // Link to the parent Experience entity (EasyAdmin will use the __toString() of Experience)
         yield AssociationField::new('experience', 'Expérience')
             ->setRequired(true)
             ->setHelp('Sélectionnez le poste ou projet général lié.');
@@ -61,15 +61,13 @@ class ExperienceItemCrudController extends AbstractCrudController
         yield TextField::new('title', 'Titre de la réalisation')
             ->setHelp('Exemple : Refonte de l\'architecture, Lead Dev Symfony, Rôle d\'équilibrage...');
 
-        // Champ texte riche pour décrire précisément la mission / les technos
         yield TextEditorField::new('details', 'Description')
             ->setHelp('Détaillez vos accomplissements majeurs pour ce point.')
             ->hideOnIndex(); // Masqué pour garder le tableau lisible
 
-        // Gestion du picto
+        // Manage the picto (optional, can be an emoji or a short text)
         yield TextField::new('picto', 'Picto')
             ->setHelp('Exemple : Copier un emoji.')
-            // Un petit rendu visuel sympa sur l'index si c'est une classe FontAwesome
             ->formatValue(function ($value, $entity) {
                 if (!$value) {
                     return '<span class="text-muted">Aucun</span>';
