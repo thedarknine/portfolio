@@ -271,7 +271,15 @@
     </div>
 
 {% endfor %}
-    <div class="text-center mt-10 animate__animated" data-animate="animate__fadeIn"><a class="nine-btn-primary transform transition hover:scale-105 duration-300 ease-in-out" href="#"><span>En savoir plus</span></a></div>
+    <div class="text-center mt-10 animate__animated" data-animate="animate__fadeIn">
+    <a href="#" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-white/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
+        <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue)] to-[var(--color-nine-turquoise)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
+        <span class="relative z-10 flex items-center gap-2">
+            <span>En savoir plus</span>
+            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+        </span>
+    </a>
+    </div>
 </section>
 
 {# Moodboard section #}
