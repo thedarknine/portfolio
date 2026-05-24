@@ -13,7 +13,7 @@
 
         <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
             {% for education in data.educationsList %}
-                {% if education.type == 'pro' %}
+                {% if education.type.value == 'professionnel' %}
                 <div class="bg-white mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
                     <div class="px-4 py-5 flex-auto w-full">
                         <div class="flex justify-between items-start mb-3">
@@ -49,7 +49,7 @@
 
         <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
             {% for education in data.educationsList %}
-                {% if education.type == 'univ' %}
+                {% if education.type.value == 'universitaire' %}
                 <div class="bg-white mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
                     <div class="px-4 py-5 flex-auto w-full">
                         <div class="flex flex-wrap items-center justify-between gap-2 mb-2">

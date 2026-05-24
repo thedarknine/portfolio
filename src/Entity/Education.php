@@ -12,6 +12,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\LabelTrait;
 use App\Entity\Traits\TimeStampableTrait;
+use App\Enum\EducationType;
 use App\Repository\EducationRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -47,20 +48,20 @@ class Education
     #[ORM\JoinColumn(nullable: false)]
     private ?School $school = null;
 
-    #[ORM\Column(length: 10)]
-    private ?string $type = null;
+    #[ORM\Column(length: 30, type: 'string', enumType: EducationType::class)] // <-- Ajout de enumType
+    private ?EducationType $type = null;
 
     public function getId(): int
     {
         return $this->id;
     }
 
-    public function getType(): ?string
+    public function getType(): ?EducationType
     {
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(?EducationType $type): self
     {
         $this->type = $type;
 

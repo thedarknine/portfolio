@@ -42,10 +42,14 @@ class DashboardController extends AbstractDashboardController
         return [
             MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home'),
 
-            MenuItem::section('Portfolio'),
+            MenuItem::section('Parcours'),
             MenuItem::linkTo(ExperienceCrudController::class, 'Expériences', 'fas fa-briefcase'),
             MenuItem::linkTo(SkillTypeCrudController::class, 'Types de compétences', 'fa fa-tags'),
             MenuItem::linkTo(SkillCrudController::class, 'Compétences', 'fa fa-code'),
+
+            MenuItem::section('Cursus & Formations'),
+            MenuItem::linkTo(SchoolCrudController::class, 'Établissements', 'fa fa-building'),
+            MenuItem::linkTo(EducationCrudController::class, 'Diplômes', 'fa fa-graduation-cap'),
 
             MenuItem::section('Retour'),
             MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_index'),

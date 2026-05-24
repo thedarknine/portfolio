@@ -18,6 +18,7 @@ $finder = (new PhpCsFixer\Finder())
         'config',
         'node_modules',
         '.coding-standard-linters', 
+        'src/DataFixtures',
     ])
     
     ->notPath('importmap.php');
