@@ -8,24 +8,29 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\Entity\Traits;
+namespace App\Entity\Trait;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait LabelTrait
+trait NameTrait
 {
     #[ORM\Column(length: 120)]
-    private ?string $label = null;
+    private ?string $name = null;
 
-    public function getLabel(): ?string
+    public function getName(): ?string
     {
-        return $this->label;
+        return $this->name;
     }
 
-    public function setLabel(string $label): self
+    public function setName(string $name): static
     {
-        $this->label = $label;
+        $this->name = $name;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name ?? '';
     }
 }

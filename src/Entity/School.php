@@ -10,9 +10,10 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\LogoTrait;
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\LabelTrait;
+use App\Entity\Trait\LogoTrait;
+use App\Entity\Trait\NameTrait;
+use App\Entity\Trait\TimeStampableTrait;
 use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -24,6 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
 class School
 {
     use TimeStampableTrait;
+    use NameTrait;
     use LabelTrait;
     use LogoTrait;
 
@@ -31,9 +33,6 @@ class School
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
 
     #[ORM\Column(length: 100)]
     private ?string $city = null;
@@ -53,18 +52,6 @@ class School
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getCity(): ?string
@@ -119,10 +106,5 @@ class School
         }
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->name;
     }
 }

@@ -10,8 +10,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\LabelTrait;
+use App\Entity\Trait\TimeStampableTrait;
+use App\Entity\Trait\TitleTrait;
 use App\Repository\ExperienceRepository;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,15 +26,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Experience
 {
     use TimeStampableTrait;
+    use TitleTrait;
     use LabelTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 120)]
-    private ?string $title = null;
 
     #[ORM\Column(length: 120, nullable: true)]
     private ?string $subtitle = null;
@@ -80,18 +79,6 @@ class Experience
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function getSubtitle(): ?string
@@ -272,10 +259,5 @@ class Experience
         }
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->title ?? '';
     }
 }

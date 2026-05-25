@@ -10,8 +10,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\LabelTrait;
+use App\Entity\Trait\TimeStampableTrait;
+use App\Entity\Trait\TitleTrait;
 use App\Enum\EducationType;
 use App\Repository\EducationRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -22,15 +23,13 @@ use Doctrine\ORM\Mapping as ORM;
 class Education
 {
     use TimeStampableTrait;
+    use TitleTrait;
     use LabelTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 120)]
-    private ?string $title = null;
 
     #[ORM\Column]
     private ?int $year = null;
@@ -64,18 +63,6 @@ class Education
     public function setType(?EducationType $type): self
     {
         $this->type = $type;
-
-        return $this;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
 
         return $this;
     }

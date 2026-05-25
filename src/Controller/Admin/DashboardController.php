@@ -43,23 +43,26 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home'),
 
             MenuItem::section('Parcours'),
+            MenuItem::linkTo(CompanyCrudController::class, 'Entreprises', 'fa fa-building-user'),
             MenuItem::linkTo(ExperienceCrudController::class, 'Expériences', 'fas fa-briefcase'),
-            MenuItem::linkTo(ExperienceItemCrudController::class, 'Livrables', 'fa fa-list-check'),
+            MenuItem::linkTo(ExperienceItemCrudController::class, 'Missions', 'fa fa-list-check'),
             MenuItem::linkTo(ExperienceLinkCrudController::class, 'Liens', 'fa fa-link'),
-            MenuItem::linkTo(SkillTypeCrudController::class, 'Types de compétences', 'fa fa-tags'),
+
+            MenuItem::section('Compétences'),
+            MenuItem::linkTo(SkillTypeCrudController::class, 'Types', 'fa fa-tags'),
             MenuItem::linkTo(SkillCrudController::class, 'Compétences', 'fa fa-code'),
 
             MenuItem::section('Réalisations'),
             MenuItem::linkTo(ProjectCrudController::class, 'Projets', 'fa fa-diagram-project'),
-            MenuItem::linkTo(CreationTypeCrudController::class, 'Types Créations', 'fa fa-brush'),
-            MenuItem::linkTo(PhotoTypeCrudController::class, 'Thématiques Photos', 'fa fa-camera'),
 
             MenuItem::section('Cursus & Formations'),
             MenuItem::linkTo(SchoolCrudController::class, 'Établissements', 'fa fa-building'),
             MenuItem::linkTo(EducationCrudController::class, 'Diplômes', 'fa fa-graduation-cap'),
 
-            MenuItem::section('Arcade'),
-            MenuItem::linkTo(ArcadeTypeCrudController::class, 'Catégories', 'fa-solid fa-gamepad'),
+            MenuItem::section('Hobbies'),
+            MenuItem::linkTo(ArcadeTypeCrudController::class, 'Arcade > Catégories', 'fa-solid fa-gamepad'),
+            MenuItem::linkTo(CreationTypeCrudController::class, 'Types > Créations', 'fa fa-brush'),
+            MenuItem::linkTo(PhotoTypeCrudController::class, 'Thématiques > Photos', 'fa fa-camera'),
 
             MenuItem::section('Retour'),
             MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_index'),

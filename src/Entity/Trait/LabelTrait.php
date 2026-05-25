@@ -8,23 +8,23 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\Entity\Traits;
+namespace App\Entity\Trait;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait LogoTrait
+trait LabelTrait
 {
-    #[ORM\Column(length: 100)]
-    private ?string $logo = null;
+    #[ORM\Column(length: 120)]
+    private ?string $label = null;
 
-    public function getLogo(): ?string
+    public function getLabel(): ?string
     {
-        return $this->logo;
+        return $this->label;
     }
 
-    public function setLogo(string $logo): static
+    public function setLabel(string $label): self
     {
-        $this->logo = $logo;
+        $this->label = $label;
 
         return $this;
     }

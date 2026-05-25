@@ -10,9 +10,10 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\LogoTrait;
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\LabelTrait;
+use App\Entity\Trait\LogoTrait;
+use App\Entity\Trait\NameTrait;
+use App\Entity\Trait\TimeStampableTrait;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,6 +24,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Project
 {
     use TimeStampableTrait;
+    use NameTrait;
     use LabelTrait;
     use LogoTrait;
 
@@ -30,9 +32,6 @@ class Project
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
 
     #[ORM\Column(length: 100)]
     private ?string $period = null;
@@ -55,18 +54,6 @@ class Project
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getPeriod(): ?string

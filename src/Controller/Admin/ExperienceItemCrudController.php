@@ -14,12 +14,14 @@ use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Entity\ExperienceItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
 class ExperienceItemCrudController extends AbstractCrudController
 {
@@ -42,6 +44,11 @@ class ExperienceItemCrudController extends AbstractCrudController
             ])
             ->showEntityActionsInlined()
         ;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters->add(EntityFilter::new('experience')->autocomplete());
     }
 
     public function configureActions(Actions $actions): Actions

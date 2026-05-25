@@ -10,7 +10,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\TimeStampableTrait;
+use App\Entity\Trait\TitleTrait;
 use App\Repository\ExperienceItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,14 +21,12 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class ExperienceItem
 {
     use TimeStampableTrait;
+    use TitleTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $details = null;
@@ -46,18 +45,6 @@ class ExperienceItem
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function getDetails(): ?string

@@ -10,14 +10,15 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\LogoTrait;
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\LabelTrait;
+use App\Entity\Trait\LogoTrait;
+use App\Entity\Trait\NameTrait;
+use App\Entity\Trait\PositionTrait;
+use App\Entity\Trait\TimeStampableTrait;
 use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'skill')]
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
@@ -25,16 +26,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Skill
 {
     use TimeStampableTrait;
+    use NameTrait;
     use LabelTrait;
     use LogoTrait;
+    use PositionTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
 
     #[ORM\Column]
     private ?int $startYear = null;
@@ -44,10 +44,6 @@ class Skill
 
     #[ORM\Column]
     private ?int $level = null;
-
-    #[ORM\Column]
-    #[Gedmo\SortablePosition]
-    private ?int $position = null;
 
     #[ORM\Column]
     private bool $display = false;
@@ -68,18 +64,6 @@ class Skill
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getStartYear(): ?int
@@ -114,18 +98,6 @@ class Skill
     public function setLevel(int $level): static
     {
         $this->level = $level;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): static
-    {
-        $this->position = $position;
 
         return $this;
     }
@@ -198,10 +170,5 @@ class Skill
         }
 
         return strval($duration).' ans';
-    }
-
-    public function __toString(): string
-    {
-        return $this->name;
     }
 }

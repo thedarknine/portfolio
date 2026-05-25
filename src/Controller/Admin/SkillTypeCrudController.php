@@ -17,6 +17,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -26,6 +27,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 
 class SkillTypeCrudController extends AbstractCrudController
 {
@@ -47,7 +49,12 @@ class SkillTypeCrudController extends AbstractCrudController
         ;
     }
 
-    public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters->add(BooleanFilter::new('deleted'));
+    }
+
+    /*public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
     {
         $qb = parent::createIndexQueryBuilder($searchDto, $entityDto, $fields, $filters);
 
@@ -56,7 +63,7 @@ class SkillTypeCrudController extends AbstractCrudController
             ->setParameter('deleted', false);
 
         return $qb;
-    }
+    }*/
 
     public function configureFields(string $pageName): iterable
     {
@@ -80,8 +87,7 @@ class SkillTypeCrudController extends AbstractCrudController
             ->onlyOnIndex(); // Display only on index as a count, not the full list of skills (which can be too long)
 
         // To manage soft delete
-        yield BooleanField::new('deleted', 'Archivé')
-            ->hideOnIndex();
+        yield BooleanField::new('deleted', 'Archivé');
     }
 
     public function configureActions(Actions $actions): Actions

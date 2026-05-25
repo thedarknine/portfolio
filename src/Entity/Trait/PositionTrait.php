@@ -8,37 +8,16 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\Entity;
+namespace App\Entity\Trait;
 
-use App\Entity\Trait\LabelTrait;
-use App\Entity\Trait\NameTrait;
-use App\Entity\Trait\TimeStampableTrait;
-use App\Repository\CreationTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Table(name: 'creation_type')]
-#[ORM\Entity(repositoryClass: CreationTypeRepository::class)]
-#[ORM\HasLifecycleCallbacks()]
-class CreationType
+trait PositionTrait
 {
-    use TimeStampableTrait;
-    use NameTrait;
-    use LabelTrait;
-
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private int $id;
-
     #[ORM\Column]
     #[Gedmo\SortablePosition]
     private ?int $position = null;
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
 
     public function getPosition(): ?int
     {

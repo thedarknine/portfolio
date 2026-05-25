@@ -10,15 +10,16 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\LogoTrait;
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\LabelTrait;
+use App\Entity\Trait\LogoTrait;
+use App\Entity\Trait\NameTrait;
+use App\Entity\Trait\PositionTrait;
+use App\Entity\Trait\TimeStampableTrait;
 use App\Repository\SkillTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'skill_type')]
 #[ORM\Entity(repositoryClass: SkillTypeRepository::class)]
@@ -26,20 +27,15 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class SkillType
 {
     use TimeStampableTrait;
+    use NameTrait;
     use LabelTrait;
     use LogoTrait;
+    use PositionTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
-
-    #[ORM\Column]
-    #[Gedmo\SortablePosition]
-    private ?int $position = null;
 
     /** @var Collection<int, Skill> */
     #[ORM\OneToMany(mappedBy: 'skillType', targetEntity: Skill::class)]
@@ -59,30 +55,6 @@ class SkillType
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): static
-    {
-        $this->position = $position;
-
-        return $this;
     }
 
     /**
@@ -137,10 +109,5 @@ class SkillType
         $this->deleted = $deleted;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->name ?? '';
     }
 }

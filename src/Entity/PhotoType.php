@@ -10,11 +10,12 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Trait\LabelTrait;
+use App\Entity\Trait\NameTrait;
+use App\Entity\Trait\PositionTrait;
+use App\Entity\Trait\TimeStampableTrait;
 use App\Repository\PhotoTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'photo_type')]
 #[ORM\Entity(repositoryClass: PhotoTypeRepository::class)]
@@ -22,46 +23,17 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class PhotoType
 {
     use TimeStampableTrait;
+    use NameTrait;
     use LabelTrait;
+    use PositionTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
-
-    #[ORM\Column]
-    #[Gedmo\SortablePosition]
-    private ?int $position = null;
-
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): static
-    {
-        $this->position = $position;
-
-        return $this;
     }
 }

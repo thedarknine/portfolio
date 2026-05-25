@@ -8,7 +8,7 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\Entity\Traits;
+namespace App\Entity\Trait;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
