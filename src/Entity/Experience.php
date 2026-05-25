@@ -10,9 +10,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\LabelTrait;
-use App\Entity\Trait\TimeStampableTrait;
-use App\Entity\Trait\TitleTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Traits\TitleableTrait;
 use App\Repository\ExperienceRepository;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -26,8 +26,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Experience
 {
     use TimeStampableTrait;
-    use TitleTrait;
-    use LabelTrait;
+    use TitleableTrait;
+    use SlugableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

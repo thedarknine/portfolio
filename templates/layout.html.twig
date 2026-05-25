@@ -55,30 +55,22 @@
 
     </head>
     <body>
-        <div class="main" id="{{ page }}">
+        <div class="main" id="{{ data.current.slug ?? 'home' }}">
             <!--Header-->
-            <header class="bg-transparent nine-sticky-bar{% if page != 'home' %} nine-stick{% endif %}">
+            <header class="bg-transparent nine-sticky-bar{% if data.current.slug != 'home' %} nine-stick{% endif %}">
                 <div class="container bg-transparent">
                     <nav class="bg-transparent flex justify-between items-center py-3">
                         <a class="text-3xl font-semibold leading-none" href="/">
                             <img id="logo" class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250-white.svg" alt="">
                         </a>
                         <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-5">
-                            <li class="p-4 nine-menu-item {% if page == 'experience' %}nine-active text-nine-turquoise{% endif %}">
-                                <a class="" href="/experience">Expérience</a>
+                        {% for page in data.pagesList %}
+                            {% if page.inHeader %}
+                            <li class="p-4 nine-menu-item {% if data.current.slug == page.slug %}nine-active text-nine-turquoise{% endif %}">
+                                <a class="" href="/{{ page.slug }}">{{ page.title }}</a>
                             </li>
-                            <li class="p-4 nine-menu-item {% if page == 'skills' %}nine-active text-nine-turquoise{% endif %}">
-                                <a class="" href="/competences">Compétences</a>
-                            </li>
-                            <li class="p-4 nine-menu-item {% if page == 'education' %}nine-active text-nine-turquoise{% endif %}">
-                                <a class="" href="/formation">Formation</a>
-                            </li>
-                            <li class="p-4 nine-menu-item {% if page == 'projects' %}nine-active text-nine-turquoise{% endif %}">
-                                <a class="" href="/projets">Projets</a>
-                            </li>
-                            <li class="p-4 nine-menu-item {% if page == 'arcade' %}nine-active text-nine-turquoise{% endif %}">
-                                <a class="" href="/arcade">Arcade</a>
-                            </li>
+                            {% endif %}
+                        {% endfor %}
                         </ul>
                         <div class="lg:hidden">
                             <button class="nine-navbar-burger flex items-center py-2 px-3 text-nine-turquoise hover:text-nine-blue">
@@ -140,27 +132,9 @@
                     </div>
                     <div>
                         <ul class="mobile-menu">
-                            <li class="mb-1">
-                                <a class="block p-4 text-blueGray-500" href="/experience">Expérience</a>
-                            </li>
-                            <li class="mb-1">
-                                <a class="block p-4 text-blueGray-500" href="/competences">Compétences</a>
-                            </li>
-                            <li class="mb-1">
-                                <a class="block p-4 text-blueGray-500" href="/formation">Formation</a>
-                            </li>
-                            <li class="mb-1">
-                                <a class="block p-4 text-blueGray-500" href="/projets">Projets</a>
-                            </li>
-                            <li class="mb-1">
-                                <a class="block p-4 text-blueGray-500" href="/arcade">Arcade</a>
-                            </li>
-                            <li class="mb-1">
-                                <a class="block p-4 text-blueGray-500" href="/creations">Créations</a>
-                            </li>
-                            <li class="mb-1">
-                                <a class="block p-4 text-blueGray-500" href="/photos">Photos</a>
-                            </li>
+                        {% for page in data.pagesList %}
+                            <li class="mb-1"><a class="block p-4 text-blueGray-500" href="/{{ page.slug }}">{{ page.title }}</a></li>
+                        {% endfor %}
                         </ul>
                     </div>
                     <div class="mt-auto">
@@ -172,14 +146,14 @@
             </div>
 
             <main>
-                {% if page != 'home' %}
-                    {{ include('blocks/page_hero.html.twig', { tagline: tagline, subtitle: subtitle, slug: page }) }}
+                {% if data.current.slug != 'home' %}
+                    {{ include('blocks/page_hero.html.twig') }}
                 {% endif %}
 
                 {% block body %}{% endblock %}
 
-                {% if page != 'home' %}
-                    {{ include('blocks/page_quote.html.twig', { quote: quote }) }}
+                {% if data.current.slug != 'home' %}
+                    {{ include('blocks/page_quote.html.twig') }}
                 {% endif %}
             </main>
         </div>
@@ -204,18 +178,21 @@
                             <div class="w-full lg:w-1/5 px-3 mb-8 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="900">
                                 <p class="mb-2 lg:text-lg font-accent nine-smallcaps text-nine-turquoise">Parcours</p>
                                 <ul class="list-unstyled mb-0">
-                                    <li class="mb-2"><a href="/experience" class="text-blue-gray-400 text-xs">Expérience</a></li>
-                                    <li class="mb-2"><a href="/competences" class="text-blue-gray-400 text-xs">Compétences</a></li>
-                                    <li class="mb-2"><a href="/formation" class="text-blue-gray-400 text-xs">Formation</a></li>
-                                    <li class="mb-2"><a href="/projets" class="text-blue-gray-400 text-xs">Projets</a></li>
+                                {% for page in data.pagesList %}
+                                    {% if page.category.value == 'career' %}
+                                    <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs">{{ page.title }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
                                 </ul>
                             </div>
-                            <div class="w-full lg:w-1/5 px-3 animate__animated" data-animate="animate__fadeInUp" data-delay="1.2s">
+                            <div class="w-full lg:w-1/5 px-3 animate__animated" data-animate="animate__fadeInUp" data-delay="1200">
                                 <p class="mb-2 lg:text-lg font-accent nine-smallcaps text-nine-turquoise">Centres d'intérêt</p>
                                 <ul class="list-unstyled mb-0">
-                                    <li class="mb-2"><a href="/creations" class="text-blue-gray-400 text-xs">Créations</a></li>
-                                    <li class="mb-2"><a href="/photos" class="text-blue-gray-400 text-xs">Photos</a></li>
-                                    <li class="mb-2"><a href="/arcade" class="text-blue-gray-400 text-xs">Arcade</a></li>
+                                {% for page in data.pagesList %}
+                                    {% if page.category.value == 'interest' %}
+                                    <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs">{{ page.title }}</a></li>
+                                    {% endif %}
+                                {% endfor %}
                                 </ul>
                             </div>
                         </div>

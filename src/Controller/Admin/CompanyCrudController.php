@@ -38,11 +38,11 @@ class CompanyCrudController extends AbstractCrudController
     {
         yield IdField::new('id')->hideOnForm();
 
-        // Utilise le NameTrait
+        // Use the NameableTrait
         yield TextField::new('name', 'Nom de l\'entreprise')
             ->setHelp('Exemple : Leviia, Perfect, Coffreo...');
 
-        // Gestion du logo (Nom de fichier texte + aperçu HTML)
+        // Logo Management (Text file name + HTML preview)
         yield TextField::new('logo', 'Nom du fichier Logo')
             ->setHelp('Exemple : logo-leviia.svg (doit être dans public/uploads/companies/)')
             ->formatValue(function ($value, $entity) {

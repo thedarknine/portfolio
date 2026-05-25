@@ -10,10 +10,10 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\LabelTrait;
-use App\Entity\Trait\NameTrait;
-use App\Entity\Trait\PositionTrait;
-use App\Entity\Trait\TimeStampableTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\SortableTrait;
+use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ArcadeTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,9 +23,9 @@ use Doctrine\ORM\Mapping as ORM;
 class ArcadeType
 {
     use TimeStampableTrait;
-    use NameTrait;
-    use LabelTrait;
-    use PositionTrait;
+    use NameableTrait;
+    use SlugableTrait;
+    use SortableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

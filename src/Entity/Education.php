@@ -10,9 +10,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\LabelTrait;
-use App\Entity\Trait\TimeStampableTrait;
-use App\Entity\Trait\TitleTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Traits\TitleableTrait;
 use App\Enum\EducationType;
 use App\Repository\EducationRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -23,8 +23,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Education
 {
     use TimeStampableTrait;
-    use TitleTrait;
-    use LabelTrait;
+    use TitleableTrait;
+    use SlugableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

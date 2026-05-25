@@ -8,12 +8,12 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\Entity\Trait;
+namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-trait PositionTrait
+trait SortableTrait
 {
     #[ORM\Column]
     #[Gedmo\SortablePosition]

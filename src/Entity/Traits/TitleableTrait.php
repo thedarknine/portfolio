@@ -8,11 +8,11 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\Entity\Trait;
+namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait TitleTrait
+trait TitleableTrait
 {
     #[ORM\Column(length: 120)]
     private ?string $title = null;

@@ -10,11 +10,11 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\LabelTrait;
-use App\Entity\Trait\LogoTrait;
-use App\Entity\Trait\NameTrait;
-use App\Entity\Trait\PositionTrait;
-use App\Entity\Trait\TimeStampableTrait;
+use App\Entity\Traits\LogoableTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\SortableTrait;
+use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\SkillTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -27,10 +27,10 @@ use Doctrine\ORM\Mapping as ORM;
 class SkillType
 {
     use TimeStampableTrait;
-    use NameTrait;
-    use LabelTrait;
-    use LogoTrait;
-    use PositionTrait;
+    use NameableTrait;
+    use SlugableTrait;
+    use LogoableTrait;
+    use SortableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

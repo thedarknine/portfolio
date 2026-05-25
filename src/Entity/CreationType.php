@@ -10,9 +10,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\LabelTrait;
-use App\Entity\Trait\NameTrait;
-use App\Entity\Trait\TimeStampableTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\CreationTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
@@ -23,8 +23,8 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class CreationType
 {
     use TimeStampableTrait;
-    use NameTrait;
-    use LabelTrait;
+    use NameableTrait;
+    use SlugableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

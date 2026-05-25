@@ -10,10 +10,10 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\LabelTrait;
-use App\Entity\Trait\LogoTrait;
-use App\Entity\Trait\NameTrait;
-use App\Entity\Trait\TimeStampableTrait;
+use App\Entity\Traits\LogoableTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,9 +25,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Company
 {
     use TimeStampableTrait;
-    use NameTrait;
-    use LabelTrait;
-    use LogoTrait;
+    use NameableTrait;
+    use SlugableTrait;
+    use LogoableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

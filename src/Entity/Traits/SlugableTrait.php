@@ -8,23 +8,23 @@
  * with this source code in the file LICENSE.
  */
 
-namespace App\Entity\Trait;
+namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait LogoTrait
+trait SlugableTrait
 {
-    #[ORM\Column(length: 100)]
-    private ?string $logo = null;
+    #[ORM\Column(length: 120, unique: true)]
+    private ?string $slug = null;
 
-    public function getLogo(): ?string
+    public function getSlug(): ?string
     {
-        return $this->logo;
+        return $this->slug;
     }
 
-    public function setLogo(string $logo): static
+    public function setSlug(?string $slug): self
     {
-        $this->logo = $logo;
+        $this->slug = $slug;
 
         return $this;
     }

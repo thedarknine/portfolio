@@ -10,8 +10,8 @@
 
 namespace App\Entity;
 
-use App\Entity\Trait\TimeStampableTrait;
-use App\Entity\Trait\TitleTrait;
+use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Traits\TitleableTrait;
 use App\Repository\ExperienceItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,7 +21,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class ExperienceItem
 {
     use TimeStampableTrait;
-    use TitleTrait;
+    use TitleableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

@@ -1,0 +1,272 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block page_title %}Tableau de bord{% endblock %}
+
+{% block content %}
+<div class="space-y-10">
+
+    {# ====================================================== #}
+    {# Header #}
+    {# ====================================================== #}
+    <section class="rounded-3xl bg-linear-to-br from-indigo-600 to-violet-600 p-8 text-white shadow-xl">
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+
+            <div>
+                <p class="text-sm font-medium uppercase tracking-widest text-indigo-100">
+                    Administration
+                </p>
+
+                <h1 class="mt-2 text-4xl font-bold tracking-tight">
+                    Tableau de bord
+                </h1>
+
+                <p class="mt-3 max-w-2xl text-base leading-relaxed text-indigo-100">
+                    Gérez les contenus du portfolio, les expériences, les projets
+                    et les différentes sections du site depuis cet espace centralisé.
+                </p>
+            </div>
+
+            <div class="rounded-2xl bg-white/10 px-5 py-4 backdrop-blur-sm">
+                <p class="text-sm text-indigo-100">
+                    Connecté en tant que
+                </p>
+
+                <p class="mt-1 text-lg font-semibold">
+                    {{ app.user.email }}
+                </p>
+
+                <div class="mt-3 text-sm text-indigo-100">
+                    {{ 'now'|date('d/m/Y • H:i') }}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {# ====================================================== #}
+    {# Actions rapides #}
+    {# ====================================================== #}
+    <section>
+
+        <div class="mb-5 flex items-center justify-between">
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">
+                    Actions rapides
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Accès direct aux principales sections du portfolio
+                </p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
+
+            <a href="{{ ea_url().setController('App\\Controller\\Admin\\PageCrudController') }}"
+               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
+                    <i class="fa fa-file-lines text-xl"></i>
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-slate-900">
+                    Pages
+                </h3>
+
+                <p class="mt-2 text-sm leading-relaxed text-slate-500">
+                    Modifier les contenus éditoriaux et les pages du site.
+                </p>
+
+                <div class="mt-5 text-sm font-medium text-indigo-600 group-hover:text-indigo-500">
+                    Accéder →
+                </div>
+            </a>
+
+            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ExperienceCrudController') }}"
+               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
+                    <i class="fas fa-briefcase text-xl"></i>
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-slate-900">
+                    Expériences
+                </h3>
+
+                <p class="mt-2 text-sm leading-relaxed text-slate-500">
+                    Gérer le parcours professionnel et les missions.
+                </p>
+
+                <div class="mt-5 text-sm font-medium text-emerald-600 group-hover:text-emerald-500">
+                    Accéder →
+                </div>
+            </a>
+
+            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProjectCrudController') }}"
+               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50 text-amber-600">
+                    <i class="fa fa-diagram-project text-xl"></i>
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-slate-900">
+                    Projets
+                </h3>
+
+                <p class="mt-2 text-sm leading-relaxed text-slate-500">
+                    Ajouter et organiser les réalisations du portfolio.
+                </p>
+
+                <div class="mt-5 text-sm font-medium text-amber-600 group-hover:text-amber-500">
+                    Accéder →
+                </div>
+            </a>
+
+            <a href="{{ ea_url().setController('App\\Controller\\Admin\\SkillCrudController') }}"
+               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
+                    <i class="fa fa-code text-xl"></i>
+                </div>
+
+                <h3 class="mt-5 text-lg font-semibold text-slate-900">
+                    Compétences
+                </h3>
+
+                <p class="mt-2 text-sm leading-relaxed text-slate-500">
+                    Mettre à jour les technologies et expertises.
+                </p>
+
+                <div class="mt-5 text-sm font-medium text-violet-600 group-hover:text-violet-500">
+                    Accéder →
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    {# ====================================================== #}
+    {# Univers du portfolio #}
+    {# ====================================================== #}
+    <section>
+
+        <div class="mb-5">
+            <h2 class="text-2xl font-bold text-slate-900">
+                Univers du portfolio
+            </h2>
+
+            <p class="mt-1 text-sm text-slate-500">
+                Les sections créatives et personnelles du site
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
+
+            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ArcadeTypeCrudController') }}"
+               class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="bg-linear-to-r from-indigo-500 to-indigo-600 p-6 text-white">
+                    <i class="fa-solid fa-gamepad text-3xl"></i>
+
+                    <h3 class="mt-4 text-2xl font-bold">
+                        Arcade
+                    </h3>
+
+                    <p class="mt-2 text-sm text-indigo-100">
+                        Gestion des catégories et contenus arcade.
+                    </p>
+                </div>
+
+                <div class="p-6">
+                    <span class="text-sm font-medium text-indigo-600">
+                        Ouvrir la section →
+                    </span>
+                </div>
+            </a>
+
+            <a href="{{ ea_url().setController('App\\Controller\\Admin\\CreationTypeCrudController') }}"
+               class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="bg-linear-to-r from-pink-500 to-rose-500 p-6 text-white">
+                    <i class="fa fa-brush text-3xl"></i>
+
+                    <h3 class="mt-4 text-2xl font-bold">
+                        Créations
+                    </h3>
+
+                    <p class="mt-2 text-sm text-pink-100">
+                        Modelages, créations artistiques et contenus visuels.
+                    </p>
+                </div>
+
+                <div class="p-6">
+                    <span class="text-sm font-medium text-pink-600">
+                        Ouvrir la section →
+                    </span>
+                </div>
+            </a>
+
+            <a href="{{ ea_url().setController('App\\Controller\\Admin\\PhotoTypeCrudController') }}"
+               class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
+
+                <div class="bg-linear-to-r from-sky-500 to-cyan-500 p-6 text-white">
+                    <i class="fa fa-camera text-3xl"></i>
+
+                    <h3 class="mt-4 text-2xl font-bold">
+                        Photos
+                    </h3>
+
+                    <p class="mt-2 text-sm text-sky-100">
+                        Gestion des thématiques et galeries photo.
+                    </p>
+                </div>
+
+                <div class="p-6">
+                    <span class="text-sm font-medium text-sky-600">
+                        Ouvrir la section →
+                    </span>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    {# ====================================================== #}
+    {# Liens utiles #}
+    {# ====================================================== #}
+    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
+
+        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
+
+            <div>
+                <h2 class="text-2xl font-bold text-slate-900">
+                    Accès rapides
+                </h2>
+
+                <p class="mt-1 text-sm text-slate-500">
+                    Navigation et accès au portfolio public
+                </p>
+            </div>
+
+            <div class="flex flex-wrap gap-4">
+
+                <a href="{{ path('app_index') }}"
+                   target="_blank"
+                   class="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800">
+
+                    <i class="fa fa-globe"></i>
+                    Voir le site
+                </a>
+
+                <a href="{{ path('app_logout') }}"
+                   class="inline-flex items-center gap-2 rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">
+
+                    <i class="fa fa-arrow-right-from-bracket"></i>
+                    Déconnexion
+                </a>
+
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -26,7 +26,7 @@
 
             <!-- RIGHT BLOCK : The skills grid -->
             <div class="w-full lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
-                {% set skills = data.skillsList[type.label] %}
+                {% set skills = data.skillsList[type.slug] %}
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {% for skill in skills %}
@@ -35,7 +35,7 @@
                         <div>
                             <div class="flex items-center gap-3.5 mb-4">
                                 <div class="w-12 h-12 shrink-0 p-2 rounded-lg flex items-center justify-center group-hover/card:bg-white group-hover/card:border-nine-turquoise/40 transition-colors duration-300">
-                                    <img src="{{ absolute_url('images/skills/' ~ skill.label ~ '.png') }}" class="w-full h-full object-contain" alt="{{ skill.name }}" />
+                                    <img src="{{ absolute_url('images/skills/' ~ skill.slug ~ '.png') }}" class="w-full h-full object-contain" alt="{{ skill.name }}" />
                                 </div>
                                 <div>
                                     <h6 class="font-accent text-xl font-medium text-nine-turquoise transition-colors duration-300">

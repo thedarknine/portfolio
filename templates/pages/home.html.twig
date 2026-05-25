@@ -237,10 +237,10 @@
         <div class="lg:col-span-5">
             <div class="mb-16 lg:mb-0 xl:mt-16 animate__animated" data-animate="animate__fadeInLeft">
                 <div class="w-10/12 sm:w-12/12 mx-auto">
-                    <div class="relative flex flex-col min-w-0 wrap-break-words w-full mb-6 shadow-lg rounded-lg bg-{{ experience.company.label }}">
-                        <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.label ~ '.png') }}" class="w-full align-middle rounded-t-lg">
+                    <div class="relative flex flex-col min-w-0 wrap-break-words w-full mb-6 shadow-lg rounded-lg bg-{{ experience.company.slug }}">
+                        <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.slug ~ '.png') }}" class="w-full align-middle rounded-t-lg">
                         <blockquote class="relative p-8 mb-4">
-                            <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px"><polygon points="-30,95 583,95 583,65" class="fill-{{ experience.company.label }}"></polygon></svg>
+                            <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px"><polygon points="-30,95 583,95 583,65" class="fill-{{ experience.company.slug }}"></polygon></svg>
                             <h4 class="text-xl font-bold text-white">{{ experience.title }}</h4>
                             <h5 class="mb-8 font-semibold text-white/70">{{ experience.subtitle }}</h5>
                             <p class="text-md font-light mt-2 text-white">{{ experience.summary }}</p>
