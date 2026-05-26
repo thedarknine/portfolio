@@ -15,6 +15,9 @@ RUN apt update && apt install -y \
     unzip \
     nodejs npm
 
+# To enable code coverage for PHPUnit
+RUN pecl install pcov && docker-php-ext-enable pcov
+
 # Clear cache
 RUN apt clean && rm -rf /var/lib/apt/lists/*
 
@@ -33,8 +36,9 @@ RUN set -ex; \
     docker-php-ext-install bcmath
 
 # Install Symfony CLI
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash
-RUN apt update && apt install -y symfony-cli
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash \
+    && apt update && apt install -y symfony-cli \
+    && apt clean && rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g pnpm
 

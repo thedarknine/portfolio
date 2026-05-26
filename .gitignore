@@ -5,6 +5,8 @@
 !.docker/mysql/data/.gitkeep
 !.docker/volumes/logs/mysql/.gitkeep
 /node_modules/*
+/coverage
+/.phpunit.cache
 
 ###> symfony/framework-bundle ###
 /.env.local

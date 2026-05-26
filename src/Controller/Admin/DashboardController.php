@@ -11,28 +11,22 @@
 namespace App\Controller\Admin;
 
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
-use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/admin', name: 'admin')]
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
-    #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
         return $this->render('admin/dashboard.html.twig');
     }
-    /*public function index(): Response
-    {
-        // Clean redirection: official method recommended by the creator of EasyAdmin
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-
-        return $this->redirect($adminUrlGenerator->setController(ExperienceCrudController::class)->generateUrl());
-    }*/
 
     public function configureDashboard(): Dashboard
     {
@@ -43,38 +37,36 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        return [
-            MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home'),
+        yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
 
-            MenuItem::section('Gestion Éditoriale'),
-            MenuItem::linkTo(PageInfoCrudController::class, 'Pages du site', 'fa fa-file-lines'),
-            MenuItem::linkTo(ResourceLinkCrudController::class, 'Ressources', 'fa-solid fa-box-open'),
+        yield MenuItem::section('Gestion Éditoriale');
+        yield MenuItem::linkTo(PageInfoCrudController::class, 'Pages du site', 'fa fa-file-lines')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(ResourceLinkCrudController::class, 'Ressources', 'fa-solid fa-box-open')->setAction(Action::INDEX);
 
-            MenuItem::section('Parcours'),
-            MenuItem::linkTo(CompanyCrudController::class, 'Entreprises', 'fa fa-building-user'),
-            MenuItem::linkTo(ExperienceCrudController::class, 'Expériences', 'fas fa-briefcase'),
-            MenuItem::linkTo(ExperienceItemCrudController::class, 'Missions', 'fa fa-list-check'),
-            MenuItem::linkTo(ExperienceLinkCrudController::class, 'Liens', 'fa fa-link'),
+        yield MenuItem::section('Parcours');
+        yield MenuItem::linkTo(CompanyCrudController::class, 'Entreprises', 'fa fa-building-user')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(ExperienceCrudController::class, 'Expériences', 'fas fa-briefcase')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(ExperienceItemCrudController::class, 'Missions', 'fa fa-list-check')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(ExperienceLinkCrudController::class, 'Liens', 'fa fa-link')->setAction(Action::INDEX);
 
-            MenuItem::section('Compétences'),
-            MenuItem::linkTo(SkillTypeCrudController::class, 'Types', 'fa fa-tags'),
-            MenuItem::linkTo(SkillCrudController::class, 'Compétences', 'fa fa-code'),
+        yield MenuItem::section('Compétences');
+        yield MenuItem::linkTo(SkillTypeCrudController::class, 'Types', 'fa fa-tags')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(SkillCrudController::class, 'Compétences', 'fa fa-code')->setAction(Action::INDEX);
 
-            MenuItem::section('Réalisations'),
-            MenuItem::linkTo(ProjectCrudController::class, 'Projets', 'fa fa-diagram-project'),
+        yield MenuItem::section('Réalisations');
+        yield MenuItem::linkTo(ProjectCrudController::class, 'Projets', 'fa fa-diagram-project')->setAction(Action::INDEX);
 
-            MenuItem::section('Cursus & Formations'),
-            MenuItem::linkTo(SchoolCrudController::class, 'Établissements', 'fa fa-building'),
-            MenuItem::linkTo(EducationCrudController::class, 'Diplômes', 'fa fa-graduation-cap'),
+        yield MenuItem::section('Cursus & Formations');
+        yield MenuItem::linkTo(SchoolCrudController::class, 'Établissements', 'fa fa-building')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(EducationCrudController::class, 'Diplômes', 'fa fa-graduation-cap')->setAction(Action::INDEX);
 
-            MenuItem::section('Hobbies'),
-            MenuItem::linkTo(ArcadeTypeCrudController::class, 'Arcade > Catégories', 'fa-solid fa-gamepad'),
-            MenuItem::linkTo(CreationTypeCrudController::class, 'Types > Créations', 'fa fa-brush'),
-            MenuItem::linkTo(PhotoTypeCrudController::class, 'Thématiques > Photos', 'fa fa-camera'),
+        yield MenuItem::section('Hobbies');
+        yield MenuItem::linkTo(ArcadeTypeCrudController::class, 'Arcade > Catégories', 'fa-solid fa-gamepad')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(CreationTypeCrudController::class, 'Types > Créations', 'fa fa-brush')->setAction(Action::INDEX);
+        yield MenuItem::linkTo(PhotoTypeCrudController::class, 'Thématiques > Photos', 'fa fa-camera')->setAction(Action::INDEX);
 
-            MenuItem::section('Retour'),
-            MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_index'),
-        ];
+        yield MenuItem::section('Retour');
+        yield MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_index');
     }
 
     public function configureAssets(): Assets

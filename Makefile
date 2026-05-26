@@ -116,7 +116,7 @@ watch: ## Watch Tailwind CSS changes and re-build
 .PHONY: test
 test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
-	php bin/phpunit
+	php vendor/bin/phpunit --coverage-html coverage/
 
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env

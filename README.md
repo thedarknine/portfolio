@@ -49,6 +49,7 @@ Into docker :
 
 ### Standard
 
+- logger
 - twig
 - symfony/twig-bundle
 - symfony/asset
