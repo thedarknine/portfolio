@@ -1,0 +1,27 @@
+<?php
+
+namespace App\Tests\Unit\Enum;
+
+use App\Enum\EducationType;
+use PHPUnit\Framework\TestCase;
+
+class EducationTypeTest extends TestCase
+{
+    /**
+     * Test that the enum values are correctly defined.
+     */
+    public function testEnumValues(): void
+    {
+        $this->assertEquals('universitaire', EducationType::UNIVERSITARY->value);
+        $this->assertEquals('professionnel', EducationType::PROFESSIONAL->value);
+    }
+
+    /**
+     * Test the getLabel method for each enum value.
+     */
+    public function testGetLabel(): void
+    {
+        $this->assertEquals('Universitaire', EducationType::UNIVERSITARY->getLabel());
+        $this->assertEquals('Professionnel', EducationType::PROFESSIONAL->getLabel());
+    }
+}
