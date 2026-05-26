@@ -110,10 +110,16 @@ final class PagesController extends AbstractController
                 $arcadeList = [];
                 foreach ($arcadeTypesList as $type) {
                     $arcadeList[$type->getSlug()] = [];
+
                     $finder = new Finder();
-                    $finder->in($this->getImagesDir().'arcade/'.$type->getSlug());
-                    foreach ($finder as $file) {
-                        $arcadeList[$type->getSlug()][] = $file->getFileName();
+                    $targetDir = $this->getImagesDir().'arcade/'.$type->getSlug();
+                    if (is_dir($targetDir)) {
+                        $finder->in($targetDir);
+                        foreach ($finder as $file) {
+                            $arcadeList[$type->getSlug()][] = $file->getFileName();
+                        }
+                    } else {
+                        $arcadeList[$type->getSlug()] = [];
                     }
                 }
                 $data['arcadeTypesList'] = $arcadeTypesList;
@@ -124,11 +130,18 @@ final class PagesController extends AbstractController
                 $creationsList = [];
                 foreach ($creationTypesList as $type) {
                     $creationsList[$type->getSlug()] = [];
+
                     $finder = new Finder();
-                    $finder->in($this->getImagesDir().'creations/'.$type->getSlug());
-                    foreach ($finder as $file) {
-                        $creationsList[$type->getSlug()][] = $file->getFileName();
+                    $targetDir = $this->getImagesDir().'creations/'.$type->getSlug();
+                    if (is_dir($targetDir)) {
+                        $finder->in($targetDir);
+                        foreach ($finder as $file) {
+                            $creationsList[$type->getSlug()][] = $file->getFileName();
+                        }
+                    } else {
+                        $creationsList[$type->getSlug()] = [];
                     }
+
                     shuffle($creationsList[$type->getSlug()]);
                 }
                 $data['creationTypesList'] = $creationTypesList;
@@ -139,19 +152,26 @@ final class PagesController extends AbstractController
                 $photosList = [];
                 foreach ($photoTypesList as $type) {
                     $photosList[$type->getSlug()] = [];
+
                     $finder = new Finder();
-                    $finder->in($this->getImagesDir().'photos/'.$type->getSlug());
-                    foreach ($finder as $file) {
-                        $caption = explode('-', str_replace(['.JPG', '.jpg'], '', $file->getFileName()));
-                        $title = '';
-                        if (array_key_exists(1, $caption)) {
-                            $title = str_replace('_', ' ', $caption[1]);
+                    $targetDir = $this->getImagesDir().'photos/'.$type->getSlug();
+                    if (is_dir($targetDir)) {
+                        $finder->in($targetDir);
+                        foreach ($finder as $file) {
+                            $caption = explode('-', str_replace(['.JPG', '.jpg'], '', $file->getFileName()));
+                            $title = '';
+                            if (array_key_exists(1, $caption)) {
+                                $title = str_replace('_', ' ', $caption[1]);
+                            }
+                            $photosList[$type->getSlug()][] = [
+                                'filename' => $file->getFileName(),
+                                'caption' => $title,
+                            ];
                         }
-                        $photosList[$type->getSlug()][] = [
-                            'filename' => $file->getFileName(),
-                            'caption' => $title,
-                        ];
+                    } else {
+                        $photosList[$type->getSlug()] = [];
                     }
+
                     shuffle($photosList[$type->getSlug()]);
                 }
                 $data['photoTypesList'] = $photoTypesList;
