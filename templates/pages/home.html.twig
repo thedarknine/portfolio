@@ -24,15 +24,13 @@
                 <p class="text-nine-turquoise text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1s" ><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
             </div>
             <div class="max-w-2xl mx-auto">
-                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="1.5s">
-                    <a href="https://www.linkedin.com/in/carolinenoyer" title="LinkedIn" class="text-2xl" target="_blank"><i class="fa fa-linkedin text-nine-light"></i></a>
+                {% for resource in data.resourceLinks %}
+                {% if resource.inHero %}
+                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}">
+                    <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank"><i class="{{ resource.icon }} text-nine-light"></i></a>
                 </span>
-                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="2s">
-                    <a href="https://instagram.com/caro.noyer/" title="Instagram" class="text-2xl" target="_blank"><i class="fa-brands fa-instagram text-nine-light"></i></a>
-                </span>
-                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="2.5s">
-                    <a href="https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf" title="CV format PDF" class="text-2xl"><i class="fa fa-file-pdf text-nine-light"></i></a>
-                </span>
+                {% endif %}
+                {% endfor %}
             </div>
         </div>
     </div> {# end of container #}
@@ -68,9 +66,9 @@
             J’interviens à la croisée du produit et de la technique pour structurer des solutions efficaces.
             </p>
             {# CTA #}
-            <div class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all">
+            <a href="/experience" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
             En savoir plus <i class="fa-solid fa-right-long"></i>
-            </div>
+            </a>
         </div>
 
         {# CARD #}
@@ -83,9 +81,9 @@
             J’accompagne les équipes pour cadrer les besoins, orienter les choix techniques et fluidifier la collaboration.
             Une approche pragmatique, centrée sur la valeur.
             </p>
-            <div class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all">
+            <a href="/competences" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
             En savoir plus <i class="fa-solid fa-right-long"></i>
-            </div>
+            </a>
         </div>
 
         {# CARD #}
@@ -98,9 +96,9 @@
             J’aime comprendre, structurer et donner forme aux idées.
             Que ce soit en produit, en code ou en création, je privilégie précision et simplicité.
             </p>
-            <div class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all">
+            <a href="/projets" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
             En savoir plus <i class="fa-solid fa-right-long"></i>
-            </div>
+            </a>
         </div>
     </div>
 </section>

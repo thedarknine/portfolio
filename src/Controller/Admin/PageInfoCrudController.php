@@ -12,6 +12,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Enum\PageCategory;
+use App\Entity\PageInfo;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -23,13 +24,13 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
-class PageCrudController extends AbstractCrudController
+class PageInfoCrudController extends AbstractCrudController
 {
     use SortableCrudTrait;
 
     public static function getEntityFqcn(): string
     {
-        return Page::class;
+        return PageInfo::class;
     }
 
     public function configureCrud(Crud $crud): Crud

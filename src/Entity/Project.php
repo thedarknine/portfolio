@@ -97,7 +97,7 @@ class Project
         return $this->screenshots;
     }
 
-    public function setScreenshots(string $screenshots): static
+    public function setScreenshots(?string $screenshots): static
     {
         $this->screenshots = $screenshots;
 

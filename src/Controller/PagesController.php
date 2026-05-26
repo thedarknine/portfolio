@@ -18,6 +18,8 @@ use App\Entity\PhotoType;
 use App\Entity\Project;
 use App\Entity\Skill;
 use App\Entity\SkillType;
+use App\Entity\PageInfo;
+use App\Entity\ResourceLink;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
@@ -32,7 +34,12 @@ final class PagesController extends AbstractController
 
     private function retrievePages(): array
     {
-        return $this->doctrine->getRepository(Page::class)->findAllAsArray([]);
+        return $this->doctrine->getRepository(PageInfo::class)->findAllAsArray([]);
+    }
+
+    private function retrieveResourceLinks(): array
+    {
+        return $this->doctrine->getRepository(ResourceLink::class)->findAllAsArray([]);
     }
 
     private function getNbYearsExperience(): int
@@ -53,6 +60,7 @@ final class PagesController extends AbstractController
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
         $data['pagesList'] = $this->retrievePages();
+        $data['resourceLinks'] = $this->retrieveResourceLinks();
         $data['current'] = [
             'title' => 'Accueil',
             'slug' => 'home',
@@ -78,6 +86,7 @@ final class PagesController extends AbstractController
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
         $data['pagesList'] = $this->retrievePages();
+        $data['resourceLinks'] = $this->retrieveResourceLinks();
         $data['current'] = array_first(array_filter($data['pagesList'], function ($page) use ($slug) {
             return $page['slug'] === $slug;
         }));

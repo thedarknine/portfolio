@@ -15,12 +15,12 @@ use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Entity\Traits\TitleableTrait;
 use App\Enum\PageCategory;
-use App\Repository\PageRepository;
+use App\Repository\PageInfoRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Table(name: 'page')]
-#[ORM\Entity(repositoryClass: PageRepository::class)]
+#[ORM\Entity(repositoryClass: PageInfoRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
 class PageInfo
 {

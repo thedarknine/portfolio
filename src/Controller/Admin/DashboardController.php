@@ -24,11 +24,15 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
+        return $this->render('admin/dashboard.html.twig');
+    }
+    /*public function index(): Response
+    {
         // Clean redirection: official method recommended by the creator of EasyAdmin
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
         return $this->redirect($adminUrlGenerator->setController(ExperienceCrudController::class)->generateUrl());
-    }
+    }*/
 
     public function configureDashboard(): Dashboard
     {
@@ -43,7 +47,8 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home'),
 
             MenuItem::section('Gestion Éditoriale'),
-            MenuItem::linkTo(PageCrudController::class, 'Pages du site', 'fa fa-file-lines'),
+            MenuItem::linkTo(PageInfoCrudController::class, 'Pages du site', 'fa fa-file-lines'),
+            MenuItem::linkTo(ResourceLinkCrudController::class, 'Ressources', 'fa-solid fa-box-open'),
 
             MenuItem::section('Parcours'),
             MenuItem::linkTo(CompanyCrudController::class, 'Entreprises', 'fa fa-building-user'),
