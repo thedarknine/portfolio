@@ -116,6 +116,11 @@ watch: ## Watch Tailwind CSS changes and re-build
 .PHONY: test
 test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
+	php vendor/bin/phpunit
+
+.PHONY: test-coverage
+test-coverage: ## Run PHPUnit tests with coverage
+	$(call display_title,Running PHPUnit tests with coverage ....................,${ICON_TEST})
 	php vendor/bin/phpunit --coverage-html coverage/
 
 .PHONY: secret
