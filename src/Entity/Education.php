@@ -33,8 +33,8 @@ class Education
     private int $id;
 
     #[ORM\Column]
-    #[Assert\NotBlank(message: "Year is required.")]
-    #[Assert\Range(min: 1990, max: 2099, notInRangeMessage: "Year must be between {{ min }} and {{ max }}.")]
+    #[Assert\NotBlank(message: 'Year is required.')]
+    #[Assert\Range(min: 1990, max: 2099, notInRangeMessage: 'Year must be between {{ min }} and {{ max }}.')]
     private ?int $year = null;
 
     #[ORM\Column(length: 180)]

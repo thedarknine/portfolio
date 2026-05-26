@@ -10,11 +10,11 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\LocalizableTrait;
 use App\Entity\Traits\LogoableTrait;
 use App\Entity\Traits\NameableTrait;
 use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\TimeStampableTrait;
-use App\Entity\Traits\LocalizableTrait;
 use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;

@@ -58,7 +58,7 @@ class CompanyValidationTest extends KernelTestCase
             ->setSlug('ma-super-entreprise')
             ->setCity('')
             ->setDepartment(45);
-            
+
         $errors = $this->validator->validate($company);
         $this->assertGreaterThan(0, count($errors));
         $this->assertSame('city', $errors[0]->getPropertyPath()); // Maintenant c'est bien elle la première !
@@ -69,7 +69,7 @@ class CompanyValidationTest extends KernelTestCase
             ->setSlug('ma-super-entreprise')
             ->setCity(str_repeat('X', 101))
             ->setDepartment(45);
-            
+
         $errorsLong = $this->validator->validate($companyLong);
         $this->assertGreaterThan(0, count($errorsLong));
         $this->assertSame('city', $errorsLong[0]->getPropertyPath());
@@ -86,7 +86,7 @@ class CompanyValidationTest extends KernelTestCase
             ->setSlug('ma-super-entreprise')
             ->setCity('Paris')
             ->setDepartment(9999);
-            
+
         $errors = $this->validator->validate($company);
 
         $this->assertGreaterThan(0, count($errors));
@@ -98,7 +98,7 @@ class CompanyValidationTest extends KernelTestCase
             ->setSlug('ma-super-entreprise')
             ->setCity('Paris')
             ->setDepartment(-5);
-            
+
         $errorsNeg = $this->validator->validate($companyNeg);
         $this->assertGreaterThan(0, count($errorsNeg));
     }

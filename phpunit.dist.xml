@@ -32,6 +32,12 @@
             <directory>src</directory>
         </include>
 
+        <exclude>
+            <directory>src/DataFixtures</directory>
+            <directory>src/Controller/Admin</directory>
+            <file>src/Kernel.php</file>
+        </exclude>
+
         <deprecationTrigger>
             <method>Doctrine\Deprecations\Deprecation::trigger</method>
             <method>Doctrine\Deprecations\Deprecation::delegateTriggerToBackend</method>
