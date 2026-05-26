@@ -11,10 +11,12 @@
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait NameableTrait
 {
     #[ORM\Column(length: 120)]
+    #[Assert\NotBlank(message: 'Name cannot be empty.')]
     private ?string $name = null;
 
     public function getName(): ?string

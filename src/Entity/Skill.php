@@ -19,6 +19,8 @@ use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Table(name: 'skill')]
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
@@ -37,12 +39,16 @@ class Skill
     private int $id;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Start year is required.')]
+    #[Assert\Range(min: 1990, max: 2099, notInRangeMessage: 'Start year must be between {{ min }} and {{ max }}.')]
     private ?int $startYear = null;
 
     #[ORM\Column(nullable: true)]
+    #[Assert\Range(min: 1990, max: 2099, notInRangeMessage: 'End year must be between {{ min }} and {{ max }}.')]
     private ?int $endYear = null;
 
     #[ORM\Column]
+    #[Assert\Range(min: 0, max: 100, notInRangeMessage: 'Level must be between {{ min }} and {{ max }}.')]
     private ?int $level = null;
 
     #[ORM\Column]
@@ -50,10 +56,13 @@ class Skill
 
     #[ORM\ManyToOne(inversedBy: 'skills')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Skill type is required.')]
+    #[Assert\Valid]
     private ?SkillType $skillType = null;
 
     /** @var Collection<int, Experience> */
     #[ORM\ManyToMany(targetEntity: Experience::class, mappedBy: 'skills')]
+    #[Assert\Valid]
     private Collection $experiences;
 
     public function __construct()
@@ -170,5 +179,18 @@ class Skill
         }
 
         return strval($duration).' ans';
+    }
+
+    /**
+     * Cross-validation: endYear cannot be before startYear.
+     */
+    #[Assert\Callback]
+    public function validateYears(ExecutionContextInterface $context, mixed $payload): void
+    {
+        if (null !== $this->startYear && null !== $this->endYear && $this->endYear < $this->startYear) {
+            $context->buildViolation('The end date cannot be before the start date.')
+                ->atPath('endYear')
+                ->addViolation();
+        }
     }
 }

@@ -17,6 +17,7 @@ use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'project')]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
@@ -34,21 +35,30 @@ class Project
     private int $id;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Period is required.')]
+    #[Assert\Length(max: 100, maxMessage: 'Period cannot exceed {{ limit }} characters.')]
     private ?string $period = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Year is required.')]
+    #[Assert\Range(min: 1990, max: 2099, notInRangeMessage: 'Year must be between {{ min }} and {{ max }}.')]
     private ?int $year = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Description is required.')]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Screenshots path cannot exceed {{ limit }} characters.')]
     private ?string $screenshots = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Category is required.')]
+    #[Assert\Length(max: 255, maxMessage: 'Category cannot exceed {{ limit }} characters.')]
     private ?string $category = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Tags cannot exceed {{ limit }} characters.')]
     private ?string $tags = null;
 
     public function getId(): int

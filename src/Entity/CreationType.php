@@ -12,10 +12,10 @@ namespace App\Entity;
 
 use App\Entity\Traits\NameableTrait;
 use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\CreationTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Table(name: 'creation_type')]
 #[ORM\Entity(repositoryClass: CreationTypeRepository::class)]
@@ -25,30 +25,15 @@ class CreationType
     use TimeStampableTrait;
     use NameableTrait;
     use SlugableTrait;
+    use SortableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column]
-    #[Gedmo\SortablePosition]
-    private ?int $position = null;
-
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): static
-    {
-        $this->position = $position;
-
-        return $this;
     }
 }

@@ -19,6 +19,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Table(name: 'experience')]
 #[ORM\Entity(repositoryClass: ExperienceRepository::class)]
@@ -35,6 +37,7 @@ class Experience
     private int $id;
 
     #[ORM\Column(length: 120, nullable: true)]
+    #[Assert\Length(max: 120, maxMessage: 'Subtitle cannot exceed {{ limit }} characters.')]
     private ?string $subtitle = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -44,9 +47,12 @@ class Experience
     private ?string $description = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message: 'Start date is required.')]
+    #[Assert\Type(\DateTimeInterface::class)]
     private ?\DateTimeInterface $startDate = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[Assert\Type(\DateTimeInterface::class)]
     private ?\DateTimeInterface $endDate = null;
 
     #[ORM\ManyToOne(inversedBy: 'experiences')]
@@ -55,18 +61,21 @@ class Experience
 
     /** @var Collection<int, Skill> */
     #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'experiences')]
+    #[Assert\Valid]
     private Collection $skills;
 
     /**
      * @var Collection<int, ExperienceItem>
      */
     #[ORM\OneToMany(targetEntity: ExperienceItem::class, mappedBy: 'experience')]
+    #[Assert\Valid]
     private Collection $items;
 
     /**
      * @var Collection<int, ExperienceLink>
      */
     #[ORM\OneToMany(targetEntity: ExperienceLink::class, mappedBy: 'experience')]
+    #[Assert\Valid]
     private Collection $links;
 
     public function __construct()
@@ -247,5 +256,15 @@ class Experience
         }
 
         return $this;
+    }
+
+    #[Assert\Callback]
+    public function validateDates(ExecutionContextInterface $context): void
+    {
+        if ($this->endDate && $this->startDate > $this->endDate) {
+            $context->buildViolation('The end date cannot be before the start date.')
+                ->atPath('endDate')
+                ->addViolation();
+        }
     }
 }

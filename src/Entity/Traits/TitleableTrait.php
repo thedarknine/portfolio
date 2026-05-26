@@ -11,10 +11,12 @@
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait TitleableTrait
 {
     #[ORM\Column(length: 120)]
+    #[Assert\NotBlank(message: 'Title cannot be empty.')]
     private ?string $title = null;
 
     public function getTitle(): ?string

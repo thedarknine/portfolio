@@ -12,11 +12,14 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait SortableTrait
 {
     #[ORM\Column]
     #[Gedmo\SortablePosition]
+    #[Assert\NotBlank(message: 'Position is required.')]
+    #[Assert\PositiveOrZero(message: 'Position must be a positive number or zero.')]
     private ?int $position = null;
 
     public function getPosition(): ?int

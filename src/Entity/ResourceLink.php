@@ -17,6 +17,7 @@ use App\Entity\Traits\TimeStampableTrait;
 use App\Entity\Traits\TitleableTrait;
 use App\Repository\ResourceLinkRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'resource')]
 #[ORM\Entity(repositoryClass: ResourceLinkRepository::class)]
@@ -35,6 +36,9 @@ class ResourceLink
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'URL is required.')]
+    #[Assert\Url(message: 'URL format is invalid.')]
+    #[Assert\Length(max: 255, maxMessage: 'URL cannot exceed {{ limit }} characters.')]
     private ?string $url = null;
 
     #[ORM\Column]

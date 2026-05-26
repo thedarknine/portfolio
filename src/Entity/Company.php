@@ -18,6 +18,7 @@ use App\Repository\CompanyRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'company')]
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
@@ -35,16 +36,24 @@ class Company
     private int $id;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'City is required.')]
+    #[Assert\Length(max: 100, maxMessage: 'City cannot exceed {{ limit }} characters.')]
     private ?string $city = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Department is required.')]
+    #[Assert\Positive(message: 'Department must be a positive number.')]
+    #[Assert\Range(min: 1, max: 976, notInRangeMessage: 'Department must be between {{ min }} and {{ max }}.')]
     private ?int $department = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Url(message: 'URL format is invalid.')]
+    #[Assert\Length(max: 255, maxMessage: 'URL cannot exceed {{ limit }} characters.')]
     private ?string $url = null;
 
     /** @var Collection<int, Experience> */
     #[ORM\OneToMany(mappedBy: 'company', targetEntity: Experience::class)]
+    #[Assert\Valid]
     private Collection $experiences;
 
     public function __construct()

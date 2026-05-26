@@ -11,10 +11,12 @@
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 trait SlugableTrait
 {
     #[ORM\Column(length: 120, unique: true)]
+    #[Assert\NotBlank(message: 'Slug cannot be empty.')]
     private ?string $slug = null;
 
     public function getSlug(): ?string

@@ -118,10 +118,11 @@ test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
 	php vendor/bin/phpunit
 
-.PHONY: test-coverage
-test-coverage: ## Run PHPUnit tests with coverage
+.PHONY: cover
+cover: ## Run PHPUnit tests with coverage
 	$(call display_title,Running PHPUnit tests with coverage ....................,${ICON_TEST})
-	php vendor/bin/phpunit --coverage-html coverage/
+	- php bin/console cache:clear --env=test
+	- php vendor/bin/phpunit --coverage-html coverage/
 
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env
