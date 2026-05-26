@@ -13,7 +13,7 @@ namespace App\Entity\Traits;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class of FontAwesome icon
+ * Class of FontAwesome icon.
  */
 trait IconableTrait
 {

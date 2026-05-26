@@ -113,6 +113,11 @@ watch: ## Watch Tailwind CSS changes and re-build
 	$(call display_title,Watching Tailwind CSS changes and re-building ...........,${ICON_BUILD})
 	php bin/console tailwind:build --watch
 
+.PHONY: test
+test: ## Run PHPUnit tests
+	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
+	php bin/phpunit
+
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env
 	$(call display_title,Generating new Symfony secret ........................,${ICON_INSTALL})

@@ -14,12 +14,13 @@ use App\Entity\ArcadeType;
 use App\Entity\CreationType;
 use App\Entity\Education;
 use App\Entity\Experience;
+use App\Entity\PageInfo;
 use App\Entity\PhotoType;
 use App\Entity\Project;
+use App\Entity\ResourceLink;
 use App\Entity\Skill;
 use App\Entity\SkillType;
-use App\Entity\PageInfo;
-use App\Entity\ResourceLink;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
@@ -44,10 +45,9 @@ final class PagesController extends AbstractController
 
     private function getNbYearsExperience(): int
     {
-        $startDate = new \DateTime('2006-10-01');
-        $currentDate = new \DateTime();
+        $startWorking = new Carbon('2006-10-01');
 
-        return $startDate->diff($currentDate)->y;
+        return (int) $startWorking->diff(Carbon::now())->y;
     }
 
     private function getImagesDir(): string

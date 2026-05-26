@@ -71,6 +71,8 @@ Into docker :
 - kocal/biome-js-bundle
 - doctrine/doctrine-fixtures-bundle
 - phpstan/phpstan-doctrine
+- symfony/test-pack
+- dama/doctrine-test-bundle
 
 ### Front-end librairies
 
@@ -114,4 +116,41 @@ Into docker :
 
     # Sortable fields
     composer require stof/doctrine-extensions-bundle
+```
+
+## Tests
+
+### Prepare database for tests
+Add and adapt something like `DATABASE_URL="mysql://test:test@127.0.0.1:3306/portfolio_test?serverVersion=8.1.0&charset=utf8mb4"` into `.env.test` file.
+
+```bash
+    ## Access to container
+    docker compose exec db mysql -p
+
+    ## Create user and db for tests
+    CREATE USER 'test'@'%' IDENTIFIED BY 'test';
+    CREATE DATABASE portfolio_test;
+    GRANT ALL PRIVILEGES ON portfolio_test.* TO 'test'@'%';
+    FLUSH PRIVILEGES;
+
+    ## Create schema
+    php bin/console doctrine:schema:update --force --env=test
+
+    ## Load data fixtures
+    php bin/console doctrine:fixtures:load --env=test
+```
+
+### Build new test 
+```bash
+    php bin/console make:test WebTestCase PageControllerTest    
+```
+
+### Run tests
+```bash
+    php bin/phpunit
+```
+
+### Run tests with coverage
+```bash
+    php bin/phpunit --coverage-html coverage
 ```

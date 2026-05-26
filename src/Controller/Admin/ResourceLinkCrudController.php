@@ -1,9 +1,17 @@
 <?php
 
+/**
+ * This file is part of Portfolio project.
+ * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Controller\Admin;
 
-use App\Entity\ResourceLink;
 use App\Controller\Admin\Trait\SortableCrudTrait;
+use App\Entity\ResourceLink;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -53,7 +61,10 @@ class ResourceLinkCrudController extends AbstractCrudController
         yield UrlField::new('url', 'Lien URL')
             ->setHelp('Exemple : https://github.com/carolinenoyer')
             ->formatValue(function ($value) {
-                if (!$value) return null;
+                if (!$value) {
+                    return null;
+                }
+
                 return sprintf('<a href="%s" target="_blank" rel="noopener"><i class="fa fa-external-link-alt me-1"></i> Ouvrir</a>', htmlspecialchars($value));
             });
 
@@ -61,7 +72,10 @@ class ResourceLinkCrudController extends AbstractCrudController
         yield TextField::new('icon', 'Classe Icône')
             ->setHelp('Exemple : fa-github, fa-linkedin, fa-file-pdf (FontAwesome)')
             ->formatValue(function ($value) {
-                if (!$value) return '<span class="text-muted">Aucune</span>';
+                if (!$value) {
+                    return '<span class="text-muted">Aucune</span>';
+                }
+
                 return sprintf('<i class="fab %1$s fas %1$s fa-lg me-2"></i> <code>%1$s</code>', htmlspecialchars($value));
             });
 

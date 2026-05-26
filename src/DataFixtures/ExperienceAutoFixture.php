@@ -14,7 +14,6 @@ class ExperienceAutoFixture extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $experience0 = new Experience();
-        $experience0->setTitle('Stagiaire en milieu de recherche');
         $experience0->setSubtitle('Étude algorithmique autour des symétries dans les familles d’ensembles');
         $experience0->setSummary(null);
         $experience0->setDescription('
@@ -32,7 +31,8 @@ class ExperienceAutoFixture extends Fixture implements DependentFixtureInterface
         $experience0->setEndDate(new \DateTime('2005-07-31 00:00:00'));
         $experience0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience0->setUpdatedAt(new \DateTime('2026-05-23 20:25:20'));
-        $experience0->setLabel('stage-limos');
+        $experience0->setTitle('Stagiaire en milieu de recherche');
+        $experience0->setSlug('stage-limos');
         try {
             $experience0->setCompany($this->getReference('company_9', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -52,7 +52,6 @@ class ExperienceAutoFixture extends Fixture implements DependentFixtureInterface
         $this->addReference('experience_11', $experience0);
 
         $experience1 = new Experience();
-        $experience1->setTitle('Stagiaire études de projets Internet');
         $experience1->setSubtitle('Analyse web et accompagnement stratégique digital');
         $experience1->setSummary(null);
         $experience1->setDescription('
@@ -71,7 +70,8 @@ ce n\'est qu\'ensuite que le directeur artistique pourra réaliser la maquette d
         $experience1->setEndDate(new \DateTime('2006-06-30 00:00:00'));
         $experience1->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience1->setUpdatedAt(new \DateTime('2026-05-23 20:21:05'));
-        $experience1->setLabel('stage-periscope');
+        $experience1->setTitle('Stagiaire études de projets Internet');
+        $experience1->setSlug('stage-periscope');
         try {
             $experience1->setCompany($this->getReference('company_10', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -81,7 +81,6 @@ ce n\'est qu\'ensuite que le directeur artistique pourra réaliser la maquette d
         $this->addReference('experience_12', $experience1);
 
         $experience2 = new Experience();
-        $experience2->setTitle('Stagiaire analyse et développement');
         $experience2->setSubtitle('Conception d’un assistant de rédaction documentaire');
         $experience2->setSummary(null);
         $experience2->setDescription('
@@ -97,7 +96,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience2->setEndDate(new \DateTime('2006-09-30 00:00:00'));
         $experience2->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience2->setUpdatedAt(new \DateTime('2026-05-23 20:17:18'));
-        $experience2->setLabel('stage-actifdesign');
+        $experience2->setTitle('Stagiaire analyse et développement');
+        $experience2->setSlug('stage-actifdesign');
         try {
             $experience2->setCompany($this->getReference('company_11', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -132,7 +132,6 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $this->addReference('experience_13', $experience2);
 
         $experience3 = new Experience();
-        $experience3->setTitle('Développeur web');
         $experience3->setSubtitle('Développement de sites Internet et de solutions innovantes');
         $experience3->setSummary(null);
         $experience3->setDescription('
@@ -147,7 +146,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience3->setEndDate(new \DateTime('2008-07-15 00:00:00'));
         $experience3->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience3->setUpdatedAt(new \DateTime('2026-05-23 20:13:46'));
-        $experience3->setLabel('dev-web');
+        $experience3->setTitle('Développeur web');
+        $experience3->setSlug('dev-web');
         try {
             $experience3->setCompany($this->getReference('company_11', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -187,7 +187,6 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $this->addReference('experience_14', $experience3);
 
         $experience4 = new Experience();
-        $experience4->setTitle('Ingénieur de développement');
         $experience4->setSubtitle('Développement de l\'outil Cadenza');
         $experience4->setSummary(null);
         $experience4->setDescription('
@@ -203,7 +202,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience4->setEndDate(new \DateTime('2012-04-30 00:00:00'));
         $experience4->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience4->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience4->setLabel('inge-dev');
+        $experience4->setTitle('Ingénieur de développement');
+        $experience4->setSlug('inge-dev');
         try {
             $experience4->setCompany($this->getReference('company_12', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -268,7 +268,6 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $this->addReference('experience_15', $experience4);
 
         $experience5 = new Experience();
-        $experience5->setTitle('Développeur web fullstack');
         $experience5->setSubtitle('Conception et développement du projet PREV@PASS');
         $experience5->setSummary(null);
         $experience5->setDescription('
@@ -285,7 +284,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience5->setEndDate(new \DateTime('2017-07-16 00:00:00'));
         $experience5->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience5->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience5->setLabel('dev-mfpdd');
+        $experience5->setTitle('Développeur web fullstack');
+        $experience5->setSlug('dev-mfpdd');
         try {
             $experience5->setCompany($this->getReference('company_13', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -365,7 +365,6 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $this->addReference('experience_16', $experience5);
 
         $experience6 = new Experience();
-        $experience6->setTitle('Développeur PHP Senior');
         $experience6->setSubtitle('Conception et développement des produits Coffreo Pro');
         $experience6->setSummary(null);
         $experience6->setDescription('
@@ -382,7 +381,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience6->setEndDate(new \DateTime('2019-11-03 00:00:00'));
         $experience6->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience6->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience6->setLabel('dev-coffreo');
+        $experience6->setTitle('Développeur PHP Senior');
+        $experience6->setSlug('dev-coffreo');
         try {
             $experience6->setCompany($this->getReference('company_14', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -472,7 +472,6 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $this->addReference('experience_17', $experience6);
 
         $experience7 = new Experience();
-        $experience7->setTitle('Product Owner');
         $experience7->setSubtitle('Animation des sprints et coordination des développements');
         $experience7->setSummary('Au coeur de la transformation digitale RH, Coffreo a créé une plateforme SaaS pour accélérer et fluidifier les échanges entre les agences d’intérim, les prestataires de l’événementiel, les traiteurs, les sociétés de sécurité, les organismes médicaux, … et leurs salariés temporaires.');
         $experience7->setDescription('
@@ -488,7 +487,8 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience7->setEndDate(new \DateTime('2022-07-17 00:00:00'));
         $experience7->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience7->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience7->setLabel('po-coffreo');
+        $experience7->setTitle('Product Owner');
+        $experience7->setSlug('po-coffreo');
         try {
             $experience7->setCompany($this->getReference('company_14', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -553,7 +553,6 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $this->addReference('experience_18', $experience7);
 
         $experience8 = new Experience();
-        $experience8->setTitle('Product Owner');
         $experience8->setSubtitle('Encadrement R&D et qualité produit');
         $experience8->setSummary('Perfect Memory est un fournisseur d\'IA sémantique, ces technologies qui permettent de donner du sens et de la valeur à toutes les données générées par une organisation.');
         $experience8->setDescription('
@@ -568,7 +567,8 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
         $experience8->setEndDate(new \DateTime('2024-04-22 00:00:00'));
         $experience8->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience8->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience8->setLabel('po-perfect');
+        $experience8->setTitle('Product Owner');
+        $experience8->setSlug('po-perfect');
         try {
             $experience8->setCompany($this->getReference('company_15', Company::class));
         } catch (\OutOfBoundsException $e) {
@@ -603,7 +603,6 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
         $this->addReference('experience_19', $experience8);
 
         $experience9 = new Experience();
-        $experience9->setTitle('Technical Product Owner');
         $experience9->setSubtitle('Encadrement équipe Drive');
         $experience9->setSummary('Leviia est une entreprise française dont l\'ensemble de l\'infrastructure est hébergé exclusivement en France. Le code source est 100 % open source, sans aucune dépendance technologique américaine ou chinoise');
         $experience9->setDescription('<p class="pb-4">Coordination de l\'équipe technique.</p>
@@ -617,7 +616,8 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
         $experience9->setEndDate(null);
         $experience9->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience9->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience9->setLabel('po-leviia');
+        $experience9->setTitle('Technical Product Owner');
+        $experience9->setSlug('po-leviia');
         try {
             $experience9->setCompany($this->getReference('company_16', Company::class));
         } catch (\OutOfBoundsException $e) {

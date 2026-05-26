@@ -11,8 +11,8 @@
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\Trait\SortableCrudTrait;
-use App\Enum\PageCategory;
 use App\Entity\PageInfo;
+use App\Enum\PageCategory;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;

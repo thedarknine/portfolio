@@ -182,23 +182,11 @@ class Experience
      */
     public function getDuration(): array
     {
-        // TODO: use CarbonInterval to get a more human readable format
-        /*$start = Carbon::instance($this->startDate);
-        $end = $this->endDate ? Carbon::instance($this->endDate) : Carbon::now();
-
-        return $start->diffForHumans($end, [
-            'parts' => 3,
-            'join' => true,
-            'short' => true,
-        ]);
-        */
-
-        $endDate = (null == $this->endDate) ? Carbon::now() : new Carbon($this->endDate);
         $startDate = new Carbon($this->startDate);
+        $endDate = $this->endDate ? Carbon::instance($this->endDate) : Carbon::now();
+        $diff = $startDate->diff($endDate);
 
-        $diff = $startDate->diffInMonths($endDate);
-
-        return ['nbYears' => floor($diff / 12), 'nbMonths' => $diff % 12];
+        return ['nbYears' => (int) $diff->y, 'nbMonths' => (int) $diff->m];
     }
 
     /**
