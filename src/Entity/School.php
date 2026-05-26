@@ -14,6 +14,7 @@ use App\Entity\Traits\LogoableTrait;
 use App\Entity\Traits\NameableTrait;
 use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Traits\LocalizableTrait;
 use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -29,21 +30,12 @@ class School
     use NameableTrait;
     use SlugableTrait;
     use LogoableTrait;
+    use LocalizableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
-
-    #[ORM\Column(length: 100)]
-    #[Assert\NotBlank(message: 'City is required.')]
-    #[Assert\Length(max: 100, maxMessage: 'City cannot exceed {{ limit }} characters.')]
-    private ?string $city = null;
-
-    #[ORM\Column]
-    #[Assert\NotBlank(message: 'Department is required.')]
-    #[Assert\Range(min: 1, max: 976, notInRangeMessage: 'Le département doit être un numéro valide.')]
-    private ?int $department = null;
 
     /** @var Collection<int, Education> */
     #[ORM\OneToMany(mappedBy: 'school', targetEntity: Education::class)]
@@ -58,30 +50,6 @@ class School
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getDepartment(): ?int
-    {
-        return $this->department;
-    }
-
-    public function setDepartment(int $department): static
-    {
-        $this->department = $department;
-
-        return $this;
     }
 
     /**

@@ -164,9 +164,6 @@ class Skill
 
     public function getDuration(): ?string
     {
-        if (null === $this->startYear) {
-            return 'En cours';
-        }
         if (null === $this->endYear) {
             $endYear = intval((new \DateTime())->format('Y'));
         } else {

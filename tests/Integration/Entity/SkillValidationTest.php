@@ -29,7 +29,7 @@ class SkillValidationTest extends KernelTestCase
     }
 
     /**
-     * Cas nominal : Une compétence valide passe sans encombre.
+     * Nominal case : A valid skill passes without issues.
      */
     public function testValidSkillHasNoViolation(): void
     {
@@ -59,7 +59,7 @@ class SkillValidationTest extends KernelTestCase
     }
 
     /**
-     * Teste la méthode getDuration() pour une compétence terminée.
+     * Test the getDuration() method for a completed skill.
      */
     public function testGetDurationForPastSkill(): void
     {
@@ -71,18 +71,20 @@ class SkillValidationTest extends KernelTestCase
     }
 
     /**
-     * Teste la méthode getDuration() pour une compétence toujours active (endYear === null).
+     * Test the getDuration() method for an active skill (endYear === null).
      */
     public function testGetDurationForActiveSkill(): void
     {
         $currentYear = intval((new \DateTime())->format('Y'));
 
         $skill = (new Skill())->setStartYear($currentYear - 4);
+
+        $this->assertNull($skill->getEndYear());
         $this->assertSame('4 ans', $skill->getDuration());
     }
 
     /**
-     * Teste le Callback de sécurité sur la cohérence des dates.
+     * Test the security Callback for date consistency.
      */
     public function testInvalidEndYearTriggerCallbackViolation(): void
     {
@@ -99,7 +101,7 @@ class SkillValidationTest extends KernelTestCase
     }
 
     /**
-     * Teste la gestion de la collection d'expériences (ManyToMany).
+     * Test the management of the experiences collection (ManyToMany).
      */
     public function testExperienceCollectionManagement(): void
     {
@@ -116,7 +118,7 @@ class SkillValidationTest extends KernelTestCase
     }
 
     /**
-     * Test de l'ID via Reflection.
+     * Test the ID via Reflection.
      */
     public function testGetId(): void
     {

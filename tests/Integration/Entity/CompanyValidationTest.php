@@ -53,12 +53,23 @@ class CompanyValidationTest extends KernelTestCase
     public function testCityConstraints(): void
     {
         // Case 1: Empty city
-        $company = (new Company())->setCity('')->setDepartment(45);
+        $company = (new Company())
+            ->setName('Ma Super Entreprise')
+            ->setSlug('ma-super-entreprise')
+            ->setCity('')
+            ->setDepartment(45);
+            
         $errors = $this->validator->validate($company);
         $this->assertGreaterThan(0, count($errors));
+        $this->assertSame('city', $errors[0]->getPropertyPath()); // Maintenant c'est bien elle la première !
 
         // Case 2: City too long
-        $companyLong = (new Company())->setCity(str_repeat('X', 101))->setDepartment(45);
+        $companyLong = (new Company())
+            ->setName('Ma Super Entreprise')
+            ->setSlug('ma-super-entreprise')
+            ->setCity(str_repeat('X', 101))
+            ->setDepartment(45);
+            
         $errorsLong = $this->validator->validate($companyLong);
         $this->assertGreaterThan(0, count($errorsLong));
         $this->assertSame('city', $errorsLong[0]->getPropertyPath());
@@ -70,14 +81,24 @@ class CompanyValidationTest extends KernelTestCase
     public function testDepartmentConstraints(): void
     {
         // Case 1: Department out of bounds (e.g., 9999)
-        $company = (new Company())->setCity('Paris')->setDepartment(9999);
+        $company = (new Company())
+            ->setName('Ma Super Entreprise')
+            ->setSlug('ma-super-entreprise')
+            ->setCity('Paris')
+            ->setDepartment(9999);
+            
         $errors = $this->validator->validate($company);
 
         $this->assertGreaterThan(0, count($errors));
         $this->assertSame('department', $errors[0]->getPropertyPath());
 
         // Case 2: Negative department
-        $companyNeg = (new Company())->setCity('Paris')->setDepartment(-5);
+        $companyNeg = (new Company())
+            ->setName('Ma Super Entreprise')
+            ->setSlug('ma-super-entreprise')
+            ->setCity('Paris')
+            ->setDepartment(-5);
+            
         $errorsNeg = $this->validator->validate($companyNeg);
         $this->assertGreaterThan(0, count($errorsNeg));
     }
