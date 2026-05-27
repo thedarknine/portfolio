@@ -116,13 +116,23 @@ watch: ## Watch Tailwind CSS changes and re-build
 .PHONY: test
 test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
-	php vendor/bin/phpunit --configuration .tools-config/phpunit.xml
+	- @echo "Running PHPUnit tests..."
+	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml
 
 .PHONY: cover
 cover: ## Run PHPUnit tests with coverage
 	$(call display_title,Running PHPUnit tests with coverage ....................,${ICON_TEST})
+	- @echo "Clearing cache..."
 	- php bin/console cache:clear --env=test
+	- @echo "Running PHPUnit tests with coverage..."
 	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml --coverage-html coverage/
+
+.PHONY: test-all
+test-all: ## Run all PHPUnit tests
+	$(call display_title,Running all PHPUnit tests ..............................,${ICON_TEST})
+	- @make cover
+	- @echo "Running Infection..."
+	- php vendor/bin/infection --configuration=.tools-config/infection.json --threads=4
 
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env

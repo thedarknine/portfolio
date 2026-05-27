@@ -74,6 +74,7 @@ Into docker :
 - phpstan/phpstan-doctrine
 - symfony/test-pack
 - dama/doctrine-test-bundle
+- infection/infection (mutation testing)
 
 ### Front-end librairies
 

@@ -5,8 +5,6 @@
 !.docker/mysql/data/.gitkeep
 !.docker/volumes/logs/mysql/.gitkeep
 /node_modules/*
-/coverage
-/.phpunit.cache
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -21,10 +19,15 @@
 ###> phpunit/phpunit ###
 /phpunit.xml
 /.tools-config/.phpunit.cache
+/coverage
 ###< phpunit/phpunit ###
 
+###> infection/infection ###
+/.tools-config/infection.log
+/.tools-config/infection-report.*
+###< infection/infection ###
+
 ###> friendsofphp/php-cs-fixer ###
-# /.php-cs-fixer.php
 /.tools-config/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 

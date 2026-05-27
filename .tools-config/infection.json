@@ -1,0 +1,20 @@
+{
+    "$schema": "../vendor/infection/infection/resources/schema.json",
+    "source": {
+        "directories": [
+            "../src"
+        ],
+        "excludes": [
+            "../src/Kernel.php",
+            "../src/DataFixtures"
+        ]
+    },
+    "logs": {
+        "text": "infection.log",
+        "html": "infection-report.html"
+    },
+    "mutators": {
+        "@default": true
+    },
+    "testFramework": "phpunit"
+}
