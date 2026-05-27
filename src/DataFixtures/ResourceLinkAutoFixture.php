@@ -14,8 +14,8 @@ class ResourceLinkAutoFixture extends Fixture implements FixtureGroupInterface
         $resourceLink0 = new ResourceLink();
         $resourceLink0->setUrl('https://www.linkedin.com/in/carolinenoyer');
         $resourceLink0->setInHero(true);
-        $resourceLink0->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $resourceLink0->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $resourceLink0->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $resourceLink0->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $resourceLink0->setIcon('fa fa-linkedin');
         $resourceLink0->setTitle('LinkedIn');
         $resourceLink0->setSlug('linkedin');
@@ -26,8 +26,8 @@ class ResourceLinkAutoFixture extends Fixture implements FixtureGroupInterface
         $resourceLink1 = new ResourceLink();
         $resourceLink1->setUrl('https://instagram.com/caro.noyer');
         $resourceLink1->setInHero(true);
-        $resourceLink1->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $resourceLink1->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $resourceLink1->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $resourceLink1->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $resourceLink1->setIcon('fa-brands fa-instagram');
         $resourceLink1->setTitle('Instagram');
         $resourceLink1->setSlug('instagram');
@@ -38,8 +38,8 @@ class ResourceLinkAutoFixture extends Fixture implements FixtureGroupInterface
         $resourceLink2 = new ResourceLink();
         $resourceLink2->setUrl('https://docs.carolinenoyer.fr/pdf/cv-cnoyer-seniorbackdev.pdf');
         $resourceLink2->setInHero(true);
-        $resourceLink2->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $resourceLink2->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $resourceLink2->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $resourceLink2->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $resourceLink2->setIcon('fa fa-file-pdf');
         $resourceLink2->setTitle('CV format PDF');
         $resourceLink2->setSlug('cv-format-pdf');
@@ -50,8 +50,8 @@ class ResourceLinkAutoFixture extends Fixture implements FixtureGroupInterface
         $resourceLink3 = new ResourceLink();
         $resourceLink3->setUrl('https://open.spotify.com/playlist/3g3bePO9Jddljzgx5wS4IM?si=c4a65cd590b04b94');
         $resourceLink3->setInHero(false);
-        $resourceLink3->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $resourceLink3->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $resourceLink3->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $resourceLink3->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $resourceLink3->setIcon('fa-brands fa-spotify');
         $resourceLink3->setTitle('Spotify');
         $resourceLink3->setSlug('spotify');
@@ -62,8 +62,8 @@ class ResourceLinkAutoFixture extends Fixture implements FixtureGroupInterface
         $resourceLink4 = new ResourceLink();
         $resourceLink4->setUrl('https://github.com/thedarknine');
         $resourceLink4->setInHero(false);
-        $resourceLink4->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $resourceLink4->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $resourceLink4->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $resourceLink4->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $resourceLink4->setIcon('fa fa-github-alt');
         $resourceLink4->setTitle('GitHub');
         $resourceLink4->setSlug('github');
@@ -76,6 +76,6 @@ class ResourceLinkAutoFixture extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
-        return ['testing_unit'];
+        return ['portfolio'];
     }
 }

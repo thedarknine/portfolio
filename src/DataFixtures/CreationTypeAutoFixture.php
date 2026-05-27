@@ -12,8 +12,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager): void
     {
         $creationType0 = new CreationType();
-        $creationType0->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $creationType0->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $creationType0->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $creationType0->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $creationType0->setName('Argile Mat');
         $creationType0->setSlug('argile-mat');
         $creationType0->setPosition(1);
@@ -21,8 +21,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('creationType_1', $creationType0);
 
         $creationType1 = new CreationType();
-        $creationType1->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $creationType1->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $creationType1->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $creationType1->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $creationType1->setName('Argile Ciré');
         $creationType1->setSlug('argile-cire');
         $creationType1->setPosition(2);
@@ -30,8 +30,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('creationType_2', $creationType1);
 
         $creationType2 = new CreationType();
-        $creationType2->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $creationType2->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $creationType2->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $creationType2->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $creationType2->setName('Argile Peint');
         $creationType2->setSlug('argile-peint');
         $creationType2->setPosition(4);
@@ -39,8 +39,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('creationType_3', $creationType2);
 
         $creationType3 = new CreationType();
-        $creationType3->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $creationType3->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $creationType3->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $creationType3->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $creationType3->setName('Argile Vernis');
         $creationType3->setSlug('argile-vernis');
         $creationType3->setPosition(4);
@@ -48,8 +48,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('creationType_4', $creationType3);
 
         $creationType4 = new CreationType();
-        $creationType4->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $creationType4->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $creationType4->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $creationType4->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $creationType4->setName('Au tour');
         $creationType4->setSlug('argile-tour');
         $creationType4->setPosition(5);
@@ -61,6 +61,6 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
-        return ['testing_unit'];
+        return ['portfolio'];
     }
 }

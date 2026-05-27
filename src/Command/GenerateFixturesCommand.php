@@ -120,8 +120,8 @@ class GenerateFixturesCommand extends Command
             // Deduplicate imports and structural dependencies
             $entitiesToImport = array_unique($entitiesToImport);
             $detectedDependencies = array_unique($detectedDependencies);
-            
-            if ($group === 'portfolio') {
+
+            if ('portfolio' === $group) {
                 $namespace = 'App\DataFixtures';
                 $subFolder = '/src/DataFixtures';
             } else {
@@ -129,14 +129,14 @@ class GenerateFixturesCommand extends Command
                 // If $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
                 $subParts = explode('_', $group);
                 $formattedParts = array_map('ucfirst', $subParts); // ['Testing', 'Unit']
-                
+
                 // To match exactly with path
-                if ($group === 'test') {
+                if ('test' === $group) {
                     $namespace = 'App\DataFixtures\Testing';
                     $subFolder = '/src/DataFixtures/Testing';
                 } else {
-                    $namespace = 'App\DataFixtures\Testing\\' . implode('\\', array_slice($formattedParts, 1));
-                    $subFolder = '/src/DataFixtures/Testing/' . implode('/', array_slice($formattedParts, 1));
+                    $namespace = 'App\DataFixtures\Testing\\'.implode('\\', array_slice($formattedParts, 1));
+                    $subFolder = '/src/DataFixtures/Testing/'.implode('/', array_slice($formattedParts, 1));
                 }
             }
 
@@ -284,28 +284,28 @@ class GenerateFixturesCommand extends Command
             $code .= "}\n";
 
             // Dynamic folder structure based on group
-if ($group === 'portfolio') {
-    $namespace = 'App\DataFixtures';
-    $subFolder = '/src/DataFixtures';
-} else {
-    // Si $group = 'test' -> App\DataFixtures\Testing
-    // Si $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
-    $subParts = explode('_', $group);
-    $formattedParts = array_map('ucfirst', $subParts); // ['Testing', 'Unit']
-    
-    // Pour correspondre exactement à ton chemin attendu :
-    if ($group === 'test') {
-        $namespace = 'App\DataFixtures\Testing';
-        $subFolder = '/src/DataFixtures/Testing';
-    } elseif ($group === 'testing_unit') {
-    // 🎯 On force explicitement le bon namespace et le bon sous-dossier pour le test unitaire
-    $namespace = 'App\DataFixtures\Testing\Unit';
-    $subFolder = '/src/DataFixtures/Testing/Unit';
-    } else {
-        $namespace = 'App\DataFixtures\Testing\\' . implode('\\', array_slice($formattedParts, 1));
-        $subFolder = '/src/DataFixtures/Testing/' . implode('/', array_slice($formattedParts, 1));
-    }
-}
+            if ('portfolio' === $group) {
+                $namespace = 'App\DataFixtures';
+                $subFolder = '/src/DataFixtures';
+            } else {
+                // If $group = 'test' -> App\DataFixtures\Testing
+                // If $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
+                $subParts = explode('_', $group);
+                $formattedParts = array_map('ucfirst', $subParts); // ['Testing', 'Unit']
+
+                // Match exactly your expected path :
+                if ('test' === $group) {
+                    $namespace = 'App\DataFixtures\Testing';
+                    $subFolder = '/src/DataFixtures/Testing';
+                } elseif ('testing_unit' === $group) {
+                    // Force the correct namespace and subfolder for unit tests
+                    $namespace = 'App\DataFixtures\Testing\Unit';
+                    $subFolder = '/src/DataFixtures/Testing/Unit';
+                } else {
+                    $namespace = 'App\DataFixtures\Testing\\'.implode('\\', array_slice($formattedParts, 1));
+                    $subFolder = '/src/DataFixtures/Testing/'.implode('/', array_slice($formattedParts, 1));
+                }
+            }
             $directoryPath = $this->kernel->getProjectDir().$subFolder;
 
             if (!is_dir($directoryPath)) {

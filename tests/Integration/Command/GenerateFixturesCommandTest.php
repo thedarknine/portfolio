@@ -1,15 +1,24 @@
 <?php
 
+/**
+ * This file is part of Portfolio project.
+ * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace App\Tests\Command;
 
 use App\Entity\Company;
 use App\Entity\Experience;
-use App\Entity\Project;
 use App\Entity\Skill;
 use App\Entity\SkillType;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateFixturesCommandTest extends KernelTestCase
 {
@@ -24,8 +33,7 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $this->entityManager = self::getContainer()->get('doctrine.orm.entity_manager');
 
         $projectDir = self::getContainer()->getParameter('kernel.project_dir');
-        
-        // 🎯 MAJ : Les fichiers générés par le test iront maintenant dans le sous-dossier /Testing
+
         $this->companyFixturePath = $projectDir.'/src/DataFixtures/Testing/Unit/CompanyAutoFixture.php';
         $this->experienceFixturePath = $projectDir.'/src/DataFixtures/Testing/Unit/ExperienceAutoFixture.php';
         $this->projectFixturePath = $projectDir.'/src/DataFixtures/Testing/Unit/ProjectAutoFixture.php';
@@ -41,6 +49,51 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $this->entityManager = null;
     }
 
+    #[DataProvider('provideFixtureGroups')]
+    public function testExecuteWithVariousGroups(string $group, ?string $expectedSubFolder): void
+    {
+        $kernel = self::bootKernel();
+        $application = new Application($kernel);
+
+        // If a specific subfolder is expected, ensure it doesn't exist to force the `mkdir` call
+        if ($expectedSubFolder) {
+            $filesystem = new Filesystem();
+            $targetDir = $kernel->getProjectDir().$expectedSubFolder;
+            if ($filesystem->exists($targetDir)) {
+                $filesystem->remove($targetDir);
+            }
+        }
+
+        // Get the command (adjust the name according to your actual fixture command)
+        $command = $application->find('app:generate-fixtures');
+        $commandTester = new CommandTester($command);
+
+        // Pass the group as argument/option according to your command's signature
+        $commandTester->execute([
+            '--group' => $group, 
+        ]);
+
+        $commandTester->assertCommandIsSuccessful();
+
+        // Clean up after the test if the directory was created specifically for the test
+        if ($expectedSubFolder && isset($filesystem)) {
+            $filesystem->remove($targetDir);
+        }
+    }
+
+    public static function provideFixtureGroups(): array
+    {
+        return [
+            'Groupe Portfolio' => ['portfolio', null],
+            'Groupe Test de base' => ['test', null],
+            'Groupe Avec Underscore' => ['testing_unit', null],
+            'Groupe dynamique complexe' => [
+                'testing_unit_mutation',
+                '/src/DataFixtures/Testing/Unit/Mutation',
+            ],
+        ];
+    }
+
     /**
      * Test error case when entity does not exist.
      */
@@ -52,7 +105,7 @@ class GenerateFixturesCommandTest extends KernelTestCase
 
         $statusCode = $commandTester->execute([
             'entityFqcn' => 'App\Entity\FakeEntity',
-            '--group' => 'testing_unit', 
+            '--group' => 'testing_unit',
         ]);
 
         $this->assertSame(1, $statusCode);
@@ -144,14 +197,12 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $command = $application->find('app:generate-fixtures');
         $commandTester = new CommandTester($command);
 
-        // 🎯 MAJ : Argument + Option de groupe
         $statusCode = $commandTester->execute([
             'entityFqcn' => Company::class,
             '--group' => 'testing_unit',
         ]);
 
         $this->assertSame(0, $statusCode);
-        // 🎯 MAJ assertion : le message console contient le sous-dossier désormais
         $this->assertStringContainsString('✅ Generated fixture: /src/DataFixtures/Testing/Unit/CompanyAutoFixture.php', $commandTester->getDisplay());
         $this->assertFileExists($this->companyFixturePath);
 
@@ -179,8 +230,8 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $connection->executeStatement('SET FOREIGN_KEY_CHECKS = 1');
 
         $projectDir = self::getContainer()->getParameter('kernel.project_dir');
-        
-        // 🎯 MAJ : On nettoie dans /Testing/ pour laisser la racine intacte
+
+        // Clean up into Testing/Unit to leave the root intact
         $fixturesToClean = [
             $this->companyFixturePath,
             $this->experienceFixturePath,
@@ -196,9 +247,9 @@ class GenerateFixturesCommandTest extends KernelTestCase
             }
         }
 
-        // On nettoie proprement le dossier unitaire
+        // Clean up the unit directory properly
         $testingDir = $projectDir.'/src/DataFixtures/Testing/Unit';
-        if (is_dir($testingDir) && count(scandir($testingDir)) === 2) {
+        if (is_dir($testingDir) && 2 === count(scandir($testingDir))) {
             rmdir($testingDir);
         }
 

@@ -148,9 +148,9 @@ test-arch: ## Run phparkitect
 .PHONY: test-all
 test-all: ## Run all PHPUnit tests
 	$(call display_title,Running all PHPUnit tests ..............................,${ICON_TEST})
-	- @make cover
-	- @make test-mutation
-	- @make test-arch
+	@$(MAKE) --no-print-directory cover
+	@$(MAKE) --no-print-directory test-mutation
+	@$(MAKE) --no-print-directory test-arch
 
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env
@@ -175,7 +175,9 @@ cc: ## Run bin/console cache:clear from docker
 .PHONY: cs
 cs: ## Check all coding standards (PHP, Twig, CSS)
 	$(call display_title,Checking coding standards .............................,${ICON_CS})
-	@make cs-php && make cs-twig && make cs-front
+	- @$(MAKE) --no-print-directory cs-php 
+	- @$(MAKE) --no-print-directory cs-twig 
+	- @$(MAKE) --no-print-directory cs-front
 
 .PHONY: cs-php
 cs-php: ## PHP CS Fixer - Only show diff
@@ -191,7 +193,9 @@ cs-twig: ## Twig CS Fixer - Only show diff
 .PHONY: cs-fix
 cs-fix: ## Fix all coding standards (PHP, Twig, CSS)
 	$(call display_title,Fixing coding standards ..............................,${ICON_CS})
-	@make cs-php-fix && make cs-twig-fix && make cs-front-fix
+	@$(MAKE) --no-print-directory cs-php-fix 
+	@$(MAKE) --no-print-directory cs-twig-fix 
+	@$(MAKE) --no-print-directory cs-front-fix
 
 .PHONY: cs-php-fix
 cs-php-fix: ## PHP CS Fixer - Fix code

@@ -85,7 +85,6 @@ class SecurityControllerTest extends WebTestCase
         $this->assertResponseIsSuccessful();
     }
 
-
     public function testAdminCanAccessDashboard(): void
     {
         $container = static::getContainer();

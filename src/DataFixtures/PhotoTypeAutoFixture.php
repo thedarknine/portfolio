@@ -12,8 +12,8 @@ class PhotoTypeAutoFixture extends Fixture implements FixtureGroupInterface
     public function load(ObjectManager $manager): void
     {
         $photoType0 = new PhotoType();
-        $photoType0->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $photoType0->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $photoType0->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $photoType0->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $photoType0->setName('Sky');
         $photoType0->setSlug('sky');
         $photoType0->setPosition(1);
@@ -21,8 +21,8 @@ class PhotoTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('photoType_1', $photoType0);
 
         $photoType1 = new PhotoType();
-        $photoType1->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $photoType1->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $photoType1->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $photoType1->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $photoType1->setName('Nature');
         $photoType1->setSlug('nature');
         $photoType1->setPosition(2);
@@ -30,8 +30,8 @@ class PhotoTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('photoType_2', $photoType1);
 
         $photoType2 = new PhotoType();
-        $photoType2->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $photoType2->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $photoType2->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $photoType2->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $photoType2->setName('Night');
         $photoType2->setSlug('night');
         $photoType2->setPosition(3);
@@ -39,8 +39,8 @@ class PhotoTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('photoType_3', $photoType2);
 
         $photoType3 = new PhotoType();
-        $photoType3->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $photoType3->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $photoType3->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $photoType3->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $photoType3->setName('City');
         $photoType3->setSlug('city');
         $photoType3->setPosition(4);
@@ -48,8 +48,8 @@ class PhotoTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $this->addReference('photoType_4', $photoType3);
 
         $photoType4 = new PhotoType();
-        $photoType4->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $photoType4->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $photoType4->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $photoType4->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $photoType4->setName('Ici et ailleurs');
         $photoType4->setSlug('ici-ailleurs');
         $photoType4->setPosition(5);
@@ -61,6 +61,6 @@ class PhotoTypeAutoFixture extends Fixture implements FixtureGroupInterface
 
     public static function getGroups(): array
     {
-        return ['testing_unit'];
+        return ['portfolio'];
     }
 }

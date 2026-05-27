@@ -19,8 +19,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
         $education0->setSpeciality(null);
         $education0->setMention(null);
         $education0->setType(\App\Enum\EducationType::PROFESSIONAL);
-        $education0->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $education0->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $education0->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $education0->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $education0->setTitle('Product Designer');
         $education0->setSlug('design');
         try {
@@ -37,8 +37,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
         $education1->setSpeciality(null);
         $education1->setMention(null);
         $education1->setType(\App\Enum\EducationType::PROFESSIONAL);
-        $education1->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $education1->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $education1->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $education1->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $education1->setTitle('Responsable de produit agile');
         $education1->setSlug('agile');
         try {
@@ -55,8 +55,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
         $education2->setSpeciality('Informatique');
         $education2->setMention('Très bien');
         $education2->setType(\App\Enum\EducationType::UNIVERSITARY);
-        $education2->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $education2->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $education2->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $education2->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $education2->setTitle('Master 2 Professionnel SIPPE');
         $education2->setSlug('m2-pro');
         try {
@@ -73,8 +73,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
         $education3->setSpeciality('Systèmes d\'information et de communication');
         $education3->setMention(null);
         $education3->setType(\App\Enum\EducationType::UNIVERSITARY);
-        $education3->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $education3->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $education3->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $education3->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $education3->setTitle('DEA Informatique');
         $education3->setSlug('m2-rech');
         try {
@@ -91,8 +91,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
         $education4->setSpeciality('Classification, data-mining et algorithmique pour les grandes bases');
         $education4->setMention('Bien');
         $education4->setType(\App\Enum\EducationType::UNIVERSITARY);
-        $education4->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $education4->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $education4->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $education4->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $education4->setTitle('Maîtrise Informatique');
         $education4->setSlug('maitrise');
         try {
@@ -109,8 +109,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
         $education5->setSpeciality('Optimisation et technologies de l\'information');
         $education5->setMention('Assez bien');
         $education5->setType(\App\Enum\EducationType::UNIVERSITARY);
-        $education5->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $education5->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $education5->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $education5->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $education5->setTitle('Licence Informatique');
         $education5->setSlug('licence');
         try {
@@ -127,8 +127,8 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
         $education6->setSpeciality('Sciences de la Vie et de la Terre');
         $education6->setMention(null);
         $education6->setType(\App\Enum\EducationType::UNIVERSITARY);
-        $education6->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
-        $education6->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $education6->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $education6->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
         $education6->setTitle('DEUG MIAS');
         $education6->setSlug('deug');
         try {
@@ -154,6 +154,6 @@ class EducationAutoFixture extends Fixture implements DependentFixtureInterface,
 
     public static function getGroups(): array
     {
-        return ['testing_unit'];
+        return ['portfolio'];
     }
 }
