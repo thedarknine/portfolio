@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\PageInfo;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class PageInfoAutoFixture extends Fixture
+class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -17,8 +18,8 @@ class PageInfoAutoFixture extends Fixture
         $pageInfo0->setQuote('J’aime transformer des idées en réalisations concrètes, apprendre en faisant et faire évoluer ce que je construis.');
         $pageInfo0->setInHeader(true);
         $pageInfo0->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo0->setCreatedAt(new \DateTime('2026-05-25 09:38:13'));
-        $pageInfo0->setUpdatedAt(new \DateTime('2026-05-25 12:53:57'));
+        $pageInfo0->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $pageInfo0->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
         $pageInfo0->setTitle('Expérience');
         $pageInfo0->setSlug('experience');
         $pageInfo0->setPosition(1);
@@ -32,8 +33,8 @@ class PageInfoAutoFixture extends Fixture
         $pageInfo1->setQuote('Je cherche à concevoir des produits simples, utiles et durables, avec une approche pragmatique et humaine.');
         $pageInfo1->setInHeader(true);
         $pageInfo1->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo1->setCreatedAt(new \DateTime('2026-05-25 10:06:31'));
-        $pageInfo1->setUpdatedAt(new \DateTime('2026-05-25 12:53:59'));
+        $pageInfo1->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $pageInfo1->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
         $pageInfo1->setTitle('Compétences');
         $pageInfo1->setSlug('competences');
         $pageInfo1->setPosition(2);
@@ -47,8 +48,8 @@ class PageInfoAutoFixture extends Fixture
         $pageInfo2->setQuote('Pour moi, la veille et l\'apprentissage ne s\'arrêtent jamais. C\'est un cycle permanent d\'expérimentation.');
         $pageInfo2->setInHeader(true);
         $pageInfo2->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo2->setCreatedAt(new \DateTime('2026-05-25 11:05:25'));
-        $pageInfo2->setUpdatedAt(new \DateTime('2026-05-25 12:54:02'));
+        $pageInfo2->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $pageInfo2->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
         $pageInfo2->setTitle('Formation');
         $pageInfo2->setSlug('formation');
         $pageInfo2->setPosition(3);
@@ -62,8 +63,8 @@ class PageInfoAutoFixture extends Fixture
         $pageInfo3->setQuote('Coder sans contraintes, tester de nouvelles technos et s\'autoriser à chercher juste pour le plaisir de comprendre.');
         $pageInfo3->setInHeader(true);
         $pageInfo3->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo3->setCreatedAt(new \DateTime('2026-05-25 11:06:39'));
-        $pageInfo3->setUpdatedAt(new \DateTime('2026-05-25 12:54:04'));
+        $pageInfo3->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $pageInfo3->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
         $pageInfo3->setTitle('Projets');
         $pageInfo3->setSlug('projets');
         $pageInfo3->setPosition(4);
@@ -77,8 +78,8 @@ class PageInfoAutoFixture extends Fixture
         $pageInfo4->setQuote('Quand la passion des vieux jeux rencontre le plaisir de bidouiller le hardware.');
         $pageInfo4->setInHeader(true);
         $pageInfo4->setCategory(\App\Enum\PageCategory::INTEREST);
-        $pageInfo4->setCreatedAt(new \DateTime('2026-05-25 12:00:50'));
-        $pageInfo4->setUpdatedAt(new \DateTime('2026-05-25 12:56:27'));
+        $pageInfo4->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $pageInfo4->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
         $pageInfo4->setTitle('Arcade');
         $pageInfo4->setSlug('arcade');
         $pageInfo4->setPosition(5);
@@ -92,8 +93,8 @@ class PageInfoAutoFixture extends Fixture
         $pageInfo5->setQuote('Poser les écrans et laisser parler la matière et l\'imagination.');
         $pageInfo5->setInHeader(false);
         $pageInfo5->setCategory(\App\Enum\PageCategory::INTEREST);
-        $pageInfo5->setCreatedAt(new \DateTime('2026-05-25 12:07:06'));
-        $pageInfo5->setUpdatedAt(new \DateTime('2026-05-25 12:56:38'));
+        $pageInfo5->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $pageInfo5->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
         $pageInfo5->setTitle('Créations');
         $pageInfo5->setSlug('creations');
         $pageInfo5->setPosition(6);
@@ -107,8 +108,8 @@ class PageInfoAutoFixture extends Fixture
         $pageInfo6->setQuote('Capturer l\'instant, cadrer une atmosphère et prêter attention aux détails qui échappent au premier coup d\'oeil.');
         $pageInfo6->setInHeader(false);
         $pageInfo6->setCategory(\App\Enum\PageCategory::INTEREST);
-        $pageInfo6->setCreatedAt(new \DateTime('2026-05-25 12:07:40'));
-        $pageInfo6->setUpdatedAt(new \DateTime('2026-05-25 12:56:45'));
+        $pageInfo6->setCreatedAt(new \DateTime('2026-05-27 12:54:01'));
+        $pageInfo6->setUpdatedAt(new \DateTime('2026-05-27 12:54:01'));
         $pageInfo6->setTitle('Photos');
         $pageInfo6->setSlug('photos');
         $pageInfo6->setPosition(7);
@@ -116,5 +117,10 @@ class PageInfoAutoFixture extends Fixture
         $this->addReference('pageInfo_7', $pageInfo6);
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['testing_unit'];
     }
 }

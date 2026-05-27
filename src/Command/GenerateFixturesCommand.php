@@ -15,6 +15,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -38,13 +39,21 @@ class GenerateFixturesCommand extends Command
             'entityFqcn',
             InputArgument::OPTIONAL,
             'The Full Qualified Class Name of the entity (optional). If empty, processes all entities.'
-        );
+        )
+            ->addOption(
+                'group',
+                'g',
+                InputOption::VALUE_REQUIRED,
+                'Doctrine group to assign to the generated fixture file.',
+                'portfolio'
+            );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
         $entityFqcn = $input->getArgument('entityFqcn');
+        $group = $input->getOption('group');
 
         $targetEntities = [];
 
@@ -111,24 +120,44 @@ class GenerateFixturesCommand extends Command
             // Deduplicate imports and structural dependencies
             $entitiesToImport = array_unique($entitiesToImport);
             $detectedDependencies = array_unique($detectedDependencies);
+            
+            if ($group === 'portfolio') {
+                $namespace = 'App\DataFixtures';
+                $subFolder = '/src/DataFixtures';
+            } else {
+                // If $group = 'test' -> App\DataFixtures\Testing
+                // If $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
+                $subParts = explode('_', $group);
+                $formattedParts = array_map('ucfirst', $subParts); // ['Testing', 'Unit']
+                
+                // To match exactly with path
+                if ($group === 'test') {
+                    $namespace = 'App\DataFixtures\Testing';
+                    $subFolder = '/src/DataFixtures/Testing';
+                } else {
+                    $namespace = 'App\DataFixtures\Testing\\' . implode('\\', array_slice($formattedParts, 1));
+                    $subFolder = '/src/DataFixtures/Testing/' . implode('/', array_slice($formattedParts, 1));
+                }
+            }
 
             // --- BUILD FIXTURE FILE HEADER ---
-            $code = "<?php\n\nnamespace App\DataFixtures;\n\n";
+            $code = "<?php\n\nnamespace $namespace;\n\n";
 
             foreach ($entitiesToImport as $importFqcn) {
                 $code .= "use $importFqcn;\n";
             }
 
             $code .= "use Doctrine\Bundle\FixturesBundle\Fixture;\n";
+            $code .= "use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;\n";
             if (!empty($detectedDependencies)) {
                 $code .= "use Doctrine\Common\DataFixtures\DependentFixtureInterface;\n";
             }
             $code .= "use Doctrine\Persistence\ObjectManager;\n\n";
 
             if (!empty($detectedDependencies)) {
-                $code .= "class $fixtureClassName extends Fixture implements DependentFixtureInterface\n{\n";
+                $code .= "class $fixtureClassName extends Fixture implements DependentFixtureInterface, FixtureGroupInterface\n{\n";
             } else {
-                $code .= "class $fixtureClassName extends Fixture\n{\n";
+                $code .= "class $fixtureClassName extends Fixture implements FixtureGroupInterface\n{\n";
             }
 
             $code .= "    public function load(ObjectManager \$manager): void\n    {\n";
@@ -148,10 +177,9 @@ class GenerateFixturesCommand extends Command
                     }
 
                     $getter = 'get'.ucfirst($fieldName);
-                    $booleanGetter = 'is'.ucfirst($fieldName); // Standard Symfony naming pattern for booleans
+                    $booleanGetter = 'is'.ucfirst($fieldName);
                     $setter = 'set'.ucfirst($fieldName);
 
-                    // Choose the right getter method depending on availability
                     $chosenGetter = null;
                     if (method_exists($record, $getter)) {
                         $chosenGetter = $getter;
@@ -208,7 +236,7 @@ class GenerateFixturesCommand extends Command
                 // 3. Collection-valued relations (ManyToMany) - Owning Side only
                 foreach ($associationNames as $assocName) {
                     $getter = 'get'.ucfirst($assocName);
-                    $adder = 'add'.ucfirst(rtrim($assocName, 's')); // e.g., getSkills -> addSkill
+                    $adder = 'add'.ucfirst(rtrim($assocName, 's'));
 
                     $isOwningSide = $metadata->associationMappings[$assocName]['isOwningSide'] ?? false;
 
@@ -250,12 +278,44 @@ class GenerateFixturesCommand extends Command
                 $code .= "        return [\n".implode("\n", $detectedDependencies)."\n        ];\n    }\n";
             }
 
+            // Use the real FixtureGroupInterface method
+            $code .= "\n    public static function getGroups(): array\n    {\n        return ['$group'];\n    }\n";
+
             $code .= "}\n";
 
-            $fixturePath = $this->kernel->getProjectDir()."/src/DataFixtures/$fixtureClassName.php";
+            // Dynamic folder structure based on group
+if ($group === 'portfolio') {
+    $namespace = 'App\DataFixtures';
+    $subFolder = '/src/DataFixtures';
+} else {
+    // Si $group = 'test' -> App\DataFixtures\Testing
+    // Si $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
+    $subParts = explode('_', $group);
+    $formattedParts = array_map('ucfirst', $subParts); // ['Testing', 'Unit']
+    
+    // Pour correspondre exactement à ton chemin attendu :
+    if ($group === 'test') {
+        $namespace = 'App\DataFixtures\Testing';
+        $subFolder = '/src/DataFixtures/Testing';
+    } elseif ($group === 'testing_unit') {
+    // 🎯 On force explicitement le bon namespace et le bon sous-dossier pour le test unitaire
+    $namespace = 'App\DataFixtures\Testing\Unit';
+    $subFolder = '/src/DataFixtures/Testing/Unit';
+    } else {
+        $namespace = 'App\DataFixtures\Testing\\' . implode('\\', array_slice($formattedParts, 1));
+        $subFolder = '/src/DataFixtures/Testing/' . implode('/', array_slice($formattedParts, 1));
+    }
+}
+            $directoryPath = $this->kernel->getProjectDir().$subFolder;
+
+            if (!is_dir($directoryPath)) {
+                mkdir($directoryPath, 0755, true);
+            }
+
+            $fixturePath = $directoryPath."/$fixtureClassName.php";
             file_put_contents($fixturePath, $code);
 
-            $io->text(sprintf('✅ Generated fixture: <info>%s.php</info> %s', $fixtureClassName, !empty($detectedDependencies) ? '(with explicit dependencies)' : ''));
+            $io->text(sprintf('✅ Generated fixture: <info>%s/%s.php</info> %s', $subFolder, $fixtureClassName, !empty($detectedDependencies) ? '(with explicit dependencies)' : ''));
         }
 
         $io->success('All automated fixtures re-generated successfully with English comments!');

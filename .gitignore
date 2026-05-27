@@ -5,6 +5,7 @@
 !.docker/mysql/data/.gitkeep
 !.docker/volumes/logs/mysql/.gitkeep
 /node_modules/*
+/src/DataFixtures/Testing/*
 
 ###> symfony/framework-bundle ###
 /.env.local

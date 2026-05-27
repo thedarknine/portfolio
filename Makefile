@@ -116,6 +116,12 @@ watch: ## Watch Tailwind CSS changes and re-build
 .PHONY: test
 test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
+	- @echo "Generating fixtures..."
+	- php bin/console app:generate-fixtures --group=test
+	- @echo "Loading fixtures..."
+	- php bin/console doctrine:schema:drop --env=test --force --full-database
+	- php bin/console doctrine:schema:update --env=test --force
+	- php bin/console doctrine:fixtures:load --env=test --group=test --no-interaction
 	- @echo "Running PHPUnit tests..."
 	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml
 

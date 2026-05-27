@@ -58,6 +58,20 @@ class PagesControllerTest extends WebTestCase
     }
 
     /**
+     * Test that homepage is successful.
+     */
+    public function testHomepageIsSuccessful(): void
+    {
+        // Execute a GET request on the homepage URL
+        $this->client->request('GET', '/');
+
+        // Assert that the HTTP response is a success (2xx)
+        $this->assertResponseIsSuccessful();
+
+        $this->assertSelectorExists('div.main');
+    }
+
+    /**
      * Configure database and filesystem to simulate IF and ELSE cases.
      */
     private function setupFixturesForMediaPages(): void
@@ -152,6 +166,31 @@ class PagesControllerTest extends WebTestCase
         $this->assertResponseStatusCodeSame(404);
     }
 
+    #[DataProvider('provideSlugsAndTitles')]
+    public function testDynamicPagesAreSuccessful(string $slug, string $expectedTagline): array
+    {
+        $this->client->request('GET', '/'.$slug);
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertSelectorTextContains('.nine-section-label', $expectedTagline);
+
+        return [$slug, $expectedTagline];
+    }
+
+    public static function provideSlugsAndTitles(): array
+    {
+        return [
+            'page_experience' => ['experience', 'Construire'],
+            'page_competences' => ['competences', 'Maîtriser'],
+            'page_formation' => ['formation', 'Apprendre'],
+            'page_projets' => ['projets', 'Expérimenter'],
+            'page_arcade' => ['arcade', 'Assembler'],
+            'page_creations' => ['creations', 'Façonner'],
+            'page_photos' => ['photos', 'Observer'],
+        ];
+    }
+
     /**
      * Create on the fly the minimal structures in your test database
      * to prevent controller loops from crashing.
@@ -169,5 +208,16 @@ class PagesControllerTest extends WebTestCase
             $this->entityManager->persist($page);
             $this->entityManager->flush();
         }
+    }
+
+    /**
+     * Test admin zone is protected and redirects anonymous users.
+     */
+    public function testAdminZoneIsProtected(): void
+    {
+        $this->client->request('GET', '/admin');
+
+        // Check anonymous user is redirected (usually to /login)
+        $this->assertResponseRedirects();
     }
 }

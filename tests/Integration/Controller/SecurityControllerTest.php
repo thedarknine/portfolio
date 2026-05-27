@@ -13,6 +13,7 @@ namespace App\Tests\Integration\Controller;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityControllerTest extends WebTestCase
 {
@@ -24,7 +25,84 @@ class SecurityControllerTest extends WebTestCase
         $this->client = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
 
-        $this->ensureTestUserExists();
+        $this->createAdminUser();
+    }
+
+    protected function tearDown(): void
+    {
+        parent::tearDown();
+        $this->entityManager->close();
+    }
+
+    /**
+     * Anonymous user should be redirected when trying to access admin.
+     */
+    public function testAdminZoneIsProtected(): void
+    {
+        $this->client->request('GET', '/admin');
+
+        // Will be redirected (302) to login page
+        $this->assertResponseRedirects();
+    }
+
+    /**
+     * Login page should be accessible.
+     */
+    public function testLoginPageIsSuccessful(): void
+    {
+        $this->client->request('GET', '/login');
+
+        $this->assertResponseIsSuccessful();
+        // Check that the form is present
+        $this->assertSelectorExists('form');
+        $this->assertSelectorExists('input[name="_username"]');
+        $this->assertSelectorExists('input[name="_password"]');
+    }
+
+    /**
+     * Check form submission with valid credentials.
+     */
+    public function testLoginSubmitWithValidCredentials(): void
+    {
+        $crawler = $this->client->request('GET', '/login');
+
+        $container = static::getContainer();
+        $entityManager = $container->get('doctrine.orm.entity_manager');
+        $adminUser = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
+
+        // Select the form button (adjust the text according to your button)
+        $form = $crawler->filter('form')->form([
+            '_username' => $adminUser->getEmail(),
+            '_password' => '$2y$13$dummyhashedpasswordstrings',
+        ]);
+
+        $this->client->submit($form);
+        // After a successful connection, Symfony redirects the user
+        $this->assertResponseRedirects('/admin');
+
+        // Follow the redirect to ensure the destination page works
+        $this->client->followRedirect();
+        $this->assertResponseIsSuccessful();
+    }
+
+
+    public function testAdminCanAccessDashboard(): void
+    {
+        $container = static::getContainer();
+        $entityManager = $container->get('doctrine.orm.entity_manager');
+
+        $adminUser = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
+        $this->client->loginUser($adminUser);
+
+        // Instead of: $client->request('GET', '/admin');
+        // We use the router to generate the real EasyAdmin route
+        $router = $container->get('router');
+
+        // Replace 'admin' with your route name if you customized it
+        $url = $router->generate('admin');
+
+        $this->client->request('GET', $url);
+        $this->assertResponseIsSuccessful();
     }
 
     /**
@@ -35,10 +113,10 @@ class SecurityControllerTest extends WebTestCase
     {
         // 1. Get our test user
         $userRepository = $this->entityManager->getRepository(User::class);
-        $testUser = $userRepository->findOneBy(['email' => 'studio@carolinenoyer.fr']);
+        $admin = $userRepository->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
 
         // 2. Connect the user on the client
-        $this->client->loginUser($testUser);
+        $this->client->loginUser($admin);
 
         // 3. Try to access the login page
         $this->client->request('GET', '/login');
@@ -59,8 +137,8 @@ class SecurityControllerTest extends WebTestCase
     {
         // 1. Connect
         $userRepository = $this->entityManager->getRepository(User::class);
-        $testUser = $userRepository->findOneBy(['email' => 'studio@carolinenoyer.fr']);
-        $this->client->loginUser($testUser);
+        $admin = $userRepository->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
+        $this->client->loginUser($admin);
 
         // 2. Call the logout route (usually /logout)
         $this->client->request('GET', '/logout');
@@ -86,20 +164,19 @@ class SecurityControllerTest extends WebTestCase
     }
 
     /**
-     * Ensure the presence of a test user in the database.
+     * Ensure the presence of an admin user in the database.
      */
-    private function ensureTestUserExists(): void
+    private function createAdminUser(): void
     {
-        $userRepository = $this->entityManager->getRepository(User::class);
+        $passwordHasher = static::getContainer()->get(UserPasswordHasherInterface::class);
 
-        if (null === $userRepository->findOneBy(['email' => 'studio@carolinenoyer.fr'])) {
-            $user = (new User())
-                ->setEmail('studio@carolinenoyer.fr')
-                ->setPassword('$2y$13$dummyhashedpasswordstrings') // Simulation d'un hash valide
-                ->setRoles(['ROLE_ADMIN']);
+        $admin = (new User())
+            ->setEmail('studiotest@carolinenoyer.fr')
+            ->setRoles(['ROLE_ADMIN']);
 
-            $this->entityManager->persist($user);
-            $this->entityManager->flush();
-        }
+        $admin->setPassword($passwordHasher->hashPassword($admin, '$2y$13$dummyhashedpasswordstrings'));
+
+        $this->entityManager->persist($admin);
+        $this->entityManager->flush();
     }
 }
