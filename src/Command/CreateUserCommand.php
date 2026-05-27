@@ -36,19 +36,19 @@ class CreateUserCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $io->title('Création d\'un utilisateur Administrateur');
+        $io->title('Admin User Creation');
 
-        $email = $io->ask('Entrez l\'adresse e-mail', null, function ($email) {
+        $email = $io->ask('Enter the email address', null, function ($email) {
             if (empty($email) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
-                throw new \RuntimeException('L\'adresse e-mail n\'est pas valide.');
+                throw new \RuntimeException('Email address is not valid.');
             }
 
             return $email;
         });
 
-        $password = $io->askHidden('Entrez le mot de passe', function ($password) {
+        $password = $io->askHidden('Enter the password', function ($password) {
             if (empty($password) || strlen($password) < 6) {
-                throw new \RuntimeException('Le mot de passe doit faire au moins 6 caractères.');
+                throw new \RuntimeException('Password must be at least 6 characters long.');
             }
 
             return $password;
@@ -57,7 +57,7 @@ class CreateUserCommand extends Command
         // Check if a user with the same email already exists
         $userRepository = $this->entityManager->getRepository(User::class);
         if ($userRepository->findOneBy(['email' => $email])) {
-            $io->error(sprintf('L\'utilisateur %s existe déjà en base de données !', $email));
+            $io->error(sprintf('User %s already exists in the database!', $email));
 
             return Command::FAILURE;
         }
@@ -75,7 +75,7 @@ class CreateUserCommand extends Command
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        $io->success(sprintf('L\'administrateur %s a été créé avec succès !', $email));
+        $io->success(sprintf('Administrator %s has been created successfully!', $email));
 
         return Command::SUCCESS;
     }
