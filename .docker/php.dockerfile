@@ -11,6 +11,7 @@ RUN apt update && apt install -y \
     libjpeg-dev \
     libfreetype6-dev \
     libicu-dev \
+    libzip-dev \
     zip \
     unzip \
     nodejs npm
@@ -33,7 +34,8 @@ RUN set -ex; \
     docker-php-ext-install xsl; \
     docker-php-ext-install exif; \
     docker-php-ext-install pcntl; \
-    docker-php-ext-install bcmath
+    docker-php-ext-install bcmath; \
+    docker-php-ext-install zip
 
 # Install Symfony CLI
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash \

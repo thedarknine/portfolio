@@ -76,6 +76,8 @@ Into docker :
 - dama/doctrine-test-bundle
 - infection/infection (mutation testing)
 - phparkitect/phparkitect (architecture validation)
+- symfony/panther (ui testing)
+- dbrekelmans/bdi (chrome driver)
 
 ### Front-end librairies
 
