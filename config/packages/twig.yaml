@@ -1,6 +1,17 @@
 twig:
     file_name_pattern: '*.twig'
 
+    # Global variables available in all templates Twig injected via service
+    globals:
+        page_manager: '@App\Service\PageService'
+        site_name: '%app.site_name%'
+        contact_email: '%app.contact_email%'
+        site_url: '%app.site_url%'
+        owner_name: '%app.owner_name%'
+        owner_role: '%app.owner_role%'
+        owner_description: '%app.owner_description%'
+        cv_url: '%app.cv_url%'
+
 when@test:
     twig:
         strict_variables: true

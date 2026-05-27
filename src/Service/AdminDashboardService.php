@@ -21,6 +21,8 @@ use Symfony\Component\Finder\Finder;
 
 class AdminDashboardService
 {
+    public const CAREER_START_DATE = '2006-10-01';
+
     // Injected repositories directly
     public function __construct(
         private ParameterBagInterface $params,
@@ -146,7 +148,7 @@ class AdminDashboardService
 
     private function getNbYearsExperience(): int
     {
-        $start = new \DateTime('2006-10-01');
+        $start = new \DateTime(self::CAREER_START_DATE);
 
         return $start->diff(new \DateTime())->y;
     }

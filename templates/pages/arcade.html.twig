@@ -18,7 +18,7 @@
 <section class="bg-nine-gray-light py-10">
     <div class="container">
         <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">This is it!</h3>
-        {% set listItemsArcade = data.arcadeList['final'] %}
+        {% set listItemsArcade = arcade_data.items['final'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
             <div class="w-full h-full rounded overflow-hidden shadow-lg animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
@@ -39,7 +39,7 @@
             personnalisé. Je suis partie des plans mis à dispo par
             <a href="http://forum.hfsplay.fr/plans-prets-emploi/bartop-frankeez-version-t8468.html" alt="Frankeezz" target="_blank">Frankeezz</a>.
             Je souhaite limiter au max la hauteur du control panel, tout en y insérant un tiroir pour un clavier.</p>
-        {% set listItemsArcade = data.arcadeList['at-the-beginning'] %}
+        {% set listItemsArcade = arcade_data.items['at-the-beginning'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
@@ -60,7 +60,7 @@
         <p class="mb-10">L'étape la plus importante, et aussi la plus délicate quand on est perfectionniste !</p>
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h4>
-        {% set listItemsArcade = data.arcadeList['side-panels'] %}
+        {% set listItemsArcade = arcade_data.items['side-panels'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
@@ -74,7 +74,7 @@
         </div>
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h4>
-        {% set listItemsArcade = data.arcadeList['control-panel'] %}
+        {% set listItemsArcade = arcade_data.items['control-panel'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
@@ -88,7 +88,7 @@
         </div>
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h4>
-        {% set listItemsArcade = data.arcadeList['upper-part'] %}
+        {% set listItemsArcade = arcade_data.items['upper-part'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
@@ -102,7 +102,7 @@
         </div>
 
         <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h4>
-        {% set listItemsArcade = data.arcadeList['back-side'] %}
+        {% set listItemsArcade = arcade_data.items['back-side'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
@@ -122,7 +122,7 @@
         <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#3 : l’assemblage.</h3>
         <p class="mb-10">Les différentes pièces se finalisent petit à petit, on monte et on redémonte histoire de
             contrôler que tout est ok. Au passage un petit coup de peinture. Ca se précise !</p>
-        {% set listItemsArcade = data.arcadeList['assembling'] %}
+        {% set listItemsArcade = arcade_data.items['assembling'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
@@ -143,7 +143,7 @@
         <p class="mb-10">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario
             et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez
             modernes malgré tout.</p>
-        {% set listItemsArcade = data.arcadeList['design'] %}
+        {% set listItemsArcade = arcade_data.items['design'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
@@ -163,7 +163,7 @@
             <p class="mb-10">Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
                 <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
                 s’installer dans ma borne.</p>
-            {% set listItemsArcade = data.arcadeList['recalbox'] %}
+            {% set listItemsArcade = arcade_data.items['recalbox'] %}
             <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
                 {% for arcade in listItemsArcade %}
                     <div class="shadow-lg mb-4">

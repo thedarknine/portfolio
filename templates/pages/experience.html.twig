@@ -10,7 +10,7 @@
 {% block body %}
     <section class="nine-experience-timeline">
         <div class="max-w-5xl mx-auto py-10">
-        {% for experience in data.experiencesList %}
+        {% for experience in experiences_list %}
             {{ include('blocks/experience_item.html.twig', { experience: experience }) }}
         {% endfor %}
         </div>

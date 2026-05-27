@@ -27,14 +27,20 @@ class EducationRepository extends ServiceEntityRepository
     /**
      * @return Education[] Returns an array of Education objects
      */
-    public function getEducationsWithSchool(): array
+    public function getEducationsWithSchool(?string $schoolType = null): array
     {
-        return $this->createQueryBuilder('educ')
+        $query = $this->createQueryBuilder('educ')
             ->select('educ')
             ->innerJoin('educ.school', 'sch')
-            ->addSelect('sch')
-            ->orderBy('educ.year', 'DESC')
-            ->getQuery()
-            ->getResult();
+            ->addSelect('sch');
+
+        if ($schoolType) {
+            $query->where('educ.type = :schoolType')
+                  ->setParameter('schoolType', $schoolType);
+        }
+
+        return $query->orderBy('educ.year', 'DESC')
+                     ->getQuery()
+                     ->getResult();
     }
 }

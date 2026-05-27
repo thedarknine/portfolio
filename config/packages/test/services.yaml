@@ -1,0 +1,3 @@
+parameters:
+    # In test mode, the application will read and write to /var/tests/images!
+    app.images_dir: '%kernel.project_dir%/var/tests/images'

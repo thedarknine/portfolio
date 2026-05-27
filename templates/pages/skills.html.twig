@@ -3,7 +3,7 @@
 {% block title %}Compétences{% endblock %}
 
 {% block body %}
-{% for type in data.skillTypesList %}
+{% for type in skill_types_list %}
     <section class="{% if loop.index is even %}bg-white{% else %}bg-nine-golden/30{% endif %} py-16 border-b border-nine-light/30 overflow-hidden">
         <div class="max-w-6xl mx-auto px-4 flex flex-col lg:flex-row gap-12 items-start">
 
@@ -26,7 +26,7 @@
 
             <!-- RIGHT BLOCK : The skills grid -->
             <div class="w-full lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
-                {% set skills = data.skillsList[type.slug] %}
+                {% set skills = skills_list[type.slug] %}
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                     {% for skill in skills %}

@@ -1,14 +1,14 @@
     <section class="nine-page-hero">
         <div class="grid grid-cols-1 md:grid-cols-3 gap-16 items-center pr-0 mr-0">
             <div class="col-span-2 ml-40 nine-hero-content animate__animated" data-animate="animate__fadeInLeft">
-                <span class="nine-section-label">{{ data.current.tagline }}</span>
-                <h1 class="nine-tagline text-3xl font-bold mb-6">{{ data.current.subtitle }}</h1>
+                <span class="nine-section-label">{{ current_page.tagline }}</span>
+                <h1 class="nine-tagline text-3xl font-bold mb-6">{{ current_page.subtitle }}</h1>
             </div>
 
             <div class="nine-hero-visual min-h-50 overflow-hidden animate__animated" data-animate="animate__fadeInRight">
                 <img
-                    src="images/{{ data.current.technicalName }}/hero-{{ data.current.technicalName }}.jpg"
-                    alt="{{ data.current.title }}"
+                    src="images/{{ current_page.technicalName }}/hero-{{ current_page.technicalName }}.jpg"
+                    alt="{{ current_page.title }}"
                     class="w-full object-cover"
                     style="clip-path: ellipse(100% 140% at 100% 50%);"
                 />

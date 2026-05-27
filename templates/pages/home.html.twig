@@ -24,12 +24,10 @@
                 <p class="text-nine-turquoise text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1s" ><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
             </div>
             <div class="max-w-2xl mx-auto">
-                {% for resource in data.resourceLinks %}
-                {% if resource.inHero %}
+                {% for resource in page_manager.getPublishedResourceLinksInHero() %}
                 <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}">
                     <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank"><i class="{{ resource.icon }} text-nine-light"></i></a>
                 </span>
-                {% endif %}
                 {% endfor %}
             </div>
         </div>
@@ -230,7 +228,7 @@
         </h2>
     </div>
 
-{% for experience in data.lastExperiences %}
+{% for experience in last_experiences %}
     <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-12 lg:gap-x-12 text-blue-dark pb-12">
         <div class="lg:col-span-5">
             <div class="mb-16 lg:mb-0 xl:mt-16 animate__animated" data-animate="animate__fadeInLeft">
@@ -289,7 +287,7 @@
             </p>
         </div>
         <div class="grid-cols-4 p-8 md:space-y-0 md:grid md:gap-3 md:grid-rows-2">
-            {% for landscape in data.mentalLandscape %}
+            {% for landscape in mental_landscape %}
             <div class="w-full h-full rounded overflow-hidden {% if landscape.big %}col-span-2 row-span-2{% endif %} animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
                 <img src="{{ absolute_url(landscape.image) }}" alt="{{ landscape.alt }}" class="block h-full w-full grayscale-50 rounded-lg my-4 lg:my-0 object-cover object-center hover:scale-110 transition duration-500">
             </div>

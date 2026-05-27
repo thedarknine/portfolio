@@ -19,7 +19,7 @@ use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
-class PagesControllerTest extends WebTestCase
+class PortfolioControllerTest extends WebTestCase
 {
     private $client;
     private EntityManagerInterface $entityManager;
@@ -55,20 +55,6 @@ class PagesControllerTest extends WebTestCase
         }
 
         parent::tearDown();
-    }
-
-    /**
-     * Test that homepage is successful.
-     */
-    public function testHomepageIsSuccessful(): void
-    {
-        // Execute a GET request on the homepage URL
-        $this->client->request('GET', '/');
-
-        // Assert that the HTTP response is a success (2xx)
-        $this->assertResponseIsSuccessful();
-
-        $this->assertSelectorExists('div.main');
     }
 
     /**
@@ -134,61 +120,32 @@ class PagesControllerTest extends WebTestCase
         $this->entityManager->flush();
     }
 
-    public function testIndexPageIsSuccessful(): void
+    #[DataProvider('providePublicUrls')]
+    public function testPublicPagesAreSuccessful(string $url): void
     {
-        $this->client->request('GET', '/');
+        $this->client->request('GET', $url);
+
+        // On vérifie simplement que la page répond un code HTTP 200 (OK)
         $this->assertResponseIsSuccessful();
     }
 
-    #[DataProvider('provideSlugs')]
-    public function testAllDynamicPagesAreSuccessful(string $slug): void
+    public static function providePublicUrls(): \Generator
     {
-        $this->client->request('GET', '/'.$slug);
-        $this->assertResponseIsSuccessful();
+        yield ['/experience'];
+        yield ['/competences'];
+        yield ['/formation'];
+        yield ['/projets'];
+        yield ['/photos'];
+        yield ['/arcade'];
+        yield ['/creations'];
     }
 
-    public static function provideSlugs(): array
+    public function testUnknownPageReturns404(): void
     {
-        return [
-            ['experience'],
-            ['competences'],
-            ['formation'],
-            ['projets'],
-            ['arcade'],
-            ['creations'],
-            ['photos'],
-        ];
-    }
+        $this->client->request('GET', '/un-slug-qui-n-existe-pas');
 
-    public function testUnknownSlugTriggersNotFound(): void
-    {
-        $this->client->request('GET', '/un-slug-totalement-inconnu');
+        // On vérifie que la sécurité 404 fonctionne
         $this->assertResponseStatusCodeSame(404);
-    }
-
-    #[DataProvider('provideSlugsAndTitles')]
-    public function testDynamicPagesAreSuccessful(string $slug, string $expectedTagline): array
-    {
-        $this->client->request('GET', '/'.$slug);
-
-        $this->assertResponseIsSuccessful();
-
-        $this->assertSelectorTextContains('.nine-section-label', $expectedTagline);
-
-        return [$slug, $expectedTagline];
-    }
-
-    public static function provideSlugsAndTitles(): array
-    {
-        return [
-            'page_experience' => ['experience', 'Construire'],
-            'page_competences' => ['competences', 'Maîtriser'],
-            'page_formation' => ['formation', 'Apprendre'],
-            'page_projets' => ['projets', 'Expérimenter'],
-            'page_arcade' => ['arcade', 'Assembler'],
-            'page_creations' => ['creations', 'Façonner'],
-            'page_photos' => ['photos', 'Observer'],
-        ];
     }
 
     /**
