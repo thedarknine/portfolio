@@ -75,6 +75,7 @@ Into docker :
 - symfony/test-pack
 - dama/doctrine-test-bundle
 - infection/infection (mutation testing)
+- phparkitect/phparkitect (architecture validation)
 
 ### Front-end librairies
 

@@ -127,12 +127,24 @@ cover: ## Run PHPUnit tests with coverage
 	- @echo "Running PHPUnit tests with coverage..."
 	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml --coverage-html coverage/
 
+.PHONY: test-mutation
+test-mutation: ## Run Infection
+	$(call display_title,Running Infection ......................................,${ICON_TEST})
+	- @echo "Running Infection..."
+	- php vendor/bin/infection --configuration=.tools-config/infection.json --threads=4
+
+.PHONY: test-arch
+test-arch: ## Run phparkitect
+	$(call display_title,Running phparkitect ....................................,${ICON_TEST})
+	- @echo "Running phparkitect..."
+	- php vendor/bin/phparkitect check --config=.tools-config/phparkitect.php
+
 .PHONY: test-all
 test-all: ## Run all PHPUnit tests
 	$(call display_title,Running all PHPUnit tests ..............................,${ICON_TEST})
 	- @make cover
-	- @echo "Running Infection..."
-	- php vendor/bin/infection --configuration=.tools-config/infection.json --threads=4
+	- @make test-mutation
+	- @make test-arch
 
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env
@@ -154,42 +166,41 @@ cc: ## Run bin/console cache:clear from docker
 	$(call display_title,Clearing Symfony cache .................................,${ICON_CLEAN})
 	symfony console cache:clear
 
-.PHONY: cs-check
-cs-check: ## Check all coding standards (PHP, Twig, CSS)
-	$(call display_title,Checking coding standards .............................,${ICON_CS})
-	@make cs-php-check && make cs-twig-check
-
 .PHONY: cs
-cs: ## Fix all coding standards (PHP, Twig, CSS)
-	$(call display_title,Fixing coding standards ..............................,${ICON_CS})
-	@make cs-php && make cs-twig
+cs: ## Check all coding standards (PHP, Twig, CSS)
+	$(call display_title,Checking coding standards .............................,${ICON_CS})
+	@make cs-php && make cs-twig && make cs-front
 
-.PHONY: cs-php-check
-cs-php-check: ## PHP CS Fixer - Only show diff
+.PHONY: cs-php
+cs-php: ## PHP CS Fixer - Only show diff
 	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
 	- ./vendor/bin/php-cs-fixer check --verbose --config=.tools-config/.php-cs-fixer.php --cache-file=.tools-config/.php-cs-fixer.cache
 	- ./vendor/bin/phpstan analyse --memory-limit=512M --configuration=.tools-config/phpstan.neon
 
-.PHONY: cs-php
-cs-php: ## PHP CS Fixer - Fix code
-	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
-	./vendor/bin/php-cs-fixer fix --diff --verbose --config=.tools-config/.php-cs-fixer.php --cache-file=.tools-config/.php-cs-fixer.cache
-	
-
-.PHONY: cs-twig-check
-cs-twig-check: ## Twig CS Fixer - Only show diff
+.PHONY: cs-twig
+cs-twig: ## Twig CS Fixer - Only show diff
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
 	./vendor/bin/twig-cs-fixer check --config=.tools-config/.twig-cs-fixer.php templates/
 
-.PHONY: cs-twig
-cs-twig: ## Twig CS Fixer - Fix code
+.PHONY: cs-fix
+cs-fix: ## Fix all coding standards (PHP, Twig, CSS)
+	$(call display_title,Fixing coding standards ..............................,${ICON_CS})
+	@make cs-php-fix && make cs-twig-fix && make cs-front-fix
+
+.PHONY: cs-php-fix
+cs-php-fix: ## PHP CS Fixer - Fix code
+	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
+	./vendor/bin/php-cs-fixer fix --diff --verbose --config=.tools-config/.php-cs-fixer.php --cache-file=.tools-config/.php-cs-fixer.cache
+
+.PHONY: cs-twig-fix
+cs-twig-fix: ## Twig CS Fixer - Fix code
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
 	- ./vendor/bin/twig-cs-fixer fix --config=.tools-config/.twig-cs-fixer.php templates/
 	- php bin/console lint:twig templates/
 
 .PHONY: cs-front
 cs-front: ## Run linters for CSS and JS
-	$(call display_title,Running linters for CSS and JS ........................,${ICON_CS})
+	$(call display_title,Running linters for CSS and JS (Diff only) .............,${ICON_CS})
 	@echo "Running ESLint..."
 	-@npx eslint --config .tools-config/eslint.config.mjs assets/scripts/
 
@@ -202,15 +213,11 @@ cs-front: ## Run linters for CSS and JS
 	@echo "Running Biome..."
 	-@bin/biome lint
 
-.PHONY: cs-stylelint-fix
-cs-stylelint-fix: ## Run Stylelint and fix issues
-	$(call display_title,Running Stylelint and fixing issues .................,${ICON_CS})
+.PHONY: cs-front-fix
+cs-front-fix: ## Run Stylelint then Prettier and fix issues
+	$(call display_title,Running Stylelint then Prettier and fixing issues ...,${ICON_CS})
 	@echo "Running Stylelint..."
 	-@npx stylelint --config .tools-config/.stylelintrc.json assets/styles/ --fix
-
-.PHONY: cs-prettier-fix
-cs-prettier-fix: ## Run Prettier and fix issues
-	$(call display_title,Running Prettier and fixing issues ................,${ICON_CS})
 	@echo "Running Prettier..."
 	-@npx prettier --config .tools-config/.prettierrc assets/ --write
 

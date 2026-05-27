@@ -20,6 +20,8 @@ $finder = (new PhpCsFixer\Finder())
         '.tools-config', 
         'src/DataFixtures',
     ])
+
+    ->append([__DIR__ . '/phparkitect.php'])
     
     ->notPath('importmap.php');
 
