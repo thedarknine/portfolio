@@ -116,13 +116,13 @@ watch: ## Watch Tailwind CSS changes and re-build
 .PHONY: test
 test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
-	php vendor/bin/phpunit
+	php vendor/bin/phpunit --configuration .tools-config/phpunit.xml
 
 .PHONY: cover
 cover: ## Run PHPUnit tests with coverage
 	$(call display_title,Running PHPUnit tests with coverage ....................,${ICON_TEST})
 	- php bin/console cache:clear --env=test
-	- php vendor/bin/phpunit --coverage-html coverage/
+	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml --coverage-html coverage/
 
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env
@@ -157,37 +157,37 @@ cs: ## Fix all coding standards (PHP, Twig, CSS)
 .PHONY: cs-php-check
 cs-php-check: ## PHP CS Fixer - Only show diff
 	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
-	- ./vendor/bin/php-cs-fixer check --verbose --config=.coding-standard-linters/.php-cs-fixer.php --cache-file=.coding-standard-linters/.php-cs-fixer.cache
-	- ./vendor/bin/phpstan analyse --memory-limit=512M --configuration=.coding-standard-linters/phpstan.neon
+	- ./vendor/bin/php-cs-fixer check --verbose --config=.tools-config/.php-cs-fixer.php --cache-file=.tools-config/.php-cs-fixer.cache
+	- ./vendor/bin/phpstan analyse --memory-limit=512M --configuration=.tools-config/phpstan.neon
 
 .PHONY: cs-php
 cs-php: ## PHP CS Fixer - Fix code
 	$(call display_title,Dry running PHP CS Fixer and display diff ..............,${ICON_CS})
-	./vendor/bin/php-cs-fixer fix --diff --verbose --config=.coding-standard-linters/.php-cs-fixer.php --cache-file=.coding-standard-linters/.php-cs-fixer.cache
+	./vendor/bin/php-cs-fixer fix --diff --verbose --config=.tools-config/.php-cs-fixer.php --cache-file=.tools-config/.php-cs-fixer.cache
 	
 
 .PHONY: cs-twig-check
 cs-twig-check: ## Twig CS Fixer - Only show diff
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
-	./vendor/bin/twig-cs-fixer check --config=.coding-standard-linters/.twig-cs-fixer.php templates/
+	./vendor/bin/twig-cs-fixer check --config=.tools-config/.twig-cs-fixer.php templates/
 
 .PHONY: cs-twig
 cs-twig: ## Twig CS Fixer - Fix code
 	$(call display_title,Dry running Twig CS Fixer and display diff .............,${ICON_CS})
-	- ./vendor/bin/twig-cs-fixer fix --config=.coding-standard-linters/.twig-cs-fixer.php templates/
+	- ./vendor/bin/twig-cs-fixer fix --config=.tools-config/.twig-cs-fixer.php templates/
 	- php bin/console lint:twig templates/
 
 .PHONY: cs-front
 cs-front: ## Run linters for CSS and JS
 	$(call display_title,Running linters for CSS and JS ........................,${ICON_CS})
 	@echo "Running ESLint..."
-	-@npx eslint --config .coding-standard-linters/eslint.config.mjs assets/scripts/
+	-@npx eslint --config .tools-config/eslint.config.mjs assets/scripts/
 
 	@echo "Running Stylelint..."
-	-@npx stylelint --config .coding-standard-linters/.stylelintrc.json assets/styles/
+	-@npx stylelint --config .tools-config/.stylelintrc.json assets/styles/
 
 	@echo "Running Prettier..."
-	-@npx prettier --config .coding-standard-linters/.prettierrc assets/ --check
+	-@npx prettier --config .tools-config/.prettierrc assets/ --check
 
 	@echo "Running Biome..."
 	-@bin/biome lint
@@ -196,13 +196,13 @@ cs-front: ## Run linters for CSS and JS
 cs-stylelint-fix: ## Run Stylelint and fix issues
 	$(call display_title,Running Stylelint and fixing issues .................,${ICON_CS})
 	@echo "Running Stylelint..."
-	-@npx stylelint --config .coding-standard-linters/.stylelintrc.json assets/styles/ --fix
+	-@npx stylelint --config .tools-config/.stylelintrc.json assets/styles/ --fix
 
 .PHONY: cs-prettier-fix
 cs-prettier-fix: ## Run Prettier and fix issues
 	$(call display_title,Running Prettier and fixing issues ................,${ICON_CS})
 	@echo "Running Prettier..."
-	-@npx prettier --config .coding-standard-linters/.prettierrc assets/ --write
+	-@npx prettier --config .tools-config/.prettierrc assets/ --write
 
 # =====================================================================
 ##@ HELP

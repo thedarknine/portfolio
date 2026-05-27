@@ -20,16 +20,16 @@
 
 ###> phpunit/phpunit ###
 /phpunit.xml
-/.phpunit.cache/
+/.tools-config/.phpunit.cache
 ###< phpunit/phpunit ###
 
 ###> friendsofphp/php-cs-fixer ###
 # /.php-cs-fixer.php
-/.coding-standard-linters/.php-cs-fixer.cache
+/.tools-config/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> vincentlanglet/twig-cs-fixer ###
-/.coding-standard-linters/.twig-cs-fixer.cache
+/.tools-config/.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
 
 ###> symfony/asset-mapper ###
