@@ -11,9 +11,11 @@
 namespace App\Tests\UI;
 
 use Facebook\WebDriver\WebDriverBy;
+use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Panther\Client as PantherClient;
 use Symfony\Component\Panther\PantherTestCase;
 
+#[Group('UI')]
 class NavigationUiTest extends PantherTestCase
 {
     private const SELENIUM_URL = 'http://chrome:4444/wd/hub';

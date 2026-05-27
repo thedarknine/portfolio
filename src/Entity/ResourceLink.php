@@ -11,6 +11,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\IconableTrait;
+use App\Entity\Traits\PublishableTrait;
 use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
@@ -29,6 +30,7 @@ class ResourceLink
     use TitleableTrait;
     use SlugableTrait;
     use SortableTrait;
+    use PublishableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

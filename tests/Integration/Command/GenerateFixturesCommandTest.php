@@ -70,7 +70,7 @@ class GenerateFixturesCommandTest extends KernelTestCase
 
         // Pass the group as argument/option according to your command's signature
         $commandTester->execute([
-            '--group' => $group, 
+            '--group' => $group,
         ]);
 
         $commandTester->assertCommandIsSuccessful();

@@ -12,6 +12,7 @@ namespace App\Entity;
 
 use App\Entity\Traits\LogoableTrait;
 use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\PublishableTrait;
 use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ProjectRepository;
@@ -28,6 +29,7 @@ class Project
     use NameableTrait;
     use SlugableTrait;
     use LogoableTrait;
+    use PublishableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]

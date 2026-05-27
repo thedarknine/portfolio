@@ -66,7 +66,11 @@ class PageInfoCrudController extends AbstractCrudController
 
         yield IntegerField::new('position', 'Ordre d\'affichage')
             ->setRequired(false)
-            ->setHelp('Plus le chiffre est bas, plus il apparaît en premier.');
+            ->setHelp('Plus le chiffre est bas, plus il apparaît en premier.')
+            ->hideOnIndex();
+
+        yield BooleanField::new('published', 'Publié')
+            ->setFormTypeOption('attr', ['checked' => true]);
 
         // Configure slug linked to 'title' for automatic generation
         yield SlugField::new('slug', 'Slug (URL)')

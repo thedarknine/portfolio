@@ -1,272 +1,280 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
 
-{% block page_title %}Tableau de bord{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
 
 {% block content %}
-<div class="space-y-10">
-
-    {# ====================================================== #}
-    {# Header #}
-    {# ====================================================== #}
-    <section class="rounded-3xl bg-linear-to-br from-indigo-600 to-violet-600 p-8 text-white shadow-xl">
-        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-
+<div class="container-fluid">
+    {# HERO #}
+    <div class="card border-0 shadow-sm mb-4 overflow-hidden">
+        <div class="card-body p-4 d-flex justify-content-between align-items-center flex-wrap gap-4">
             <div>
-                <p class="text-sm font-medium uppercase tracking-widest text-indigo-100">
-                    Administration
-                </p>
-
-                <h1 class="mt-2 text-4xl font-bold tracking-tight">
-                    Tableau de bord
-                </h1>
-
-                <p class="mt-3 max-w-2xl text-base leading-relaxed text-indigo-100">
-                    Gérez les contenus du portfolio, les expériences, les projets
-                    et les différentes sections du site depuis cet espace centralisé.
-                </p>
+                <div class="text-uppercase small text-muted mb-2">Portfolio Administration</div>
+                <h1 class="display-6 fw-bold mb-2">Tableau de bord</h1>
+                <p class="text-muted mb-0">Gérez l'ensemble du contenu de votre portfolio depuis une interface centralisée.</p>
             </div>
-
-            <div class="rounded-2xl bg-white/10 px-5 py-4 backdrop-blur-sm">
-                <p class="text-sm text-indigo-100">
-                    Connecté en tant que
-                </p>
-
-                <p class="mt-1 text-lg font-semibold">
-                    {{ app.user.email }}
-                </p>
-
-                <div class="mt-3 text-sm text-indigo-100">
-                    {{ 'now'|date('d/m/Y • H:i') }}
-                </div>
-            </div>
-        </div>
-    </section>
-
-    {# ====================================================== #}
-    {# Actions rapides #}
-    {# ====================================================== #}
-    <section>
-
-        <div class="mb-5 flex items-center justify-between">
-            <div>
-                <h2 class="text-2xl font-bold text-slate-900">
-                    Actions rapides
-                </h2>
-
-                <p class="mt-1 text-sm text-slate-500">
-                    Accès direct aux principales sections du portfolio
-                </p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-4">
-
-            <a href="{{ ea_url().setController('App\\Controller\\Admin\\PageCrudController') }}"
-               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-indigo-50 text-indigo-600">
-                    <i class="fa fa-file-lines text-xl"></i>
-                </div>
-
-                <h3 class="mt-5 text-lg font-semibold text-slate-900">
-                    Pages
-                </h3>
-
-                <p class="mt-2 text-sm leading-relaxed text-slate-500">
-                    Modifier les contenus éditoriaux et les pages du site.
-                </p>
-
-                <div class="mt-5 text-sm font-medium text-indigo-600 group-hover:text-indigo-500">
-                    Accéder →
-                </div>
-            </a>
-
-            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ExperienceCrudController') }}"
-               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-600">
-                    <i class="fas fa-briefcase text-xl"></i>
-                </div>
-
-                <h3 class="mt-5 text-lg font-semibold text-slate-900">
-                    Expériences
-                </h3>
-
-                <p class="mt-2 text-sm leading-relaxed text-slate-500">
-                    Gérer le parcours professionnel et les missions.
-                </p>
-
-                <div class="mt-5 text-sm font-medium text-emerald-600 group-hover:text-emerald-500">
-                    Accéder →
-                </div>
-            </a>
-
-            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProjectCrudController') }}"
-               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-amber-50 text-amber-600">
-                    <i class="fa fa-diagram-project text-xl"></i>
-                </div>
-
-                <h3 class="mt-5 text-lg font-semibold text-slate-900">
-                    Projets
-                </h3>
-
-                <p class="mt-2 text-sm leading-relaxed text-slate-500">
-                    Ajouter et organiser les réalisations du portfolio.
-                </p>
-
-                <div class="mt-5 text-sm font-medium text-amber-600 group-hover:text-amber-500">
-                    Accéder →
-                </div>
-            </a>
-
-            <a href="{{ ea_url().setController('App\\Controller\\Admin\\SkillCrudController') }}"
-               class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-
-                <div class="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
-                    <i class="fa fa-code text-xl"></i>
-                </div>
-
-                <h3 class="mt-5 text-lg font-semibold text-slate-900">
-                    Compétences
-                </h3>
-
-                <p class="mt-2 text-sm leading-relaxed text-slate-500">
-                    Mettre à jour les technologies et expertises.
-                </p>
-
-                <div class="mt-5 text-sm font-medium text-violet-600 group-hover:text-violet-500">
-                    Accéder →
-                </div>
-            </a>
-
-        </div>
-    </section>
-
-    {# ====================================================== #}
-    {# Univers du portfolio #}
-    {# ====================================================== #}
-    <section>
-
-        <div class="mb-5">
-            <h2 class="text-2xl font-bold text-slate-900">
-                Univers du portfolio
-            </h2>
-
-            <p class="mt-1 text-sm text-slate-500">
-                Les sections créatives et personnelles du site
-            </p>
-        </div>
-
-        <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
-
-            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ArcadeTypeCrudController') }}"
-               class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-
-                <div class="bg-linear-to-r from-indigo-500 to-indigo-600 p-6 text-white">
-                    <i class="fa-solid fa-gamepad text-3xl"></i>
-
-                    <h3 class="mt-4 text-2xl font-bold">
-                        Arcade
-                    </h3>
-
-                    <p class="mt-2 text-sm text-indigo-100">
-                        Gestion des catégories et contenus arcade.
-                    </p>
-                </div>
-
-                <div class="p-6">
-                    <span class="text-sm font-medium text-indigo-600">
-                        Ouvrir la section →
-                    </span>
-                </div>
-            </a>
-
-            <a href="{{ ea_url().setController('App\\Controller\\Admin\\CreationTypeCrudController') }}"
-               class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-
-                <div class="bg-linear-to-r from-pink-500 to-rose-500 p-6 text-white">
-                    <i class="fa fa-brush text-3xl"></i>
-
-                    <h3 class="mt-4 text-2xl font-bold">
-                        Créations
-                    </h3>
-
-                    <p class="mt-2 text-sm text-pink-100">
-                        Modelages, créations artistiques et contenus visuels.
-                    </p>
-                </div>
-
-                <div class="p-6">
-                    <span class="text-sm font-medium text-pink-600">
-                        Ouvrir la section →
-                    </span>
-                </div>
-            </a>
-
-            <a href="{{ ea_url().setController('App\\Controller\\Admin\\PhotoTypeCrudController') }}"
-               class="group overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-xl">
-
-                <div class="bg-linear-to-r from-sky-500 to-cyan-500 p-6 text-white">
-                    <i class="fa fa-camera text-3xl"></i>
-
-                    <h3 class="mt-4 text-2xl font-bold">
-                        Photos
-                    </h3>
-
-                    <p class="mt-2 text-sm text-sky-100">
-                        Gestion des thématiques et galeries photo.
-                    </p>
-                </div>
-
-                <div class="p-6">
-                    <span class="text-sm font-medium text-sky-600">
-                        Ouvrir la section →
-                    </span>
-                </div>
-            </a>
-
-        </div>
-    </section>
-
-    {# ====================================================== #}
-    {# Liens utiles #}
-    {# ====================================================== #}
-    <section class="rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-
-        <div class="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
-
-            <div>
-                <h2 class="text-2xl font-bold text-slate-900">
-                    Accès rapides
-                </h2>
-
-                <p class="mt-1 text-sm text-slate-500">
-                    Navigation et accès au portfolio public
-                </p>
-            </div>
-
-            <div class="flex flex-wrap gap-4">
-
-                <a href="{{ path('app_index') }}"
-                   target="_blank"
-                   class="inline-flex items-center gap-2 rounded-2xl bg-slate-900 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800">
-
-                    <i class="fa fa-globe"></i>
-                    Voir le site
+            <div class="text-end">
+                <div class="fw-semibold">{{ app.user.email }}</div>
+                <div class="text-muted small">{{ 'now'|date('d/m/Y • H:i') }}</div>
+                <a href="{{ path('app_index') }}" target="_blank" class="btn btn-dark btn-sm mt-3">
+                    <i class="fa fa-globe me-2"></i>Voir le site
                 </a>
-
-                <a href="{{ path('app_logout') }}"
-                   class="inline-flex items-center gap-2 rounded-2xl border border-slate-300 bg-white px-5 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50">
-
-                    <i class="fa fa-arrow-right-from-bracket"></i>
-                    Déconnexion
-                </a>
-
             </div>
         </div>
-    </section>
+    </div>
 
+    {# MAIN STATS #}
+    <div class="row g-4 mb-4">
+        <div class="col-md-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="text-muted small mb-2">Projets</div>
+                            <div class="display-6 fw-bold">{{ stats.projects }}</div>
+                            <div class="mt-2 text-muted xsmall">
+                                <span class="text-success"><i class="fa fa-check-circle"></i> {{ stats.publishedProjects }}</span> •
+                                <span class="text-warning"><i class="fa fa-pen-to-square"></i> {{ stats.draftProjects }}</span>
+                            </div>
+                        </div>
+                        <div class="stat-icon bg-warning-subtle text-warning">
+                            <i class="fa fa-diagram-project"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="text-muted small mb-2">Expérience</div>
+                            <div class="display-6 fw-bold">{{ stats.yearsExperience }} <span class="fs-5">ans</span></div>
+                            <div class="mt-2 text-muted xsmall">Depuis oct. 2006</div>
+                        </div>
+                        <div class="stat-icon bg-success-subtle text-success">
+                            <i class="fa fa-briefcase"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="text-muted small mb-2">Ratio Projets/Exp</div>
+                            <div class="display-6 fw-bold">{{ stats.projectsExperienceRatio }}</div>
+                            <div class="mt-2 text-muted xsmall">Projets par expérience</div>
+                        </div>
+                        <div class="stat-icon bg-info-subtle text-info">
+                            <i class="fa fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card stat-card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <div class="text-muted small mb-2">Images & Médias</div>
+                            <div class="display-6 fw-bold">{{ stats.totalImages }}</div>
+                            <div class="mt-2 text-muted xsmall">
+                                <i class="fa fa-hdd"></i> Poids : {{ stats.portfolioDiskUsage }}
+                            </div>
+                        </div>
+                        <div class="stat-icon bg-danger-subtle text-danger">
+                            <i class="fa fa-images"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# LAST ADDED CONTENT #}
+    <div class="row g-4 mb-4">
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h3 class="h6 text-muted text-uppercase fw-bold mb-3">
+                        <i class="fa fa-clock text-primary me-2"></i>Dernier Projet Ajouté
+                    </h3>
+                    {% if stats.latestProject %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h4 class="h5 fw-bold mb-1">{{ stats.latestProject.name }}</h4>
+                                <span class="badge {{ stats.latestProject.published ? 'bg-success-subtle text-success' : 'bg-warning-subtle text-warning' }}">
+                                    {{ stats.latestProject.published ? 'Publié' : 'Brouillon' }}
+                                </span>
+                            </div>
+                            <div class="text-muted small text-end">
+                                Modifié le<br><strong>{{ stats.latestProject.updatedAt|date('d/m/Y') }}</strong>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="text-muted small mb-0">Aucun projet enregistré.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h3 class="h6 text-muted text-uppercase fw-bold mb-3">
+                        <i class="fa fa-camera text-info me-2"></i>Dernière Photo (Assets)
+                    </h3>
+                    {% if stats.latestPhoto %}
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="text-truncate me-2">
+                                <div class="fw-bold text-truncate" title="{{ stats.latestPhoto.filename }}">
+                                    {{ stats.latestPhoto.filename }}
+                                </div>
+                                <span class="text-muted small">Dossier: /photos</span>
+                            </div>
+                            <div class="text-muted small text-end text-nowrap">
+                                Synchro le<br><strong>{{ stats.latestPhoto.updatedAt }}</strong>
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="text-muted small mb-0">Aucune photo trouvée dans le dossier.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {# ACTIONS & ENVIRONMENT #}
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h2 class="h4 fw-bold mb-1">Gestion du contenu</h2>
+                        <p class="text-muted small mb-0">Accès rapide aux sections principales de votre portfolio</p>
+                    </div>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ProjectCrudController') }}" class="dashboard-link">
+                                <i class="fa fa-diagram-project"></i>
+                                <div class="d-flex flex-column">
+                                    <span>Projets</span>
+                                    <small class="text-muted xsmall">{{ stats.projects }} éléments</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ ea_url().setController('App\\Controller\\Admin\\ExperienceCrudController') }}" class="dashboard-link">
+                                <i class="fa fa-briefcase"></i>
+                                <div class="d-flex flex-column">
+                                    <span>Expériences</span>
+                                    <small class="text-muted xsmall">Parcours pro</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ ea_url().setController('App\\Controller\\Admin\\SkillCrudController') }}" class="dashboard-link">
+                                <i class="fa fa-code"></i>
+                                <div class="d-flex flex-column">
+                                    <span>Compétences</span>
+                                    <small class="text-muted xsmall">{{ stats.technologiesCount }} technos</small>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{{ ea_url().setController('App\\Controller\\Admin\\PageCrudController') }}" class="dashboard-link">
+                                <i class="fa fa-file-lines"></i>
+                                <div class="d-flex flex-column">
+                                    <span>Pages</span>
+                                    <small class="text-muted xsmall">{{ stats.publicPages }} actives</small>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body">
+                    <h2 class="h5 fw-bold mb-4">Système & Serveur</h2>
+
+                    <div class="env-item">
+                        <span>Framework</span>
+                        <strong>Symfony {{ stats.symfonyVersion }}</strong>
+                    </div>
+                    <div class="env-item">
+                        <span>Moteur d'admin</span>
+                        <strong>EasyAdmin {{ stats.easyAdminVersion }}</strong>
+                    </div>
+                    <div class="env-item">
+                        <span>PHP version</span>
+                        <span class="badge bg-dark">{{ stats.phpVersion }}</span>
+                    </div>
+                    <div class="env-item">
+                        <span>Mode d'exécution</span>
+                        <span class="badge bg-danger-subtle text-danger text-uppercase">{{ app.environment }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+.stat-card {
+    transition: all .15s ease;
+}
+.stat-card:hover {
+    transform: translateY(-4px);
+}
+.stat-icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+.dashboard-link {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 14px;
+    background: #f8fafc;
+    text-decoration: none;
+    color: #0f172a;
+    transition: all .15s ease;
+    font-weight: 500;
+}
+.dashboard-link:hover {
+    background: #eef2ff;
+    transform: translateX(4px);
+    color: #4338ca;
+}
+.env-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+.env-item:last-child {
+    border-bottom: none;
+}
+.xsmall {
+    font-size: 0.75rem;
+}
+</style>
 {% endblock %}

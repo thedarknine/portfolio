@@ -35,12 +35,12 @@ final class PagesController extends AbstractController
 
     private function retrievePages(): array
     {
-        return $this->doctrine->getRepository(PageInfo::class)->findAllAsArray([]);
+        return $this->doctrine->getRepository(PageInfo::class)->findAllAsArray(['published' => true]);
     }
 
     private function retrieveResourceLinks(): array
     {
-        return $this->doctrine->getRepository(ResourceLink::class)->findAllAsArray([]);
+        return $this->doctrine->getRepository(ResourceLink::class)->findAllAsArray(['published' => true]);
     }
 
     private function getNbYearsExperience(): int

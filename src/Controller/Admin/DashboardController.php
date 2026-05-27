@@ -10,6 +10,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Service\AdminDashboardService;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
@@ -23,9 +24,15 @@ use Symfony\Component\Routing\Attribute\Route;
 #[AdminDashboard(routePath: '/admin', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
+    public function __construct(private AdminDashboardService $dashboard)
+    {
+    }
+
     public function index(): Response
     {
-        return $this->render('admin/dashboard.html.twig');
+        return $this->render('admin/dashboard.html.twig', [
+            'stats' => $this->dashboard->getStats(),
+        ]);
     }
 
     public function configureDashboard(): Dashboard

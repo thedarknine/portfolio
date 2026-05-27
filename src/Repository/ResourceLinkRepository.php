@@ -24,11 +24,17 @@ class ResourceLinkRepository extends ServiceEntityRepository
         parent::__construct($registry, ResourceLink::class);
     }
 
-    public function findAllAsArray(): array
+    public function findAllAsArray($filters = []): array
     {
-        return $this->createQueryBuilder('r')
-            ->orderBy('r.position', 'ASC')
-            ->getQuery()
+        $query = $this->createQueryBuilder('r')
+            ->orderBy('r.position', 'ASC');
+
+        foreach ($filters as $key => $value) {
+            $query->andWhere("r.$key = :$key")
+                ->setParameter($key, $value);
+        }
+
+        return $query->getQuery()
             ->getArrayResult(); // Associative array
     }
 

@@ -204,7 +204,8 @@ class PagesControllerTest extends WebTestCase
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
                 ->setSlug('experience')
-                ->setTagline('Construire');
+                ->setTagline('Construire')
+                ->setPublished(true);
             $this->entityManager->persist($page);
             $this->entityManager->flush();
         }

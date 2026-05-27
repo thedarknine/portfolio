@@ -24,11 +24,17 @@ class PageInfoRepository extends ServiceEntityRepository
         parent::__construct($registry, PageInfo::class);
     }
 
-    public function findAllAsArray(): array
+    public function findAllAsArray($filters = []): array
     {
-        return $this->createQueryBuilder('p')
-            ->orderBy('p.position', 'ASC')
-            ->getQuery()
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.position', 'ASC');
+
+        foreach ($filters as $key => $value) {
+            $query->andWhere("p.$key = :$key")
+                ->setParameter($key, $value);
+        }
+
+        return $query->getQuery()
             ->getArrayResult(); // Associative array
     }
 

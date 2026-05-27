@@ -84,6 +84,11 @@ class ResourceLinkCrudController extends AbstractCrudController
             ->setHelp('Si activé, ce lien apparaîtra sous forme d\'icône directement dans l\'en-tête principal du site.')
             ->renderAsSwitch(true);
 
+        // Switch to publish/unpublish
+        yield BooleanField::new('published', 'Publié')
+            ->setHelp('Si activé, ce lien sera visible sur le site.')
+            ->renderAsSwitch(true);
+
         // Use SortableTrait: hidden in form to let Gedmo place it at the end automatically
         yield IntegerField::new('position', 'Ordre')
             ->setRequired(false)

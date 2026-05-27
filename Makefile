@@ -123,7 +123,7 @@ test: ## Run PHPUnit tests
 	- php bin/console doctrine:schema:update --env=test --force
 	- php bin/console doctrine:fixtures:load --env=test --group=test --no-interaction
 	- @echo "Running PHPUnit tests..."
-	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml
+	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml --exclude-group=UI
 
 .PHONY: cover
 cover: ## Run PHPUnit tests with coverage
@@ -131,7 +131,7 @@ cover: ## Run PHPUnit tests with coverage
 	- @echo "Clearing cache..."
 	- php bin/console cache:clear --env=test
 	- @echo "Running PHPUnit tests with coverage..."
-	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml --coverage-html coverage/
+	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml --coverage-html coverage/ --exclude-group=UI
 
 .PHONY: test-mutation
 test-mutation: ## Run Infection
@@ -151,6 +151,8 @@ test-all: ## Run all PHPUnit tests
 	@$(MAKE) --no-print-directory cover
 	@$(MAKE) --no-print-directory test-mutation
 	@$(MAKE) --no-print-directory test-arch
+	- @echo "Running PHPUnit tests for UI group..."
+	- php vendor/bin/phpunit --configuration .tools-config/phpunit.xml --group=UI
 
 .PHONY: secret
 secret: ## Generate a new Symfony secret and update .env

@@ -13,6 +13,7 @@ namespace App\Controller\Admin;
 use App\Entity\Project;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
@@ -59,6 +60,9 @@ class ProjectCrudController extends AbstractCrudController
 
         yield IntegerField::new('year', 'Année')
             ->setFormTypeOption('attr', ['min' => 2000, 'max' => 2030]);
+
+        yield BooleanField::new('published', 'Publié')
+            ->setFormTypeOption('attr', ['checked' => true]);
 
         yield TextField::new('period', 'Période')
             ->setHelp('Exemple : Janvier - Mars ou 6 mois')
