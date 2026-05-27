@@ -10,7 +10,9 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\PhotoTypeRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -21,45 +23,17 @@ use Doctrine\ORM\Mapping as ORM;
 class PhotoType
 {
     use TimeStampableTrait;
-    use LabelTrait;
+    use NameableTrait;
+    use SlugableTrait;
+    use SortableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
-
-    #[ORM\Column]
-    private ?int $position = null;
-
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): static
-    {
-        $this->position = $position;
-
-        return $this;
     }
 }

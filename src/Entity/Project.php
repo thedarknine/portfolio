@@ -10,12 +10,15 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\LogoTrait;
+use App\Entity\Traits\LogoableTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\PublishableTrait;
+use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ProjectRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'project')]
 #[ORM\Entity(repositoryClass: ProjectRepository::class)]
@@ -23,50 +26,46 @@ use Doctrine\ORM\Mapping as ORM;
 class Project
 {
     use TimeStampableTrait;
-    use LabelTrait;
-    use LogoTrait;
+    use NameableTrait;
+    use SlugableTrait;
+    use LogoableTrait;
+    use PublishableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
-
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Period is required.')]
+    #[Assert\Length(max: 100, maxMessage: 'Period cannot exceed {{ limit }} characters.')]
     private ?string $period = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(message: 'Year is required.')]
+    #[Assert\Range(min: 1990, max: 2099, notInRangeMessage: 'Year must be between {{ min }} and {{ max }}.')]
     private ?int $year = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Description is required.')]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Screenshots path cannot exceed {{ limit }} characters.')]
     private ?string $screenshots = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Category is required.')]
+    #[Assert\Length(max: 255, maxMessage: 'Category cannot exceed {{ limit }} characters.')]
     private ?string $category = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\Length(max: 255, maxMessage: 'Tags cannot exceed {{ limit }} characters.')]
     private ?string $tags = null;
 
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getPeriod(): ?string
@@ -110,7 +109,7 @@ class Project
         return $this->screenshots;
     }
 
-    public function setScreenshots(string $screenshots): static
+    public function setScreenshots(?string $screenshots): static
     {
         $this->screenshots = $screenshots;
 

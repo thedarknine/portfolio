@@ -12,19 +12,22 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-trait LogoTrait
+/**
+ * Class of FontAwesome icon.
+ */
+trait IconableTrait
 {
     #[ORM\Column(length: 100)]
-    private ?string $logo = null;
+    private ?string $icon = null;
 
-    public function getLogo(): ?string
+    public function getIcon(): ?string
     {
-        return $this->logo;
+        return $this->icon;
     }
 
-    public function setLogo(string $logo): static
+    public function setIcon(string $icon): static
     {
-        $this->logo = $logo;
+        $this->icon = $icon;
 
         return $this;
     }

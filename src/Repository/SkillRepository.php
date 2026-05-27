@@ -70,7 +70,7 @@ class SkillRepository extends ServiceEntityRepository
 
         $listing = [];
         foreach ($result as $skill) {
-            $listing[$skill->getSkillType()->getLabel()][] = $skill;
+            $listing[$skill->getSkillType()->getSlug()][] = $skill;
         }
 
         return $listing;

@@ -12,7 +12,31 @@ namespace App\Enum;
 
 enum LinkType: string
 {
-    case Document = 'document';
-    case Pdf = 'pdf';
-    case External = 'external';
+    case DOCUMENT = 'document';
+    case PDF = 'pdf';
+    case EXTERNAL = 'external';
+
+    /**
+     * Return a user-friendly label for forms and display.
+     */
+    public function getLabel(): string
+    {
+        return match ($this) {
+            self::DOCUMENT => 'Document',
+            self::PDF => 'Fichier PDF',
+            self::EXTERNAL => 'Lien externe',
+        };
+    }
+
+    /**
+     * Return the FontAwesome class for EasyAdmin (and the front).
+     */
+    public function getIcon(): string
+    {
+        return match ($this) {
+            self::DOCUMENT => 'fa-file-word',
+            self::PDF => 'fa-file-pdf text-danger',
+            self::EXTERNAL => 'fa-external-link-alt',
+        };
+    }
 }

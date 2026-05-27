@@ -10,52 +10,44 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
+use App\Entity\Traits\TitleableTrait;
 use App\Repository\ExperienceItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExperienceItemRepository::class)]
 class ExperienceItem
 {
     use TimeStampableTrait;
+    use TitleableTrait;
+    use SortableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(length: 255)]
-    private ?string $title = null;
-
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'Details cannot be empty.')]
     private ?string $details = null;
 
-    #[ORM\Column]
-    private ?int $position = null;
-
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Picto cannot be empty.')]
+    #[Assert\Length(max: 255, maxMessage: 'Picto cannot exceed 255 characters.')]
     private ?string $picto = null;
 
     #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: 'Experience is required.')]
+    #[Assert\Valid]
     private ?Experience $experience = null;
 
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): static
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function getDetails(): ?string
@@ -66,18 +58,6 @@ class ExperienceItem
     public function setDetails(string $details): static
     {
         $this->details = $details;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): static
-    {
-        $this->position = $position;
 
         return $this;
     }

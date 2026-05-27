@@ -10,13 +10,16 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\LogoTrait;
+use App\Entity\Traits\LocalizableTrait;
+use App\Entity\Traits\LogoableTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\SchoolRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'school')]
 #[ORM\Entity(repositoryClass: SchoolRepository::class)]
@@ -24,25 +27,19 @@ use Doctrine\ORM\Mapping as ORM;
 class School
 {
     use TimeStampableTrait;
-    use LabelTrait;
-    use LogoTrait;
+    use NameableTrait;
+    use SlugableTrait;
+    use LogoableTrait;
+    use LocalizableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
-
-    #[ORM\Column(length: 100)]
-    private ?string $city = null;
-
-    #[ORM\Column]
-    private ?int $department = null;
-
     /** @var Collection<int, Education> */
     #[ORM\OneToMany(mappedBy: 'school', targetEntity: Education::class)]
+    #[Assert\Valid]
     private Collection $education;
 
     public function __construct()
@@ -53,42 +50,6 @@ class School
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getCity(): ?string
-    {
-        return $this->city;
-    }
-
-    public function setCity(string $city): static
-    {
-        $this->city = $city;
-
-        return $this;
-    }
-
-    public function getDepartment(): ?int
-    {
-        return $this->department;
-    }
-
-    public function setDepartment(int $department): static
-    {
-        $this->department = $department;
-
-        return $this;
     }
 
     /**

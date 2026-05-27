@@ -17,8 +17,11 @@ $finder = (new PhpCsFixer\Finder())
         'public/build', 
         'config',
         'node_modules',
-        '.coding-standard-linters', 
+        '.tools-config', 
+        'src/DataFixtures',
     ])
+
+    ->append([__DIR__ . '/phparkitect.php'])
     
     ->notPath('importmap.php');
 

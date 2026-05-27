@@ -1,0 +1,60 @@
+/* assets/styles/admin.css */
+[data-bs-theme='dark'],
+[data-ea-dark-scheme='dark'] {
+    --color-nine-primary: oklch(33.74% 0.071 254.99); /* #1c385b */
+    --color-nine-golden: oklch(96.81% 0.0074 80.72); /* #f7f4ef */
+    --color-nine-light: oklch(90.81% 0.008 253.86); /* #dde1e6 */
+    --color-nine-blue-dark: oklch(24.83% 0.049 253.38); /* #0f2238 */
+    --color-nine-blue-darker: oklch(32.49% 0.0821 255.92); /* #14345d */
+    --color-nine-blue: oklch(35.22% 0.104 259.27); /* #163970 */
+    --color-nine-turquoise: oklch(61.25% 0.116 226.51); /* #0a91b9 */
+    --color-nine-blue-gray: oklch(71.07% 0.035 256.79); /* #94a3b8 */
+    --color-nine-yellow: oklch(80.16% 0.171 73.27); /* #ffaa00 */
+    --color-nine-yellow-dark: oklch(78.59% 0.167 70.04); /* #fca313 */
+    --color-nine-amber: oklch(85.95% 0.0594 82.95); /* #e4cea5 */
+    --color-nine-gray: oklch(71.07% 0.035 256.79); /* #94a3b8 */
+    --color-nine-gray-light: oklch(90.97% 0 0); /* #e1e1e1 */
+    --color-nine-gray-dark: oklch(50.97% 0.035 256.79); /* #64748b */
+
+    /* --- Surcharge d'EasyAdmin --- */
+
+    --button-primary-bg: var(--color-nine-turquoise);
+    --sidebar-bg: var(--color-nine-blue);
+    --sidebar-text: oklch(85% 0.02 259.27);
+    --sidebar-text-hover: #fff;
+    --sidebar-menu-active-item-bg: oklch(42% 0.09 259.27);
+    --sidebar-menu-active-item-color: oklch(85% 0.02 259.27);
+    --body-bg: oklch(25% 0.05 259.27);
+    --card-bg: oklch(28% 0.06 259.27);
+    --border-color: oklch(38% 0.06 259.27);
+    --border-radius-base: 0.75rem;
+    --table-hover-cell-bg: oklch(30% 0.05 259.27);
+    --form-control-bg: var(--color-nine-blue);
+    --form-type-text-editor-toolbar-bg: oklch(28% 0.06 259.27);
+    --form-type-autocomplete-multi-item-bg: oklch(28% 0.06 259.27);
+    --form-type-autocomplete-multi-item-border-color: transparent;
+}
+
+.table {
+    --bs-table-bg: transparent;
+}
+
+td.actions {
+    white-space: nowrap; /* Empêche les boutons de passer à la ligne */
+}
+
+td.actions a[data-action^='ea-'][href*='move'] {
+    padding: 0.25rem !important;
+    font-size: 0.85rem !important;
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+}
+
+td.actions a[data-action^='ea-'][href*='move']:hover {
+    opacity: 1;
+    color: var(--color-nine-turquoise) !important;
+}
+
+.datagrid td.actions a:not(.dropdown-item) + a:not(.dropdown-item) {
+    margin-inline-start: 1px;
+}

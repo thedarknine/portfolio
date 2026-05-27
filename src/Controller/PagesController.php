@@ -14,10 +14,13 @@ use App\Entity\ArcadeType;
 use App\Entity\CreationType;
 use App\Entity\Education;
 use App\Entity\Experience;
+use App\Entity\PageInfo;
 use App\Entity\PhotoType;
 use App\Entity\Project;
+use App\Entity\ResourceLink;
 use App\Entity\Skill;
 use App\Entity\SkillType;
+use Carbon\Carbon;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
@@ -30,12 +33,21 @@ final class PagesController extends AbstractController
     {
     }
 
+    private function retrievePages(): array
+    {
+        return $this->doctrine->getRepository(PageInfo::class)->findAllAsArray(['published' => true]);
+    }
+
+    private function retrieveResourceLinks(): array
+    {
+        return $this->doctrine->getRepository(ResourceLink::class)->findAllAsArray(['published' => true]);
+    }
+
     private function getNbYearsExperience(): int
     {
-        $startDate = new \DateTime('2006-10-01');
-        $currentDate = new \DateTime();
+        $startWorking = new Carbon('2006-10-01');
 
-        return $startDate->diff($currentDate)->y;
+        return (int) $startWorking->diff(Carbon::now())->y;
     }
 
     private function getImagesDir(): string
@@ -47,6 +59,13 @@ final class PagesController extends AbstractController
     public function index(): Response
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
+        $data['pagesList'] = $this->retrievePages();
+        $data['resourceLinks'] = $this->retrieveResourceLinks();
+        $data['current'] = [
+            'title' => 'Accueil',
+            'slug' => 'home',
+            'technicalName' => 'home',
+        ];
         $data['mentalLandscape'] = [
             'rugby' => ['image' => 'images/home/rugby-asm.jpeg', 'alt' => 'Rugby', 'big' => false],
             'zen' => ['image' => 'images/home/lac-zen.jpg', 'alt' => 'Sérénité', 'big' => true],
@@ -62,115 +81,108 @@ final class PagesController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}', name: 'app_page')]
+    #[Route('/{slug}', name: 'app_page', requirements: ['slug' => '^(?!admin|login|logout).*$'])]
     public function page(string $slug): Response
     {
         $data['nbYearsExperience'] = $this->getNbYearsExperience();
-        $pagename = $slug;
+        $data['pagesList'] = $this->retrievePages();
+        $data['resourceLinks'] = $this->retrieveResourceLinks();
+        $data['current'] = array_first(array_filter($data['pagesList'], function ($page) use ($slug) {
+            return $page['slug'] === $slug;
+        }));
 
         switch ($slug) {
             case 'experience':
-                $pagetitle = 'Expérience';
-                $tagline = 'Construire';
-                $subtitle = 'Du code au produit : mon parcours en mouvement';
-                $quote = 'J’aime transformer des idées en réalisations concrètes, apprendre en faisant et faire évoluer ce que je construis.';
                 $data['experiencesList'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(20);
                 break;
             case 'competences':
-                $pagename = 'skills';
-                $tagline = 'Maîtriser';
-                $subtitle = 'Des outils au service de solutions fiables et utiles';
-                $quote = 'Je cherche à concevoir des produits simples, utiles et durables, avec une approche pragmatique et humaine.';
                 $data['skillTypesList'] = $this->doctrine->getRepository(SkillType::class)->getSkillTypes();
                 $data['skillsList'] = $this->doctrine->getRepository(Skill::class)->getSkillsOrderByType();
                 break;
             case 'formation':
-                $pagename = 'education';
-                $tagline = 'Apprendre';
-                $subtitle = 'Les fondations techniques... et l\'évolution continue';
-                $quote = "Pour moi, la veille et l'apprentissage ne s'arrêtent jamais. C'est un cycle permanent d'expérimentation.";
                 $data['educationsList'] = $this->doctrine->getRepository(Education::class)->getEducationsWithSchool();
                 break;
             case 'projets':
-                $pagename = 'projects';
-                $tagline = 'Expérimenter';
-                $subtitle = 'Chaque projet est un terrain d’exploration';
-                $quote = "Coder sans contraintes, tester de nouvelles technos et s'autoriser à chercher juste pour le plaisir de comprendre.";
                 $data['projectsList'] = $this->doctrine->getRepository(Project::class)->getProjects();
                 break;
             case 'arcade':
-                $tagline = 'Assembler';
-                $subtitle = 'Un défi technique entre nostalgie et pop culture';
-                $quote = 'Quand la passion des vieux jeux rencontre le plaisir de bidouiller le hardware.';
                 $arcadeTypesList = $this->doctrine->getRepository(ArcadeType::class)->getArcadeTypes();
                 $arcadeList = [];
                 foreach ($arcadeTypesList as $type) {
-                    $arcadeList[$type->getLabel()] = [];
+                    $arcadeList[$type->getSlug()] = [];
+
                     $finder = new Finder();
-                    $finder->in($this->getImagesDir().'arcade/'.$type->getLabel());
-                    foreach ($finder as $file) {
-                        $arcadeList[$type->getLabel()][] = $file->getFileName();
+                    $targetDir = $this->getImagesDir().'arcade/'.$type->getSlug();
+                    if (is_dir($targetDir)) {
+                        $finder->in($targetDir);
+                        foreach ($finder as $file) {
+                            $arcadeList[$type->getSlug()][] = $file->getFileName();
+                        }
+                    } else {
+                        $arcadeList[$type->getSlug()] = [];
                     }
                 }
                 $data['arcadeTypesList'] = $arcadeTypesList;
                 $data['arcadeList'] = $arcadeList;
                 break;
             case 'creations':
-                $tagline = 'Façonner';
-                $subtitle = 'Entre matière, patience et intuition';
-                $quote = "Poser les écrans et laisser parler la matière et l'imagination.";
                 $creationTypesList = $this->doctrine->getRepository(CreationType::class)->getCreationTypes();
                 $creationsList = [];
                 foreach ($creationTypesList as $type) {
-                    $creationsList[$type->getLabel()] = [];
+                    $creationsList[$type->getSlug()] = [];
+
                     $finder = new Finder();
-                    $finder->in($this->getImagesDir().'creations/'.$type->getLabel());
-                    foreach ($finder as $file) {
-                        $creationsList[$type->getLabel()][] = $file->getFileName();
+                    $targetDir = $this->getImagesDir().'creations/'.$type->getSlug();
+                    if (is_dir($targetDir)) {
+                        $finder->in($targetDir);
+                        foreach ($finder as $file) {
+                            $creationsList[$type->getSlug()][] = $file->getFileName();
+                        }
+                    } else {
+                        $creationsList[$type->getSlug()] = [];
                     }
-                    shuffle($creationsList[$type->getLabel()]);
+
+                    shuffle($creationsList[$type->getSlug()]);
                 }
                 $data['creationTypesList'] = $creationTypesList;
                 $data['creationsList'] = $creationsList;
                 break;
             case 'photos':
-                $tagline = 'Observer';
-                $subtitle = 'Regards sur l\'Auvergne, les détails et les lumières';
-                $quote = "Capturer l'instant, cadrer une atmosphère et prêter attention aux détails qui échappent au premier coup d'œil.";
                 $photoTypesList = $this->doctrine->getRepository(PhotoType::class)->getPhotoTypes();
                 $photosList = [];
                 foreach ($photoTypesList as $type) {
-                    $photosList[$type->getLabel()] = [];
+                    $photosList[$type->getSlug()] = [];
+
                     $finder = new Finder();
-                    $finder->in($this->getImagesDir().'photos/'.$type->getLabel());
-                    foreach ($finder as $file) {
-                        $caption = explode('-', str_replace(['.JPG', '.jpg'], '', $file->getFileName()));
-                        $title = '';
-                        if (array_key_exists(1, $caption)) {
-                            $title = str_replace('_', ' ', $caption[1]);
+                    $targetDir = $this->getImagesDir().'photos/'.$type->getSlug();
+                    if (is_dir($targetDir)) {
+                        $finder->in($targetDir);
+                        foreach ($finder as $file) {
+                            $caption = explode('-', str_replace(['.JPG', '.jpg'], '', $file->getFileName()));
+                            $title = '';
+                            if (array_key_exists(1, $caption)) {
+                                $title = str_replace('_', ' ', $caption[1]);
+                            }
+                            $photosList[$type->getSlug()][] = [
+                                'filename' => $file->getFileName(),
+                                'caption' => $title,
+                            ];
                         }
-                        $photosList[$type->getLabel()][] = [
-                            'filename' => $file->getFileName(),
-                            'caption' => $title,
-                        ];
+                    } else {
+                        $photosList[$type->getSlug()] = [];
                     }
-                    shuffle($photosList[$type->getLabel()]);
+
+                    shuffle($photosList[$type->getSlug()]);
                 }
                 $data['photoTypesList'] = $photoTypesList;
                 $data['photosList'] = $photosList;
                 break;
 
             default:
-                return $this->redirectToRoute('app_index');
+                throw $this->createNotFoundException('Cette page n\'existe pas.');
         }
 
-        return $this->render("pages/{$pagename}.html.twig", [
-            'page' => $pagename,
-            'slug' => $slug,
-            'pagetitle' => $pagetitle ?? null,
-            'tagline' => $tagline ?? null,
-            'subtitle' => $subtitle ?? null,
-            'quote' => $quote ?? null,
+        return $this->render("pages/{$data['current']['technicalName']}.html.twig", [
             'data' => $data,
         ]);
     }

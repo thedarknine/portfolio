@@ -10,21 +10,22 @@
 
 namespace App\Entity\Traits;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-trait LabelTrait
+trait PublishableTrait
 {
-    #[ORM\Column(length: 120)]
-    private ?string $label = null;
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    protected bool $published = false;
 
-    public function getLabel(): ?string
+    public function isPublished(): bool
     {
-        return $this->label;
+        return $this->published;
     }
 
-    public function setLabel(string $label): self
+    public function setPublished(bool $published): self
     {
-        $this->label = $label;
+        $this->published = $published;
 
         return $this;
     }

@@ -11,7 +11,8 @@
             "!var/*",
             "!vendor/*",
             "!composer.json",
-            "!package.json"
+            "!package.json",
+            "!coverage/*"
         ]
     }
 }

@@ -10,14 +10,17 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LabelTrait;
-use App\Entity\Traits\LogoTrait;
+use App\Entity\Traits\LogoableTrait;
+use App\Entity\Traits\NameableTrait;
+use App\Entity\Traits\SlugableTrait;
+use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\SkillTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'skill_type')]
 #[ORM\Entity(repositoryClass: SkillTypeRepository::class)]
@@ -25,22 +28,19 @@ use Doctrine\ORM\Mapping as ORM;
 class SkillType
 {
     use TimeStampableTrait;
-    use LabelTrait;
-    use LogoTrait;
+    use NameableTrait;
+    use SlugableTrait;
+    use LogoableTrait;
+    use SortableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private int $id;
 
-    #[ORM\Column(length: 120)]
-    private ?string $name = null;
-
-    #[ORM\Column]
-    private ?int $position = null;
-
     /** @var Collection<int, Skill> */
     #[ORM\OneToMany(mappedBy: 'skillType', targetEntity: Skill::class)]
+    #[Assert\Valid]
     private Collection $skills;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -57,30 +57,6 @@ class SkillType
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): static
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getPosition(): ?int
-    {
-        return $this->position;
-    }
-
-    public function setPosition(int $position): static
-    {
-        $this->position = $position;
-
-        return $this;
     }
 
     /**

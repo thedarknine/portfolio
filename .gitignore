@@ -5,6 +5,7 @@
 !.docker/mysql/data/.gitkeep
 !.docker/volumes/logs/mysql/.gitkeep
 /node_modules/*
+/src/DataFixtures/Testing/*
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -18,16 +19,21 @@
 
 ###> phpunit/phpunit ###
 /phpunit.xml
-/.phpunit.cache/
+/.tools-config/.phpunit.cache
+/coverage
 ###< phpunit/phpunit ###
 
+###> infection/infection ###
+/.tools-config/infection.log
+/.tools-config/infection-report.*
+###< infection/infection ###
+
 ###> friendsofphp/php-cs-fixer ###
-# /.php-cs-fixer.php
-/.coding-standard-linters/.php-cs-fixer.cache
+/.tools-config/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> vincentlanglet/twig-cs-fixer ###
-/.coding-standard-linters/.twig-cs-fixer.cache
+/.tools-config/.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
 
 ###> symfony/asset-mapper ###
