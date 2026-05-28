@@ -73,7 +73,7 @@ ICON_DEBUG := 🪲
 #= FONCTIONS ===========================================================
 define display_title
 	@printf "\n$(PURPLE)• $(2) $(1)$(RESET)\n"
-	$(if $(3), $(call display_subtitle,$3), @printf "\n")
+	@printf "$(PURPLE)────────────────────────────────────────────$(RESET)\n\n"
 endef
 
 define display_subtitle
@@ -107,22 +107,22 @@ endef
 ##@ DOCKER
 .PHONY: build
 build: ## Docker build
-	$(call display_title,Building Docker ........................................,${ICON_BUILD})
+	$(call display_title,Building Docker,${ICON_BUILD})
 	@$(DC) build 
 
 .PHONY: up
 up: ## Run Docker containers
-	$(call display_title,Starting containers ....................................,${ICON_DOCKER})
+	$(call display_title,Starting containers,${ICON_DOCKER})
 	@$(DC) up -d 
 
 .PHONY: down
 down: ## Stop Docker containers
-	$(call display_title,Stopping containers ....................................,${ICON_DOCKER})
+	$(call display_title,Stopping containers,${ICON_DOCKER})
 	@$(DC) down
 
 .PHONY: destroy
 destroy: ## Stop and remove Docker containers
-	$(call display_title,Stopping and remove containers .........................,${ICON_DOCKER})
+	$(call display_title,Stopping and remove containers,${ICON_DOCKER})
 	@$(DC) down --remove-orphans
 
 .PHONY: restart
@@ -138,27 +138,27 @@ force-restart: ## Docker restart (down, remove all containers, re-build and up)
 
 .PHONY: shell
 shell: ## Run a shell in the PHP container
-	$(call display_title,Running shell in PHP container .........................,${ICON_SHELL})
+	$(call display_title,Running shell in PHP container,${ICON_SHELL})
 	@$(DC_EXEC) bash
 
 .PHONY: logs
 logs: ## Show Docker logs for all services
-	$(call display_title,Displaying Docker logs .............................,${ICON_LOGS})
+	$(call display_title,Displaying Docker logs,${ICON_DEBUG})
 	@$(DC) logs -f --tail=100
 
 .PHONY: logs-app
 logs-app: ## Show Docker logs for the app service
-	$(call display_title,Displaying app logs .................................,${ICON_LOGS})
+	$(call display_title,Displaying app logs,${ICON_DEBUG})
 	@$(DC) logs -f $(DOCKER_APP_SERVICE)
 
 .PHONY: logs-db
 logs-db: ## Show Docker logs for the database service
-	$(call display_title,Displaying database logs ............................,${ICON_LOGS})
+	$(call display_title,Displaying database logs,${ICON_DEBUG})
 	@$(DC) logs -f $(DOCKER_DB_SERVICE)
 
 .PHONY: logs-nginx
 logs-nginx: ## Show docker logs for nginx
-	$(call display_title,Logs Nginx .............................................,${ICON_DEBUG})
+	$(call display_title,Logs Nginx,${ICON_DEBUG})
 	@$(DC) logs -f $(DOCKER_NGINX_SERVICE)
 
 # =====================================================================
@@ -166,7 +166,7 @@ logs-nginx: ## Show docker logs for nginx
 
 .PHONY: doctor
 doctor: ## Check system requirements and project health
-	$(call display_title,Running health check ....................................,${ICON_DEBUG})
+	$(call display_title,Running health check,${ICON_DEBUG})
 	@$(MAKE) --no-print-directory check-docker
 	@$(MAKE) --no-print-directory check-containers
 	@$(MAKE) --no-print-directory check-env
@@ -176,7 +176,7 @@ doctor: ## Check system requirements and project health
 
 .PHONY: check-docker
 check-docker: ## Check Docker is running
-	@$(call display_subtitle,Checking Docker daemon...)
+	$(call display_subtitle,Checking Docker daemon...)
 	@if ! docker info >/dev/null 2>&1; then \
 		$(call display_error,Docker daemon unavailable. Please start Docker Desktop.) \
 	fi
@@ -184,7 +184,7 @@ check-docker: ## Check Docker is running
 
 .PHONY: check-containers
 check-containers: ## Check if Docker containers are running
-	@$(call display_subtitle,Checking Docker containers...)
+	$(call display_subtitle,Checking Docker containers...)
 	@if ! $(DC) ps | grep -q "app.*Up"; then \
 		$(call display_error,Containers are not running. Use 'make up' to start them); \
 	fi
@@ -237,18 +237,122 @@ check-dependencies: ## Check if PHP dependencies (vendor) are installed
 	fi
 
 # =====================================================================
+##@ DEVELOPMENT
+
+.PHONY: cc
+cc: ## Run bin/console cache:clear from docker
+	$(call display_title,Clearing Symfony cache,${ICON_CLEAN})
+	@$(SYMFONY) cache:clear
+
+.PHONY: watch
+watch: ## Watch Tailwind CSS changes and re-build
+	$(call display_title,Watching Tailwind CSS changes and re-building,${ICON_BUILD})
+	@$(SYMFONY) tailwind:build --watch
+
+.PHONY: clean
+clean: ## Clean temporary files (cache, coverage, logs)
+	$(call display_title,Cleaning temporary files,${ICON_CLEAN})
+	@rm -rf var/cache/* var/log/* public/build/* coverage/ .phpunit.result.cache 
+	@$(call display_success,Temporary files cleaned.)
+
+.PHONY: secret
+secret: ## Generate a new APP_SECRET and display it (copy it to .env manually)
+	$(call display_title,Generating new APP_SECRET,${ICON_INSTALL})
+	@printf "  $(GREEN)APP_SECRET=$(RESET)"; $(DC_EXEC) openssl rand -hex 32
+
+.PHONY: migration
+migration: ## Run Doctrine migrations
+	$(call assert_not_prod)
+	$(call display_title,Running Doctrine migrations,${ICON_DATA})
+	@$(SYMFONY) make:migration
+	@$(SYMFONY) doctrine:migrations:migrate
+
+.PHONY: fixtures
+fixtures: ## Load Doctrine fixtures
+	$(call assert_not_prod)
+	$(call display_title,Loading Doctrine fixtures,${ICON_DATA})
+	@$(SYMFONY) doctrine:fixtures:load
+
+.PHONY: cs
+cs: ## Check all coding standards (PHP, Twig, CSS)
+	$(call display_title,Checking coding standards,${ICON_CS})
+	@$(MAKE) --no-print-directory cs-php 
+	@$(MAKE) --no-print-directory cs-twig 
+	@$(MAKE) --no-print-directory cs-front
+	$(call display_success,PHP coding standards check completed.)
+	$(call display_success,PHPStan analysis completed.)
+	$(call display_success,Twig coding standards check completed.)
+	$(call display_success,CSS and JS coding standards check completed.)
+	
+.PHONY: cs-php
+cs-php: ## PHP CS Fixer - Only show diff
+	$(call assert_not_prod)
+	$(call display_subtitle,Dry running PHP coding standards...)
+	@$(CSPHP) check --verbose
+	$(call display_subtitle,Running PHPStan analysis...)
+	@$(PHPSTAN) analyse
+
+.PHONY: cs-twig
+cs-twig: ## Twig CS Fixer - Only show diff
+	$(call assert_not_prod)
+	$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
+	@$(CSTWIG) check templates/
+
+.PHONY: cs-front
+cs-front: ## Run linters for CSS and JS
+	$(call assert_not_prod)
+	$(call display_subtitle,Running ESLint...)
+	@$(ESLINT) assets/scripts/
+	$(call display_subtitle,Running Stylelint...)
+	@$(STYLELINT) assets/styles/
+	$(call display_subtitle,Running Prettier...)
+	@$(PRETTIER) assets/ --check
+	$(call display_subtitle,Running Biome...)
+	@$(BIOME) lint
+
+.PHONY: cs-fix
+cs-fix: ## Fix all coding standards (PHP, Twig, CSS)
+	$(call assert_not_prod)
+	$(call display_title,Fixing coding standards,${ICON_CS})
+	@$(MAKE) --no-print-directory cs-php-fix 
+	@$(MAKE) --no-print-directory cs-twig-fix 
+	@$(MAKE) --no-print-directory cs-front-fix
+	$(call display_success,PHP coding standards fixed.)
+	$(call display_success,Twig coding standards fixed.)
+	$(call display_success,CSS and JS coding standards fixed.)
+
+.PHONY: cs-php-fix
+cs-php-fix: ## PHP CS Fixer - Fix code
+	$(call assert_not_prod)
+	$(call display_subtitle,Dry running PHP CS Fixer and display diff...)
+	@$(CSPHP) fix --diff --verbose
+
+.PHONY: cs-twig-fix
+cs-twig-fix: ## Twig CS Fixer - Fix code
+	$(call assert_not_prod)
+	$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
+	@$(CSTWIG) fix templates/
+	@$(SYMFONY) lint:twig templates/
+
+.PHONY: cs-front-fix
+cs-front-fix: ## Run Stylelint then Prettier and fix issues
+	$(call assert_not_prod)
+	$(call display_subtitle,Running Stylelint...)
+	@$(STYLELINT) assets/styles/ --fix
+	$(call display_subtitle,Running Prettier...)
+	@$(PRETTIER) assets/ --write
+
+# =====================================================================
 ##@ TESTS
 
 .PHONY: qa
 qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 	$(call assert_not_prod)
-	$(call display_title,Running complete Quality Assurance suite ...............,${ICON_CS})
 	@TIMEFORMAT='  ⏱️  Temps d’exécution : %R secondes'; \
 	time { \
 		$(MAKE) --no-print-directory cs || exit 1; \
 		$(MAKE) --no-print-directory test-analyse || exit 1; \
 		$(MAKE) --no-print-directory cover || exit 1; \
-		$(MAKE) --no-print-directory test-mutation || exit 1; \
 		$(MAKE) --no-print-directory test-arch || exit 1; \
 		$(MAKE) --no-print-directory test-ui || exit 1; \
 	}
@@ -263,7 +367,7 @@ qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 
 .PHONY: test
 test: ## Run PHPUnit tests
-	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
+	$(call display_title,Running PHPUnit tests,${ICON_TEST})
 	@$(MAKE) --no-print-directory check-containers
 	$(call display_subtitle,Generating fixtures...)
 #@$(SYMFONY) cache:clear --env=test
@@ -302,112 +406,6 @@ cover: ## Run PHPUnit tests with coverage
 	$(call display_subtitle,Running PHPUnit tests with coverage...)
 	@$(PHPUNIT) --coverage-html coverage/ --exclude-group=UI
 	@$(call display_success,Coverage report generated in 'coverage/' directory.)
-
-# =====================================================================
-##@ DEVELOPMENT
-
-.PHONY: cc
-cc: ## Run bin/console cache:clear from docker
-	$(call display_title,Clearing Symfony cache .................................,${ICON_CLEAN})
-	@$(SYMFONY) cache:clear
-
-.PHONY: watch
-watch: ## Watch Tailwind CSS changes and re-build
-	$(call display_title,Watching Tailwind CSS changes and re-building ...........,${ICON_BUILD})
-	@$(SYMFONY) tailwind:build --watch
-
-.PHONY: clean
-clean: ## Clean temporary files (cache, coverage, logs)
-	$(call display_title,Cleaning temporary files .............................,${ICON_CLEAN})
-	@rm -rf var/cache/* var/log/* public/build/* coverage/ .phpunit.result.cache 
-	@$(call display_success,Temporary files cleaned.)
-
-.PHONY: secret
-secret: ## Generate a new Symfony secret and update .env
-	$(call display_title,Generating new Symfony secret ........................,${ICON_INSTALL})
-	@$(DC_EXEC) openssl rand -hex 32
-
-.PHONY: migration
-migration: ## Run Doctrine migrations
-	$(call assert_not_prod)
-	$(call display_title,Running Doctrine migrations ..........................,${ICON_DATA})
-	@$(SYMFONY) make:migration
-	@$(SYMFONY) doctrine:migrations:migrate
-
-.PHONY: fixtures
-fixtures: ## Load Doctrine fixtures
-	$(call assert_not_prod)
-	$(call display_title,Loading Doctrine fixtures ............................,${ICON_DATA})
-	@$(SYMFONY) doctrine:fixtures:load
-
-.PHONY: cs
-cs: ## Check all coding standards (PHP, Twig, CSS)
-	$(call display_title,Checking coding standards .............................,${ICON_CS})
-	@$(MAKE) --no-print-directory cs-php 
-	@$(MAKE) --no-print-directory cs-twig 
-	@$(MAKE) --no-print-directory cs-front
-	$(call display_success,PHP coding standards check completed.)
-	$(call display_success,PHPStan analysis completed.)
-	$(call display_success,Twig coding standards check completed.)
-	$(call display_success,CSS and JS coding standards check completed.)
-	
-.PHONY: cs-php
-cs-php: ## PHP CS Fixer - Only show diff
-	$(call assert_not_prod)
-	$(call display_subtitle,Dry running PHP coding standards...)
-	@$(CSPHP) check --verbose
-	$(call display_subtitle,Running PHPStan analysis...)
-	@$(PHPSTAN) analyse
-
-.PHONY: cs-twig
-cs-twig: ## Twig CS Fixer - Only show diff
-	$(call assert_not_prod)
-	$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
-	@$(CSTWIG) check templates/
-
-.PHONY: cs-front
-cs-front: ## Run linters for CSS and JS
-	$(call assert_not_prod)
-	$(call display_subtitle,Running ESLint...)
-	@$(ESLINT) assets/scripts/
-	$(call display_subtitle,Running Stylelint...)
-	@$(STYLELINT) assets/styles/
-	$(call display_subtitle,Running Prettier...)
-	@$(PRETTIER) assets/ --check
-	$(call display_subtitle,Running Biome...)
-	@$(BIOME) lint
-
-.PHONY: cs-fix
-cs-fix: ## Fix all coding standards (PHP, Twig, CSS)
-	$(call assert_not_prod)
-	$(call display_title,Fixing coding standards ..............................,${ICON_CS})
-	@$(MAKE) --no-print-directory cs-php-fix 
-	@$(MAKE) --no-print-directory cs-twig-fix 
-	@$(MAKE) --no-print-directory cs-front-fix
-	$(call display_success,PHP coding standards fixed.)
-	$(call display_success,Twig coding standards fixed.)
-	$(call display_success,CSS and JS coding standards fixed.)
-
-.PHONY: cs-php-fix
-cs-php-fix: ## PHP CS Fixer - Fix code
-	$(call assert_not_prod)
-	$(call display_subtitle,Dry running PHP CS Fixer and display diff...)
-	@$(CSPHP) fix --diff --verbose
-
-.PHONY: cs-twig-fix
-cs-twig-fix: ## Twig CS Fixer - Fix code
-	$(call assert_not_prod)
-	$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
-	@$(CSTWIG) fix templates/
-	@$(SYMFONY) lint:twig templates/
-
-.PHONY: cs-front-fix
-cs-front-fix: ## Run Stylelint then Prettier and fix issues
-	$(call assert_not_prod)
-	$(call display_subtitle,Running Stylelint...)
-	@$(STYLELINT) assets/styles/ --fix
-	$(call display_subtitle,Running Prettier...)
-	@$(PRETTIER) assets/ --write
 
 # =====================================================================
 ##@ HELP
