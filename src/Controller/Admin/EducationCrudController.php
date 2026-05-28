@@ -20,6 +20,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<Education>
+ */
 class EducationCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

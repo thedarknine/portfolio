@@ -10,6 +10,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interface\SortableEntityInterface;
 use App\Entity\Traits\LogoableTrait;
 use App\Entity\Traits\NameableTrait;
 use App\Entity\Traits\SlugableTrait;
@@ -25,7 +26,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 #[ORM\Table(name: 'skill')]
 #[ORM\Entity(repositoryClass: SkillRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class Skill
+class Skill implements SortableEntityInterface
 {
     use TimeStampableTrait;
     use NameableTrait;

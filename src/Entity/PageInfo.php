@@ -10,6 +10,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interface\SortableEntityInterface;
 use App\Entity\Traits\PublishableTrait;
 use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\SortableTrait;
@@ -24,7 +25,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'page')]
 #[ORM\Entity(repositoryClass: PageInfoRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class PageInfo
+class PageInfo implements SortableEntityInterface
 {
     use TimeStampableTrait;
     use TitleableTrait;

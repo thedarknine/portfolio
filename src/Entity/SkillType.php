@@ -10,6 +10,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interface\SortableEntityInterface;
 use App\Entity\Traits\LogoableTrait;
 use App\Entity\Traits\NameableTrait;
 use App\Entity\Traits\SlugableTrait;
@@ -25,7 +26,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'skill_type')]
 #[ORM\Entity(repositoryClass: SkillTypeRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class SkillType
+class SkillType implements SortableEntityInterface
 {
     use TimeStampableTrait;
     use NameableTrait;

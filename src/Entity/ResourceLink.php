@@ -10,6 +10,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interface\SortableEntityInterface;
 use App\Entity\Traits\IconableTrait;
 use App\Entity\Traits\PublishableTrait;
 use App\Entity\Traits\SlugableTrait;
@@ -23,7 +24,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Table(name: 'resource')]
 #[ORM\Entity(repositoryClass: ResourceLinkRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class ResourceLink
+class ResourceLink implements SortableEntityInterface
 {
     use TimeStampableTrait;
     use IconableTrait;

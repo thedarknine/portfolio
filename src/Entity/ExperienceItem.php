@@ -10,6 +10,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interface\SortableEntityInterface;
 use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Entity\Traits\TitleableTrait;
@@ -19,7 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExperienceItemRepository::class)]
-class ExperienceItem
+class ExperienceItem implements SortableEntityInterface
 {
     use TimeStampableTrait;
     use TitleableTrait;

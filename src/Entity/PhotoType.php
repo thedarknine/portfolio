@@ -10,6 +10,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Interface\SortableEntityInterface;
 use App\Entity\Traits\NameableTrait;
 use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\SortableTrait;
@@ -20,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: 'photo_type')]
 #[ORM\Entity(repositoryClass: PhotoTypeRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class PhotoType
+class PhotoType implements SortableEntityInterface
 {
     use TimeStampableTrait;
     use NameableTrait;
