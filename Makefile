@@ -87,7 +87,7 @@ endef
 
 # Fonction pour afficher un message d'erreur et quitter
 define display_error
-	{ printf "\n${RED}✗ ERROR${RESET}: %s\n\n" "$1" >&2; exit 1; }
+	{ printf "\n$(RED)✗ ERROR$(RESET): $(1)\n\n" >&2; exit 1; }
 endef
 
 # Fonction pour afficher un message d'avertissement
@@ -127,11 +127,14 @@ destroy: ## Stop and remove Docker containers
 
 .PHONY: restart
 restart: ## Docker restart
-	@$(MAKE) down && $(MAKE) up
+	@$(MAKE) down
+	@$(MAKE) up
 
 .PHONY: force-restart
 force-restart: ## Docker restart (down, remove all containers, re-build and up)
-	@$(MAKE) destroy && $(MAKE) build && $(MAKE) up
+	@$(MAKE) destroy
+	@$(MAKE) build
+	@$(MAKE) up
 
 .PHONY: shell
 shell: ## Run a shell in the PHP container
@@ -164,11 +167,11 @@ logs-nginx: ## Show docker logs for nginx
 .PHONY: doctor
 doctor: ## Check system requirements and project health
 	$(call display_title,Running health check ....................................,${ICON_DEBUG})
-	@$(MAKE) check-docker
-	@$(MAKE) check-containers
-	@$(MAKE) check-env
-	@$(MAKE) check-ports
-	@$(MAKE) check-dependencies
+	@$(MAKE) --no-print-directory check-docker
+	@$(MAKE) --no-print-directory check-containers
+	@$(MAKE) --no-print-directory check-env
+	@$(MAKE) --no-print-directory check-ports
+	@$(MAKE) --no-print-directory check-dependencies
 	@$(call display_success,All systems are ok! The project is ready.)
 
 .PHONY: check-docker
@@ -261,7 +264,7 @@ qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 .PHONY: test
 test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests ..................................,${ICON_TEST})
-	@$(MAKE) check-containers
+	@$(MAKE) --no-print-directory check-containers
 	$(call display_subtitle,Generating fixtures...)
 #@$(SYMFONY) cache:clear --env=test
 #$(SYMFONY) app:generate-fixtures --group=test
@@ -316,7 +319,7 @@ watch: ## Watch Tailwind CSS changes and re-build
 .PHONY: clean
 clean: ## Clean temporary files (cache, coverage, logs)
 	$(call display_title,Cleaning temporary files .............................,${ICON_CLEAN})
-	@rm -rf var/cache/* var/log/* coverage/ .phpunit.result.cache
+	@rm -rf var/cache/* var/log/* public/build/* coverage/ .phpunit.result.cache 
 	@$(call display_success,Temporary files cleaned.)
 
 .PHONY: secret
