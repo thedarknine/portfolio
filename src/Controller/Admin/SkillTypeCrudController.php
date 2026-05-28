@@ -29,8 +29,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 
+/**
+ * @extends AbstractCrudController<SkillType>
+ */
 class SkillTypeCrudController extends AbstractCrudController
 {
+    /**
+     * @use SortableCrudTrait<SkillType>
+     */
     use SortableCrudTrait;
 
     public static function getEntityFqcn(): string

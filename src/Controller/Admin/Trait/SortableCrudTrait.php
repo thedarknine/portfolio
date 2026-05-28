@@ -10,6 +10,7 @@
 
 namespace App\Controller\Admin\Trait;
 
+use App\Entity\Interface\SortableEntityInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -19,6 +20,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @template TEntity of SortableEntityInterface
+ */
 trait SortableCrudTrait
 {
     /**
@@ -50,36 +54,51 @@ trait SortableCrudTrait
         ;
     }
 
+    /**
+     * @param AdminContext<TEntity> $context
+     */
     #[AdminRoute('/move-up', name: 'moveUp')]
     public function moveUp(AdminContext $context, EntityManagerInterface $em, AdminUrlGenerator $aug): Response
     {
         return $this->updateSortablePosition($context, $em, $aug, -1);
     }
 
+    /**
+     * @param AdminContext<TEntity> $context
+     */
     #[AdminRoute('/move-down', name: 'moveDown')]
     public function moveDown(AdminContext $context, EntityManagerInterface $em, AdminUrlGenerator $aug): Response
     {
         return $this->updateSortablePosition($context, $em, $aug, 1);
     }
 
+    /**
+     * @param AdminContext<TEntity> $context
+     */
     #[AdminRoute('/move-top', name: 'moveTop')]
     public function moveTop(AdminContext $context, EntityManagerInterface $em, AdminUrlGenerator $aug): Response
     {
         return $this->updateSortablePosition($context, $em, $aug, 0, true);
     }
 
+    /**
+     * @param AdminContext<TEntity> $context
+     */
     #[AdminRoute('/move-bottom', name: 'moveBottom')]
     public function moveBottom(AdminContext $context, EntityManagerInterface $em, AdminUrlGenerator $aug): Response
     {
         return $this->updateSortablePosition($context, $em, $aug, -1, true);
     }
 
+    /**
+     * @param AdminContext<TEntity> $context
+     */
     private function updateSortablePosition(AdminContext $context, EntityManagerInterface $em, AdminUrlGenerator $urlGenerator, int $offset, bool $absolute = false): Response
     {
         // Thanks to polymorphism, $entity dynamically gets the current object (Skill, SkillType...)
         $entity = $context->getEntity()->getInstance();
 
-        if (method_exists($entity, 'setPosition') && method_exists($entity, 'getPosition')) {
+        if ($entity instanceof SortableEntityInterface) {
             if ($absolute) {
                 $entity->setPosition($offset);
             } else {

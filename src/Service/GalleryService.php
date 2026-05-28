@@ -14,7 +14,6 @@ use App\Repository\ArcadeTypeRepository;
 use App\Repository\CreationTypeRepository;
 use App\Repository\PhotoTypeRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
 
 class GalleryService
@@ -23,11 +22,16 @@ class GalleryService
         private ArcadeTypeRepository $arcadeTypeRepository,
         private CreationTypeRepository $creationTypeRepository,
         private PhotoTypeRepository $photoTypeRepository,
-        private ParameterBagInterface $params,
         #[Autowire(param: 'app.images_dir')] private string $imagesDir,
     ) {
     }
 
+    /**
+     * @return array{
+     *  types: array<int, \App\Entity\ArcadeType>,
+     *  items: array<string, array<int, string>>
+     * }
+     */
     public function getArcadeGallery(): array
     {
         $arcadeTypesList = $this->arcadeTypeRepository->getArcadeTypes();
@@ -59,6 +63,12 @@ class GalleryService
         ];
     }
 
+    /**
+     * @return array{
+     *  types: array<int, \App\Entity\CreationType>,
+     *  creations: array<string, array<int, string>>
+     * }
+     */
     public function getCreationsGallery(): array
     {
         $creationTypesList = $this->creationTypeRepository->getCreationTypes();
@@ -90,6 +100,12 @@ class GalleryService
         ];
     }
 
+    /**
+     * @return array{
+     *  types: array<int, \App\Entity\PhotoType>,
+     *  photos: array<string, list<array{filename: string, caption: string}>>
+     * }
+     */
     public function getPhotosGallery(): array
     {
         $photoTypesList = $this->photoTypeRepository->getPhotoTypes();

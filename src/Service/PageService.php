@@ -45,24 +45,46 @@ class PageService
         return $page;
     }
 
-    public function getPublishedPages(): array
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getPublishedPages(?bool $inHeader = null): array
     {
-        return $this->pageInfoRepository->findAllAsArray(['published' => true]);
+        $filters = ['published' => true];
+        if (null !== $inHeader) {
+            $filters['inHeader'] = $inHeader;
+        }
+
+        return $this->pageInfoRepository->findAllAsArray($filters);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getPublishedPagesInHeader(): array
     {
-        return $this->pageInfoRepository->findAllAsArray(['published' => true, 'inHeader' => true]);
+        return $this->getPublishedPages(true);
     }
 
-    public function getPublishedResourceLinks(): array
+    /**
+     * @return array<int, array<string, mixed>>
+     */
+    public function getPublishedResourceLinks(?bool $inHero = null): array
     {
-        return $this->resourceLinkRepository->findAllAsArray(['published' => true]);
+        $filters = ['published' => true];
+        if (null !== $inHero) {
+            $filters['inHero'] = $inHero;
+        }
+
+        return $this->resourceLinkRepository->findAllAsArray($filters);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getPublishedResourceLinksInHero(): array
     {
-        return $this->resourceLinkRepository->findAllAsArray(['published' => true, 'inHero' => true]);
+        return $this->getPublishedResourceLinks(true);
     }
 
     public function getNbYearsExperience(): int

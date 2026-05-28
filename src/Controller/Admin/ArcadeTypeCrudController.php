@@ -19,8 +19,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<ArcadeType>
+ */
 class ArcadeTypeCrudController extends AbstractCrudController
 {
+    /**
+     * @use SortableCrudTrait<ArcadeType>
+     */
     use SortableCrudTrait;
 
     public static function getEntityFqcn(): string

@@ -24,8 +24,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
+/**
+ * @extends AbstractCrudController<PageInfo>
+ */
 class PageInfoCrudController extends AbstractCrudController
 {
+    /**
+     * @use SortableCrudTrait<PageInfo>
+     */
     use SortableCrudTrait;
 
     public static function getEntityFqcn(): string

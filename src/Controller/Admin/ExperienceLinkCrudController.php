@@ -20,6 +20,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
+/**
+ * @extends AbstractCrudController<ExperienceLink>
+ */
 class ExperienceLinkCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

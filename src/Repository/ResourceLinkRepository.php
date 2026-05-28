@@ -24,7 +24,12 @@ class ResourceLinkRepository extends ServiceEntityRepository
         parent::__construct($registry, ResourceLink::class);
     }
 
-    public function findAllAsArray($filters = []): array
+    /**
+     * @param array<string, mixed> $filters
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function findAllAsArray(array $filters = []): array
     {
         $query = $this->createQueryBuilder('r')
             ->orderBy('r.position', 'ASC');

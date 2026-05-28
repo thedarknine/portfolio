@@ -17,14 +17,13 @@ use App\Repository\SkillRepository;
 use App\Repository\SkillTypeRepository;
 use App\Service\GalleryService;
 use App\Service\PageService;
-use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class PortfolioController extends AbstractController
 {
-    public function __construct(private ManagerRegistry $doctrine, private PageService $pageService)
+    public function __construct(private PageService $pageService)
     {
     }
 
@@ -70,7 +69,7 @@ final class PortfolioController extends AbstractController
 
         return $this->render('pages/projects.html.twig', [
             'current_page' => $page,
-            'projects_list' => $projectRepository->findAll(['published' => true], ['year' => 'DESC']),
+            'projects_list' => $projectRepository->findBy(['published' => true], ['year' => 'DESC']),
         ]);
     }
 

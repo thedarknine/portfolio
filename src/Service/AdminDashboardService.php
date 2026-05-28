@@ -34,13 +34,15 @@ class AdminDashboardService
     ) {
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getStats(): array
     {
         return [
             // Content
             'projects' => $this->projectRepository->count([]),
             'publicPages' => $this->pageInfoRepository->count([]),
-            'publishedProjects' => $this->projectRepository->count([]),
             'draftProjects' => $this->projectRepository->count(['published' => false]),
             'publishedProjects' => $this->projectRepository->count(['published' => true]),
 
@@ -66,6 +68,9 @@ class AdminDashboardService
         ];
     }
 
+    /**
+     * @return array<string, mixed>|null
+     */
     private function getLatestPhoto(): ?array
     {
         $finder = new Finder();

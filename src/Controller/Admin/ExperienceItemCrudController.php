@@ -23,8 +23,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
+/**
+ * @extends AbstractCrudController<ExperienceItem>
+ */
 class ExperienceItemCrudController extends AbstractCrudController
 {
+    /**
+     * @use SortableCrudTrait<ExperienceItem>
+     */
     use SortableCrudTrait;
 
     public static function getEntityFqcn(): string

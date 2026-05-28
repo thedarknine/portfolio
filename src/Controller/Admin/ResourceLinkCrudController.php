@@ -22,8 +22,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
+/**
+ * @extends AbstractCrudController<ResourceLink>
+ */
 class ResourceLinkCrudController extends AbstractCrudController
 {
+    /**
+     * @use SortableCrudTrait<ResourceLink>
+     */
     use SortableCrudTrait;
 
     public static function getEntityFqcn(): string

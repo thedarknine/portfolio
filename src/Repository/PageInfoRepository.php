@@ -24,7 +24,12 @@ class PageInfoRepository extends ServiceEntityRepository
         parent::__construct($registry, PageInfo::class);
     }
 
-    public function findAllAsArray($filters = []): array
+    /**
+     * @param array<string, mixed> $filters
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function findAllAsArray(?array $filters = []): array
     {
         $query = $this->createQueryBuilder('p')
             ->orderBy('p.position', 'ASC');
