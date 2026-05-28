@@ -84,7 +84,7 @@ class GenerateFixturesCommandTest extends KernelTestCase
     public static function provideFixtureGroups(): array
     {
         return [
-            'Groupe Portfolio' => ['portfolio', null],
+            // 'Groupe Portfolio' => ['portfolio', null], // DISABLED - overrides existing fixtures
             'Groupe Test de base' => ['test', null],
             'Groupe Avec Underscore' => ['testing_unit', null],
             'Groupe dynamique complexe' => [
