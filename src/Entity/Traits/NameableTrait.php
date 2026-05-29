@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -19,6 +19,11 @@ trait NameableTrait
     #[Assert\NotBlank(message: 'Name cannot be empty.')]
     private ?string $name = null;
 
+    public function __toString(): string
+    {
+        return $this->name ?? '';
+    }
+
     public function getName(): ?string
     {
         return $this->name;
@@ -29,10 +34,5 @@ trait NameableTrait
         $this->name = $name;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->name ?? '';
     }
 }

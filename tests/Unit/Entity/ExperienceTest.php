@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -25,7 +25,7 @@ class ExperienceTest extends TestCase
     public function testRemoveItemClearsRelation(): void
     {
         $experience = new Experience();
-        $item = new ExperienceItem();
+        $item       = new ExperienceItem();
 
         $item->setExperience($experience);
         if (method_exists($experience, 'addItem')) {
@@ -44,7 +44,7 @@ class ExperienceTest extends TestCase
     public function testAddAndRemoveLinkMaintainBidirectionalRelation(): void
     {
         $experience = new Experience();
-        $link = new ExperienceLink();
+        $link       = new ExperienceLink();
 
         // Add test
         $experience->addLink($link);
@@ -81,7 +81,7 @@ class ExperienceTest extends TestCase
         $experience->validateDates($contextMock);
 
         // --- INVALID CASES (Violation expected) ---
-        $invalidContextMock = $this->createMock(ExecutionContextInterface::class);
+        $invalidContextMock   = $this->createMock(ExecutionContextInterface::class);
         $violationBuilderMock = $this->createMock(ConstraintViolationBuilderInterface::class);
 
         $invalidContextMock->expects($this->once())

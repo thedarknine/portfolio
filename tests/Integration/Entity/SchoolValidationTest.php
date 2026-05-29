@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -52,7 +52,7 @@ class SchoolValidationTest extends KernelTestCase
      */
     public function testEducationCollectionManagement(): void
     {
-        $school = new School();
+        $school    = new School();
         $education = new Education();
 
         $this->assertCount(0, $school->getEducation());
@@ -105,7 +105,7 @@ class SchoolValidationTest extends KernelTestCase
         $school = new School();
 
         $reflection = new \ReflectionClass($school);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($school, 45);
 

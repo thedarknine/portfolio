@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -56,8 +56,8 @@ class ExperienceLinkCrudController extends AbstractCrudController
 
         yield ChoiceField::new('type', 'Nature du lien')
             ->setChoices([
-                'Document' => LinkType::DOCUMENT,
-                'Fichier PDF' => LinkType::PDF,
+                'Document'     => LinkType::DOCUMENT,
+                'Fichier PDF'  => LinkType::PDF,
                 'Lien externe' => LinkType::EXTERNAL,
             ])
             ->formatValue(function ($value, $entity) {
@@ -65,7 +65,7 @@ class ExperienceLinkCrudController extends AbstractCrudController
                     return sprintf(
                         '<i class="fas %s me-2"></i> %s',
                         $value->getIcon(),
-                        $value->getLabel()
+                        $value->getLabel(),
                     );
                 }
 

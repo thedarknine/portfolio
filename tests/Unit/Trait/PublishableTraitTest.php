@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -16,16 +16,6 @@ use PHPUnit\Framework\TestCase;
 class PublishableTraitTest extends TestCase
 {
     /**
-     * Crée une instance d'une classe anonyme qui utilise le Trait.
-     */
-    private function createMockObject(): object
-    {
-        return new class {
-            use PublishableTrait;
-        };
-    }
-
-    /**
      * 🎯 Test de l'état initial par défaut.
      */
     public function testDefaultValueIsFalse(): void
@@ -34,7 +24,7 @@ class PublishableTraitTest extends TestCase
 
         $this->assertFalse(
             $object->isPublished(),
-            'Par défaut, l\'état de publication doit être à "false".'
+            'Par défaut, l\'état de publication doit être à "false".',
         );
     }
 
@@ -54,5 +44,15 @@ class PublishableTraitTest extends TestCase
         // On rebascule à false pour valider le changement inverse
         $object->setPublished(false);
         $this->assertFalse($object->isPublished(), 'L\'état de publication aurait dû repasser à "false".');
+    }
+
+    /**
+     * Crée une instance d'une classe anonyme qui utilise le Trait.
+     */
+    private function createMockObject(): object
+    {
+        return new class {
+            use PublishableTrait;
+        };
     }
 }

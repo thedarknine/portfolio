@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -33,7 +33,7 @@ final class PortfolioController extends AbstractController
         $page = $this->pageService->getActivePageBySlug('experience');
 
         return $this->render('pages/experience.html.twig', [
-            'current_page' => $page,
+            'current_page'     => $page,
             'experiences_list' => $experienceRepository->getExperiencesWithCompany(20),
         ]);
     }
@@ -44,9 +44,9 @@ final class PortfolioController extends AbstractController
         $page = $this->pageService->getActivePageBySlug('competences');
 
         return $this->render('pages/skills.html.twig', [
-            'current_page' => $page,
+            'current_page'     => $page,
             'skill_types_list' => $skillTypeRepository->getSkillTypes(),
-            'skills_list' => $skillRepository->getSkillsOrderByType(),
+            'skills_list'      => $skillRepository->getSkillsOrderByType(),
         ]);
     }
 
@@ -56,7 +56,7 @@ final class PortfolioController extends AbstractController
         $page = $this->pageService->getActivePageBySlug('formation');
 
         return $this->render('pages/education.html.twig', [
-            'current_page' => $page,
+            'current_page'                 => $page,
             'educations_universitary_list' => $educationRepository->getEducationsWithSchool('universitaire'),
             'educations_professional_list' => $educationRepository->getEducationsWithSchool('professionnel'),
         ]);
@@ -68,7 +68,7 @@ final class PortfolioController extends AbstractController
         $page = $this->pageService->getActivePageBySlug('projets');
 
         return $this->render('pages/projects.html.twig', [
-            'current_page' => $page,
+            'current_page'  => $page,
             'projects_list' => $projectRepository->findBy(['published' => true], ['year' => 'DESC']),
         ]);
     }
@@ -80,7 +80,7 @@ final class PortfolioController extends AbstractController
 
         return $this->render('pages/arcade.html.twig', [
             'current_page' => $page,
-            'arcade_data' => $galleryService->getArcadeGallery(),
+            'arcade_data'  => $galleryService->getArcadeGallery(),
         ]);
     }
 
@@ -90,7 +90,7 @@ final class PortfolioController extends AbstractController
         $page = $this->pageService->getActivePageBySlug('creations');
 
         return $this->render('pages/creations.html.twig', [
-            'current_page' => $page,
+            'current_page'   => $page,
             'creations_data' => $galleryService->getCreationsGallery(),
         ]);
     }
@@ -102,7 +102,7 @@ final class PortfolioController extends AbstractController
 
         return $this->render('pages/photos.html.twig', [
             'current_page' => $page,
-            'photos_data' => $galleryService->getPhotosGallery(),
+            'photos_data'  => $galleryService->getPhotosGallery(),
         ]);
     }
 }

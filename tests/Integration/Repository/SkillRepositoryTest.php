@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -24,7 +24,7 @@ class SkillRepositoryTest extends KernelTestCase
     {
         self::bootKernel();
 
-        $this->entityManager = self::getContainer()->get('doctrine.orm.entity_manager');
+        $this->entityManager   = self::getContainer()->get('doctrine.orm.entity_manager');
         $this->skillRepository = $this->entityManager->getRepository(Skill::class);
 
         $this->cleanUpDatabase();

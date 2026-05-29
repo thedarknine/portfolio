@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -41,14 +41,14 @@ class AdminDashboardService
     {
         return [
             // Content
-            'projects' => $this->projectRepository->count([]),
-            'publicPages' => $this->pageInfoRepository->count([]),
-            'draftProjects' => $this->projectRepository->count(['published' => false]),
+            'projects'          => $this->projectRepository->count([]),
+            'publicPages'       => $this->pageInfoRepository->count([]),
+            'draftProjects'     => $this->projectRepository->count(['published' => false]),
             'publishedProjects' => $this->projectRepository->count(['published' => true]),
 
             // Last content
             'latestProject' => $this->projectRepository->findOneBy([], ['year' => 'DESC']),
-            'latestPhoto' => $this->getLatestPhoto(),
+            'latestPhoto'   => $this->getLatestPhoto(),
 
             // Skills / stack
             'technologiesCount' => $this->skillRepository->count([]),
@@ -57,14 +57,14 @@ class AdminDashboardService
             'projectsExperienceRatio' => $this->getProjectsExperienceRatio(),
 
             // Assets
-            'totalImages' => $this->countImages(),
+            'totalImages'        => $this->countImages(),
             'portfolioDiskUsage' => $this->getDirectorySize(),
 
             // Docker & Divers
-            'phpVersion' => phpversion(),
-            'symfonyVersion' => $this->kernel::VERSION,
+            'phpVersion'       => phpversion(),
+            'symfonyVersion'   => $this->kernel::VERSION,
             'easyAdminVersion' => InstalledVersions::getVersion('easycorp/easyadmin-bundle'),
-            'yearsExperience' => $this->getNbYearsExperience(),
+            'yearsExperience'  => $this->getNbYearsExperience(),
         ];
     }
 
@@ -73,8 +73,8 @@ class AdminDashboardService
      */
     private function getLatestPhoto(): ?array
     {
-        $finder = new Finder();
-        $directory = $this->params->get('kernel.project_dir').'/public/images/photos';
+        $finder    = new Finder();
+        $directory = $this->params->get('kernel.project_dir') . '/public/images/photos';
 
         if (!is_dir($directory)) {
             return null;
@@ -90,14 +90,14 @@ class AdminDashboardService
         $latest = end($files);
 
         return [
-            'filename' => $latest->getFilename(),
+            'filename'  => $latest->getFilename(),
             'updatedAt' => date('d/m/Y H:i', $latest->getMTime()),
         ];
     }
 
     private function getProjectsExperienceRatio(): string
     {
-        $projects = $this->projectRepository->count([]);
+        $projects    = $this->projectRepository->count([]);
         $experiences = $this->experienceRepository->count([]);
 
         if (0 === $experiences) {
@@ -109,8 +109,8 @@ class AdminDashboardService
 
     private function countImages(): int
     {
-        $finder = new Finder();
-        $directory = $this->params->get('kernel.project_dir').'/public/images';
+        $finder    = new Finder();
+        $directory = $this->params->get('kernel.project_dir') . '/public/images';
 
         if (!is_dir($directory)) {
             return 0;
@@ -123,7 +123,7 @@ class AdminDashboardService
 
     private function getDirectorySize(): string
     {
-        $directory = $this->params->get('kernel.project_dir').'/public/images';
+        $directory = $this->params->get('kernel.project_dir') . '/public/images';
 
         if (!is_dir($directory)) {
             return '0 B';
@@ -148,7 +148,7 @@ class AdminDashboardService
             $bytes /= 1024;
         }
 
-        return round($bytes, 2).' '.$units[$i];
+        return round($bytes, 2) . ' ' . $units[$i];
     }
 
     private function getNbYearsExperience(): int

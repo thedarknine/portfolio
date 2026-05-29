@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -34,9 +34,9 @@ class GenerateFixturesCommandTest extends KernelTestCase
 
         $projectDir = self::getContainer()->getParameter('kernel.project_dir');
 
-        $this->companyFixturePath = $projectDir.'/src/DataFixtures/Testing/Unit/CompanyAutoFixture.php';
-        $this->experienceFixturePath = $projectDir.'/src/DataFixtures/Testing/Unit/ExperienceAutoFixture.php';
-        $this->projectFixturePath = $projectDir.'/src/DataFixtures/Testing/Unit/ProjectAutoFixture.php';
+        $this->companyFixturePath    = $projectDir . '/src/DataFixtures/Testing/Unit/CompanyAutoFixture.php';
+        $this->experienceFixturePath = $projectDir . '/src/DataFixtures/Testing/Unit/ExperienceAutoFixture.php';
+        $this->projectFixturePath    = $projectDir . '/src/DataFixtures/Testing/Unit/ProjectAutoFixture.php';
 
         $this->cleanUpDatabaseAndFiles();
     }
@@ -52,20 +52,20 @@ class GenerateFixturesCommandTest extends KernelTestCase
     #[DataProvider('provideFixtureGroups')]
     public function testExecuteWithVariousGroups(string $group, ?string $expectedSubFolder): void
     {
-        $kernel = self::bootKernel();
+        $kernel      = self::bootKernel();
         $application = new Application($kernel);
 
         // If a specific subfolder is expected, ensure it doesn't exist to force the `mkdir` call
         if ($expectedSubFolder) {
             $filesystem = new Filesystem();
-            $targetDir = $kernel->getProjectDir().$expectedSubFolder;
+            $targetDir  = $kernel->getProjectDir() . $expectedSubFolder;
             if ($filesystem->exists($targetDir)) {
                 $filesystem->remove($targetDir);
             }
         }
 
         // Get the command (adjust the name according to your actual fixture command)
-        $command = $application->find('app:generate-fixtures');
+        $command       = $application->find('app:generate-fixtures');
         $commandTester = new CommandTester($command);
 
         // Pass the group as argument/option according to your command's signature
@@ -85,8 +85,8 @@ class GenerateFixturesCommandTest extends KernelTestCase
     {
         return [
             // 'Groupe Portfolio' => ['portfolio', null], // DISABLED - overrides existing fixtures
-            'Groupe Test de base' => ['test', null],
-            'Groupe Avec Underscore' => ['testing_unit', null],
+            'Groupe Test de base'       => ['test', null],
+            'Groupe Avec Underscore'    => ['testing_unit', null],
             'Groupe dynamique complexe' => [
                 'testing_unit_mutation',
                 '/src/DataFixtures/Testing/Unit/Mutation',
@@ -99,13 +99,13 @@ class GenerateFixturesCommandTest extends KernelTestCase
      */
     public function testExecuteFailsIfEntityDoesNotExist(): void
     {
-        $application = new Application(self::$kernel);
-        $command = $application->find('app:generate-fixtures');
+        $application   = new Application(self::$kernel);
+        $command       = $application->find('app:generate-fixtures');
         $commandTester = new CommandTester($command);
 
         $statusCode = $commandTester->execute([
             'entityFqcn' => 'App\Entity\FakeEntity',
-            '--group' => 'testing_unit',
+            '--group'    => 'testing_unit',
         ]);
 
         $this->assertSame(1, $statusCode);
@@ -124,8 +124,8 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $this->entityManager->persist($experience);
         $this->entityManager->flush();
 
-        $application = new Application(self::$kernel);
-        $command = $application->find('app:generate-fixtures');
+        $application   = new Application(self::$kernel);
+        $command       = $application->find('app:generate-fixtures');
         $commandTester = new CommandTester($command);
 
         $statusCode = $commandTester->execute([
@@ -163,8 +163,8 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $this->entityManager->persist($experience);
         $this->entityManager->flush();
 
-        $application = new Application(self::$kernel);
-        $command = $application->find('app:generate-fixtures');
+        $application   = new Application(self::$kernel);
+        $command       = $application->find('app:generate-fixtures');
         $commandTester = new CommandTester($command);
 
         $statusCode = $commandTester->execute([
@@ -193,21 +193,21 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $this->entityManager->persist($company);
         $this->entityManager->flush();
 
-        $application = new Application(self::$kernel);
-        $command = $application->find('app:generate-fixtures');
+        $application   = new Application(self::$kernel);
+        $command       = $application->find('app:generate-fixtures');
         $commandTester = new CommandTester($command);
 
         $statusCode = $commandTester->execute([
             'entityFqcn' => Company::class,
-            '--group' => 'testing_unit',
+            '--group'    => 'testing_unit',
         ]);
 
         $this->assertSame(0, $statusCode);
         $this->assertStringContainsString('✅ Generated fixture: /src/DataFixtures/Testing/Unit/CompanyAutoFixture.php', $commandTester->getDisplay());
         $this->assertFileExists($this->companyFixturePath);
 
-        $projectDir = self::getContainer()->getParameter('kernel.project_dir');
-        $userFixturePath = $projectDir.'/src/DataFixtures/Testing/Unit/UserAutoFixture.php';
+        $projectDir      = self::getContainer()->getParameter('kernel.project_dir');
+        $userFixturePath = $projectDir . '/src/DataFixtures/Testing/Unit/UserAutoFixture.php';
         $this->assertFileDoesNotExist($userFixturePath);
     }
 
@@ -236,9 +236,9 @@ class GenerateFixturesCommandTest extends KernelTestCase
             $this->companyFixturePath,
             $this->experienceFixturePath,
             $this->projectFixturePath,
-            $projectDir.'/src/DataFixtures/Testing/Unit/UserAutoFixture.php',
-            $projectDir.'/src/DataFixtures/Testing/Unit/SkillAutoFixture.php',
-            $projectDir.'/src/DataFixtures/Testing/Unit/SkillTypeAutoFixture.php',
+            $projectDir . '/src/DataFixtures/Testing/Unit/UserAutoFixture.php',
+            $projectDir . '/src/DataFixtures/Testing/Unit/SkillAutoFixture.php',
+            $projectDir . '/src/DataFixtures/Testing/Unit/SkillTypeAutoFixture.php',
         ];
 
         foreach ($fixturesToClean as $path) {
@@ -248,7 +248,7 @@ class GenerateFixturesCommandTest extends KernelTestCase
         }
 
         // Clean up the unit directory properly
-        $testingDir = $projectDir.'/src/DataFixtures/Testing/Unit';
+        $testingDir = $projectDir . '/src/DataFixtures/Testing/Unit';
         if (is_dir($testingDir) && 2 === count(scandir($testingDir))) {
             rmdir($testingDir);
         }

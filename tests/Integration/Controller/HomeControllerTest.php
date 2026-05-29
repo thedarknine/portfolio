@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -21,7 +21,7 @@ class HomeControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->client = static::createClient();
+        $this->client        = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
 
         $projectDir = static::getContainer()->getParameter('kernel.project_dir');
@@ -50,6 +50,17 @@ class HomeControllerTest extends WebTestCase
     }
 
     /**
+     * Test admin zone is protected and redirects anonymous users.
+     */
+    public function testAdminZoneIsProtected(): void
+    {
+        $this->client->request('GET', '/admin');
+
+        // Check anonymous user is redirected (usually to /login)
+        $this->assertResponseRedirects();
+    }
+
+    /**
      * Create on the fly the minimal structures in your test database
      * to prevent controller loops from crashing.
      */
@@ -67,16 +78,5 @@ class HomeControllerTest extends WebTestCase
             $this->entityManager->persist($page);
             $this->entityManager->flush();
         }
-    }
-
-    /**
-     * Test admin zone is protected and redirects anonymous users.
-     */
-    public function testAdminZoneIsProtected(): void
-    {
-        $this->client->request('GET', '/admin');
-
-        // Check anonymous user is redirected (usually to /login)
-        $this->assertResponseRedirects();
     }
 }
