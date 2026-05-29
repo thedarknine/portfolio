@@ -1,0 +1,37 @@
+grumphp:
+    stop_on_failure: true
+    process_timeout: 120
+
+    git_hook_variables:
+        EXEC_GRUMPHP_COMMAND: docker compose exec -T app php
+
+    tasks:
+
+        composer:
+            no_check_publish: true
+
+        phpcsfixer:
+            config: .tools-config/.php-cs-fixer.php
+            cache_file: .tools-config/.php-cs-fixer.cache
+            allow_risky: true
+            verbose: true
+            diff: true
+
+        phpstan:
+            configuration: .tools-config/phpstan.neon
+            memory_limit: "-1"
+            use_grumphp_paths: false
+            triggered_by: ['php']
+
+        git_blacklist:
+            keywords:
+                - "dd("
+                - "dump("
+                - "var_dump("
+                - "die("
+                - "exit;"
+            triggered_by: [php, twig]
+
+        phpunit:
+            config_file: .tools-config/phpunit.xml
+            always_execute: false

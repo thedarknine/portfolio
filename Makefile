@@ -34,6 +34,7 @@ DC_EXEC   = $(DC) exec $(TTY_FLAG) $(DOCKER_APP_SERVICE)
 
 SYMFONY		:= $(DC_EXEC) php bin/console
 COMPOSER	:= $(DC_EXEC) composer
+GRUMPHP		:= $(DC_EXEC) vendor/bin/grumphp --config=$(TOOLS_CONFIG_DIR)/grumphp.yml
 PHPUNIT		:= $(DC_EXEC) php vendor/bin/phpunit --configuration $(TOOLS_CONFIG_DIR)/phpunit.xml
 INFECTION	:= $(DC_EXEC) php vendor/bin/infection --configuration=$(TOOLS_CONFIG_DIR)/infection.json
 PHPARKITECT	:= $(DC_EXEC) php vendor/bin/phparkitect --config=$(TOOLS_CONFIG_DIR)/phparkitect.php
@@ -291,10 +292,12 @@ fixtures: ## Load Doctrine fixtures
 cs: ## Check all coding standards (PHP, Twig, CSS)
 	$(call display_title,Checking coding standards,${ICON_CS})
 	@$(MAKE) --no-print-directory cs-php 
+	@$(MAKE) --no-print-directory cs-yaml
 	@$(MAKE) --no-print-directory cs-twig 
 	@$(MAKE) --no-print-directory cs-front
 	$(call display_success,PHP coding standards check completed.)
 	$(call display_success,PHPStan analysis completed.)
+	$(call display_success,YAML linting completed.)
 	$(call display_success,Twig coding standards check completed.)
 	$(call display_success,CSS and JS coding standards check completed.)
 	
@@ -305,6 +308,12 @@ cs-php: ## PHP CS Fixer - Only show diff
 	@$(CSPHP) check --verbose
 	$(call display_subtitle,Running PHPStan analysis...)
 	@$(PHPSTAN) analyse
+
+.PHONY: cs-yaml
+cs-yaml: ## YAML Linter - Only show diff
+	$(call assert_not_prod)
+	$(call display_subtitle,Dry running YAML linter...)
+	@$(SYMFONY) lint:yaml config/
 
 .PHONY: cs-twig
 cs-twig: ## Twig CS Fixer - Only show diff
@@ -359,6 +368,16 @@ cs-front-fix: ## Run Stylelint then Prettier and fix issues
 # =====================================================================
 ##@ TESTS
 
+.PHONY: grum-install
+grum-install: ## Install GrumPHP hooks
+	$(call display_title,Installing GrumPHP hooks,${ICON_DEBUG})
+	@$(GRUMPHP) git:init
+
+.PHONY: grum-run
+grum-run: ## Run GrumPHP checks
+	$(call display_title,Running GrumPHP checks,${ICON_TEST})
+	@$(GRUMPHP) run
+
 .PHONY: qa
 qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 	$(call assert_not_prod)
@@ -367,6 +386,7 @@ qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 		$(MAKE) --no-print-directory cs || exit 1; \
 		$(MAKE) --no-print-directory test-analyse || exit 1; \
 		$(MAKE) --no-print-directory cover || exit 1; \
+		$(MAKE) --no-print-directory test-mutation || exit 1; \
 		$(MAKE) --no-print-directory test-arch || exit 1; \
 		$(MAKE) --no-print-directory test-ui || exit 1; \
 	}

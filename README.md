@@ -74,8 +74,10 @@ Into docker :
 - phpstan/phpstan
 - vincentlanglet/twig-cs-fixer
 - kocal/biome-js-bundle
+- phpro/grumphp
 - doctrine/doctrine-fixtures-bundle
 - phpstan/phpstan-doctrine
+# - phpstan/phpstan-strict-rules
 - symfony/test-pack
 - dama/doctrine-test-bundle
 - infection/infection (mutation testing)
