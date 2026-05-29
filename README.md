@@ -32,6 +32,9 @@ Into docker :
     git config --global user.email "you@example.com"
     git config --global user.name "Your Name"
 
+    # Ignore commits that only apply coding standards for example
+    git config blame.ignoreRevsFile .git-blame-ignore-revs
+
     symfony check:requirements
 
     symfony new tmp --version="8.0.*"
