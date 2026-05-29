@@ -104,6 +104,20 @@ define assert_not_prod
 endef
 
 # =====================================================================
+
+CHECKMAKE := checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
+.PHONY: cs-makefile
+cs-makefile: ## Lint Makefile with checkmake
+	$(call display_subtitle,Checking if checkmake is installed...)
+	@if ! command -v checkmake >/dev/null 2>&1; then \
+		$(call display_error,checkmake is not installed. Please run 'brew install checkmake' or 'apt install checkmake'.) \
+	fi
+	$(call display_success,checkmake is installed)
+	$(call display_subtitle,Running checkmake...)
+	@$(CHECKMAKE) Makefile
+	$(call display_success,Makefile formatting is perfect!)
+
+# =====================================================================
 ##@ DOCKER
 .PHONY: build
 build: ## Docker build
@@ -391,7 +405,7 @@ test-mutation: ## Run Infection
 
 .PHONY: test-arch
 test-arch: ## Run phparkitect
-	$(call display_subtitle,Running phparkitect...)
+	$(call display_subtitle,Running PHPArkitect...)
 	@$(PHPARKITECT) check
 
 .PHONY: test-ui

@@ -1,4 +1,5 @@
 # portfolio
+
 My Portfolio based on Symfony framework
 
 ## Before prod
@@ -17,10 +18,10 @@ My Portfolio based on Symfony framework
 ### Reset fixtures
 
 ```bash
-php bin/console doctrine:database:drop --force
-php bin/console doctrine:database:create
-php bin/console doctrine:schema:update --force
-php bin/console doctrine:fixtures:load
+    php bin/console doctrine:database:drop --force
+    php bin/console doctrine:database:create
+    php bin/console doctrine:schema:update --force
+    php bin/console doctrine:fixtures:load
 ```
 
 ## Initialize
@@ -126,6 +127,7 @@ Into docker :
 ## Tests
 
 ### Prepare database for tests
+
 Add and adapt something like `DATABASE_URL="mysql://test:test@127.0.0.1:3306/portfolio_test?serverVersion=8.1.0&charset=utf8mb4"` into `.env.test` file.
 
 ```bash
@@ -145,17 +147,20 @@ Add and adapt something like `DATABASE_URL="mysql://test:test@127.0.0.1:3306/por
     php bin/console doctrine:fixtures:load --env=test
 ```
 
-### Build new test 
+### Build new test
+
 ```bash
     php bin/console make:test WebTestCase PageControllerTest    
 ```
 
 ### Run tests
+
 ```bash
     php bin/phpunit
 ```
 
 ### Run tests with coverage
+
 ```bash
     php bin/phpunit --coverage-html coverage
 ```
