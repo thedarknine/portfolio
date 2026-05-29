@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -22,7 +22,7 @@ class SecurityControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->client = static::createClient();
+        $this->client        = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
 
         $this->createAdminUser();
@@ -66,9 +66,9 @@ class SecurityControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/login');
 
-        $container = static::getContainer();
+        $container     = static::getContainer();
         $entityManager = $container->get('doctrine.orm.entity_manager');
-        $adminUser = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
+        $adminUser     = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
 
         // Select the form button (adjust the text according to your button)
         $form = $crawler->filter('form')->form([
@@ -87,7 +87,7 @@ class SecurityControllerTest extends WebTestCase
 
     public function testAdminCanAccessDashboard(): void
     {
-        $container = static::getContainer();
+        $container     = static::getContainer();
         $entityManager = $container->get('doctrine.orm.entity_manager');
 
         $adminUser = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
@@ -112,7 +112,7 @@ class SecurityControllerTest extends WebTestCase
     {
         // 1. Get our test user
         $userRepository = $this->entityManager->getRepository(User::class);
-        $admin = $userRepository->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
+        $admin          = $userRepository->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
 
         // 2. Connect the user on the client
         $this->client->loginUser($admin);
@@ -136,7 +136,7 @@ class SecurityControllerTest extends WebTestCase
     {
         // 1. Connect
         $userRepository = $this->entityManager->getRepository(User::class);
-        $admin = $userRepository->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
+        $admin          = $userRepository->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
         $this->client->loginUser($admin);
 
         // 2. Call the logout route (usually /logout)

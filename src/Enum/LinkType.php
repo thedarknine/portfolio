@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -13,7 +13,7 @@ namespace App\Enum;
 enum LinkType: string
 {
     case DOCUMENT = 'document';
-    case PDF = 'pdf';
+    case PDF      = 'pdf';
     case EXTERNAL = 'external';
 
     /**
@@ -23,7 +23,7 @@ enum LinkType: string
     {
         return match ($this) {
             self::DOCUMENT => 'Document',
-            self::PDF => 'Fichier PDF',
+            self::PDF      => 'Fichier PDF',
             self::EXTERNAL => 'Lien externe',
         };
     }
@@ -35,7 +35,7 @@ enum LinkType: string
     {
         return match ($this) {
             self::DOCUMENT => 'fa-file-word',
-            self::PDF => 'fa-file-pdf text-danger',
+            self::PDF      => 'fa-file-pdf text-danger',
             self::EXTERNAL => 'fa-external-link-alt',
         };
     }

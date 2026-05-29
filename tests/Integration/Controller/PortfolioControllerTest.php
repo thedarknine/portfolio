@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -28,12 +28,12 @@ class PortfolioControllerTest extends WebTestCase
 
     protected function setUp(): void
     {
-        $this->client = static::createClient();
+        $this->client        = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
-        $this->filesystem = new Filesystem();
+        $this->filesystem    = new Filesystem();
 
-        $projectDir = static::getContainer()->getParameter('kernel.project_dir');
-        $this->publicImagesDir = $projectDir.'/public/images';
+        $projectDir            = static::getContainer()->getParameter('kernel.project_dir');
+        $this->publicImagesDir = $projectDir . '/public/images';
 
         $this->createRequiredPages();
         $this->setupFixturesForMediaPages();
@@ -43,9 +43,9 @@ class PortfolioControllerTest extends WebTestCase
     {
         // Clean all temporary directories after each test
         $foldersToRemove = [
-            $this->publicImagesDir.'/arcade/bartop',
-            $this->publicImagesDir.'/creations/sculptures',
-            $this->publicImagesDir.'/photos/paysages',
+            $this->publicImagesDir . '/arcade/bartop',
+            $this->publicImagesDir . '/creations/sculptures',
+            $this->publicImagesDir . '/photos/paysages',
         ];
 
         foreach ($foldersToRemove as $folder) {
@@ -55,69 +55,6 @@ class PortfolioControllerTest extends WebTestCase
         }
 
         parent::tearDown();
-    }
-
-    /**
-     * Configure database and filesystem to simulate IF and ELSE cases.
-     */
-    private function setupFixturesForMediaPages(): void
-    {
-        // ==========================================
-        // 1. ARCADE
-        // ==========================================
-        $arcadeRepo = $this->entityManager->getRepository(ArcadeType::class);
-
-        // IF case: "bartop" type will have its directory and a file
-        if (null === $arcadeRepo->findOneBy(['slug' => 'bartop'])) {
-            $this->entityManager->persist((new ArcadeType())->setName('Bartop')->setSlug('bartop'));
-        }
-        $arcadeDir = $this->publicImagesDir.'/arcade/bartop';
-        $this->filesystem->mkdir($arcadeDir);
-        $this->filesystem->touch($arcadeDir.'/cabinet.jpg');
-
-        // ELSE case: "dossier-fantome-arcade" type will not have a physical directory
-        if (null === $arcadeRepo->findOneBy(['slug' => 'dossier-fantome-arcade'])) {
-            $this->entityManager->persist((new ArcadeType())->setName('Fantome')->setSlug('dossier-fantome-arcade'));
-        }
-
-        // ==========================================
-        // 2. CRÉATIONS
-        // ==========================================
-        $creationRepo = $this->entityManager->getRepository(CreationType::class);
-
-        // IF case: "sculptures" type will have its directory and a file
-        if (null === $creationRepo->findOneBy(['slug' => 'sculptures'])) {
-            $this->entityManager->persist((new CreationType())->setName('Sculptures')->setSlug('sculptures'));
-        }
-        $creationDir = $this->publicImagesDir.'/creations/sculptures';
-        $this->filesystem->mkdir($creationDir);
-        $this->filesystem->touch($creationDir.'/pot-argile.jpg');
-
-        // ELSE case: "dossier-fantome-creations" type will not have a physical directory
-        if (null === $creationRepo->findOneBy(['slug' => 'dossier-fantome-creations'])) {
-            $this->entityManager->persist((new CreationType())->setName('Fantome')->setSlug('dossier-fantome-creations'));
-        }
-
-        // ==========================================
-        // 3. PHOTOS
-        // ==========================================
-        $photoRepo = $this->entityManager->getRepository(PhotoType::class);
-
-        // IF case: "paysages" type will have its directory and files
-        if (null === $photoRepo->findOneBy(['slug' => 'paysages'])) {
-            $this->entityManager->persist((new PhotoType())->setName('Paysages')->setSlug('paysages'));
-        }
-        $photoDir = $this->publicImagesDir.'/photos/paysages';
-        $this->filesystem->mkdir($photoDir);
-        $this->filesystem->touch($photoDir.'/01-lever_de_soleil.jpg');
-        $this->filesystem->touch($photoDir.'/sans_tiret.jpg');
-
-        // ELSE case: "dossier-fantome-photos" type will not have a physical directory
-        if (null === $photoRepo->findOneBy(['slug' => 'dossier-fantome-photos'])) {
-            $this->entityManager->persist((new PhotoType())->setName('Fantome')->setSlug('dossier-fantome-photos'));
-        }
-
-        $this->entityManager->flush();
     }
 
     #[DataProvider('providePublicUrls')]
@@ -149,6 +86,80 @@ class PortfolioControllerTest extends WebTestCase
     }
 
     /**
+     * Test admin zone is protected and redirects anonymous users.
+     */
+    public function testAdminZoneIsProtected(): void
+    {
+        $this->client->request('GET', '/admin');
+
+        // Check anonymous user is redirected (usually to /login)
+        $this->assertResponseRedirects();
+    }
+
+    /**
+     * Configure database and filesystem to simulate IF and ELSE cases.
+     */
+    private function setupFixturesForMediaPages(): void
+    {
+        // ==========================================
+        // 1. ARCADE
+        // ==========================================
+        $arcadeRepo = $this->entityManager->getRepository(ArcadeType::class);
+
+        // IF case: "bartop" type will have its directory and a file
+        if (null === $arcadeRepo->findOneBy(['slug' => 'bartop'])) {
+            $this->entityManager->persist((new ArcadeType())->setName('Bartop')->setSlug('bartop'));
+        }
+        $arcadeDir = $this->publicImagesDir . '/arcade/bartop';
+        $this->filesystem->mkdir($arcadeDir);
+        $this->filesystem->touch($arcadeDir . '/cabinet.jpg');
+
+        // ELSE case: "dossier-fantome-arcade" type will not have a physical directory
+        if (null === $arcadeRepo->findOneBy(['slug' => 'dossier-fantome-arcade'])) {
+            $this->entityManager->persist((new ArcadeType())->setName('Fantome')->setSlug('dossier-fantome-arcade'));
+        }
+
+        // ==========================================
+        // 2. CRÉATIONS
+        // ==========================================
+        $creationRepo = $this->entityManager->getRepository(CreationType::class);
+
+        // IF case: "sculptures" type will have its directory and a file
+        if (null === $creationRepo->findOneBy(['slug' => 'sculptures'])) {
+            $this->entityManager->persist((new CreationType())->setName('Sculptures')->setSlug('sculptures'));
+        }
+        $creationDir = $this->publicImagesDir . '/creations/sculptures';
+        $this->filesystem->mkdir($creationDir);
+        $this->filesystem->touch($creationDir . '/pot-argile.jpg');
+
+        // ELSE case: "dossier-fantome-creations" type will not have a physical directory
+        if (null === $creationRepo->findOneBy(['slug' => 'dossier-fantome-creations'])) {
+            $this->entityManager->persist((new CreationType())->setName('Fantome')->setSlug('dossier-fantome-creations'));
+        }
+
+        // ==========================================
+        // 3. PHOTOS
+        // ==========================================
+        $photoRepo = $this->entityManager->getRepository(PhotoType::class);
+
+        // IF case: "paysages" type will have its directory and files
+        if (null === $photoRepo->findOneBy(['slug' => 'paysages'])) {
+            $this->entityManager->persist((new PhotoType())->setName('Paysages')->setSlug('paysages'));
+        }
+        $photoDir = $this->publicImagesDir . '/photos/paysages';
+        $this->filesystem->mkdir($photoDir);
+        $this->filesystem->touch($photoDir . '/01-lever_de_soleil.jpg');
+        $this->filesystem->touch($photoDir . '/sans_tiret.jpg');
+
+        // ELSE case: "dossier-fantome-photos" type will not have a physical directory
+        if (null === $photoRepo->findOneBy(['slug' => 'dossier-fantome-photos'])) {
+            $this->entityManager->persist((new PhotoType())->setName('Fantome')->setSlug('dossier-fantome-photos'));
+        }
+
+        $this->entityManager->flush();
+    }
+
+    /**
      * Create on the fly the minimal structures in your test database
      * to prevent controller loops from crashing.
      */
@@ -166,16 +177,5 @@ class PortfolioControllerTest extends WebTestCase
             $this->entityManager->persist($page);
             $this->entityManager->flush();
         }
-    }
-
-    /**
-     * Test admin zone is protected and redirects anonymous users.
-     */
-    public function testAdminZoneIsProtected(): void
-    {
-        $this->client->request('GET', '/admin');
-
-        // Check anonymous user is redirected (usually to /login)
-        $this->assertResponseRedirects();
     }
 }

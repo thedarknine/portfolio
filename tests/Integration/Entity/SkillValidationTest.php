@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -45,7 +45,7 @@ class SkillValidationTest extends KernelTestCase
                 (new SkillType())
                     ->setName('Programming')
                     ->setSlug('programming')
-                    ->setPosition(1)
+                    ->setPosition(1),
             );
 
         $errors = $this->validator->validate($skill);
@@ -105,7 +105,7 @@ class SkillValidationTest extends KernelTestCase
      */
     public function testExperienceCollectionManagement(): void
     {
-        $skill = new Skill();
+        $skill      = new Skill();
         $experience = new Experience();
 
         $this->assertCount(0, $skill->getExperiences());
@@ -125,7 +125,7 @@ class SkillValidationTest extends KernelTestCase
         $skill = new Skill();
 
         $reflection = new \ReflectionClass($skill);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($skill, 7);
 

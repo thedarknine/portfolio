@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -32,7 +32,7 @@ class PageInfoValidationTest extends KernelTestCase
      */
     public function testValidPageInfoHasNoViolation(): void
     {
-        $enumCases = PageCategory::cases();
+        $enumCases       = PageCategory::cases();
         $defaultCategory = !empty($enumCases) ? $enumCases[0] : null;
 
         $page = (new PageInfo())
@@ -86,7 +86,7 @@ class PageInfoValidationTest extends KernelTestCase
      */
     public function testNegativePositionTriggerViolation(): void
     {
-        $enumCases = PageCategory::cases();
+        $enumCases       = PageCategory::cases();
         $defaultCategory = !empty($enumCases) ? $enumCases[0] : null;
 
         $page = (new PageInfo())
@@ -114,7 +114,7 @@ class PageInfoValidationTest extends KernelTestCase
         $page = new PageInfo();
 
         $reflection = new \ReflectionClass($page);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($page, 88);
 

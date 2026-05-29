@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -64,16 +64,12 @@ class Experience
     #[Assert\Valid]
     private Collection $skills;
 
-    /**
-     * @var Collection<int, ExperienceItem>
-     */
+    /** @var Collection<int, ExperienceItem> */
     #[ORM\OneToMany(targetEntity: ExperienceItem::class, mappedBy: 'experience')]
     #[Assert\Valid]
     private Collection $items;
 
-    /**
-     * @var Collection<int, ExperienceLink>
-     */
+    /** @var Collection<int, ExperienceLink> */
     #[ORM\OneToMany(targetEntity: ExperienceLink::class, mappedBy: 'experience')]
     #[Assert\Valid]
     private Collection $links;
@@ -81,8 +77,8 @@ class Experience
     public function __construct()
     {
         $this->skills = new ArrayCollection();
-        $this->items = new ArrayCollection();
-        $this->links = new ArrayCollection();
+        $this->items  = new ArrayCollection();
+        $this->links  = new ArrayCollection();
     }
 
     public function getId(): int
@@ -192,8 +188,8 @@ class Experience
     public function getDuration(): array
     {
         $startDate = new Carbon($this->startDate);
-        $endDate = $this->endDate ? Carbon::instance($this->endDate) : Carbon::now();
-        $diff = $startDate->diff($endDate);
+        $endDate   = $this->endDate ? Carbon::instance($this->endDate) : Carbon::now();
+        $diff      = $startDate->diff($endDate);
 
         return ['nbYears' => (int) $diff->y, 'nbMonths' => (int) $diff->m];
     }

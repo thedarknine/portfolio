@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -19,6 +19,11 @@ trait TitleableTrait
     #[Assert\NotBlank(message: 'Title cannot be empty.')]
     private ?string $title = null;
 
+    public function __toString(): string
+    {
+        return $this->title ?? '';
+    }
+
     public function getTitle(): ?string
     {
         return $this->title;
@@ -29,10 +34,5 @@ trait TitleableTrait
         $this->title = $title;
 
         return $this;
-    }
-
-    public function __toString(): string
-    {
-        return $this->title ?? '';
     }
 }

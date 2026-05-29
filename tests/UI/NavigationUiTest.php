@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -19,7 +19,7 @@ use Symfony\Component\Panther\PantherTestCase;
 class NavigationUiTest extends PantherTestCase
 {
     private const SELENIUM_URL = 'http://chrome:4444/wd/hub';
-    private const SITE_URL = 'http://engine';
+    private const SITE_URL     = 'http://engine';
 
     /**
      * 🖥️ TEST AFFICHAGE BUREAU (Desktop).
@@ -27,7 +27,7 @@ class NavigationUiTest extends PantherTestCase
     public function testNavigationMenuOnDesktopResolution(): void
     {
         // 1. On crée le client manuel
-        $client = PantherClient::createSeleniumClient(self::SELENIUM_URL, null, self::SITE_URL);
+        $client    = PantherClient::createSeleniumClient(self::SELENIUM_URL, null, self::SITE_URL);
         $webDriver = $client->getWebDriver();
 
         $client->request('GET', '/');
@@ -48,14 +48,14 @@ class NavigationUiTest extends PantherTestCase
      */
     public function testNavigationMenuOnMobileResolution(): void
     {
-        $client = PantherClient::createSeleniumClient(self::SELENIUM_URL, null, self::SITE_URL);
+        $client    = PantherClient::createSeleniumClient(self::SELENIUM_URL, null, self::SITE_URL);
         $webDriver = $client->getWebDriver();
 
         $client->request('GET', '/');
         $client->getWebDriver()->manage()->window()->setSize(new \Facebook\WebDriver\WebDriverDimension(375, 667));
 
-        $desktopMenu = $webDriver->findElement(WebDriverBy::cssSelector('nav ul.hidden.lg\\:flex'));
-        $burgerButton = $webDriver->findElement(WebDriverBy::cssSelector('.nine-navbar-burger'));
+        $desktopMenu     = $webDriver->findElement(WebDriverBy::cssSelector('nav ul.hidden.lg\\:flex'));
+        $burgerButton    = $webDriver->findElement(WebDriverBy::cssSelector('.nine-navbar-burger'));
         $mobileMenuPanel = $webDriver->findElement(WebDriverBy::cssSelector('.nine-navbar-menu'));
 
         // 1. Vérification de l'état initial sur mobile

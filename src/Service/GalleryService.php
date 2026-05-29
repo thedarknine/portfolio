@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -35,13 +35,13 @@ class GalleryService
     public function getArcadeGallery(): array
     {
         $arcadeTypesList = $this->arcadeTypeRepository->getArcadeTypes();
-        $arcadesList = [];
-        $imagesDir = $this->imagesDir.'/arcade/';
+        $arcadesList     = [];
+        $imagesDir       = $this->imagesDir . '/arcade/';
 
         foreach ($arcadeTypesList as $type) {
-            $slug = $type->getSlug();
+            $slug               = $type->getSlug();
             $arcadesList[$slug] = [];
-            $targetDir = $imagesDir.$slug;
+            $targetDir          = $imagesDir . $slug;
 
             if (!is_dir($targetDir)) {
                 continue;
@@ -72,13 +72,13 @@ class GalleryService
     public function getCreationsGallery(): array
     {
         $creationTypesList = $this->creationTypeRepository->getCreationTypes();
-        $creationsList = [];
-        $imagesDir = $this->imagesDir.'/creations/';
+        $creationsList     = [];
+        $imagesDir         = $this->imagesDir . '/creations/';
 
         foreach ($creationTypesList as $type) {
-            $slug = $type->getSlug();
+            $slug                 = $type->getSlug();
             $creationsList[$slug] = [];
-            $targetDir = $imagesDir.$slug;
+            $targetDir            = $imagesDir . $slug;
 
             if (!is_dir($targetDir)) {
                 continue;
@@ -95,7 +95,7 @@ class GalleryService
         }
 
         return [
-            'types' => $creationTypesList,
+            'types'     => $creationTypesList,
             'creations' => $creationsList,
         ];
     }
@@ -109,13 +109,13 @@ class GalleryService
     public function getPhotosGallery(): array
     {
         $photoTypesList = $this->photoTypeRepository->getPhotoTypes();
-        $photosList = [];
-        $imagesDir = $this->imagesDir.'/photos/';
+        $photosList     = [];
+        $imagesDir      = $this->imagesDir . '/photos/';
 
         foreach ($photoTypesList as $type) {
-            $slug = $type->getSlug();
+            $slug              = $type->getSlug();
             $photosList[$slug] = [];
-            $targetDir = $imagesDir.$slug;
+            $targetDir         = $imagesDir . $slug;
 
             if (!is_dir($targetDir)) {
                 continue;
@@ -126,12 +126,12 @@ class GalleryService
 
             foreach ($finder as $file) {
                 $filename = $file->getFileName();
-                $caption = explode('-', str_replace(['.JPG', '.jpg'], '', $filename));
-                $title = isset($caption[1]) ? str_replace('_', ' ', $caption[1]) : '';
+                $caption  = explode('-', str_replace(['.JPG', '.jpg'], '', $filename));
+                $title    = isset($caption[1]) ? str_replace('_', ' ', $caption[1]) : '';
 
                 $photosList[$slug][] = [
                     'filename' => $filename,
-                    'caption' => $title,
+                    'caption'  => $title,
                 ];
             }
 
@@ -139,7 +139,7 @@ class GalleryService
         }
 
         return [
-            'types' => $photoTypesList,
+            'types'  => $photoTypesList,
             'photos' => $photosList,
         ];
     }

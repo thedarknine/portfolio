@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -63,7 +63,7 @@ class PageInfoCrudController extends AbstractCrudController
 
         yield ChoiceField::new('category', 'Catégorie')
             ->setChoices([
-                'Parcours' => PageCategory::CAREER,
+                'Parcours'          => PageCategory::CAREER,
                 'Centre d\'intérêt' => PageCategory::INTEREST,
             ])
             ->formatValue(function ($value, $entity) {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -20,7 +20,7 @@ use Arkitect\Rules\Rule;
 
 return static function (Config $config): void {
     // 1. Define the set of files to analyze
-    $classSet = ClassSet::fromDir(__DIR__.'/../src');
+    $classSet = ClassSet::fromDir(__DIR__ . '/../src');
 
     $rules = [];
 

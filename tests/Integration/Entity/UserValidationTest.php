@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -81,7 +81,7 @@ class UserValidationTest extends KernelTestCase
 
         // Verify that the private property password key does not contain plain text
         // but the crc32c hash expected by your implementation
-        $passwordKey = "\0".User::class."\0password";
+        $passwordKey = "\0" . User::class . "\0password";
         $this->assertArrayHasKey($passwordKey, $serialized);
         $this->assertSame(hash('crc32c', 'super_secret_hash'), $serialized[$passwordKey]);
     }
@@ -94,7 +94,7 @@ class UserValidationTest extends KernelTestCase
         $user = new User();
 
         $reflection = new \ReflectionClass($user);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($user, 1);
 

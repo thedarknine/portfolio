@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -26,19 +26,6 @@ class ExperienceItemValidationTest extends KernelTestCase
         $this->validator = Validation::createValidatorBuilder()
             ->enableAttributeMapping()
             ->getValidator();
-    }
-
-    /**
-     * Helper to create a valid Experience entity for testing purposes.
-     */
-    private function createValidMockExperience(): Experience
-    {
-        return (new Experience())
-            ->setTitle('Product Owner')
-            ->setSlug('product-owner')
-            ->setDescription('Une description d’expérience valide.')
-            ->setStartDate(new \DateTime('-1 year'))
-            ->setCompany(new Company());
     }
 
     /**
@@ -106,10 +93,23 @@ class ExperienceItemValidationTest extends KernelTestCase
         $experienceItem = new ExperienceItem();
 
         $reflection = new \ReflectionClass($experienceItem);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($experienceItem, 99);
 
         $this->assertSame(99, $experienceItem->getId());
+    }
+
+    /**
+     * Helper to create a valid Experience entity for testing purposes.
+     */
+    private function createValidMockExperience(): Experience
+    {
+        return (new Experience())
+            ->setTitle('Product Owner')
+            ->setSlug('product-owner')
+            ->setDescription('Une description d’expérience valide.')
+            ->setStartDate(new \DateTime('-1 year'))
+            ->setCompany(new Company());
     }
 }

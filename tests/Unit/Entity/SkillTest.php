@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -23,7 +23,7 @@ class SkillTest extends TestCase
      */
     public function testAddAndRemoveExperienceMaintainBidirectionalRelation(): void
     {
-        $skill = new Skill();
+        $skill      = new Skill();
         $experience = new Experience();
 
         // 1. Add test
@@ -41,7 +41,7 @@ class SkillTest extends TestCase
         if (method_exists($experience, 'getSkills')) {
             $this->assertFalse(
                 $experience->getSkills()->contains($skill),
-                'Skill should have been removed from the experience as well.'
+                'Skill should have been removed from the experience as well.',
             );
         }
     }
@@ -66,7 +66,7 @@ class SkillTest extends TestCase
         $skill->validateYears($contextMock, null);
 
         // Invalid case (to validate that the error is triggered)
-        $invalidContextMock = $this->createMock(ExecutionContextInterface::class);
+        $invalidContextMock   = $this->createMock(ExecutionContextInterface::class);
         $violationBuilderMock = $this->createMock(ConstraintViolationBuilderInterface::class);
 
         // Simulate Symfony's validation chaining
