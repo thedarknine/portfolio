@@ -254,10 +254,18 @@ check-dependencies: ## Check if PHP dependencies (vendor) are installed
 # =====================================================================
 ##@ DEVELOPMENT
 
+CC_ENV ?= 
 .PHONY: cc
-cc: ## Run bin/console cache:clear from docker
+cc: ## Run bin/console cache:clear from docker (optional CC_ENV=parameter)
 	$(call display_title,Clearing Symfony cache,${ICON_CLEAN})
-	@$(SYMFONY) cache:clear
+	@start=$$(date +%s); \
+	if [ -n "$(CC_ENV)" ]; then \
+		$(SYMFONY) cache:clear --env=$(CC_ENV); \
+	else \
+		$(SYMFONY) cache:clear; \
+	fi; \
+	end=$$(date +%s); elapsed=$$((end - start)); minutes=$$((elapsed / 60)); seconds=$$((elapsed % 60)); \
+	printf "\n  $(BLUE)⏱  Total execution time: %dm %ds$(RESET)\n" $$minutes $$seconds
 
 .PHONY: watch
 watch: ## Watch Tailwind CSS changes and re-build
@@ -365,6 +373,13 @@ cs-front-fix: ## Run Stylelint then Prettier and fix issues
 	$(call display_subtitle,Running Prettier...)
 	@$(PRETTIER) assets/ --write
 
+.PHONY: composer-clear
+composer-clear: ## Clear Composer cache and reinstall dependencies
+	$(call display_title,Clearing Composer cache and reinstalling dependencies,${ICON_CLEAN})
+	@rm -rf vendor/
+	@$(COMPOSER) clear-cache
+	@$(COMPOSER) install
+
 # =====================================================================
 ##@ TESTS
 
@@ -381,15 +396,15 @@ grum-run: ## Run GrumPHP checks
 .PHONY: qa
 qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 	$(call assert_not_prod)
-	@TIMEFORMAT='  ⏱️  Temps d’exécution : %R secondes'; \
-	time { \
-		$(MAKE) --no-print-directory cs || exit 1; \
-		$(MAKE) --no-print-directory test-analyse || exit 1; \
-		$(MAKE) --no-print-directory cover || exit 1; \
-		$(MAKE) --no-print-directory test-mutation || exit 1; \
-		$(MAKE) --no-print-directory test-arch || exit 1; \
-		$(MAKE) --no-print-directory test-ui || exit 1; \
-	}
+	@start=$$(date +%s); \
+	$(MAKE) --no-print-directory cs || exit 1; \
+	$(MAKE) --no-print-directory test-analyse || exit 1; \
+	$(MAKE) --no-print-directory cover || exit 1; \
+	$(MAKE) --no-print-directory test-mutation || exit 1; \
+	$(MAKE) --no-print-directory test-arch || exit 1; \
+	$(MAKE) --no-print-directory test-ui || exit 1; \
+	end=$$(date +%s); elapsed=$$((end - start)); minutes=$$((elapsed / 60)); seconds=$$((elapsed % 60)); \
+	printf "\n  $(BLUE)⏱  Total execution time: %dm %ds$(RESET)\n" $$minutes $$seconds
 	@printf "\n"
 	$(call display_success,Coding standards passed.)
 	$(call display_success,Static analysis passed.)
@@ -411,12 +426,15 @@ test: ## Run PHPUnit tests
 	@$(SYMFONY) doctrine:schema:update --env=test --force
 	@$(SYMFONY) doctrine:fixtures:load --env=test --group=test --no-interaction
 	$(call display_subtitle,Running PHPUnit tests...)
-	$(PHPUNIT) --exclude-group=UI
+	@$(PHPUNIT) --exclude-group=UI
 
 .PHONY: test-analyse
 test-analyse: ## Run all tests
-	$(call display_subtitle,Running static analysis (PHPStan)...); \
-	$(PHPSTAN) analyse
+	$(call display_subtitle,Running static analysis (PHPStan)...); 
+	@start=$$(date +%s); \
+	$(PHPSTAN) analyse; \
+	end=$$(date +%s); elapsed=$$((end - start)); minutes=$$((elapsed / 60)); seconds=$$((elapsed % 60)); \
+	printf "\n  $(BLUE)⏱  Total execution time: %dm %ds$(RESET)\n" $$minutes $$seconds
 
 .PHONY: test-mutation
 test-mutation: ## Run Infection
