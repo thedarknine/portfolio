@@ -169,3 +169,20 @@ Add and adapt something like `DATABASE_URL="mysql://test:test@127.0.0.1:3306/por
 ```bash
     php bin/phpunit --coverage-html coverage
 ```
+
+## Quality Assurance
+
+### Run all QA checks
+
+```bash
+    make qa
+```
+
+### Deptrac
+
+```bash
+    composer require --dev qossmic/deptrac-shim
+    vendor/bin/deptrac init
+    vendor/bin/deptrac analyse --config-file=deptrac.yaml
+    vendor/bin/deptrac debug:layer --config-file=.tools-config/deptrac.yaml
+```

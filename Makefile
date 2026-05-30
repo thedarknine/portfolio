@@ -38,6 +38,7 @@ GRUMPHP		:= $(DC_EXEC) vendor/bin/grumphp --config=$(TOOLS_CONFIG_DIR)/grumphp.y
 PHPUNIT		:= $(DC_EXEC) php vendor/bin/phpunit --configuration $(TOOLS_CONFIG_DIR)/phpunit.xml
 INFECTION	:= $(DC_EXEC) php vendor/bin/infection --configuration=$(TOOLS_CONFIG_DIR)/infection.json
 PHPARKITECT	:= $(DC_EXEC) php vendor/bin/phparkitect --config=$(TOOLS_CONFIG_DIR)/phparkitect.php
+DEPTRAC		:= $(DC_EXEC) vendor/bin/deptrac --config-file=$(TOOLS_CONFIG_DIR)/deptrac.yaml
 PHPSTAN		:= $(DC_EXEC) php vendor/bin/phpstan --memory-limit=512M --configuration=$(TOOLS_CONFIG_DIR)/phpstan.neon
 CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer  --config=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.php --cache-file=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.cache
 CSTWIG		:= $(DC_EXEC) vendor/bin/twig-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.twig-cs-fixer.php
@@ -78,7 +79,7 @@ define display_title
 endef
 
 define display_subtitle
-	@printf "\n  $(BLUE)» $(1)$(RESET)\n\n"
+	printf "\n  $(BLUE)» $(1)$(RESET)\n\n"
 endef
 
 # Fonction pour afficher un message de succès
@@ -109,12 +110,12 @@ endef
 CHECKMAKE := checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
 .PHONY: cs-makefile
 cs-makefile: ## Lint Makefile with checkmake
-	$(call display_subtitle,Checking if checkmake is installed...)
+	@$(call display_subtitle,Checking if checkmake is installed...)
 	@if ! command -v checkmake >/dev/null 2>&1; then \
 		$(call display_error,checkmake is not installed. Please run 'brew install checkmake' or 'apt install checkmake'.) \
 	fi
 	$(call display_success,checkmake is installed)
-	$(call display_subtitle,Running checkmake...)
+	@$(call display_subtitle,Running checkmake...)
 	@$(CHECKMAKE) Makefile
 	$(call display_success,Makefile formatting is perfect!)
 
@@ -191,7 +192,7 @@ doctor: ## Check system requirements and project health
 
 .PHONY: check-docker
 check-docker: ## Check Docker is running
-	$(call display_subtitle,Checking Docker daemon...)
+	@$(call display_subtitle,Checking Docker daemon...)
 	@if ! docker info >/dev/null 2>&1; then \
 		$(call display_error,Docker daemon unavailable. Please start Docker Desktop.) \
 	fi
@@ -199,7 +200,7 @@ check-docker: ## Check Docker is running
 
 .PHONY: check-containers
 check-containers: ## Check if Docker containers are running
-	$(call display_subtitle,Checking Docker containers...)
+	@$(call display_subtitle,Checking Docker containers...)
 	@if ! $(DC) ps | grep -q "app.*Up"; then \
 		$(call display_error,Containers are not running. Use 'make up' to start them); \
 	fi
@@ -207,7 +208,7 @@ check-containers: ## Check if Docker containers are running
 
 .PHONY: check-ports
 check-ports: ## Check if required ports are available or used by this project
-	$(call display_subtitle,Checking network ports...)
+	@$(call display_subtitle,Checking network ports...)
 	@ports_conflict=0; \
 	current_project_ids=$$(docker compose ps -q 2>/dev/null | tr '\n' ' '); \
 	for port in $(DOCKER_PORTS); do \
@@ -235,13 +236,13 @@ check-ports: ## Check if required ports are available or used by this project
 
 .PHONY: check-env
 check-env: ## Check .env file
-	$(call display_subtitle,Checking .env file...)
+	@$(call display_subtitle,Checking .env file...)
 	@[ -f .env ] || $(call display_error,.env file is missing. Please create it from .env.dist.)
 	$(call display_success,.env file exists.)
 
 .PHONY: check-dependencies
 check-dependencies: ## Check if PHP dependencies (vendor) are installed
-	$(call display_subtitle,Checking PHP dependencies...)
+	@$(call display_subtitle,Checking PHP dependencies...)
 	@$(DC) ps app | grep -q "Up" || $(call display_warning,Containers are not running. Cannot check 'vendor' (run 'make up').)
 	@if $(DC) ps app | grep -q "Up"; then \
 		if ! $(DC_EXEC) [ -d vendor ]; then \
@@ -257,7 +258,7 @@ check-dependencies: ## Check if PHP dependencies (vendor) are installed
 CC_ENV ?= 
 .PHONY: cc
 cc: ## Run bin/console cache:clear from docker (optional CC_ENV=parameter)
-	$(call display_title,Clearing Symfony cache,${ICON_CLEAN})
+	@$(call display_title,Clearing Symfony cache,${ICON_CLEAN})
 	@start=$$(date +%s); \
 	if [ -n "$(CC_ENV)" ]; then \
 		$(SYMFONY) cache:clear --env=$(CC_ENV); \
@@ -312,33 +313,33 @@ cs: ## Check all coding standards (PHP, Twig, CSS)
 .PHONY: cs-php
 cs-php: ## PHP CS Fixer - Only show diff
 	$(call assert_not_prod)
-	$(call display_subtitle,Dry running PHP coding standards...)
+	@$(call display_subtitle,Dry running PHP coding standards...)
 	@$(CSPHP) check --verbose
-	$(call display_subtitle,Running PHPStan analysis...)
+	@$(call display_subtitle,Running PHPStan analysis...)
 	@$(PHPSTAN) analyse
 
 .PHONY: cs-yaml
 cs-yaml: ## YAML Linter - Only show diff
 	$(call assert_not_prod)
-	$(call display_subtitle,Dry running YAML linter...)
+	@$(call display_subtitle,Dry running YAML linter...)
 	@$(SYMFONY) lint:yaml config/
 
 .PHONY: cs-twig
 cs-twig: ## Twig CS Fixer - Only show diff
 	$(call assert_not_prod)
-	$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
+	@$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
 	@$(CSTWIG) check templates/
 
 .PHONY: cs-front
 cs-front: ## Run linters for CSS and JS
 	$(call assert_not_prod)
-	$(call display_subtitle,Running ESLint...)
+	@$(call display_subtitle,Running ESLint...)
 	@$(ESLINT) assets/scripts/
-	$(call display_subtitle,Running Stylelint...)
+	@$(call display_subtitle,Running Stylelint...)
 	@$(STYLELINT) assets/styles/
-	$(call display_subtitle,Running Prettier...)
+	@$(call display_subtitle,Running Prettier...)
 	@$(PRETTIER) assets/ --check
-	$(call display_subtitle,Running Biome...)
+	@$(call display_subtitle,Running Biome...)
 	@$(BIOME) lint
 
 .PHONY: cs-fix
@@ -355,22 +356,22 @@ cs-fix: ## Fix all coding standards (PHP, Twig, CSS)
 .PHONY: cs-php-fix
 cs-php-fix: ## PHP CS Fixer - Fix code
 	$(call assert_not_prod)
-	$(call display_subtitle,Dry running PHP CS Fixer and display diff...)
+	@$(call display_subtitle,Dry running PHP CS Fixer and display diff...)
 	@$(CSPHP) fix --diff --verbose
 
 .PHONY: cs-twig-fix
 cs-twig-fix: ## Twig CS Fixer - Fix code
 	$(call assert_not_prod)
-	$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
+	@$(call display_subtitle,Dry running Twig CS Fixer and display diff...)
 	@$(CSTWIG) fix templates/
 	@$(SYMFONY) lint:twig templates/
 
 .PHONY: cs-front-fix
 cs-front-fix: ## Run Stylelint then Prettier and fix issues
 	$(call assert_not_prod)
-	$(call display_subtitle,Running Stylelint...)
+	@$(call display_subtitle,Running Stylelint...)
 	@$(STYLELINT) assets/styles/ --fix
-	$(call display_subtitle,Running Prettier...)
+	@$(call display_subtitle,Running Prettier...)
 	@$(PRETTIER) assets/ --write
 
 .PHONY: composer-clear
@@ -398,7 +399,7 @@ qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 	$(call assert_not_prod)
 	@start=$$(date +%s); \
 	$(MAKE) --no-print-directory cs || exit 1; \
-	$(MAKE) --no-print-directory test-analyse || exit 1; \
+	$(MAKE) --no-print-directory qa-analyse || exit 1; \
 	$(MAKE) --no-print-directory cover || exit 1; \
 	$(MAKE) --no-print-directory test-mutation || exit 1; \
 	$(MAKE) --no-print-directory test-arch || exit 1; \
@@ -418,44 +419,46 @@ qa: ## Run complete Quality Assurance suite (Lint, Static Analysis, Tests)
 test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests,${ICON_TEST})
 	@$(MAKE) --no-print-directory check-containers
-	$(call display_subtitle,Generating fixtures...)
+	@$(call display_subtitle,Generating fixtures...)
 #@$(SYMFONY) cache:clear --env=test
 #$(SYMFONY) app:generate-fixtures --group=test
-	$(call display_subtitle,Preparing test database...)
+	@$(call display_subtitle,Preparing test database...)
 	- @$(SYMFONY) doctrine:schema:drop --env=test --force --full-database
 	@$(SYMFONY) doctrine:schema:update --env=test --force
 	@$(SYMFONY) doctrine:fixtures:load --env=test --group=test --no-interaction
-	$(call display_subtitle,Running PHPUnit tests...)
+	@$(call display_subtitle,Running PHPUnit tests...)
 	@$(PHPUNIT) --exclude-group=UI
 
-.PHONY: test-analyse
-test-analyse: ## Run all tests
-	$(call display_subtitle,Running static analysis (PHPStan)...); 
+.PHONY: qa-analyse
+qa-analyse: ## Run static analysis
+	@$(call display_subtitle,Running static analysis...); 
 	@start=$$(date +%s); \
 	$(PHPSTAN) analyse; \
+	@$(call display_subtitle,Running Deptrac...); \
+	$(DEPTRAC) analyse; \
 	end=$$(date +%s); elapsed=$$((end - start)); minutes=$$((elapsed / 60)); seconds=$$((elapsed % 60)); \
 	printf "\n  $(BLUE)⏱  Total execution time: %dm %ds$(RESET)\n" $$minutes $$seconds
 
 .PHONY: test-mutation
 test-mutation: ## Run Infection
-	$(call display_subtitle,Running Infection...)
+	@$(call display_subtitle,Running Infection...)
 	@$(INFECTION) --threads=4
 
 .PHONY: test-arch
 test-arch: ## Run phparkitect
-	$(call display_subtitle,Running PHPArkitect...)
+	@$(call display_subtitle,Running PHPArkitect...)
 	@$(PHPARKITECT) check
 
 .PHONY: test-ui
 test-ui: ## Run PHPUnit tests for UI group
-	$(call display_subtitle,Running PHPUnit tests for UI group...)
+	@$(call display_subtitle,Running PHPUnit tests for UI group...)
 	@$(PHPUNIT) --group=UI
 
 .PHONY: cover
 cover: ## Run PHPUnit tests with coverage
-	$(call display_subtitle,Clearing cache...)
+	@$(call display_subtitle,Clearing cache...)
 	@$(SYMFONY) cache:clear --env=test
-	$(call display_subtitle,Running PHPUnit tests with coverage...)
+	@$(call display_subtitle,Running PHPUnit tests with coverage...)
 	@$(PHPUNIT) --coverage-html coverage/ --exclude-group=UI
 	@$(call display_success,Coverage report generated in 'coverage/' directory.)
 
