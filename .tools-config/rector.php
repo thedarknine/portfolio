@@ -15,9 +15,12 @@ return RectorConfig::configure()
     ])
     ->withSkip([
         __DIR__ . '/../src/Kernel.php',
+        __DIR__ . '/../tests/bootstrap.php',
         __DIR__ . '/../var',
         __DIR__ . '/../vendor',
         __DIR__ . '/../public',
+        __DIR__ . '/../.tools-config',
+        __DIR__ . '/../src/DataFixtures/Testing',
     ])
     
     ->withPhpSets(
@@ -35,9 +38,9 @@ return RectorConfig::configure()
         SetList::PRIVATIZATION,
     ])
     ->withPreparedSets(
-        // deadCode: true,
-        // codeQuality: true,
-        // codingStyle: true,
+        deadCode: true,
+        codeQuality: true,
+        codingStyle: true,
         // naming: true,
         // privatization: true,
         // typeDeclarations: false,

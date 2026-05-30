@@ -2,6 +2,76 @@
 
 My Portfolio based on Symfony framework
 
+## 🛠️ Commandes du Makefile
+
+<!-- MAKEFILE:START -->
+```bash
+
+  Portfolio (dev)
+  ───────────────────────────────────────────────────────────────────────────────
+
+  Usage:
+    make <target> [OPTION=value]
+
+  Available targets:
+    cs-makefile               Lint Makefile with checkmake                   
+
+  DOCKER
+    build                     Docker build                                   
+    up                        Run Docker containers                          
+    down                      Stop Docker containers                         
+    destroy                   Stop and remove Docker containers              
+    restart                   Docker restart                                 FORCE=1 to destroy and rebuild
+    shell                     Run a shell in the PHP container               
+    logs                      Show Docker logs                               LOGS_SERVICE=app|db|nginx
+
+  CHECKERS
+    doctor                    Check system requirements and project health   
+    check-docker              Check Docker is running                        
+    check-containers          Check if Docker containers are running         
+    check-ports               Check if required ports are available or used by this project  
+    check-env                 Check .env file                                
+    check-dependencies        Check if PHP dependencies - vendor directory - are installed  
+
+  DEVELOPMENT
+    cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
+    composer-clear            Clear Composer cache and reinstall dependencies  
+    clean                     Clean temporary files: cache, coverage, logs, public build  
+    watch                     Watch Tailwind CSS changes and re-build        
+    secret                    Generate a new APP_SECRET and display it       
+    migration                 Run Doctrine migrations                        
+    fixtures                  Load Doctrine fixtures                         
+    cs                        Check all coding standards: PHP, Twig, CSS     CS_TARGET=all|php|yaml|twig|front
+    cs-php                    PHP CS Fixer                                   PHP_FIX=1 to actually fix
+    cs-yaml                   Validate YAML files                            
+    cs-twig                   Twig CS Fixer                                  TWIG_FIX=1 to actually fix
+    cs-front                  Run linters for CSS and JS                     FRONT_FIX=1 to actually fix
+    cs-fix                    Fix all coding standards: PHP, Twig, CSS       
+
+  TESTS
+    grum-install              Install GrumPHP hooks                          
+    grum-run                  Run GrumPHP checks                             
+    qa                        Run complete Quality Assurance suite: Lint, Static Analysis, Tests  
+    test                      Run PHPUnit tests                              
+    qa-analyse                Run static analysis                            
+    qa-rector                 Run Rector                                     REC_FIX=1 to actually fix
+    test-mutation             Run Infection                                  
+    test-arch                 Run phparkitect                                
+    test-ui                   Run PHPUnit tests for UI group                 
+    cover                     Run PHPUnit tests with coverage                
+
+  HELP
+    help                      Show this help message                         
+    readme                    Update README.md Makefile section              
+
+  Examples:
+    make test            	# Run PHPUnit tests
+    make cs              	# Check and fix coding standards
+    make cs-php PHP_FIX=1	# Run linter and apply changes
+
+```
+<!-- MAKEFILE:END -->
+
 ## Before prod
 
 ```bash
