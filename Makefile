@@ -40,6 +40,7 @@ INFECTION	:= $(DC_EXEC) php vendor/bin/infection --configuration=$(TOOLS_CONFIG_
 PHPARKITECT	:= $(DC_EXEC) php vendor/bin/phparkitect --config=$(TOOLS_CONFIG_DIR)/phparkitect.php
 DEPTRAC		:= $(DC_EXEC) vendor/bin/deptrac --config-file=$(TOOLS_CONFIG_DIR)/deptrac.yaml
 PHPSTAN		:= $(DC_EXEC) php vendor/bin/phpstan --memory-limit=512M --configuration=$(TOOLS_CONFIG_DIR)/phpstan.neon
+RECTOR		:= $(DC_EXEC) vendor/bin/rector process --config $(TOOLS_CONFIG_DIR)/rector.php
 CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer  --config=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.php --cache-file=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.cache
 CSTWIG		:= $(DC_EXEC) vendor/bin/twig-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.twig-cs-fixer.php
 ESLINT		:= $(DC_EXEC) npx eslint --config $(TOOLS_CONFIG_DIR)/eslint.config.mjs
@@ -438,6 +439,11 @@ qa-analyse: ## Run static analysis
 	$(DEPTRAC) analyse; \
 	end=$$(date +%s); elapsed=$$((end - start)); minutes=$$((elapsed / 60)); seconds=$$((elapsed % 60)); \
 	printf "\n  $(BLUE)⏱  Total execution time: %dm %ds$(RESET)\n" $$minutes $$seconds
+
+.PHONY: qa-rector
+qa-rector: ## Run Rector
+	@$(call display_subtitle,Running Rector...);
+	$(RECTOR) --dry-run
 
 .PHONY: test-mutation
 test-mutation: ## Run Infection

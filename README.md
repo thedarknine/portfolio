@@ -186,3 +186,11 @@ Add and adapt something like `DATABASE_URL="mysql://test:test@127.0.0.1:3306/por
     vendor/bin/deptrac analyse --config-file=deptrac.yaml
     vendor/bin/deptrac debug:layer --config-file=.tools-config/deptrac.yaml
 ```
+
+### Rector
+
+```bash
+    composer require --dev rector/rector
+    vendor/bin/rector process --dry-run --config .tools-config/rector.php
+
+```
