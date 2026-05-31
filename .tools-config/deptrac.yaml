@@ -1,0 +1,107 @@
+deptrac:
+  paths:
+    - ../src
+
+  exclude_files:
+    - '#.*test.*#'
+
+  layers:
+    - name: Controller
+      collectors:
+        - type: directory
+          value: Controller/
+
+    - name: Service
+      collectors:
+        - type: directory
+          value: Service/
+
+    - name: Repository
+      collectors:
+        - type: directory
+          value: Repository/
+
+    - name: Entity
+      collectors:
+        - type: directory
+          value: Entity/
+
+    - name: Enum
+      collectors:
+        - type: directory
+          value: Enum/
+
+    - name: Symfony
+      collectors:
+        - type: classNameRegex
+          value: '#^Symfony\\.*#'
+
+    - name: Doctrine
+      collectors:
+        - type: classNameRegex
+          value: '#^Doctrine\\.*#'
+
+    - name: EasyAdmin
+      collectors:
+        - type: classNameRegex
+          value: '#^EasyCorp\\.*#'
+    
+    - name: Carbon
+      collectors:
+        - type: classNameRegex
+          value: '#^Carbon\\.*#'
+    
+    - name: Gedmo
+      collectors:
+        - type: classNameRegex
+          value: '#^Gedmo\\.*#'
+
+    - name: Composer
+      collectors:
+        - type: classNameRegex
+          value: '#^Composer\\.*#'
+
+    - name: Kernel
+      collectors:
+        - type: classNameRegex
+          value: '#^App\\Kernel$#'
+
+  ruleset:
+    Controller:
+      - Service
+      - Repository
+      - Entity
+      - Enum
+      - Symfony
+      - Doctrine
+      - EasyAdmin
+
+    Service:
+      - Repository
+      - Entity
+      - Enum
+      - Symfony
+      - Carbon
+      - Composer
+      - Kernel
+
+    Repository:
+      - Entity
+      - Doctrine
+      - Symfony
+
+    Entity:
+      - Repository
+      - Enum
+      - Symfony
+      - Doctrine
+      - Carbon
+      - Gedmo
+    
+    Kernel:
+      - Symfony
+
+    Enum: ~
+    Symfony: ~
+    Doctrine: ~
+    EasyAdmin: ~
