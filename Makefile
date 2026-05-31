@@ -34,6 +34,8 @@ DC_EXEC   = $(DC) exec $(TTY_FLAG) $(DOCKER_APP_SERVICE)
 
 SYMFONY		:= $(DC_EXEC) php bin/console
 COMPOSER	:= $(DC_EXEC) composer
+PNPM		:= $(DC_EXEC) pnpm 
+PNPX		:= $(DC_EXEC) pnpx
 GRUMPHP		:= $(DC_EXEC) vendor/bin/grumphp --config=$(TOOLS_CONFIG_DIR)/grumphp.yml
 PHPUNIT		:= $(DC_EXEC) php vendor/bin/phpunit --configuration $(TOOLS_CONFIG_DIR)/phpunit.xml
 INFECTION	:= $(DC_EXEC) php vendor/bin/infection --configuration=$(TOOLS_CONFIG_DIR)/infection.json
@@ -43,10 +45,8 @@ PHPSTAN		:= $(DC_EXEC) php vendor/bin/phpstan --memory-limit=512M --configuratio
 RECTOR		:= $(DC_EXEC) vendor/bin/rector process --config $(TOOLS_CONFIG_DIR)/rector.php
 CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer  --config=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.php --cache-file=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.cache
 CSTWIG		:= $(DC_EXEC) vendor/bin/twig-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.twig-cs-fixer.php
-ESLINT		:= $(DC_EXEC) npx eslint --config $(TOOLS_CONFIG_DIR)/eslint.config.mjs
-STYLELINT	:= $(DC_EXEC) npx stylelint --config $(TOOLS_CONFIG_DIR)/.stylelintrc.json
-PRETTIER	:= $(DC_EXEC) npx prettier --config $(TOOLS_CONFIG_DIR)/.prettierrc
-BIOME		:= $(DC_EXEC) bin/biome
+ESLINT		:= $(DC_EXEC) pnpm exec eslint --config $(TOOLS_CONFIG_DIR)/eslint.config.mjs
+BIOME		:= $(DC_EXEC) pnpm biome check --config-path=$(TOOLS_CONFIG_DIR)/biome.json
 
 #= COLORS =============================================================
 BLACK        := \033[0;30m
@@ -322,6 +322,22 @@ composer-clear: ## Clear Composer cache and reinstall dependencies
 	@$(COMPOSER) clear-cache
 	@$(COMPOSER) install
 
+.PHONY: pnpm-clear
+pnpm-clear: ## Clear pnpm cache and reinstall dependencies
+	$(call display_title,Clearing pnpm cache and reinstalling dependencies,${ICON_CLEAN})
+	@rm -rf node_modules/
+	@$(PNPM) clear-cache
+	@$(PNPM) install
+
+.PHONY: pnpm-prune
+pnpm-prune: ## Prune unused packages
+	$(call display_title,Pruning unused packages,${ICON_CLEAN})
+	@$(call display_subtitle,Removing unused packages...)
+	@$(PNPM) store prune
+	@$(call display_subtitle,Checking for unused packages...)
+	@$(PNPX) depcheck --ignores="animate.css,@biomejs/biome"
+	$(call display_success,Unused packages check completed)
+
 .PHONY: clean
 clean: ## Clean temporary files: cache, coverage, logs, public build
 	$(call display_title,Cleaning temporary files,${ICON_CLEAN})
@@ -410,21 +426,13 @@ cs-front: ## Run linters for CSS and JS (FRONT_FIX=1 to actually fix)
 	@if [ "$(FRONT_FIX)" = "1" ]; then \
 		$(call display_subtitle,Running ESLint in fix mode...); \
 		$(ESLINT) assets/scripts/ --fix; \
-		$(call display_subtitle,Running Stylelint in fix mode...); \
-		$(STYLELINT) assets/styles/ --fix; \
-		$(call display_subtitle,Running Prettier in fix mode...); \
-		$(PRETTIER) assets/ --write; \
 		$(call display_subtitle,Running Biome in fix mode...); \
-		$(BIOME) check --write; \
+		$(BIOME) --write assets/; \
 	else \
 		$(call display_subtitle,Running ESLint...); \
 		$(ESLINT) assets/scripts/; \
-		$(call display_subtitle,Running Stylelint...); \
-		$(STYLELINT) assets/styles/; \
-		$(call display_subtitle,Running Prettier...); \
-		$(PRETTIER) assets/ --check; \
 		$(call display_subtitle,Running Biome...); \
-		$(BIOME) lint; \
+		$(BIOME) assets/; \
 	fi;
 
 .PHONY: cs-fix
@@ -501,7 +509,7 @@ test: ## Run PHPUnit tests
 .PHONY: qa-analyse
 qa-analyse: ## Run static analysis
 	@$(call display_subtitle,Running static analysis...); 
-	$(PHPSTAN) analyse; \
+	@$(PHPSTAN) analyse; \
 	$(call display_subtitle,Running Deptrac...); \
 	$(DEPTRAC) analyse; \
 

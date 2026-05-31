@@ -1,6 +1,6 @@
 # Caroline Noyer - Portfolio & Lab 🚀
 
-Bienvenue sur le dépôt de mon site personnel et portfolio (**carolinenoyer.fr**). 
+Bienvenue sur le dépôt de mon site personnel et portfolio (**carolinenoyer.fr**).
 
 Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laboratoire technique** qui me sert de terrain d'expérimentation pour appliquer les meilleures pratiques de développement web full-stack, de l'architecture backend au design moderne, en passant par l'automatisation de la qualité de code.
 
@@ -39,7 +39,7 @@ Le projet intègre notamment :
 * **Deptrac** (Analyse des dépendances architecturales et étanchéité des couches)
 * **Infection** (Mutation Testing pour valider la pertinence et la force des tests)
 * **PHPArkitect** (Validation automatique des règles de design architectural)
-* **Biome** & **Linters Node** (Formatage et linting ultra-rapide des assets front avec ESLint/Stylelint)
+* **Biome** & **Linters Node** (Formatage et linting ultra-rapide des assets front avec ESLint)
 * **Checkmake** (Linter intégré pour valider la syntaxe et la propreté du `Makefile`)
 
 ---
@@ -82,6 +82,8 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
   DEVELOPMENT
     cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
     composer-clear            Clear Composer cache and reinstall dependencies  
+    pnpm-clear                Clear pnpm cache and reinstall dependencies    
+    pnpm-prune                Prune unused packages                          
     clean                     Clean temporary files: cache, coverage, logs, public build  
     watch                     Watch Tailwind CSS changes and re-build        
     secret                    Generate a new APP_SECRET and display it       
@@ -269,7 +271,6 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 * `dama/doctrine-test-bundle` : Isolation des tests en base de données via des transactions.
 * `friendsofphp/php-cs-fixer` & `vincentlanglet/twig-cs-fixer` : Linters et formateurs de code PHP/Twig.
 * `phpstan/phpstan` & `phpstan/phpstan-doctrine` : Analyse statique rigoureuse.
-* `kocal/biome-js-bundle` : Alternative ultra-rapide pour le lint/formatage JS/CSS.
 * `phpro/grumphp` : Gestionnaire de Git Hooks pour valider le code avant le commit.
 * `doctrine/doctrine-fixtures-bundle` : Génération de fausses données pour le développement.
 * `infection/infection` : Outil de mutation testing.
@@ -280,8 +281,7 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 ## 🎨 Librairies Frontend & Linters d'intégration
 
 * ESLint → JS
-* Stylelint → CSS/Tailwind
-* Prettier → formatage global
+* Biome → CSS/Tailwind
 
 ```bash
     # Add and declaration of UI/Animation libraries via AssetMapper
@@ -290,11 +290,10 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
     php bin/console importmap:require photoswipe
     php bin/console importmap:require photoswipe/lightbox
 
-    # Linters tools Node (ESLint, Stylelint, Prettier)
-    npm install -D eslint @eslint/js globals eslint-config-prettier
-    npm init @eslint/config
-    npm install -D stylelint stylelint-config-standard stylelint-config-tailwindcss
-    # npm install -D prettier prettier-plugin-tailwindcss prettier-plugin-twig-melody
+    # Linters tools Node (ESLint, Biome)
+    pnpm add -D eslint @eslint/js globals 
+    pnpm exec eslint --init
+    pnpm add -D @biomejs/biome
 ```
 
 ## 🎨 Ressources Graphiques & Icônes

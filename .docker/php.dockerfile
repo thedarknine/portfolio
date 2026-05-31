@@ -1,55 +1,56 @@
-FROM php:8.4-fpm
+FROM php:8.4-fpm-alpine AS base
 
-# Install system dependencies
-RUN apt update && apt install -y \
+RUN apk add --no-cache \
     git \
     curl \
     libpng-dev \
-    libonig-dev \
+    oniguruma-dev \
     libxml2-dev \
     libxslt-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libicu-dev \
+    libjpeg-turbo-dev \
+    freetype-dev \
+    icu-dev \
     libzip-dev \
     zip \
     unzip \
-    nodejs npm \
-    bash 
+    nodejs \
+    npm \
+    bash \
+    make
 
+# Install php extensions using mlocati/php-extension-installer
+# This is the recommended tool to manage dependencies and extensions
+COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
+
+RUN install-php-extensions \
+    pcov \
+    pdo \
+    pdo_mysql \
+    gd \
+    opcache \
+    intl \
+    dom \
+    mbstring \
+    xsl \
+    exif \
+    pcntl \
+    bcmath \
+    zip
+
+# Install checkmake for Makefile QA
 RUN curl -L "https://github.com/checkmake/checkmake/releases/download/v0.3.2/checkmake-v0.3.2.linux.arm64" -o /usr/local/bin/checkmake \
     && chmod +x /usr/local/bin/checkmake
 
-# To enable code coverage for PHPUnit
-RUN pecl install pcov && docker-php-ext-enable pcov
+# Install Symfony CLI and pnpm
+RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash \
+    && apk add --no-cache symfony-cli \
+    && npm install -g pnpm@latest
 
-# Clear cache
-RUN apt clean && rm -rf /var/lib/apt/lists/*
-
-# Install PHP extensions
-RUN set -ex; \
-    docker-php-ext-install pdo; \
-    docker-php-ext-install pdo_mysql; \
-    docker-php-ext-install gd; \
-    docker-php-ext-install opcache; \
-    docker-php-ext-install intl; \
-    docker-php-ext-install dom; \
-    docker-php-ext-install mbstring; \
-    docker-php-ext-install xsl; \
-    docker-php-ext-install exif; \
-    docker-php-ext-install pcntl; \
-    docker-php-ext-install bcmath; \
-    docker-php-ext-install zip
-
-# Install Symfony CLI
-RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.deb.sh' | bash \
-    && apt update && apt install -y symfony-cli \
-    && apt clean && rm -rf /var/lib/apt/lists/*
-
-RUN npm install -g pnpm
-
-# Get latest Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Get Composer (official image frozen on a major version for stability)
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Set working directory
 WORKDIR /var/www/html
+
+# Security: Never run container as root in production
+USER www-data

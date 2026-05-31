@@ -99,7 +99,6 @@
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
         "friendsofphp/php-cs-fixer": "^3.95.3",
         "infection/infection": "^0.33.2",
-        "kocal/biome-js-bundle": "^2.1.2",
         "phparkitect/phparkitect": "^1.1.1",
         "phpro/grumphp": "^2.21",
         "phpstan/phpstan": "^2.2.1",

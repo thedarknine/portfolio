@@ -5,7 +5,9 @@
 !.docker/mysql/data/.gitkeep
 !.docker/volumes/logs/mysql/.gitkeep
 /node_modules/*
+.pnpm-store
 /src/DataFixtures/Testing/*
+/bin/biome
 
 ###> symfony/framework-bundle ###
 /.env.local
@@ -40,11 +42,6 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
-
-###> kocal/biome-js-bundle ###
-/bin/biome
-###< kocal/biome-js-bundle ###
-
 ###> deptrac/deptrac ###
 /.deptrac.cache
 ###< deptrac/deptrac ###

@@ -95,19 +95,6 @@
             ".php-cs-fixer.dist.php"
         ]
     },
-    "kocal/biome-js-bundle": {
-        "version": "2.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "2.0",
-            "ref": "e748fc31eee6e9d9ceaf5ec4f51a371f9f619723"
-        },
-        "files": [
-            "config/packages/kocal_biome_js.yaml",
-            "biome.json"
-        ]
-    },
     "phpstan/phpstan": {
         "version": "2.1",
         "recipe": {
