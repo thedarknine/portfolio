@@ -30,6 +30,26 @@
             <p class="text-nine-blue/90 leading-relaxed">
                 {{ project.description|raw }}
             </p>
+{% if project.screenshots is not empty %}
+<div class="flex flex-wrap gap-2 mt-4 pswp9-gallery" id="gallery-{{ loop.index }}">
+    {% set screenshots = project.screenshots|split('::') %}
+    {% for screenshot in screenshots %}
+        {% set screenshot_url = absolute_url('images/projects/' ~ screenshot) %}
+        <a href="{{ screenshot_url }}"
+           target="_blank"
+           class="group/thumb pswp9-link relative block overflow-hidden rounded-lg border border-nine-light/30 hover:border-nine-turquoise transition-all duration-300">
+
+            <img src="{{ screenshot_url }}"
+                 alt="Screenshot {{ screenshot }}"
+                 class="w-20 h-14 object-cover hover:scale-105 transition-transform duration-300" />
+
+            <div class="absolute inset-0 bg-nine-primary/20 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v6m3-3H7"/></svg>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+{% endif %}
         </div>
 
         <div class="mt-6 pt-4 border-t border-nine-light/50 flex flex-wrap justify-between items-center gap-4">
