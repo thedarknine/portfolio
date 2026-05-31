@@ -35,3 +35,9 @@ grumphp:
         phpunit:
             config_file: .tools-config/phpunit.xml
             always_execute: false
+        
+        shell:
+            scripts:
+                - '.tools-config/run-pre-commit.sh'
+            metadata:
+                priority: 100

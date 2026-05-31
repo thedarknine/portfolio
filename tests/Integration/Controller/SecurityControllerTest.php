@@ -152,7 +152,8 @@ class SecurityControllerTest extends WebTestCase
     public function testLogoutMethodThrowsLogicException(): void
     {
         // 1. Instantiate the controller directly (without going through the Kernel)
-        $controller = new \App\Controller\SecurityController();
+        $container  = static::getContainer();
+        $controller = $container->get(\App\Controller\SecurityController::class);
 
         // 2. Expect the LogicException from Symfony to be thrown
         $this->expectException(\LogicException::class);

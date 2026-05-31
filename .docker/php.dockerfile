@@ -14,7 +14,11 @@ RUN apt update && apt install -y \
     libzip-dev \
     zip \
     unzip \
-    nodejs npm
+    nodejs npm \
+    bash 
+
+RUN curl -L "https://github.com/checkmake/checkmake/releases/download/v0.3.2/checkmake-v0.3.2.linux.arm64" -o /usr/local/bin/checkmake \
+    && chmod +x /usr/local/bin/checkmake
 
 # To enable code coverage for PHPUnit
 RUN pecl install pcov && docker-php-ext-enable pcov

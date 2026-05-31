@@ -1,8 +1,54 @@
-# portfolio
+# Caroline Noyer - Portfolio & Lab 🚀
 
-My Portfolio based on Symfony framework
+Bienvenue sur le dépôt de mon site personnel et portfolio (**carolinenoyer.fr**). 
 
-## 🛠️ Commandes du Makefile
+Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laboratoire technique** qui me sert de terrain d'expérimentation pour appliquer les meilleures pratiques de développement web full-stack, de l'architecture backend au design moderne, en passant par l'automatisation de la qualité de code.
+
+---
+
+## 🛠️ Stack Technique
+
+### Backend & Base de données
+
+* **PHP >= 8.4** (Utilisation native des nouveautés du langage, modernisation et typage strict)
+* **Symfony 8.0.x** (Architecture découplée avec contrôleurs optimisés, gestion des assets via AssetMapper)
+* **Doctrine ORM 3.x** & **MySQL** (Gestion stricte des entités, migrations et fixtures)
+
+### Frontend
+
+* **Tailwind CSS v4** (Design moderne basé sur le *Glassmorphism*, animations CSS fluides via `animate.css` et transitions soignées)
+* **Twig 3.x** (Moteur de templates structuré pour une intégration propre des composants)
+
+### DevOps & Outillage
+
+* **Docker & Docker Compose** (Environnement multi-conteneurs : `app` (PHP), `db` (MySQL), et `engine` (Nginx))
+* **Makefile** (Point d'entrée unique et automatisé pour toutes les commandes du projet)
+
+---
+
+## 📐 Qualité de Code & Automatisation
+
+Pour garantir la maintenabilité et la robustesse de l'application, une suite complète d'outils d'analyse statique et d'automatisation est intégrée via **GrumPHP** (les configurations sont centralisées dans le dossier `.tools-config/`).
+
+Le projet intègre notamment :
+
+* **PHPStan 2.x** (Analyse statique avec configuration stricte pour Doctrine)
+* **PHP-CS-Fixer** (Respect des standards de code PSR-12 / PER)
+* **Twig-CS-Fixer** (Linter et formateur pour les fichiers de templates)
+* **Rector** (Refactoring automatisé pour le maintien du code aux normes de PHP 8.4)
+* **Deptrac** (Analyse des dépendances architecturales et étanchéité des couches)
+* **Infection** (Mutation Testing pour valider la pertinence et la force des tests)
+* **PHPArkitect** (Validation automatique des règles de design architectural)
+* **Biome** & **Linters Node** (Formatage et linting ultra-rapide des assets front avec ESLint/Stylelint)
+* **Checkmake** (Linter intégré pour valider la syntaxe et la propreté du `Makefile`)
+
+---
+
+## 🧰 Commandes du Makefile
+
+Le projet est entièrement piloté par un `Makefile` situé à la racine. Il sert d'interface unique pour orchestrer les conteneurs Docker, le serveur de développement et les outils de QA.
+
+*(Cette section sera automatiquement écrasée et mise à jour textuellement lors de l'exécution de la commande `make readme`)*
 
 <!-- MAKEFILE:START -->
 ```bash
@@ -63,204 +109,201 @@ My Portfolio based on Symfony framework
   HELP
     help                      Show this help message                         
     readme                    Update README.md Makefile section              
+    readme-check              Check if README.md is up to date               
 
   Examples:
-    make test            	# Run PHPUnit tests
-    make cs              	# Check and fix coding standards
-    make cs-php PHP_FIX=1	# Run linter and apply changes
+    make test              # Run PHPUnit tests
+    make cs                # Check and fix coding standards
+    make cs-php PHP_FIX=1  # Run linter and apply changes
 
 ```
 <!-- MAKEFILE:END -->
 
-## Before prod
+---
+
+## 🧠 Cheat Sheet
+
+Cette section regroupe les workflows, commandes natives Symfony/Docker et paquets utiles à conserver pour l'initialisation ou la maintenance de projets similaires.
+
+### 🛠️ Initialisation d'un nouveau projet (Dans Docker)
 
 ```bash
-    php bin/console asset-map:compile
+   # Configure Git identity inside the container
+    git config --global user.email "you@example.com"
+    git config --global user.name "Your Name"
+
+    # Ignore formatting commits (CS Fixer) in git blame
+    git config blame.ignoreRevsFile .git-blame-ignore-revs
+
+    # Check system requirements
+    symfony check:requirements
+
+    # Create project in a temporary folder and move it to root
+    symfony new tmp --version="8.0.*"
+    mv tmp/* . 
+    # Note: Remember to check and merge hidden files (e.g., .gitignore, .env)
+
+    # Initialize frontend
+    php bin/console tailwind:init
+    php bin/console importmap:require jquery
 ```
 
-## Update database
+### 🗄️ Gestion de la Base de données
 
 ```bash
-    php bin/console make:migration
-    php bin/console doctrine:migrations:migrate
-```
+    # Classic migration workflow
+    make migration  # Runs make:migration + doctrine:migrations:migrate
 
-### Reset fixtures
+    # Run the automated fixtures pipeline (Custom composer script)
+    composer run pipeline:fixtures
+    # This script generates test fixtures, drops the test database, recreates it, and loads the fixtures cleanly.
 
-```bash
+    # Complete database reset with purge and fixtures loading
     php bin/console doctrine:database:drop --force
     php bin/console doctrine:database:create
     php bin/console doctrine:schema:update --force
     php bin/console doctrine:fixtures:load
 ```
 
-## Initialize
+### 🧪 Environnement de Tests & CI
 
-Into docker :
+#### Préparation de la base de test (.env.test)
 
-```bash
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
-
-    # Ignore commits that only apply coding standards for example
-    git config blame.ignoreRevsFile .git-blame-ignore-revs
-
-    symfony check:requirements
-
-    symfony new tmp --version="8.0.*"
-    mv tmp/* . # Think about hidden files (possibly to be merged)
-
-    php bin/console tailwind:init
-    php bin/console importmap:require jquery
-```
-
-## Icons
-
-- [IconStack](https://iconstack.io/)
-- [HugeIcons](https://hugeicons.com/icons/stroke-rounded?search=inst)
-
-## Packages used
-
-### Standard
-
-- logger
-- twig
-- symfony/twig-bundle
-- symfony/asset
-- symfony/asset-mapper
-- symfony/twig-pack
-- twig/intl-extra
-- symfonycasts/tailwind-bundle
-- symfony/orm-pack
-- gedmo/doctrine-extensions
-- nesbot/carbon
-- doctrine/doctrine-migrations-bundle
-
-### Dev
-
-- symfony/maker-bundle
-- phpunit/phpunit
-- friendsofphp/php-cs-fixer
-- phpstan/phpstan
-- vincentlanglet/twig-cs-fixer
-- kocal/biome-js-bundle
-- phpro/grumphp
-- doctrine/doctrine-fixtures-bundle
-- phpstan/phpstan-doctrine
-# - phpstan/phpstan-strict-rules
-- symfony/test-pack
-- dama/doctrine-test-bundle
-- infection/infection (mutation testing)
-- phparkitect/phparkitect (architecture validation)
-- symfony/panther (ui testing)
-- dbrekelmans/bdi (chrome driver)
-
-### Front-end librairies
+S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127.0.0.1:3306/portfolio_test?serverVersion=8.1.0&charset=utf8mb4"`).
 
 ```bash
-    npm install animate.css --save
-    php bin/console importmap:require animate.css
-
-    npm install typed.js
-    php bin/console importmap:require typed.js
-
-    npm install photoswipe --save
-    php bin/console importmap:require photoswipe
-    php bin/console importmap:require photoswipe/lightbox
-```
-
-### Front-end linters
-
-- ESLint → JS
-- Stylelint → CSS/Tailwind
-- Prettier → formatage global
-
-```bash
-    npm install -D eslint @eslint/js globals
-    npm install -D eslint-config-prettier
-    npm init @eslint/config
-    npm install -D stylelint stylelint-config-standard stylelint-config-tailwindcss
-    #npm install -D prettier prettier-plugin-tailwindcss prettier-plugin-twig-melody
-    
-```
-
-### Admin
-
-```bash
-    composer require easycorp/easyadmin-bundle
-    php bin/console make:admin:dashboard
-    php bin/console make:admin:crud
-
-    # Update security
-    php bin/console make:user
-    php bin/console make:security:form-login
-
-    # Sortable fields
-    composer require stof/doctrine-extensions-bundle
-```
-
-## Tests
-
-### Prepare database for tests
-
-Add and adapt something like `DATABASE_URL="mysql://test:test@127.0.0.1:3306/portfolio_test?serverVersion=8.1.0&charset=utf8mb4"` into `.env.test` file.
-
-```bash
-    ## Access to container
+    # Manual connection to the DB container to initialize access
     docker compose exec db mysql -p
 
-    ## Create user and db for tests
+    # SQL commands to execute if necessary :
     CREATE USER 'test'@'%' IDENTIFIED BY 'test';
     CREATE DATABASE portfolio_test;
     GRANT ALL PRIVILEGES ON portfolio_test.* TO 'test'@'%';
     FLUSH PRIVILEGES;
 
-    ## Create schema
+    # Initialize schema and fixtures for test environment
     php bin/console doctrine:schema:update --force --env=test
-
-    ## Load data fixtures
     php bin/console doctrine:fixtures:load --env=test
 ```
 
-### Build new test
+#### Exécution des tests
 
 ```bash
+    # Generate a new test
     php bin/console make:test WebTestCase PageControllerTest    
-```
 
-### Run tests
-
-```bash
+    # Run PHPUnit test suite
     php bin/phpunit
+
+    # Run tests with HTML coverage report generation
+    make cover  # Runs PHPUnit and generates the report in the coverage/ folder (php bin/phpunit --coverage-html coverage)
+
+    # Run mutation tests (Infection)
+    make test-mutation
+
+    # Run End-to-End / interface tests (Panther + Chrome Driver via BDI)
+    make test-ui
 ```
 
-### Run tests with coverage
+### 🔍 Outils avancés de Quality Assurance
 
 ```bash
-    php bin/phpunit --coverage-html coverage
-```
-
-## Quality Assurance
-
-### Run all QA checks
-
-```bash
+    # Run everything at once via Makefile
     make qa
-```
 
-### Deptrac
-
-```bash
+    # Deptrac (Analysis of architectural dependencies and layers)
     composer require --dev qossmic/deptrac-shim
     vendor/bin/deptrac init
     vendor/bin/deptrac analyse --config-file=deptrac.yaml
     vendor/bin/deptrac debug:layer --config-file=.tools-config/deptrac.yaml
-```
 
-### Rector
-
-```bash
+    # Rector (Analysis of refactoring rules / Dry-run)
     composer require --dev rector/rector
     vendor/bin/rector process --dry-run --config .tools-config/rector.php
-
 ```
+
+### 🏗️ Backoffice & Sécurité (EasyAdmin)
+
+```bash
+    # Installation and initialization of Dashboard and CRUDs
+    composer require easycorp/easyadmin-bundle
+    php bin/console make:admin:dashboard
+    php bin/console make:admin:crud
+
+    # Securing access
+    php bin/console make:user
+    php bin/console make:security:form-login
+
+    # Managing sortable fields
+    composer require gedmo/doctrine-extensions
+    composer require stof/doctrine-extensions-bundle
+```
+
+### 🚀 Optimisation Frontend (AssetMapper & Tailwind)
+
+```bash
+    # Run Tailwind watcher in background to compile on the fly
+    make watch
+
+    # Compilation and minification of assets managed via AssetMapper
+    php bin/console asset-map:compile
+```
+
+## 📦 Inventaire des Dépendances
+
+### Packages Standards
+
+* `logger` & `symfony/twig-bundle` : Logs et moteur de rendu.
+* `symfony/asset` & `symfony/asset-mapper` : Gestion moderne des assets sans Node.js.
+* `symfony/twig-pack` & `twig/intl-extra` : Extensions Twig avancées (dates, filtres internationaux).
+* `symfonycasts/tailwind-bundle` : Intégration transparente de Tailwind CSS.
+* `symfony/orm-pack` & `doctrine/doctrine-migrations-bundle` : Persistance de données.
+* `gedmo/doctrine-extensions` : Ajout de comportements (Sluggable, Timestampable).
+* `nesbot/carbon` : Manipulation avancée et fluide des dates.
+* `easycorp/easyadmin-bundle` : Moteur de Backoffice fluide et moderne (v5).
+
+### Packages de Développement / QA
+
+* `symfony/maker-bundle` : Générateur de code de l'écosystème.
+* `phpunit/phpunit` & `symfony/test-pack` : Framework de tests.
+* `dama/doctrine-test-bundle` : Isolation des tests en base de données via des transactions.
+* `friendsofphp/php-cs-fixer` & `vincentlanglet/twig-cs-fixer` : Linters et formateurs de code PHP/Twig.
+* `phpstan/phpstan` & `phpstan/phpstan-doctrine` : Analyse statique rigoureuse.
+* `kocal/biome-js-bundle` : Alternative ultra-rapide pour le lint/formatage JS/CSS.
+* `phpro/grumphp` : Gestionnaire de Git Hooks pour valider le code avant le commit.
+* `doctrine/doctrine-fixtures-bundle` : Génération de fausses données pour le développement.
+* `infection/infection` : Outil de mutation testing.
+* `phparkitect/phparkitect` : Validation des règles de design architectural.
+* `deptrac/deptrac` : Contrôle de l'étanchéité des couches logicielles.
+* `symfony/panther` & `dbrekelmans/bdi` : Tests End-to-End et UI avec un vrai navigateur (Chrome Driver).
+
+## 🎨 Librairies Frontend & Linters d'intégration
+
+* ESLint → JS
+* Stylelint → CSS/Tailwind
+* Prettier → formatage global
+
+```bash
+    # Add and declaration of UI/Animation libraries via AssetMapper
+    php bin/console importmap:require animate.css
+    php bin/console importmap:require typed.js
+    php bin/console importmap:require photoswipe
+    php bin/console importmap:require photoswipe/lightbox
+
+    # Linters tools Node (ESLint, Stylelint, Prettier)
+    npm install -D eslint @eslint/js globals eslint-config-prettier
+    npm init @eslint/config
+    npm install -D stylelint stylelint-config-standard stylelint-config-tailwindcss
+    # npm install -D prettier prettier-plugin-tailwindcss prettier-plugin-twig-melody
+```
+
+## 🎨 Ressources Graphiques & Icônes
+
+* [IconStack](https://iconstack.io/) — Découverte et gestion de sets d'icônes.
+* [HugeIcons](https://hugeicons.com/icons/stroke-rounded?search=inst) — Icônes filaires haut de gamme.
+
+---
+
+## 📝 Licence
+
+Ce projet est personnel et son contenu textuel/visuel m'appartient. Le code source est partagé à des fins de démonstration technique.

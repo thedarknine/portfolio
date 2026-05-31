@@ -149,17 +149,32 @@ endef
 
 # =====================================================================
 
-CHECKMAKE := checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
+CHECKMAKE := $(DC_EXEC) checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
+CHECKMAKE_BIN := checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
 .PHONY: cs-makefile
 cs-makefile: ## Lint Makefile with checkmake
 	@$(call display_subtitle,Checking if checkmake is installed...)
+# Use native if to check if context is docker container
+ifneq ($(wildcard /.dockerenv),)
+	@# CONTEXT from DOCKER (GrumPHP)
 	@if ! command -v checkmake >/dev/null 2>&1; then \
-		$(call display_error,checkmake is not installed. Please run 'brew install checkmake' or 'apt install checkmake'.) \
+		$(call display_error,checkmake is not installed in the Docker container.) ; \
+		exit 1; \
 	fi
-	$(call display_success,checkmake is installed)
+	@$(call display_success,checkmake is ready (container context))
 	@$(call display_subtitle,Running checkmake...)
-	@$(CHECKMAKE) Makefile
-	$(call display_success,Makefile formatting is perfect!)
+	@$(CHECKMAKE_BIN) Makefile
+else
+	@# CONTEXT from host
+	@if ! $(DC) exec -T app bash -c "command -v checkmake" >/dev/null 2>&1; then \
+		$(call display_error,checkmake is not installed in the Docker container. Please rebuild it.) ; \
+		exit 1; \
+	fi
+	@$(call display_success,checkmake is ready via Docker Compose)
+	@$(call display_subtitle,Running checkmake via Docker...)
+	@$(DC) exec -T app $(CHECKMAKE_BIN) Makefile
+endif
+	@$(call display_success,Makefile formatting is perfect!)
 
 # =====================================================================
 ##@ DOCKER
@@ -443,6 +458,11 @@ grum-run: ## Run GrumPHP checks
 	$(call display_title,Running GrumPHP checks,${ICON_TEST})
 	@$(GRUMPHP) run
 
+.PHONY: grum-pre-commit
+grum-pre-commit:
+	$(call display_title,Running GrumPHP pre-commit hooks,${ICON_TEST})
+	$(GRUMPHP) git:pre-commit
+
 .PHONY: qa
 qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 	$(call assert_not_prod)
@@ -560,9 +580,9 @@ help: ## Show this help message
 		}'  $(MAKEFILE_LIST)
 	@printf '\n'
 	@printf '  ${BOLD}Examples:${RESET}\n'
-	@printf '    make test            	# Run PHPUnit tests\n'
-	@printf '    make cs              	# Check and fix coding standards\n'
-	@printf '    make cs-php PHP_FIX=1	# Run linter and apply changes\n'
+	@printf '    make test              # Run PHPUnit tests\n'
+	@printf '    make cs                # Check and fix coding standards\n'
+	@printf '    make cs-php PHP_FIX=1  # Run linter and apply changes\n'
 	@printf '\n'
 
 .PHONY: readme
@@ -597,6 +617,19 @@ readme: ## Update README.md Makefile section
 	' README.md > $$tmp_readme; \
 	\
 	mv $$tmp_readme README.md; \
-	rm -f $$tmp_help
+	rm -f $$tmp_help; \
+	git add README.md
 
 	@$(call display_success,README.md updated successfully!)
+
+.PHONY: readme-check
+readme-check: ## Check if README.md is up to date
+	@tmp=$$(mktemp); \
+	cp README.md $$tmp; \
+	$(MAKE) readme > /dev/null; \
+	if ! diff -q README.md $$tmp >/dev/null; then \
+		mv $$tmp README.md; \
+		$(call display_warning,README.md is outdated. Run 'make readme'.); \
+		exit 1; \
+	fi; \
+	rm $$tmp
