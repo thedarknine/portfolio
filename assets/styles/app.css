@@ -1,17 +1,17 @@
 /* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap');
-@import url('https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.min.css');
-@import 'animate.css';
+@import url("https://fonts.googleapis.com/css2?family=League+Spartan:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Oxygen:wght@300;400;700&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/photoswipe@5.4.4/dist/photoswipe.min.css");
+@import "animate.css";
 
 /* stylelint-disable-next-line import-notation */
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
-    --font-normal: 'Oxygen', 'Inter', sans-serif;
-    --font-accent: 'League Spartan', sans-serif;
+    --font-normal: "Oxygen", "Inter", sans-serif;
+    --font-accent: "League Spartan", sans-serif;
     --color-nine-primary: oklch(33.74% 0.071 254.99); /* #1c385b */
     --color-nine-golden: oklch(96.81% 0.0074 80.72); /* #f7f4ef */
     --color-nine-light: oklch(90.81% 0.008 253.86); /* #dde1e6 */
@@ -32,13 +32,13 @@
 }
 
 /* Safelist for Tailwind CSS classes used in templates */
-@source inline('fill-leviia');
-@source inline('fill-perfect');
-@source inline('fill-coffreo');
-@source inline('bg-leviia');
-@source inline('bg-perfect');
-@source inline('bg-coffreo');
-@source inline('flex-row-reverse');
+@source inline("fill-leviia");
+@source inline("fill-perfect");
+@source inline("fill-coffreo");
+@source inline("bg-leviia");
+@source inline("bg-perfect");
+@source inline("bg-coffreo");
+@source inline("flex-row-reverse");
 
 @layer base {
     body {
@@ -297,25 +297,25 @@
 /* -------------------------------------------------------------------------------------------- *
  * MEDIA QUERIES                                                                                *
  * -------------------------------------------------------------------------------------------- */
-@media (width >=640px) {
+@media (width >= 640px) {
     .container {
         max-width: 640px;
     }
 }
 
-@media (width >=768px) {
+@media (width >= 768px) {
     .container {
         max-width: 768px;
     }
 }
 
-@media (width >=1024px) {
+@media (width >= 1024px) {
     .container {
         max-width: 1024px;
     }
 }
 
-@media (width >=1200px) {
+@media (width >= 1200px) {
     .container {
         max-width: 1200px;
     }

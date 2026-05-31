@@ -25,7 +25,8 @@ $(document).ready(() => {
                 const animationClass = element.getAttribute('data-animate');
 
                 // On récupère le délai (on met 0 par défaut si l'attribut n'existe pas)
-                const delay = parseInt(element.getAttribute('data-delay')) || 0;
+                const delay =
+                    parseInt(element.getAttribute('data-delay'), 10) || 0;
 
                 // On arrête d'observer l'élément immédiatement pour éviter les doublons
                 observer.unobserve(element);
@@ -39,7 +40,9 @@ $(document).ready(() => {
     }, options);
 
     const elementsToAnimate = document.querySelectorAll('[data-animate]');
-    elementsToAnimate.forEach((el) => observer.observe(el));
+    elementsToAnimate.forEach((el) => {
+        observer.observe(el);
+    });
 
     // Menus Burger (Mobile)
     const burgers = document.querySelectorAll('.nine-navbar-burger');
@@ -48,7 +51,9 @@ $(document).ready(() => {
     const backdrops = document.querySelectorAll('.nine-navbar-backdrop');
 
     const toggleMenu = () => {
-        menus.forEach((menu) => menu.classList.toggle('hidden'));
+        menus.forEach((menu) => {
+            menu.classList.toggle('hidden');
+        });
     };
     if (burgers.length && menus.length) {
         // Applying the 'click' event on each burger button
