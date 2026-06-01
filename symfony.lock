@@ -122,6 +122,9 @@
             "bin/phpunit"
         ]
     },
+    "presta/sitemap-bundle": {
+        "version": "v4.3.0"
+    },
     "stof/doctrine-extensions-bundle": {
         "version": "1.15",
         "recipe": {

@@ -22,7 +22,7 @@ final class HomeController extends AbstractController
     {
     }
 
-    #[Route('/', name: 'app_index')]
+    #[Route('/', name: 'app_index', options: ['sitemap' => true])]
     public function index(): Response
     {
         $data['current_page'] = [

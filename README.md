@@ -108,6 +108,12 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     test-ui                   Run PHPUnit tests for UI group                 
     cover                     Run PHPUnit tests with coverage                
 
+  ENVIRONMENT
+    db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous dumps
+    prod                      Build production version                       
+    prod-deploy               Deploy production build to remote server       
+    dev                       Switch back to development environment         
+
   HELP
     help                      Show this help message                         
     readme                    Update README.md Makefile section              
@@ -263,6 +269,7 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 * `gedmo/doctrine-extensions` : Ajout de comportements (Sluggable, Timestampable).
 * `nesbot/carbon` : Manipulation avancée et fluide des dates.
 * `easycorp/easyadmin-bundle` : Moteur de Backoffice fluide et moderne (v5).
+* `presta/sitemap-bundle` : Génération automatique des sitemaps XML.
 
 ### Packages de Développement / QA
 
