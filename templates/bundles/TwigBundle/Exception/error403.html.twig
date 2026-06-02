@@ -1,0 +1,17 @@
+{% extends 'layout_error.html.twig' %}
+
+{% block title %}Accès refusé — 403{% endblock %}
+
+{% block status_badge %}throw new AccessDeniedException(){% endblock %}
+
+{% block number %}403{% endblock %}
+
+{% block tagline %}Accès refusé{% endblock %}
+
+{% block hero_title %}L'accès à l'atelier est verrouillé.{% endblock %}
+
+{% block hero_desc %}
+Cet espace est réservé aux coulisses de la création. Vous
+tentez d'entrer sans badge dans la zone de modelage ou le
+script de sécurité a bloqué votre requête.
+{% endblock %}

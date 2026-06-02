@@ -303,6 +303,8 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
     pnpm add -D eslint @eslint/js globals 
     pnpm exec eslint --init
     pnpm add -D @biomejs/biome
+    pnpm add -D eslint-plugin-tailwindcss
+    pnpm add -D @html-eslint/parser
 ```
 
 ## 🎨 Ressources Graphiques & Icônes
