@@ -109,15 +109,16 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     cover                     Run PHPUnit tests with coverage                
 
   ENVIRONMENT
-    db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous dumps
-    prod                      Build production version                       
+    db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous
+    prod-publish              Publish to production                          
+    prod-build                Build production version                       
     prod-deploy               Deploy production build to remote server       
     dev                       Switch back to development environment         
 
   HELP
-    help                      Show this help message                         
     readme                    Update README.md Makefile section              
     readme-check              Check if README.md is up to date               
+    help                      Show this help message                         
 
   Examples:
     make test              # Run PHPUnit tests

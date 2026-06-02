@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "lab/portfolio",
+    "description": "My personal portfolio",
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -91,6 +93,10 @@
         "symfony": {
             "allow-contrib": false,
             "require": "8.0.*"
+        },
+        "grumphp": {
+            "config-default-path": ".tools-config/grumphp.yml",
+            "disable-plugin": false
         }
     },
     "require-dev": {
