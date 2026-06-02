@@ -39,7 +39,7 @@ class SecurityControllerTest extends WebTestCase
      */
     public function testAdminZoneIsProtected(): void
     {
-        $this->client->request('GET', '/admin');
+        $this->client->request('GET', '/backstage');
 
         // Will be redirected (302) to login page
         $this->assertResponseRedirects();
@@ -78,7 +78,7 @@ class SecurityControllerTest extends WebTestCase
 
         $this->client->submit($form);
         // After a successful connection, Symfony redirects the user
-        $this->assertResponseRedirects('/admin');
+        $this->assertResponseRedirects('/backstage');
 
         // Follow the redirect to ensure the destination page works
         $this->client->followRedirect();
@@ -93,7 +93,7 @@ class SecurityControllerTest extends WebTestCase
         $adminUser = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
         $this->client->loginUser($adminUser);
 
-        // Instead of: $client->request('GET', '/admin');
+        // Instead of: $client->request('GET', '/backstage');
         // We use the router to generate the real EasyAdmin route
         $router = $container->get('router');
 

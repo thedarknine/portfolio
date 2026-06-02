@@ -1,0 +1,33 @@
+{% extends '@EasyAdmin/page/content.html.twig' %}
+
+{% block content_title %}Mon Profil Sécurisé{% endblock %}
+
+{% block main %}
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-success"><i class="fas fa-shield-alt"></i> Double Authentification (2FA)</h5>
+                    <p class="card-text">
+                        Sécurisez votre accès en ajoutant manuellement cette clé dans votre application de sécurité
+                        (Bitwarden, Aegis, Authy, etc.).
+                    </p>
+
+                    <div class="alert alert-dark text-center my-4 font-monospace fs-4" style="letter-spacing: 2px;">
+                        <strong>{{ secretKey }}</strong>
+                    </div>
+
+                    <div class="alert alert-info small">
+                        <strong>Type de clé :</strong> Basée sur le temps (TOTP)<br>
+                        <strong>Identifiant / Compte :</strong> {{ user.email }}<br>
+                        <strong>Éditeur / Fournisseur :</strong> Portfolio Caroline
+                    </div>
+
+                    <p class="text-muted small">
+                        <i class="fas fa-info-circle"></i> <strong>Comment faire ?</strong> Dans votre application 2FA, créez un nouveau compte, choisissez "Saisir une clé de configuration", collez la clé ci-dessus, et validez. Elle commencera à générer vos codes à 6 chiffres.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

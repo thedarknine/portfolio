@@ -54,7 +54,7 @@ class HomeControllerTest extends WebTestCase
      */
     public function testAdminZoneIsProtected(): void
     {
-        $this->client->request('GET', '/admin');
+        $this->client->request('GET', '/backstage');
 
         // Check anonymous user is redirected (usually to /login)
         $this->assertResponseRedirects();

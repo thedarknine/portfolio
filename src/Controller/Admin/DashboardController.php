@@ -20,8 +20,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin', name: 'admin')]
-#[AdminDashboard(routePath: '/admin', routeName: 'admin')]
+#[Route('/backstage', name: 'admin')]
+#[AdminDashboard(routePath: '/backstage', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(private AdminDashboardService $dashboard)
@@ -45,6 +45,9 @@ class DashboardController extends AbstractDashboardController
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
+
+        yield MenuItem::section('Sécurité');
+        yield MenuItem::linkToRoute('2FA', 'fa fa-user-shield', 'admin_profile');
 
         yield MenuItem::section('Gestion Éditoriale');
         yield MenuItem::linkTo(PageInfoCrudController::class, 'Pages du site', 'fa fa-file-lines')->setAction(Action::INDEX);

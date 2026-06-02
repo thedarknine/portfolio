@@ -1,0 +1,57 @@
+{# templates/security/2fa_login.html.twig #}
+{% extends '@EasyAdmin/page/login.html.twig' %}
+
+{% block page_title %}Double Authentification{% endblock %}
+
+{% block wrapper_wrapper %}
+    <div class="login-wrapper">
+        <header class="main-header">
+            <h1 class="logo">
+                <i class="fas fa-shield-alt text-success"></i> Code de Sécurité
+            </h1>
+        </header>
+
+{% if authenticationError %}
+    <div class="alert alert-danger rounded shadow-sm mb-3">
+        <i class="fas fa-exclamation-circle"></i>
+        {{ authenticationError.messageKey|trans(authenticationError.messageData, 'TwoFactorBundle') }}
+    </div>
+{% endif %}
+
+        <div class="card bg-white p-4 shadow-sm rounded">
+            <p class="text-muted small mb-4 text-center">
+                Veuillez saisir le code de validation à 6 chiffres généré par votre application de sécurité.
+            </p>
+
+            <form action="{{ path('2fa_login_check') }}" method="post" class="w-100">
+                <div class="form-group mb-4">
+                    <label for="_auth_code" class="form-control-label field-label required fw-bold mb-2">
+                        Code d'authentification
+                    </label>
+                    <input
+                        type="text"
+                        id="_auth_code"
+                        name="{{ authCodeParameterName }}"
+                        autocomplete="one-time-code"
+                        inputmode="numeric"
+                        pattern="[0-9]*"
+                        class="form-control form-control-lg text-center font-monospace fs-3"
+                        placeholder="000 000"
+                        required
+                        autofocus
+                    />
+                </div>
+
+                {# Gestion du bouton d'annulation ou déconnexion s'il y a un problème #}
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Valider et se connecter
+                    </button>
+                    <a href="{{ path('app_logout') }}" class="btn btn-link btn-sm text-muted mt-2 text-center">
+                        Annuler la connexion
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
