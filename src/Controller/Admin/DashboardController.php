@@ -76,7 +76,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(PhotoTypeCrudController::class, 'Thématiques > Photos', 'fa fa-camera')->setAction(Action::INDEX);
 
         yield MenuItem::section('Retour');
-        yield MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_index');
+        yield MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_home');
     }
 
     public function configureAssets(): Assets

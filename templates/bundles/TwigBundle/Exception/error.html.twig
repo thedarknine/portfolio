@@ -1,0 +1,17 @@
+{% extends 'layout_error.html.twig' %}
+
+{% block title %}Une erreur est survenue - 500{% endblock %}
+
+{% block status_badge %}throw new \RuntimeException(){% endblock %}
+
+{% block number %}500{% endblock %}
+
+{% block tagline %}Erreur interne du serveur{% endblock %}
+
+{% block hero_title %}Le serveur a perdu le fil.{% endblock %}
+
+{% block hero_desc %}
+Une erreur interne s'est glissée dans les rouages du code ou
+l'argile a séché trop vite. L'administrateur (c'est-à-dire moi)
+a été alerté par les logs.
+{% endblock %}

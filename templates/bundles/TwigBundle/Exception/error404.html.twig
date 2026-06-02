@@ -1,0 +1,17 @@
+{% extends 'layout_error.html.twig' %}
+
+{% block title %}Page non trouvée — 404{% endblock %}
+
+{% block status_badge %}throw new PageNotFoundException(){% endblock %}
+
+{% block number %}404{% endblock %}
+
+{% block tagline %}Page introuvable{% endblock %}
+
+{% block hero_title %}Perdu dans le code ?{% endblock %}
+
+{% block hero_desc %}
+Le lien que vous avez suivi a peut-être été refactorisé,
+ou l'objet que vous cherchez n'a pas encore été modelé.
+Ne restez pas dans l'ombre du code.
+{% endblock %}
