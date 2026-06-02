@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -34,24 +34,12 @@ class AdminDashboardServiceTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->params = $this->createMock(ParameterBagInterface::class);
-        $this->kernel = $this->createStub(Kernel::class);
-        $this->projectRepository = $this->createMock(ProjectRepository::class);
-        $this->pageInfoRepository = $this->createMock(PageInfoRepository::class);
-        $this->skillRepository = $this->createMock(SkillRepository::class);
+        $this->params               = $this->createMock(ParameterBagInterface::class);
+        $this->kernel               = $this->createStub(Kernel::class);
+        $this->projectRepository    = $this->createMock(ProjectRepository::class);
+        $this->pageInfoRepository   = $this->createMock(PageInfoRepository::class);
+        $this->skillRepository      = $this->createMock(SkillRepository::class);
         $this->experienceRepository = $this->createMock(ExperienceRepository::class);
-    }
-
-    private function createService(): AdminDashboardService
-    {
-        return new AdminDashboardService(
-            $this->params,
-            $this->kernel,
-            $this->projectRepository,
-            $this->pageInfoRepository,
-            $this->skillRepository,
-            $this->experienceRepository
-        );
     }
 
     /**
@@ -67,7 +55,7 @@ class AdminDashboardServiceTest extends TestCase
 
         $fakeProject = (object) [
             'title' => 'Mon super projet',
-            'year' => 2026,
+            'year'  => 2026,
         ];
 
         $this->projectRepository->expects($this->once())
@@ -81,7 +69,7 @@ class AdminDashboardServiceTest extends TestCase
             ->willReturn('/un/dossier/fantome/qui/n/existe/pas');
 
         $service = $this->createService();
-        $stats = $service->getStats();
+        $stats   = $service->getStats();
 
         $this->assertIsArray($stats);
         $this->assertEquals(15, $stats['projects']);
@@ -110,7 +98,7 @@ class AdminDashboardServiceTest extends TestCase
         $this->params->method('get')->willReturn('/dossier/vide');
 
         $service = $this->createService();
-        $stats = $service->getStats();
+        $stats   = $service->getStats();
 
         $this->assertEquals('0', $stats['projectsExperienceRatio']);
     }
@@ -120,8 +108,8 @@ class AdminDashboardServiceTest extends TestCase
      */
     public function testDirectorySizeWithRealTemporaryFiles(): void
     {
-        $tmpDir = sys_get_temp_dir().'/dashboard_service_test_'.uniqid();
-        mkdir($tmpDir.'/public/images/photos', 0777, true);
+        $tmpDir = sys_get_temp_dir() . '/dashboard_service_test_' . uniqid();
+        mkdir($tmpDir . '/public/images/photos', 0777, true);
 
         // Verify that the get method is called at least once
         $this->params->expects($this->atLeastOnce())
@@ -130,33 +118,33 @@ class AdminDashboardServiceTest extends TestCase
             ->willReturn($tmpDir);
 
         $fileContent = str_repeat('A', 1536);
-        file_put_contents($tmpDir.'/public/images/photo1.jpg', $fileContent);
-        file_put_contents($tmpDir.'/public/images/photos/photo2.jpg', 'fake-image-data');
+        file_put_contents($tmpDir . '/public/images/photo1.jpg', $fileContent);
+        file_put_contents($tmpDir . '/public/images/photos/photo2.jpg', 'fake-image-data');
 
         $service = $this->createService();
-        $stats = $service->getStats();
+        $stats   = $service->getStats();
 
         $this->assertStringContainsString('KB', $stats['portfolioDiskUsage']);
         $this->assertEquals(2, $stats['totalImages']);
         $this->assertNotNull($stats['latestPhoto']);
         $this->assertEquals('photo2.jpg', $stats['latestPhoto']['filename']);
 
-        unlink($tmpDir.'/public/images/photos/photo2.jpg');
-        unlink($tmpDir.'/public/images/photo1.jpg');
-        rmdir($tmpDir.'/public/images/photos');
-        rmdir($tmpDir.'/public/images');
-        rmdir($tmpDir.'/public');
+        unlink($tmpDir . '/public/images/photos/photo2.jpg');
+        unlink($tmpDir . '/public/images/photo1.jpg');
+        rmdir($tmpDir . '/public/images/photos');
+        rmdir($tmpDir . '/public/images');
+        rmdir($tmpDir . '/public');
         rmdir($tmpDir);
     }
 
     public function testGetLatestPhotoWhenDirectoryIsEmpty(): void
     {
         // Create isolated temporary directory
-        $tmpDir = sys_get_temp_dir().'/dashboard_service_empty_test_'.uniqid();
-        mkdir($tmpDir.'/public/images/photos', 0777, true);
+        $tmpDir = sys_get_temp_dir() . '/dashboard_service_empty_test_' . uniqid();
+        mkdir($tmpDir . '/public/images/photos', 0777, true);
 
         // Place only the file excluded by your filter
-        file_put_contents($tmpDir.'/public/images/photos/hero-photos.jpg', 'hero');
+        file_put_contents($tmpDir . '/public/images/photos/hero-photos.jpg', 'hero');
 
         // Configuration of the stub for ALL parameter requests in this test
         $this->params->expects($this->atLeastOnce())
@@ -165,16 +153,28 @@ class AdminDashboardServiceTest extends TestCase
             ->willReturn($tmpDir);
 
         $service = $this->createService();
-        $stats = $service->getStats();
+        $stats   = $service->getStats();
 
         // Verification: The filter has emptied everything, we should be null (Line 80 covered!)
         $this->assertNull($stats['latestPhoto']);
 
         // Clean up
-        unlink($tmpDir.'/public/images/photos/hero-photos.jpg');
-        rmdir($tmpDir.'/public/images/photos');
-        rmdir($tmpDir.'/public/images');
-        rmdir($tmpDir.'/public');
+        unlink($tmpDir . '/public/images/photos/hero-photos.jpg');
+        rmdir($tmpDir . '/public/images/photos');
+        rmdir($tmpDir . '/public/images');
+        rmdir($tmpDir . '/public');
         rmdir($tmpDir);
+    }
+
+    private function createService(): AdminDashboardService
+    {
+        return new AdminDashboardService(
+            $this->params,
+            $this->kernel,
+            $this->projectRepository,
+            $this->pageInfoRepository,
+            $this->skillRepository,
+            $this->experienceRepository,
+        );
     }
 }

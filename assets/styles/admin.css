@@ -1,6 +1,6 @@
 /* assets/styles/admin.css */
-[data-bs-theme='dark'],
-[data-ea-dark-scheme='dark'] {
+[data-bs-theme="dark"],
+[data-ea-dark-scheme="dark"] {
     --color-nine-primary: oklch(33.74% 0.071 254.99); /* #1c385b */
     --color-nine-golden: oklch(96.81% 0.0074 80.72); /* #f7f4ef */
     --color-nine-light: oklch(90.81% 0.008 253.86); /* #dde1e6 */
@@ -43,14 +43,14 @@ td.actions {
     white-space: nowrap; /* Empêche les boutons de passer à la ligne */
 }
 
-td.actions a[data-action^='ea-'][href*='move'] {
+td.actions a[data-action^="ea-"][href*="move"] {
     padding: 0.25rem !important;
     font-size: 0.85rem !important;
     opacity: 0.6;
     transition: opacity 0.2s ease;
 }
 
-td.actions a[data-action^='ea-'][href*='move']:hover {
+td.actions a[data-action^="ea-"][href*="move"]:hover {
     opacity: 1;
     color: var(--color-nine-turquoise) !important;
 }

@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -77,7 +77,7 @@ class PageServiceTest extends KernelTestCase
     {
         // Get actual project path configured in the test container
         $kernelProjectDir = self::getContainer()->getParameter('kernel.project_dir');
-        $expectedPath = $kernelProjectDir.'/public/images';
+        $expectedPath     = $kernelProjectDir . '/public/images';
 
         $actualPath = $this->pageService->getImagesDir();
 

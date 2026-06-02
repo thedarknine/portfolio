@@ -6,6 +6,7 @@
  */
 import $ from 'jquery';
 import './styles/app.css';
+import PhotoSwipe from 'photoswipe';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
@@ -25,7 +26,8 @@ $(document).ready(() => {
                 const animationClass = element.getAttribute('data-animate');
 
                 // On récupère le délai (on met 0 par défaut si l'attribut n'existe pas)
-                const delay = parseInt(element.getAttribute('data-delay')) || 0;
+                const delay =
+                    parseInt(element.getAttribute('data-delay'), 10) || 0;
 
                 // On arrête d'observer l'élément immédiatement pour éviter les doublons
                 observer.unobserve(element);
@@ -39,7 +41,9 @@ $(document).ready(() => {
     }, options);
 
     const elementsToAnimate = document.querySelectorAll('[data-animate]');
-    elementsToAnimate.forEach((el) => observer.observe(el));
+    elementsToAnimate.forEach((el) => {
+        observer.observe(el);
+    });
 
     // Menus Burger (Mobile)
     const burgers = document.querySelectorAll('.nine-navbar-burger');
@@ -48,7 +52,9 @@ $(document).ready(() => {
     const backdrops = document.querySelectorAll('.nine-navbar-backdrop');
 
     const toggleMenu = () => {
-        menus.forEach((menu) => menu.classList.toggle('hidden'));
+        menus.forEach((menu) => {
+            menu.classList.toggle('hidden');
+        });
     };
     if (burgers.length && menus.length) {
         // Applying the 'click' event on each burger button
@@ -66,16 +72,39 @@ $(document).ready(() => {
 
     // Lightbox
     const myPhotoSwipe = () => {
-        const galleryElement = document.querySelector('.pswp9-lightbox');
+        const galleryElement = document.querySelector(
+            '.pswp9-lightbox, .pswp9-gallery',
+        );
 
         if (galleryElement != null) {
             const lightbox = new PhotoSwipeLightbox({
-                gallery: '.pswp9-lightbox',
-                // Finding the 'a' element inside the grid items
-                children: 'div > a',
-
-                pswpModule: () => import('photoswipe'),
+                gallery: '.pswp9-gallery, .pswp9-lightbox',
+                children: '.pswp9-link',
+                pswpModule: PhotoSwipe,
             });
+            lightbox.addFilter('domItemData', (itemData, element) => {
+                const img = element.querySelector('img');
+
+                if (img?.naturalWidth) {
+                    itemData.width = img.naturalWidth;
+                    itemData.height = img.naturalHeight;
+                } else {
+                    itemData.width = 1200;
+                    itemData.height = 800;
+                }
+                return itemData;
+            });
+            lightbox.on('pointerdown', (e) => {
+                const linkEl = e.originalEvent.target.closest('.pswp-link');
+                if (linkEl) {
+                    const img = new Image();
+                    img.src = linkEl.href;
+                    img.onload = () => {
+                        // L'objet Image est simplement mis en cache par le navigateur pour le clic
+                    };
+                }
+            });
+
             lightbox.init();
         }
     };

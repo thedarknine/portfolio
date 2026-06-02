@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -33,7 +33,7 @@ class EducationValidationTest extends KernelTestCase
      */
     public function testValidEducationHasNoViolation(): void
     {
-        $enumCases = EducationType::cases();
+        $enumCases   = EducationType::cases();
         $defaultType = !empty($enumCases) ? $enumCases[0] : null;
 
         $education = (new Education())
@@ -48,7 +48,7 @@ class EducationValidationTest extends KernelTestCase
                     ->setName('Université de Paris')
                     ->setSlug('universite-de-paris')
                     ->setCity('Paris')
-                    ->setDepartment(75)
+                    ->setDepartment(75),
             )
             ->setType($defaultType);
 
@@ -107,7 +107,7 @@ class EducationValidationTest extends KernelTestCase
         $education = new Education();
 
         $reflection = new \ReflectionClass($education);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($education, 45);
 

@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -81,7 +81,7 @@ class ExperienceValidationTest extends KernelTestCase
      */
     public function testSubtitleTooLongTriggerViolation(): void
     {
-        $company = new Company();
+        $company    = new Company();
         $experience = (new Experience())
             ->setTitle('Développeur Symfony')
             ->setSlug('developpeur-symfony')
@@ -121,7 +121,7 @@ class ExperienceValidationTest extends KernelTestCase
     public function testAddAndRemoveItemsRelations(): void
     {
         $experience = new Experience();
-        $item = new ExperienceItem();
+        $item       = new ExperienceItem();
 
         // Test addition (must return static for chaining)
         $result = $experience->addItem($item);
@@ -176,7 +176,7 @@ class ExperienceValidationTest extends KernelTestCase
             (new SkillType())
                 ->setName('Programming')
                 ->setSlug('programming')
-                ->setPosition(1)
+                ->setPosition(1),
         );
 
         // 3. Associate the invalid skill with the experience
@@ -200,7 +200,7 @@ class ExperienceValidationTest extends KernelTestCase
     public function testAddAndRemoveSkillsRelations(): void
     {
         $experience = new Experience();
-        $skill = new Skill();
+        $skill      = new Skill();
 
         // Test adding skill
         $experience->addSkill($skill);
@@ -218,7 +218,7 @@ class ExperienceValidationTest extends KernelTestCase
     public function testAddAndRemoveLinksRelations(): void
     {
         $experience = new Experience();
-        $link = new ExperienceLink();
+        $link       = new ExperienceLink();
 
         // Test adding link
         $experience->addLink($link);
@@ -238,7 +238,7 @@ class ExperienceValidationTest extends KernelTestCase
         $experience = new Experience();
 
         $reflection = new \ReflectionClass($experience);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($experience, 7);
 

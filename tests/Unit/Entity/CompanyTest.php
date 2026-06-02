@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -18,7 +18,7 @@ class CompanyTest extends TestCase
 {
     public function testRemoveExperienceClearsRelation(): void
     {
-        $company = new Company();
+        $company    = new Company();
         $experience = new Experience();
 
         // 1. Establish relation in both directions
@@ -41,7 +41,7 @@ class CompanyTest extends TestCase
 
     public function testSkillTypeRemoveSkillClearsRelation(): void
     {
-        $type = new \App\Entity\SkillType();
+        $type  = new \App\Entity\SkillType();
         $skill = new \App\Entity\Skill();
 
         $skill->setSkillType($type);

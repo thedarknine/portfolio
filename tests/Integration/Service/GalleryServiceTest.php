@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -24,11 +24,11 @@ class GalleryServiceTest extends KernelTestCase
     {
         self::bootKernel();
         $this->galleryService = self::getContainer()->get(GalleryService::class);
-        $this->filesystem = new Filesystem();
+        $this->filesystem     = new Filesystem();
 
         // Security: Point to /var/tests/images instead of /public/images
-        $projectDir = self::getContainer()->getParameter('kernel.project_dir');
-        $this->testImagesDir = $projectDir.'/var/tests/images';
+        $projectDir          = self::getContainer()->getParameter('kernel.project_dir');
+        $this->testImagesDir = $projectDir . '/var/tests/images';
 
         // Ensure the temporary directory exists
         $this->filesystem->mkdir($this->testImagesDir);
@@ -48,11 +48,11 @@ class GalleryServiceTest extends KernelTestCase
         // 1. ARRANGEMENT : Prepare a directory for one of the slugs returned by your fixtures/BDD
         // Replace 'nintendo' with a slug that your fixture command actually creates for ArcadeType
         $existingSlug = 'nintendo';
-        $targetDir = $this->testImagesDir.'/arcade/'.$existingSlug;
+        $targetDir    = $this->testImagesDir . '/arcade/' . $existingSlug;
 
         $this->filesystem->mkdir($targetDir);
-        $this->filesystem->touch($targetDir.'/mario.png');
-        $this->filesystem->touch($targetDir.'/zelda.png');
+        $this->filesystem->touch($targetDir . '/mario.png');
+        $this->filesystem->touch($targetDir . '/zelda.png');
 
         // 2. ACT
         $result = $this->galleryService->getArcadeGallery();
@@ -72,10 +72,10 @@ class GalleryServiceTest extends KernelTestCase
     {
         // Take an existing slug (e.g., 'poterie')
         $existingSlug = 'poterie';
-        $targetDir = $this->testImagesDir.'/creations/'.$existingSlug;
+        $targetDir    = $this->testImagesDir . '/creations/' . $existingSlug;
 
         $this->filesystem->mkdir($targetDir);
-        $this->filesystem->touch($targetDir.'/vase.jpg');
+        $this->filesystem->touch($targetDir . '/vase.jpg');
 
         $result = $this->galleryService->getCreationsGallery();
 
@@ -91,14 +91,14 @@ class GalleryServiceTest extends KernelTestCase
     {
         // Create a directory to test the renaming logic and caption explode
         $existingSlug = 'paysages';
-        $targetDir = $this->testImagesDir.'/photos/'.$existingSlug;
+        $targetDir    = $this->testImagesDir . '/photos/' . $existingSlug;
 
         $this->filesystem->mkdir($targetDir);
 
         // File 1: Standard format "ID-Ma_Super_Legende.jpg"
-        $this->filesystem->touch($targetDir.'/01-Coucher_de_soleil.jpg');
+        $this->filesystem->touch($targetDir . '/01-Coucher_de_soleil.jpg');
         // File 2: Format without hyphen (edge case for isset($caption[1]))
-        $this->filesystem->touch($targetDir.'/sans_tiret.JPG');
+        $this->filesystem->touch($targetDir . '/sans_tiret.JPG');
 
         $result = $this->galleryService->getPhotosGallery();
 
@@ -113,7 +113,7 @@ class GalleryServiceTest extends KernelTestCase
 
             // Find the file structured to validate the caption extraction algorithm
             $coucherDeSoleilData = null;
-            $sansTiretData = null;
+            $sansTiretData       = null;
             foreach ($photos as $photo) {
                 if ('01-Coucher_de_soleil.jpg' === $photo['filename']) {
                     $coucherDeSoleilData = $photo;

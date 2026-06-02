@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -30,24 +30,11 @@ class ExperienceLinkValidationTest extends KernelTestCase
     }
 
     /**
-     * Helper to create a valid Experience entity for testing purposes.
-     */
-    private function createValidMockExperience(): Experience
-    {
-        return (new Experience())
-            ->setTitle('Product Owner')
-            ->setSlug('product-owner')
-            ->setDescription('Une description d’expérience valide.')
-            ->setStartDate(new \DateTime('-1 year'))
-            ->setCompany(new Company());
-    }
-
-    /**
      * Nominal case: a valid experience link passes without violations.
      */
     public function testValidExperienceLinkHasNoViolation(): void
     {
-        $enumCases = LinkType::cases();
+        $enumCases   = LinkType::cases();
         $defaultType = !empty($enumCases) ? $enumCases[0] : null;
 
         $link = (new ExperienceLink())
@@ -90,10 +77,23 @@ class ExperienceLinkValidationTest extends KernelTestCase
         $link = new ExperienceLink();
 
         $reflection = new \ReflectionClass($link);
-        $property = $reflection->getProperty('id');
+        $property   = $reflection->getProperty('id');
         $property->setAccessible(true);
         $property->setValue($link, 742);
 
         $this->assertSame(742, $link->getId());
+    }
+
+    /**
+     * Helper to create a valid Experience entity for testing purposes.
+     */
+    private function createValidMockExperience(): Experience
+    {
+        return (new Experience())
+            ->setTitle('Product Owner')
+            ->setSlug('product-owner')
+            ->setDescription('Une description d’expérience valide.')
+            ->setStartDate(new \DateTime('-1 year'))
+            ->setCompany(new Company());
     }
 }

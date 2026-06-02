@@ -2,7 +2,7 @@
 
 /**
  * This file is part of Portfolio project.
- * (c) Caroline Noyer <hello@carolinenoyer.fr>
+ * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
@@ -39,11 +39,11 @@ class CreateUserCommandTest extends KernelTestCase
      */
     public function testExecuteCreatesUserSuccessfully(): void
     {
-        $kernel = self::$kernel;
+        $kernel      = self::$kernel;
         $application = new Application($kernel);
 
         // 1. Get the command registered in the Symfony application
-        $command = $application->find('app:create-user');
+        $command       = $application->find('app:create-user');
         $commandTester = new CommandTester($command);
 
         // 2. Simulate user input in the terminal
@@ -64,7 +64,7 @@ class CreateUserCommandTest extends KernelTestCase
 
         // 5. Validation in Database
         $userRepository = $this->entityManager->getRepository(User::class);
-        $user = $userRepository->findOneBy(['email' => 'admin@portfolio.fr']);
+        $user           = $userRepository->findOneBy(['email' => 'admin@portfolio.fr']);
 
         $this->assertNotNull($user);
         $this->assertContains('ROLE_ADMIN', $user->getRoles());
@@ -77,9 +77,9 @@ class CreateUserCommandTest extends KernelTestCase
      */
     public function testExecuteValidatesEmailFormatInteractively(): void
     {
-        $kernel = self::$kernel;
-        $application = new Application($kernel);
-        $command = $application->find('app:create-user');
+        $kernel        = self::$kernel;
+        $application   = new Application($kernel);
+        $command       = $application->find('app:create-user');
         $commandTester = new CommandTester($command);
 
         // Simulate a user who first enters an invalid value,
@@ -106,9 +106,9 @@ class CreateUserCommandTest extends KernelTestCase
      */
     public function testExecuteValidatesPasswordLengthInteractively(): void
     {
-        $kernel = self::$kernel;
-        $application = new Application($kernel);
-        $command = $application->find('app:create-user');
+        $kernel        = self::$kernel;
+        $application   = new Application($kernel);
+        $command       = $application->find('app:create-user');
         $commandTester = new CommandTester($command);
 
         $commandTester->setInputs([
@@ -139,9 +139,9 @@ class CreateUserCommandTest extends KernelTestCase
         $this->entityManager->persist($existingUser);
         $this->entityManager->flush();
 
-        $kernel = self::$kernel;
-        $application = new Application($kernel);
-        $command = $application->find('app:create-user');
+        $kernel        = self::$kernel;
+        $application   = new Application($kernel);
+        $command       = $application->find('app:create-user');
         $commandTester = new CommandTester($command);
 
         // 2. Provide the same information for the command
