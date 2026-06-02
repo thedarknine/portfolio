@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page non trouvée - 404</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body class="h-full flex flex-col justify-between antialiased font-normal text-nine-primary selection:bg-nine-turquoise/20">
+
+    <main class="flex-grow flex items-center justify-center px-6 py-24 sm:py-32 lg:px-8">
+        <div class="text-center max-w-2xl">
+
+            <p class="text-xs font-mono tracking-widest text-[#ff5e02] uppercase bg-[#ff5e02]/10 px-3 py-1 rounded-full inline-block border border-[#ff5e02]/20 mb-6">
+                Status: HTTP/1.1 404 Not Found
+            </p>
+
+            <h1 class="text-7xl font-extrabold text-nine-blue tracking-tight sm:text-8xl font-accent">
+                4<span class="text-nine-turquoise font-serif italic">0</span>4
+            </h1>
+
+            <h2 class="mt-6 text-xl font-medium tracking-tight text-nine-blue sm:text-2xl font-accent uppercase">
+                Cette URL a fait un faux pli.
+            </h2>
+            <p class="mt-4 text-base text-slate-500 leading-relaxed font-light">
+                Le lien que vous avez suivi a peut-être été refactorisé, ou l'objet que vous cherchez n'a pas encore été modelé. Ne restez pas dans l'ombre du code !
+            </p>
+
+            <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+                <a href="{{ path('app_home') }}" class="flex flex-col items-center justify-center p-5 bg-white border border-slate-200 rounded-2xl shadow-xs hover:border-nine-turquoise hover:shadow-md transition-all group">
+                    <i class="fas fa-laptop-code text-xl text-slate-400 group-hover:text-nine-turquoise mb-2 transition-colors"></i>
+                    <span class="text-sm font-semibold text-nine-blue font-accent uppercase tracking-wider text-xs">Le Portfolio</span>
+                    <span class="text-xs text-slate-400 mt-1">Retour au dev</span>
+                </a>
+
+                <a href="/#creations" class="flex flex-col items-center justify-center p-5 bg-white border border-slate-200 rounded-2xl shadow-xs hover:border-nine-turquoise hover:shadow-md transition-all group">
+                    <i class="fas fa-paint-brush text-xl text-slate-400 group-hover:text-nine-turquoise mb-2 transition-colors"></i>
+                    <span class="text-sm font-semibold text-nine-blue font-accent uppercase tracking-wider text-xs">L'Atelier</span>
+                    <span class="text-xs text-slate-400 mt-1">Clay & Créations</span>
+                </a>
+
+                <a href="/#photography" class="flex flex-col items-center justify-center p-5 bg-white border border-slate-200 rounded-2xl shadow-xs hover:border-nine-turquoise hover:shadow-md transition-all group">
+                    <i class="fas fa-camera-retro text-xl text-slate-400 group-hover:text-nine-turquoise mb-2 transition-colors"></i>
+                    <span class="text-sm font-semibold text-nine-blue font-accent uppercase tracking-wider text-xs">La Galerie</span>
+                    <span class="text-xs text-slate-400 mt-1">Coup d'œil photo</span>
+                </a>
+            </div>
+
+            <div class="mt-10">
+                <a href="{{ path('app_home') }}" class="text-sm font-medium text-nine-turquoise hover:text-nine-turquoise/80 group">
+                    <i class="fas fa-chevron-left mr-1 text-xs transition-transform group-hover:-translate-x-1"></i> Simplement revenir à la racine
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-6 border-t border-slate-100 bg-white/50 text-center text-xs text-slate-400 font-mono">
+        carolinenoyer.fr // workflow checked
+    </footer>
+
+</body>
+</html>
