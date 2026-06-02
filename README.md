@@ -110,9 +110,8 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
 
   ENVIRONMENT
     db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous
-    prod-publish              Publish to production                          
+    prod-pull                 Pull from remote server                        
     prod-build                Build production version                       
-    prod-deploy               Deploy production build to remote server       
     dev                       Switch back to development environment         
 
   HELP
@@ -270,6 +269,8 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 * `gedmo/doctrine-extensions` : Ajout de comportements (Sluggable, Timestampable).
 * `nesbot/carbon` : Manipulation avancée et fluide des dates.
 * `easycorp/easyadmin-bundle` : Moteur de Backoffice fluide et moderne (v5).
+* `scheb/2fa-google-authenticator` : Authentification à deux facteurs via Google Authenticator.
+* `symfony/rate-limiter` : Limitation des tentatives de connexion.
 * `presta/sitemap-bundle` : Génération automatique des sitemaps XML.
 
 ### Packages de Développement / QA
