@@ -7,6 +7,7 @@ SHELL := /usr/bin/env bash
 ENVIRONMENT ?= dev
 
 NOW := $(shell date +"%Y%m%d_%H%M%S")
+TODAY := $(shell date +"%Y%m%d")
 
 # Manage Docker container execution flags for CI compatibility
 TTY_FLAG := -it
@@ -33,6 +34,7 @@ DC        := docker compose
 DC_EXEC   = $(DC) exec $(TTY_FLAG) $(DOCKER_APP_SERVICE)
 
 SYMFONY		:= $(DC_EXEC) php bin/console
+SYMFONY_PROD:= $(DC_EXEC) -e APP_ENV=prod php bin/console 
 COMPOSER	:= $(DC_EXEC) composer
 PNPM		:= $(DC_EXEC) pnpm 
 PNPX		:= $(DC_EXEC) pnpx
@@ -79,6 +81,7 @@ ICON_DATA := 💾
 ICON_CLEAN := 🧹
 ICON_HELP := ❓
 ICON_DEBUG := 🪲
+ICON_UPLOAD := 📤
 
 #= FONCTIONS ===========================================================
 define display_title
@@ -122,10 +125,12 @@ define display_error
 endef
 
 define display_warning
-    @printf "\n"
-    @printf "$(RESET)$(BG_YELLOW)  $(RESET)  $(YELLOW)┌─────────────────────────────────────────────────────────┐$(RESET)\n"
-    @printf "$(RESET)$(BG_YELLOW)  $(RESET)  $(BOLD)$(YELLOW)⚠ WARNING:$(RESET) %s\n" "$(1)"
-    @printf "$(RESET)$(BG_YELLOW)  $(RESET)  $(YELLOW)└─────────────────────────────────────────────────────────┘$(RESET)\n\n"
+	{ \
+		printf "\n" >&2; \
+		printf "$(RESET)$(BG_YELLOW)  $(RESET)  $(YELLOW)┌─────────────────────────────────────────────────────────┐$(RESET)\n" >&2; \
+		printf "$(RESET)$(BG_YELLOW)  $(RESET)  $(BOLD)$(YELLOW)⚠ WARNING:$(RESET) %s\n" "$(1)" >&2; \
+		printf "$(RESET)$(BG_YELLOW)  $(RESET)  $(YELLOW)└─────────────────────────────────────────────────────────┘$(RESET)\n\n" >&2; \
+    }
 endef
 
 define display_elapsed
@@ -547,51 +552,152 @@ cover: ## Run PHPUnit tests with coverage
 	@$(call display_success,Coverage report generated in 'coverage/' directory.)
 
 # =====================================================================
+##@ ENVIRONMENT
+EXPORT_DIR=$(TOOLS_CONFIG_DIR)/export
+ZIP_NAME=portfolio_prod-$(TODAY).zip
+SQL_FILE=portfolio_db-$(NOW).sql
+CMD_PROD=zip -r archive-portfolio-20260601.zip * -x analytics/* -x medias/movies/*
+REMOTE_PATH=/home/$(REMOTE_USER)/domains/carolinenoyer.fr/public_html
+
+.PHONY: db-dump
+FILES_CLEAN ?= 0
+db-dump: ## Dump database (FILES_CLEAN=1 to clean previous)
+	@$(call display_title,Dumping database...,${ICON_DATA})
+	@if [ "$(FILES_CLEAN)" = "1" ]; then \
+		rm -f $(EXPORT_DIR)/*.sql; \
+	fi
+	@$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE) 
+	@$(call display_success_matrix) \
+		"Database dumped to:" \
+		"$(EXPORT_DIR)/$(SQL_FILE)"
+
+# Before use this command think about :
+# 1- Connect to production server with SSH
+# 2- Create hidden folder for Git deployment repository
+#		mkdir -p ~/repo/portfolio.git
+#		cd ~/repo/portfolio.git
+# 3- Initialise a "Bare" Git repository
+#		git init --bare
+# 4- Create the magic script (the post-receive hook)
+#		nano hooks/post-receive
+# 5- Paste the code
+# 		#	#!/bin/bash
+# 		TARGET="/[PATH_TO_YOUR_PROJECT]/carolinenoyer.fr/public_html"
+# 		GIT_DIR="/[PATH_TO_YOUR_GIT_REPO]/repo/portfolio.git"
+# 		echo "🚀 Git post-receive hook triggered on Hostinger..."
+# 		# 2. Extract code cleanly (without .git folder) to public_html
+# 		git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f main
+# 		cd $TARGET
+# 		# 3. Clean unwanted files or dev residues
+# 		echo "🧹 Cleaning dev files..."
+# 		rm -rf tests/ Grumphp.yml Rector.php php_cs.dist.php
+# 		# 4. Install production dependencies without dev tools
+# 		echo "📦 Installing Composer dependencies (prod)..."
+# 		export APP_ENV=prod
+# 		composer install --no-dev --optimize-autoloader --no-interaction
+# 		# 5. Clean and rebuild Symfony cache properly
+# 		echo "⚡ Cleaning and optimizing Symfony cache..."
+# 		php bin/console cache:clear --env=prod
+# 		echo "✅ Deployment completed successfully! Your portfolio is up to date."
+# 6- Make script executable
+# 		chmod +x hooks/post-receive
+# 7- From local env dev, add production remote, this will tell Git local that 
+#    remote production server is a new push destination.
+# 		git remote add production [USER]@[REMOTE_SERVER]:repo/portfolio.git
+.PHONY: prod-publish
+prod-publish: ## Publish to production
+	@$(call display_title,Publishing to production...,$(ICON_UPLOAD))
+	$(MAKE) -s db-dump
+	git checkout main
+	git pull origin main
+	git push production main
+	@$(call display_success,Production published successfully!)
+
+.PHONY: prod-build
+prod-build: ## Build production version
+	@$(call display_title,Building production version...)
+	@start=$$(date +%s); \
+	$(call display_subtitle,🗜️ [1/7] Dumping database...); \
+	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE); \
+	$(call display_subtitle,🧹 [2/7] Cleaning of the local cache...); \
+	$(SYMFONY_PROD) cache:clear --env=prod; \
+	$(call display_subtitle,🎨 [3/7] Compilation and minification of Tailwind v4...); \
+	$(SYMFONY_PROD) tailwind:build --minify --env=prod; \
+	$(call display_subtitle,🎨 [4/7] Compilation of assets with AssetMapper for PROD...); \
+	$(SYMFONY_PROD) asset-map:compile --env=prod; \
+	$(call display_subtitle,📦 [5/7] Removal of DEV tools and optimization of Composer...); \
+	docker compose exec -t -e APP_ENV=prod app composer install --no-dev --optimize-autoloader; \
+	$(call display_subtitle,✨ [6/7] Warming up the PROD cache...); \
+	$(SYMFONY_PROD) cache:warmup --env=prod; \
+	$(call display_subtitle,📦 [7/7] Zipping the production build...); \
+	rm -f $(EXPORT_DIR)/*.zip; \
+	zip -r $(EXPORT_DIR)/$(ZIP_NAME) . -x "*.git*" "node_modules/*" "tests/*" "var/cache/*" "var/log/*" ".env.local" "Makefile" "$(TOOLS_CONFIG_DIR)/*" ".docker/*" "docker-compose.yml" > /dev/null; \
+	$(call display_elapsed,$$(date +%s),$$start)
+	@$(display_success_matrix) \
+		"Database dumped" \
+		"Local cache cleaned" \
+		"Tailwind compiled and minified" \
+		"Assets compiled with AssetMapper" \
+		"DEV tools removed and Composer optimized" \
+		"PROD cache warmed up" \
+		"Archive $(ZIP_NAME) created"
+	@printf "\n  ${BOLD}${GREEN}✨ Archive $(ZIP_NAME) ready for manual transfer! ✨${RESET}\n\n"
+
+.PHONY: prod-deploy
+prod-deploy: ## Deploy production build to remote server
+	@$(call display_title,Deploying production build...)
+	$(MAKE) -s check-remote-vars
+	$(MAKE) -s prod-build
+	@start=$$(date +%s); \
+	$(call display_subtitle,📤 [1/3] Uploading archive...); \
+	rsync -avz --progress -e 'ssh -i $(REMOTE_SSH_KEY) -p $(REMOTE_PORT)' $(EXPORT_DIR)/$(ZIP_NAME) $(REMOTE_USER)@$(REMOTE_HOST):$(REMOTE_PATH)/tmp/; \
+	$(call display_elapsed,$$(date +%s),$$start)
+	@$(display_success_matrix) \
+		"Archive uploaded" \
+		"Extracted on remote" \
+		"Cleaned up"
+	@printf "\n  ${BOLD}${GREEN}✨ Production deployed! ✨${RESET}\n\n"
+# 	$(call display_subtitle,📦 [2/3] Extracting on remote...); \
+# 	ssh $(REMOTE_USER)@$(REMOTE_HOST) "cd $(REMOTE_PATH) && unzip -o $(REMOTE_PATH)/tmp/$(ZIP_NAME) -d ."; \
+# 	$(call display_subtitle,🧹 [3/3] Cleaning up...); \
+# 	ssh $(REMOTE_USER)@$(REMOTE_HOST) "rm -f $(REMOTE_PATH)/tmp/$(ZIP_NAME)"; \
+
+check-remote-vars:
+	@if [ -z "$(REMOTE_USER)" ] || [ -z "$(REMOTE_HOST)" ] || [ -z "$(REMOTE_SSH_KEY)" ] || [ -z "$(REMOTE_PATH)" ]; then \
+		echo "${RED}Error: REMOTE_USER, REMOTE_HOST, REMOTE_SSH_KEY, and REMOTE_PATH must be set${RESET}"; \
+		exit 1; \
+	fi
+
+.PHONY: dev
+dev: ## Switch back to development environment
+	@$(call display_title,Switching back to development environment...)
+	@start=$$(date +%s); \
+	$(call display_subtitle,🔄 [1/3] Restoring dev dependencies...); \
+	docker compose exec -t -e APP_ENV=dev app composer install; \
+	$(call display_subtitle,🧹 [2/3] Cleaning dev cache...); \
+	$(SYMFONY) cache:clear --env=dev; \
+	$(call display_subtitle,🎨 [3/3] Regenerating assets for development...); \
+	$(SYMFONY) tailwind:build --env=dev; \
+	$(call display_subtitle,🧹 [4/4] Cleaning public assets...); \
+	rm -rf public/assets/*; \
+	$(call display_subtitle,🧹 [5/5] Cleaning archive...); \
+	rm -f $(ZIP_NAME); \
+	$(call display_elapsed,$$(date +%s),$$start)
+	@$(display_success_matrix) \
+		"Dev dependencies restored" \
+		"Dev cache cleaned" \
+		"Assets regenerated for development" \
+		"Public assets cleaned" \
+		"Archive cleaned"
+	@printf "\n  ${BOLD}${GREEN}✅ Development environment restored!${RESET}\n\n"
+
+	
+
+# =====================================================================
 ##@ HELP
 TARGET_MAX_CHAR_NUM ?= 15
 DESC_MAX_CHAR_NUM ?= 45
 
-.PHONY: help
-help: ## Show this help message
-	@printf '\n'
-	@printf '  ${BOLD}${YELLOW}${PROJECT_NAME}${RESET} ${BLUE}(${GREEN}${ENVIRONMENT}${BLUE})${RESET}\n'
-	@printf '  ${BLUE}───────────────────────────────────────────────────────────────────────────────${RESET}\n'
-	@printf '\n'
-	@printf '  ${BOLD}Usage:${RESET}\n'
-	@printf '    ${YELLOW}make${RESET} ${GREEN}<target>${RESET} ${PURPLE}[OPTION=value]${RESET}\n'
-	@printf '\n'
-	@printf '  ${BOLD}Available targets:${RESET}\n'
-	@awk -v yellow="${YELLOW}" -v green="${GREEN}" -v cyan="${CYAN}" -v purple="${PURPLE}" -v reset="${RESET}" -v tw="$(TARGET_MAX_CHAR_NUM)" -v dw="$(DESC_MAX_CHAR_NUM)" ' \
-		/^##@/ { \
-			section=substr($$0,5); \
-			printf "\n%s  %s%s\n", cyan, section, reset; \
-			next \
-		} \
-		/^[a-zA-Z0-9\._-]+:.*##/ { \
-			split($$0, parts, "##"); \
-			cmd=parts[1]; desc=parts[2]; \
-			sub(":.*","",cmd); \
-			gsub(/^[ \t]+/, "", desc); \
-			gsub(/^[ \t]+/, "", cmd); \
-			\
-			options=""; \
-			p_start = index(desc, "("); \
-			p_end = index(desc, ")"); \
-			if (p_start > 0 && p_end > p_start) { \
-				options = substr(desc, p_start + 1, p_end - p_start - 1); \
-				desc = substr(desc, 1, p_start - 1); \
-				gsub(/[ \t]+$$/, "", desc); \
-				options = purple""options""reset; \
-			} \
-			\
-			printf "    %s%-" tw "s%s  %-" dw "s  %s\n", yellow, cmd, reset, desc, options; \
-		}'  $(MAKEFILE_LIST)
-	@printf '\n'
-	@printf '  ${BOLD}Examples:${RESET}\n'
-	@printf '    make test              # Run PHPUnit tests\n'
-	@printf '    make cs                # Check and fix coding standards\n'
-	@printf '    make cs-php PHP_FIX=1  # Run linter and apply changes\n'
-	@printf '\n'
 
 .PHONY: readme
 readme: ## Update README.md Makefile section
@@ -640,4 +746,47 @@ readme-check: ## Check if README.md is up to date
 		$(call display_warning,README.md is outdated. Run 'make readme'.); \
 		exit 1; \
 	fi; \
-	rm $$tmp
+	rm -f $$tmp
+
+.PHONY: help
+help: ## Show this help message
+	@printf '\n'
+	@printf '  ${BOLD}${YELLOW}${PROJECT_NAME}${RESET} ${BLUE}(${GREEN}${ENVIRONMENT}${BLUE})${RESET}\n'
+	@printf '  ${BLUE}───────────────────────────────────────────────────────────────────────────────${RESET}\n'
+	@printf '\n'
+	@printf '  ${BOLD}Usage:${RESET}\n'
+	@printf '    ${YELLOW}make${RESET} ${GREEN}<target>${RESET} ${PURPLE}[OPTION=value]${RESET}\n'
+	@printf '\n'
+	@printf '  ${BOLD}Available targets:${RESET}\n'
+	@awk -v yellow="${YELLOW}" -v green="${GREEN}" -v cyan="${CYAN}" -v purple="${PURPLE}" -v reset="${RESET}" -v tw="$(TARGET_MAX_CHAR_NUM)" -v dw="$(DESC_MAX_CHAR_NUM)" ' \
+		/^##@/ { \
+			section=substr($$0,5); \
+			printf "\n%s  %s%s\n", cyan, section, reset; \
+			next \
+		} \
+		/^[a-zA-Z0-9\._-]+:.*##/ { \
+			split($$0, parts, "##"); \
+			cmd=parts[1]; desc=parts[2]; \
+			sub(":.*","",cmd); \
+			gsub(/^[ \t]+/, "", desc); \
+			gsub(/^[ \t]+/, "", cmd); \
+			\
+			options=""; \
+			p_start = index(desc, "("); \
+			p_end = index(desc, ")"); \
+			if (p_start > 0 && p_end > p_start) { \
+				options = substr(desc, p_start + 1, p_end - p_start - 1); \
+				desc = substr(desc, 1, p_start - 1); \
+				gsub(/[ \t]+$$/, "", desc); \
+				options = purple""options""reset; \
+			} \
+			\
+			printf "    %s%-" tw "s%s  %-" dw "s  %s\n", yellow, cmd, reset, desc, options; \
+		}'  $(MAKEFILE_LIST)
+	@printf '\n'
+	@printf '  ${BOLD}Examples:${RESET}\n'
+	@printf '    make test              # Run PHPUnit tests\n'
+	@printf '    make cs                # Check and fix coding standards\n'
+	@printf '    make cs-php PHP_FIX=1  # Run linter and apply changes\n'
+	@printf '\n'
+

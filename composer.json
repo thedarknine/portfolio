@@ -1,5 +1,7 @@
 {
     "type": "project",
+    "name": "lab/portfolio",
+    "description": "My personal portfolio",
     "license": "proprietary",
     "minimum-stability": "stable",
     "prefer-stable": true,
@@ -13,6 +15,7 @@
         "easycorp/easyadmin-bundle": "^5.0.11",
         "gedmo/doctrine-extensions": "^3.22",
         "nesbot/carbon": "^3.11.4",
+        "presta/sitemap-bundle": "^4.3",
         "stof/doctrine-extensions-bundle": "^1.15.3",
         "symfony/asset": "8.0.*",
         "symfony/asset-mapper": "8.0.*",
@@ -90,6 +93,10 @@
         "symfony": {
             "allow-contrib": false,
             "require": "8.0.*"
+        },
+        "grumphp": {
+            "config-default-path": ".tools-config/grumphp.yml",
+            "disable-plugin": false
         }
     },
     "require-dev": {
