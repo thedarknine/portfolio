@@ -1,0 +1,28 @@
+#!/bin/bash
+# Force stop on error
+set -e
+
+TARGET="/home/u274369575/domains/carolinenoyer.fr/public_html"
+cd $TARGET
+
+echo " "
+echo "📥 Retrieving the latest code from the remote repository..."
+# The -f forces overwriting if there were accidental local changes in prod
+git fetch origin main
+git reset --hard origin/main
+
+echo " "
+echo "🧹 Cleaning up dev files..."
+rm -rf tests/ .tools-config/ .docker/ docker-compose.yml
+
+echo " "
+echo "📦 Installing Composer dependencies (prod)..."
+export APP_ENV=prod
+composer install --no-dev --optimize-autoloader --no-interaction
+
+echo " "
+echo "⚡️ Cleaning up and optimizing Symfony cache..."
+php bin/console cache:clear --env=prod
+
+echo " "
+echo "✅ Git Pull deployment completed successfully!"

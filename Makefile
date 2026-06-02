@@ -571,47 +571,15 @@ db-dump: ## Dump database (FILES_CLEAN=1 to clean previous)
 		"Database dumped to:" \
 		"$(EXPORT_DIR)/$(SQL_FILE)"
 
-# Before use this command think about :
-# 1- Connect to production server with SSH
-# 2- Create hidden folder for Git deployment repository
-#		mkdir -p ~/repo/portfolio.git
-#		cd ~/repo/portfolio.git
-# 3- Initialise a "Bare" Git repository
-#		git init --bare
-# 4- Create the magic script (the post-receive hook)
-#		nano hooks/post-receive
-# 5- Paste the code
-# 		#	#!/bin/bash
-# 		TARGET="/[PATH_TO_YOUR_PROJECT]/carolinenoyer.fr/public_html"
-# 		GIT_DIR="/[PATH_TO_YOUR_GIT_REPO]/repo/portfolio.git"
-# 		echo "🚀 Git post-receive hook triggered on Hostinger..."
-# 		# 2. Extract code cleanly (without .git folder) to public_html
-# 		git --work-tree=$TARGET --git-dir=$GIT_DIR checkout -f main
-# 		cd $TARGET
-# 		# 3. Clean unwanted files or dev residues
-# 		echo "🧹 Cleaning dev files..."
-# 		rm -rf tests/ Grumphp.yml Rector.php php_cs.dist.php
-# 		# 4. Install production dependencies without dev tools
-# 		echo "📦 Installing Composer dependencies (prod)..."
-# 		export APP_ENV=prod
-# 		composer install --no-dev --optimize-autoloader --no-interaction
-# 		# 5. Clean and rebuild Symfony cache properly
-# 		echo "⚡ Cleaning and optimizing Symfony cache..."
-# 		php bin/console cache:clear --env=prod
-# 		echo "✅ Deployment completed successfully! Your portfolio is up to date."
-# 6- Make script executable
-# 		chmod +x hooks/post-receive
-# 7- From local env dev, add production remote, this will tell Git local that 
-#    remote production server is a new push destination.
-# 		git remote add production [USER]@[REMOTE_SERVER]:repo/portfolio.git
-.PHONY: prod-publish
-prod-publish: ## Publish to production
-	@$(call display_title,Publishing to production...,$(ICON_UPLOAD))
+.PHONY: prod-pull
+# deploy.sh should be copied to remote server in user folder
+# Find it into .tools-config directory if needed
+prod-pull: ## Pull from remote server
+	@$(call display_title,Pulling from remote server...,$(ICON_UPLOAD))
+	$(MAKE) -s check-remote-vars
 	$(MAKE) -s db-dump
-	git checkout main
-	git pull origin main
-	git push production main
-	@$(call display_success,Production published successfully!)
+	@ssh -i $(REMOTE_SSH_KEY) -p $(REMOTE_PORT) $(REMOTE_USER)@$(REMOTE_HOST) "~/deploy.sh"
+	@$(call display_success,Production pulled successfully!)
 
 .PHONY: prod-build
 prod-build: ## Build production version
@@ -642,25 +610,6 @@ prod-build: ## Build production version
 		"PROD cache warmed up" \
 		"Archive $(ZIP_NAME) created"
 	@printf "\n  ${BOLD}${GREEN}✨ Archive $(ZIP_NAME) ready for manual transfer! ✨${RESET}\n\n"
-
-.PHONY: prod-deploy
-prod-deploy: ## Deploy production build to remote server
-	@$(call display_title,Deploying production build...)
-	$(MAKE) -s check-remote-vars
-	$(MAKE) -s prod-build
-	@start=$$(date +%s); \
-	$(call display_subtitle,📤 [1/3] Uploading archive...); \
-	rsync -avz --progress -e 'ssh -i $(REMOTE_SSH_KEY) -p $(REMOTE_PORT)' $(EXPORT_DIR)/$(ZIP_NAME) $(REMOTE_USER)@$(REMOTE_HOST):$(REMOTE_PATH)/tmp/; \
-	$(call display_elapsed,$$(date +%s),$$start)
-	@$(display_success_matrix) \
-		"Archive uploaded" \
-		"Extracted on remote" \
-		"Cleaned up"
-	@printf "\n  ${BOLD}${GREEN}✨ Production deployed! ✨${RESET}\n\n"
-# 	$(call display_subtitle,📦 [2/3] Extracting on remote...); \
-# 	ssh $(REMOTE_USER)@$(REMOTE_HOST) "cd $(REMOTE_PATH) && unzip -o $(REMOTE_PATH)/tmp/$(ZIP_NAME) -d ."; \
-# 	$(call display_subtitle,🧹 [3/3] Cleaning up...); \
-# 	ssh $(REMOTE_USER)@$(REMOTE_HOST) "rm -f $(REMOTE_PATH)/tmp/$(ZIP_NAME)"; \
 
 check-remote-vars:
 	@if [ -z "$(REMOTE_USER)" ] || [ -z "$(REMOTE_HOST)" ] || [ -z "$(REMOTE_SSH_KEY)" ] || [ -z "$(REMOTE_PATH)" ]; then \
