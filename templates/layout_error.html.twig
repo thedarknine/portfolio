@@ -10,9 +10,314 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700;800&family=Oxygen:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
 
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+    <style>
+        /* Injection locale de tes variables de thème pour le rendu immédiat */
+        :root {
+            --font-normal: "Oxygen", "Inter", sans-serif;
+            --font-accent: "League Spartan", sans-serif;
+            --color-nine-blue-dark: oklch(24.83% 0.049 253.38);
+            --color-nine-blue-darker: oklch(32.49% 0.0821 255.92);
+            --color-nine-turquoise: oklch(61.25% 0.116 226.51);
+            --color-nine-blue: oklch(35.22% 0.104 259.27);
+            --color-nine-light: oklch(90.81% 0.008 253.86);
+            --color-nine-blue-gray: oklch(71.07% 0.035 256.79);
+            --color-nine-yellow: oklch(80.16% 0.171 73.27);
+        }
+
+        body {
+            font-family: var(--font-normal);
+            background-color: var(--color-nine-blue-dark);
+            color: var(--color-nine-light);
+        }
+
+        .nine-font-accent {
+            font-family: var(--font-accent);
+        }
+
+        .nine-gradient-bg {
+            background: linear-gradient(
+                to right bottom,
+                var(--color-nine-blue-dark) 0%,
+                var(--color-nine-blue-darker) 50%,
+                oklch(20% 0.04 253) 100
+            );
+        }
+
+        .nine-btn-primary-custom {
+            display: inline-block;
+            padding: 0 38px;
+            font-family: var(--font-accent);
+            font-size: 14px;
+            font-weight: 600;
+            line-height: 44px;
+            color: var(--color-nine-light);
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            background: linear-gradient(
+                to right,
+                var(--color-nine-blue) 0%,
+                var(--color-nine-turquoise) 51%,
+                var(--color-nine-blue) 100%
+            );
+            background-size: 200% auto;
+            border-radius: 5px;
+            transition: all 0.4s ease;
+        }
+
+        .nine-btn-primary-custom:hover {
+            color: #ffffff;
+            background-position: right center;
+            box-shadow: 0 0 25px oklch(61.25% 0.116 226.51 / 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Hero */
+.error-hero {
+    position: relative;
+    padding: 2.5rem 2rem 3rem;
+    overflow: hidden;
+    text-align: center;
+    background: var(--color-nine-blue-dark);
+
+    .error-hero-grid {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.06;
+    }
+
+    .error-status-badge {
+        display: inline-block;
+        padding: 4px 14px;
+        margin-bottom: 1.8rem;
+        font-family: "Courier New", monospace;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 2px;
+        color: var(--color-nine-yellow-dark);
+        text-transform: uppercase;
+        background: rgb(255 94 2 / 12%);
+        border: 1px solid rgb(255 94 2 / 25%);
+        border-radius: 20px;
+    }
+
+    .error-number {
+        position: relative;
+        display: inline-block;
+        margin: 0;
+        font-family: var(--font-accent);
+        font-size: clamp(80px, 16vw, 130px);
+        font-weight: 800;
+        line-height: 1;
+        letter-spacing: -4px;
+        color: var(--color-nine-light);
+
+        &::before {
+            position: absolute;
+            inset: 0;
+            content: attr(data-text);
+            color: rgb(10 145 185 / 15%);
+            transform: translateX(-3px) skew(-1deg);
+            pointer-events: none;
+        }
+
+        .error-zero {
+            display: inline-block;
+            font-style: italic;
+            color: var(--color-nine-turquoise);
+            animation: pulse-zero 3s ease-in-out infinite;
+        }
+    }
+
+    .error-tagline {
+        margin-top: 0.5rem;
+        font-family: var(--font-accent);
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--color-nine-blue-gray);
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+}
+
+@keyframes pulse-zero {
+    0%,
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(0.95);
+    }
+}
+
+/* Zone principale */
+.error-main {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 1.5rem;
+    background: var(--color-nine-golden);
+
+    .error-inner {
+        max-width: 560px;
+        width: 100%;
+        text-align: center;
+    }
+
+    .error-exception {
+        display: inline-block;
+        padding: 2px 12px;
+        margin-bottom: 1.5rem;
+        font-family: "Courier New", monospace;
+        font-size: 12px;
+        color: var(--color-nine-gray);
+        background: var(--color-nine-blue);
+        border-radius: 4px;
+    }
+
+    .error-desc {
+        margin-bottom: 2rem;
+        font-size: 0.95rem;
+        font-weight: 300;
+        line-height: 1.8;
+        color: var(--color-nine-gray-dark);
+    }
+
+    .error-nav-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-bottom: 1rem;
+
+        .error-nav-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 1.1rem 0.8rem;
+            text-decoration: none;
+            background: white;
+            border: 1px solid var(--color-nine-light);
+            border-radius: 16px;
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        &:hover {
+            border-color: var(--color-nine-turquoise);
+            box-shadow: 0 4px 16px rgb(10 145 185 / 10%);
+        }
+
+        i {
+            font-size: 1.2rem;
+            color: var(--color-nine-blue-gray);
+            transition: color 0.2s ease;
+
+            &:hover {
+                color: var(--color-nine-turquoise);
+            }
+        }
+
+        .error-nav-card-title {
+            font-family: var(--font-accent);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--color-nine-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .error-nav-card-sub {
+            font-size: 11px;
+            color: var(--color-nine-blue-gray);
+        }
+
+        @media (width <= 480px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+.error-footer {
+    background: var(--color-nine-blue-dark);
+    padding: 2.5rem 2rem 1.8rem;
+    font-family: var(--font-normal);
+
+    .error-footer-inner {
+        max-width: 560px;
+        margin: 0 auto;
+
+        .error-footer-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            padding-bottom: 1.6rem;
+
+            .error-footer-logo img {
+                height: 44px;
+                width: auto;
+                opacity: 0.92;
+            }
+
+            .error-footer-accent {
+                width: 36px;
+                height: 2px;
+                background: var(--color-nine-turquoise);
+                border-radius: 2px;
+            }
+        }
+
+        .error-footer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            padding-top: 1.4rem;
+
+            .error-footer-copy {
+                font-family: "Courier New", monospace;
+                font-size: 11px;
+                color: rgb(148 163 184 / 50%);
+            }
+
+            .error-footer-socials {
+                display: flex;
+                gap: 12px;
+                align-items: center;
+
+                a {
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 30px;
+                    height: 30px;
+                    color: var(--color-nine-blue-gray);
+                    font-size: 13px;
+                    text-decoration: none;
+                    transition: color 0.2s ease;
+
+                    &:hover {
+                        color: var(--color-nine-turquoise);
+                        border-color: var(--color-nine-turquoise);
+                    }
+                }
+            }
+        }
+    }
+}
+
+    </style>
 </head>
 
 <body class="h-full flex flex-col antialiased">
@@ -66,13 +371,13 @@
                     <span class="error-nav-card-sub">Retour au dev</span>
                 </a>
 
-                <a href="{{ path('app_home') }}#creations" class="error-nav-card">
+                <a href="{{ path('app_home') }}/creations" class="error-nav-card">
                     <i class="fas fa-paint-brush" aria-hidden="true"></i>
                     <span class="error-nav-card-title">L'Atelier</span>
                     <span class="error-nav-card-sub">Clay &amp; Créations</span>
                 </a>
 
-                <a href="{{ path('app_home') }}#photography" class="error-nav-card">
+                <a href="{{ path('app_home') }}/photos" class="error-nav-card">
                     <i class="fas fa-camera-retro" aria-hidden="true"></i>
                     <span class="error-nav-card-title">La Galerie</span>
                     <span class="error-nav-card-sub">Coup d'œil photo</span>
