@@ -37,6 +37,7 @@
         {% set screenshot_url = absolute_url('images/projects/' ~ screenshot) %}
         <a href="{{ screenshot_url }}"
            target="_blank"
+           aria-label="Voir la capture d'écran {{ screenshot }} du projet {{ project.name }}"
            class="group/thumb pswp9-link relative block overflow-hidden rounded-lg border border-nine-light/30 hover:border-nine-turquoise transition-all duration-300">
 
             <img src="{{ screenshot_url }}"

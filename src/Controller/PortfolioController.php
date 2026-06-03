@@ -27,7 +27,7 @@ final class PortfolioController extends AbstractController
     {
     }
 
-    #[Route('/experience', name: 'app_page_experience', options: ['sitemap' => true])]
+    #[Route('/experience', name: 'app_experience', options: ['sitemap' => true])]
     public function experience(ExperienceRepository $experienceRepository): Response
     {
         $page = $this->pageService->getActivePageBySlug('experience');
@@ -38,8 +38,8 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
-    #[Route('/competences', name: 'app_page_competences', options: ['sitemap' => true])]
-    public function competences(SkillRepository $skillRepository, SkillTypeRepository $skillTypeRepository): Response
+    #[Route('/competences', name: 'app_skills', options: ['sitemap' => true])]
+    public function skills(SkillRepository $skillRepository, SkillTypeRepository $skillTypeRepository): Response
     {
         $page = $this->pageService->getActivePageBySlug('competences');
 
@@ -50,8 +50,8 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
-    #[Route('/formation', name: 'app_page_formation', options: ['sitemap' => true])]
-    public function formation(EducationRepository $educationRepository): Response
+    #[Route('/formation', name: 'app_education', options: ['sitemap' => true])]
+    public function education(EducationRepository $educationRepository): Response
     {
         $page = $this->pageService->getActivePageBySlug('formation');
 
@@ -62,8 +62,8 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
-    #[Route('/projets', name: 'app_page_projects', options: ['sitemap' => true])]
-    public function projets(ProjectRepository $projectRepository): Response
+    #[Route('/projets', name: 'app_projects', options: ['sitemap' => true])]
+    public function projects(ProjectRepository $projectRepository): Response
     {
         $page = $this->pageService->getActivePageBySlug('projets');
 
@@ -73,7 +73,7 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
-    #[Route('/arcade', name: 'app_page_arcade', options: ['sitemap' => true])]
+    #[Route('/arcade', name: 'app_arcade', options: ['sitemap' => true])]
     public function arcade(GalleryService $galleryService): Response
     {
         $page = $this->pageService->getActivePageBySlug('arcade');
@@ -84,7 +84,7 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
-    #[Route('/creations', name: 'app_page_creations', options: ['sitemap' => true])]
+    #[Route('/creations', name: 'app_creations', options: ['sitemap' => true])]
     public function creations(GalleryService $galleryService): Response
     {
         $page = $this->pageService->getActivePageBySlug('creations');
@@ -95,7 +95,7 @@ final class PortfolioController extends AbstractController
         ]);
     }
 
-    #[Route('/photos', name: 'app_page_photos', options: ['sitemap' => true])]
+    #[Route('/photos', name: 'app_photos', options: ['sitemap' => true])]
     public function photos(GalleryService $galleryService): Response
     {
         $page = $this->pageService->getActivePageBySlug('photos');

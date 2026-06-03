@@ -11,7 +11,7 @@
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox">
             {% for photo in listItemsPhotos %}
                 <div class="w-full rounded-lg overflow-hidden animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                    <a href="{{ absolute_url('images/photos/' ~ type.slug ~ '/' ~ photo.filename) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                    <a href="{{ absolute_url('images/photos/' ~ type.slug ~ '/' ~ photo.filename) }}" aria-label="{{ type.name }} | Photo {{ photo.filename }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                         <img src="{{ absolute_url('images/photos/' ~ type.slug ~ '/' ~ photo.filename) }}" alt="" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
                     </a>
                 </div>

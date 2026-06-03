@@ -1,39 +1,33 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{{ owner_name }} — {% block title %}{{ owner_role }}{% endblock %}</title>
 
-        <link rel="shortcut icon" type="image/x-icon" href="{{ absolute_url('images/global/favicon.ico') }}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ absolute_url('images/global/apple-touch-icon.png') }}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{ absolute_url('images/global/favicon-32x32.png') }}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{ absolute_url('images/global/favicon-16x16.png') }}">
+        <link rel="shortcut icon" type="image/x-icon" href="{{ absolute_url(asset('images/global/favicon.ico')) }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ absolute_url(asset('images/global/apple-touch-icon.png')) }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ absolute_url(asset('images/global/favicon-32x32.png')) }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ absolute_url(asset('images/global/favicon-16x16.png')) }}">
 
-        <meta name="title" content="{{ owner_name }} — {{ owner_role }}">
-        <meta name="description" content="{{ owner_description }}">
-        <meta name="keywords" content="CV,Design,Technical Product Owner,Product Owner,Développeur,Senior Backend Developer,PHP,Symfony">
+        <title>{% block meta_title %}{{ owner_name }} — {{ owner_role }}{% endblock %}</title>
+        <meta name="description" content="{% block meta_description %}{{ owner_description }}{% endblock %}">
         <meta name="author" content="{{ owner_name }}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="index,follow">
-        <meta name="googlebot" content="index,follow">
+        <link rel="canonical" href="{{ absolute_url(app.request.uri) }}">
 
-        <!-- Open Graph / Facebook -->
+        {# Open Graph / Facebook #}
         <meta property="og:type" content="website">
-        <meta property="og:url" content="{{ site_url }}">
-        <meta property="og:title" content="{{ owner_name }} — {{ owner_role }}">
-        <meta property="og:description" content="{{ owner_description }}">
-        <meta property="og:image" content="{{ site_url }}/images/cnoyer-product-owner.jpg">
+        <meta property="og:url" content="{{ absolute_url(app.request.uri) }}">
+        <meta property="og:title" content="{{ block('meta_title') }}">
+        <meta property="og:description" content="{{ block('meta_description') }}">
+        <meta property="og:image" content="{{ absolute_url(asset('images/cnoyer-product-owner.jpg')) }}">
         <meta property="og:site_name" content="{{ site_name }}">
 
-        <!-- Twitter -->
-        <meta property="twitter:card" content="summary_large_image">
-        <meta property="twitter:url" content="{{ site_url }}">
-        <meta property="twitter:title" content="{{ owner_name }} — {{ owner_role }}">
-        <meta property="twitter:description" content="{{ owner_description }}">
-        <meta property="twitter:image" content="{{ site_url }}/images/cnoyer-product-owner.jpg">
-
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        {# Twitter #}
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="{{ block('meta_title') }}">
+        <meta name="twitter:description" content="{{ block('meta_description') }}">
+        <meta name="twitter:image" content="{{ absolute_url(asset('images/cnoyer-product-owner.jpg')) }}">
 
         {% block stylesheets %}
         <script src="https://kit.fontawesome.com/e13f84fe9c.js" crossorigin="anonymous"></script>
@@ -60,13 +54,13 @@
             <header class="bg-transparent nine-sticky-bar{% if current_page.slug != 'home' %} nine-stick{% endif %}">
                 <div class="container bg-transparent">
                     <nav class="bg-transparent flex justify-between items-center py-3">
-                        <a class="text-3xl font-semibold leading-none" href="/">
+                        <a class="text-3xl font-semibold leading-none" href="{{ path('app_home') }}" aria-label="{{ owner_name }} — {{ owner_role }}">
                             <img id="logo" class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250-white.svg" alt="">
                         </a>
                         <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-5">
                         {% for page in page_manager.getPublishedPagesInHeader() %}
                             <li class="p-4 nine-menu-item {% if current_page.slug == page.slug %}nine-active text-nine-turquoise{% endif %}">
-                                <a class="" href="/{{ page.slug }}">{{ page.title }}</a>
+                                <a class="" href="/{{ page.slug }}" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a>
                             </li>
                         {% endfor %}
                         </ul>
@@ -74,7 +68,7 @@
                             <button class="nine-navbar-burger flex items-center py-2 px-3 text-nine-turquoise hover:text-nine-blue">
                                 <svg class="fill-current h-6 w-6" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" stroke="currentColor">
                                     <title>Mobile menu</title>
-                                    <!--path d="M0 3h20v2H0V3zm0 6h10v2H0V9zm0 6h15v2H0v-2z"></path-->
+                                    {# <--path d="M0 3h20v2H0V3zm0 6h10v2H0V9zm0 6h15v2H0v-2z"></path> #}
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M 2 20 l 16 0 M 2 4 l 20 0 M 2 12 l 12 0"></path>
                                 </svg>
                             </button>
@@ -119,7 +113,7 @@
                 <div class="nine-navbar-backdrop fixed inset-0 bg-nine-blue-dark opacity-25"></div>
                 <nav class="fixed top-0 left-0 bottom-0 flex flex-col w-5/6 max-w-sm py-6 px-6 bg-white border-r overflow-y-auto transition duration-300">
                     <div class="flex items-center mb-8">
-                        <a class="mr-auto text-3xl font-semibold leading-none" href="https://carolinenoyer.fr/">
+                        <a class="mr-auto text-3xl font-semibold leading-none" href="{{ path('app_home') }}" aria-label="{{ owner_name }} — {{ owner_role }}">
                             <img class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250.svg" alt="">
                         </a>
                         <button class="nine-navbar-close">
@@ -131,13 +125,13 @@
                     <div>
                         <ul class="mobile-menu">
                         {% for page in page_manager.getPublishedPages() %}
-                            <li class="mb-1"><a class="block p-4 text-blueGray-500" href="/{{ page.slug }}">{{ page.title }}</a></li>
+                            <li class="mb-1"><a class="block p-4 text-blueGray-500" href="/{{ page.slug }}" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
                         {% endfor %}
                         </ul>
                     </div>
                     <div class="mt-auto">
                         {% for resource in page_manager.getPublishedResourceLinks() %}
-                        <a class="inline-block px-1" href="{{ resource.url }}" target="_blank" title="{{ resource.title }}"><i class="text-2xl text-nine-turquoise {{ resource.icon }}"></i></a>
+                        <a class="inline-block px-1" href="{{ resource.url }}" target="_blank" title="{{ resource.title }}" aria-label="{{ resource.title }}"><i class="text-2xl text-nine-turquoise {{ resource.icon }}"></i></a>
                         {% endfor %}
                     </div>
                 </nav>
@@ -169,7 +163,7 @@
                                 </p>
                             </div>
                             <div class="w-full lg:w-1/5 px-3 mb-6 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="300">
-                                <a class="inline-block mx-auto lg:mx-0 text-3xl font-semibold leading-none" href="{{ site_url }}">
+                                <a class="inline-block mx-auto lg:mx-0 text-3xl font-semibold leading-none" href="{{ site_url }}" aria-label="{{ owner_name }} — {{ owner_role }}">
                                     <img class="h-14 mx-auto" src="https://medias.carolinenoyer.fr/images/logo-2024-colored.png" alt="">
                                 </a>
                             </div>
@@ -178,7 +172,7 @@
                                 <ul class="list-unstyled mb-0">
                                 {% for page in page_manager.getPublishedPages() %}
                                     {% if page.category.value == 'career' %}
-                                    <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs">{{ page.title }}</a></li>
+                                    <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
                                     {% endif %}
                                 {% endfor %}
                                 </ul>
@@ -188,7 +182,7 @@
                                 <ul class="list-unstyled mb-0">
                                 {% for page in page_manager.getPublishedPages() %}
                                     {% if page.category.value == 'interest' %}
-                                    <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs">{{ page.title }}</a></li>
+                                    <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
                                     {% endif %}
                                 {% endfor %}
                                 </ul>
@@ -199,7 +193,7 @@
                             <div class="order-first lg:order-last -mx-2 mb-4 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="1800">
                                 <ul class="nine-list-inline">
                                 {% for resource in page_manager.getPublishedResourceLinks() %}
-                                    <li class="nine-list-inline-item"></li><a href="{{ resource.url }}" target="_blank" title="{{ resource.title }}"><i class="{{ resource.icon }}"></i></a></li>
+                                    <li class="nine-list-inline-item"><a href="{{ resource.url }}" target="_blank" title="{{ resource.title }}" aria-label="{{ resource.title }}"><i class="{{ resource.icon }}"></i></a></li>
                                 {% endfor %}
                             </ul>
                             </div>
