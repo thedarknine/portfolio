@@ -16,7 +16,7 @@
 <section class="nine-home-area -mt-24 pt-24 static">
     <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
         <div class="md:pt-12">
-            <img class="lg:h-80 h-40 mx-auto jump rounded animate__animated" data-animate="animate__fadeInUp" data-delay="1s" src="https://carolinenoyer.fr/images/logo-nine-2021.png" alt="">
+            <img class="lg:h-80 h-40 mx-auto jump rounded animate__animated" data-animate="animate__fadeInUp" data-delay="1s" src="{{ absolute_url(asset('images/logo-cnoyer.webp')) }}" alt="">
         </div>
         <div class="mb-16 mt-12 lg:mt-32 xl:mt-40 xl:mr-12">
             <div class="max-w-2xl mx-auto mb-8">
@@ -26,7 +26,7 @@
             <div class="max-w-2xl mx-auto">
                 {% for resource in page_manager.getPublishedResourceLinksInHero() %}
                 <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}">
-                    <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank"><i class="{{ resource.icon }} text-nine-light"></i></a>
+                    <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank" aria-label="{{ resource.title }}"><i class="{{ resource.icon }} text-nine-light"></i></a>
                 </span>
                 {% endfor %}
             </div>
@@ -64,7 +64,7 @@
             J’interviens à la croisée du produit et de la technique pour structurer des solutions efficaces.
             </p>
             {# CTA #}
-            <a href="/experience" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
+            <a href="{{ path('app_experience') }}" aria-label="En savoir plus sur mon parcours" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
             En savoir plus <i class="fa-solid fa-right-long"></i>
             </a>
         </div>
@@ -79,7 +79,7 @@
             J’accompagne les équipes pour cadrer les besoins, orienter les choix techniques et fluidifier la collaboration.
             Une approche pragmatique, centrée sur la valeur.
             </p>
-            <a href="/competences" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
+            <a href="{{ path('app_skills') }}" aria-label="En savoir plus sur mon expertise" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
             En savoir plus <i class="fa-solid fa-right-long"></i>
             </a>
         </div>
@@ -94,7 +94,7 @@
             J’aime comprendre, structurer et donner forme aux idées.
             Que ce soit en produit, en code ou en création, je privilégie précision et simplicité.
             </p>
-            <a href="/projets" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
+            <a href="{{ path('app_projects') }}" aria-label="En savoir plus sur mon approche" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
             En savoir plus <i class="fa-solid fa-right-long"></i>
             </a>
         </div>
@@ -234,7 +234,7 @@
             <div class="mb-16 lg:mb-0 xl:mt-16 animate__animated" data-animate="animate__fadeInLeft">
                 <div class="w-10/12 sm:w-12/12 mx-auto">
                     <div class="relative flex flex-col min-w-0 wrap-break-words w-full mb-6 shadow-lg rounded-lg bg-{{ experience.company.slug }}">
-                        <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.slug ~ '.png') }}" class="w-full align-middle rounded-t-lg">
+                        <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.slug ~ '.webp') }}" class="w-full align-middle rounded-t-lg">
                         <blockquote class="relative p-8 mb-4">
                             <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px"><polygon points="-30,95 583,95 583,65" class="fill-{{ experience.company.slug }}"></polygon></svg>
                             <h4 class="text-xl font-bold text-white">{{ experience.title }}</h4>
@@ -268,7 +268,7 @@
 
 {% endfor %}
     <div class="text-center mt-10 animate__animated" data-animate="animate__fadeIn">
-    <a href="#" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-white/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
+    <a href="{{ path('app_experience') }}" aria-label="Découvrez mon parcours professionnel" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-white/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
         <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue)] to-[var(--color-nine-turquoise)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
         <span class="relative z-10 flex items-center gap-2">
             <span>En savoir plus</span>
@@ -309,7 +309,7 @@
 
     <div class="container flex flex-wrap">
         <div class="w-5/6 sm:w-1/3 p-6 animate__animated" data-animate="animate__zoomInUp">
-            <img src="{{ absolute_url('images/home/cnoyer.jpg') }}" alt="Caroline Noyer • Technical Product Owner &amp; Développeur web senior" class="drop-shadow-xl rounded-full w-3/4 mx-auto mt-10 nine-border-gradient">
+            <img src="{{ absolute_url('images/cnoyer.webp') }}" alt="Caroline Noyer • Technical Product Owner &amp; Développeur web senior" class="drop-shadow-xl rounded-full w-3/4 mx-auto mt-10 nine-border-gradient">
         </div>
         <div class="w-full sm:w-2/3 p-6 mt-10 animate__animated" data-animate="animate__zoomIn">
             <p class="mb-4">

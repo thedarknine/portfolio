@@ -30,6 +30,8 @@
                 <a href="http://docs.carolinenoyer.fr/{{ link.url }}"
                    target="_blank"
                    rel="noopener noreferrer"
+                   title="{{ link.title }}"
+                   aria-label="{{ link.title }}"
                    class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-blue-gray shadow-sm hover:shadow hover:text-perfect hover:border-perfect/30 hover:bg-white transition-all duration-200 group">
 
                     <i class="far fa-file-pdf text-red-500 text-base transition-transform group-hover:scale-110"></i>
@@ -43,6 +45,8 @@
                 <a href="{{ link.url }}"
                    target="_blank"
                    rel="noopener noreferrer"
+                   title="{{ link.title }}"
+                   aria-label="{{ link.title }}"
                    class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-blue-gray shadow-sm hover:shadow hover:text-perfect hover:border-perfect/30 hover:bg-white transition-all duration-200 group">
                     <i class="fa-solid fa-globe text-base transition-transform group-hover:scale-110"></i>
                     <span>{{ link.title }}</span>

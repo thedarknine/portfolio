@@ -22,7 +22,7 @@
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
             <div class="w-full h-full rounded overflow-hidden shadow-lg animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                <a href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                <a href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" aria-label="This is it! | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                     <img src="{{ absolute_url('images/arcade/final/' ~ arcade) }}" alt="" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
                 </a>
             </div>
@@ -44,7 +44,7 @@
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                        <a href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" aria-label="Step#1: les plans | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -65,7 +65,7 @@
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                        <a href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" aria-label="Step#2 : la découpe | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -79,7 +79,7 @@
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                        <a href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" aria-label="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -93,7 +93,7 @@
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                        <a href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" aria-label="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -107,7 +107,7 @@
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                        <a href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" aria-label="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -127,7 +127,7 @@
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
-                        <a href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                        <a href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" aria-label="Step#3 : l'assemblage | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                             <img src="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" alt="" class="rounded-lg">
                         </a>
                     </div>
@@ -147,7 +147,7 @@
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
-                    <a href="{{ absolute_url('images/arcade/design/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                    <a href="{{ absolute_url('images/arcade/design/' ~ arcade) }}" aria-label="Step#4 : le design | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                         <img src="{{ absolute_url('images/arcade/design/' ~ arcade) }}" alt="" class="rounded-lg" />
                     </a>
                 </div>
@@ -168,7 +168,7 @@
                 {% for arcade in listItemsArcade %}
                     <div class="shadow-lg mb-4">
                         <div>
-                            <a href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                            <a href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" aria-label="Step#5 : l'émulateur | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
                                 <img src="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" alt="" class="rounded-lg">
                             </a>
                         </div>

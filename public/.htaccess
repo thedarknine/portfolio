@@ -14,3 +14,22 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ %{ENV:BASE}/index.php [L]
 </IfModule>
+
+# Cache static files => SEO & Performance
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+
+    # Images (Poterie, Photos, Profil, Favicons) -> Cache 1 an
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
+
+    # CSS et JS -> Cache 1 an (Sécurisé par le hachage d'AssetMapper)
+    ExpiresByType text/css "access plus 1 year"
+    ExpiresByType application/javascript "access plus 1 year"
+
+    # Polices de caractères (Si tu en auto-héberges)
+    ExpiresByType font/woff2 "access plus 1 year"
+</IfModule>
