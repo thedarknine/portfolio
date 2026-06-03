@@ -3,7 +3,7 @@
     <div class="p-3 text-3xl text-nine-blue font-bold">{{ experience.subtitle }}</div>
     <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 px-3 mb-4">
         <div class="space-y-1">
-            <p class="text-nine-blue-gray"><i class="far fa-calendar-alt mr-1"></i>&nbsp;
+            <p class="text-nine-blue-gray">{{ ux_icon('flowbite:calendar-month-outline', { class: 'mr-1 inline-block' }) }}&nbsp;
             {% if experience.endDate is empty %}
                 Depuis {{ experience.startDate|date('m/Y') }}
             {% else %}
@@ -16,7 +16,7 @@
             </p>
 
             <p class="text-nine-blue-gray">
-                <i class="fas fa-map-marker-alt mr-1"></i>&nbsp; {{ experience.company.name }}
+                {{ ux_icon('flowbite:map-pin-alt-outline', { class: 'mr-1 inline-block' }) }}&nbsp; {{ experience.company.name }}
                 - <span class="text-sm">{{ experience.company.city }} ({{ experience.company.department|format_number({ min_integer_digit: 2 }) }})</span>
             </p>
         </div>
@@ -34,10 +34,10 @@
                    aria-label="{{ link.title }}"
                    class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-blue-gray shadow-sm hover:shadow hover:text-perfect hover:border-perfect/30 hover:bg-white transition-all duration-200 group">
 
-                    <i class="far fa-file-pdf text-red-500 text-base transition-transform group-hover:scale-110"></i>
+                    {{ ux_icon('flowbite:file-pdf-outline', { class: 'text-red-500 text-base transition-transform group-hover:scale-110' }) }}
                     <span>{{ link.title }}</span>
 
-                    <i class="fas fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-perfect transition-all"></i>
+                    {{ ux_icon('fa7-solid:arrow-up-right-from-square', { class: 'text-[16px] opacity-40 group-hover:opacity-100 group-hover:text-perfect transition-all' }) }}
                 </a>
             </li>
                 {% elseif link.type.value == 'external' %}
@@ -48,10 +48,10 @@
                    title="{{ link.title }}"
                    aria-label="{{ link.title }}"
                    class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-blue-gray shadow-sm hover:shadow hover:text-perfect hover:border-perfect/30 hover:bg-white transition-all duration-200 group">
-                    <i class="fa-solid fa-globe text-base transition-transform group-hover:scale-110"></i>
+                   {{ ux_icon('fa7-solid:globe-europe', { class: 'text-base transition-transform group-hover:scale-110' }) }}
                     <span>{{ link.title }}</span>
 
-                    <i class="fas fa-arrow-up-right-from-square text-[10px] opacity-40 group-hover:opacity-100 group-hover:text-perfect transition-all"></i>
+                    {{ ux_icon('fa7-solid:arrow-up-right-from-square', { class: 'text-[16px] opacity-40 group-hover:opacity-100 group-hover:text-perfect transition-all' }) }}
                 </a>
             </li>
                 {% endif %}

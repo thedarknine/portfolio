@@ -26,7 +26,7 @@
             <div class="max-w-2xl mx-auto">
                 {% for resource in page_manager.getPublishedResourceLinksInHero() %}
                 <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}">
-                    <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank" aria-label="{{ resource.title }}"><i class="{{ resource.icon }} text-nine-light"></i></a>
+                    <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank" aria-label="{{ resource.title }}">{{ ux_icon(resource.icon, { class: 'text-nine-light' }) }}</a>
                 </span>
                 {% endfor %}
             </div>
@@ -65,7 +65,7 @@
             </p>
             {# CTA #}
             <a href="{{ path('app_experience') }}" aria-label="En savoir plus sur mon parcours" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-            En savoir plus <i class="fa-solid fa-right-long"></i>
+            En savoir plus {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
             </a>
         </div>
 
@@ -80,7 +80,7 @@
             Une approche pragmatique, centrée sur la valeur.
             </p>
             <a href="{{ path('app_skills') }}" aria-label="En savoir plus sur mon expertise" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-            En savoir plus <i class="fa-solid fa-right-long"></i>
+            En savoir plus {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
             </a>
         </div>
 
@@ -95,7 +95,7 @@
             Que ce soit en produit, en code ou en création, je privilégie précision et simplicité.
             </p>
             <a href="{{ path('app_projects') }}" aria-label="En savoir plus sur mon approche" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-            En savoir plus <i class="fa-solid fa-right-long"></i>
+            En savoir plus {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
             </a>
         </div>
     </div>
@@ -272,7 +272,7 @@
         <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue)] to-[var(--color-nine-turquoise)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
         <span class="relative z-10 flex items-center gap-2">
             <span>En savoir plus</span>
-            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+            {{ ux_icon('fa7-solid:right-long', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
         </span>
     </a>
     </div>

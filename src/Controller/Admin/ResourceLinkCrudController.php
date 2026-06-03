@@ -71,18 +71,18 @@ class ResourceLinkCrudController extends AbstractCrudController
                     return null;
                 }
 
-                return sprintf('<a href="%s" target="_blank" rel="noopener"><i class="fa fa-external-link-alt me-1"></i> Ouvrir</a>', htmlspecialchars($value));
+                return sprintf('<a href="%s" target="_blank" rel="noopener"><i class="fa7-brands:linkedin-in me-1"></i> Ouvrir</a>', htmlspecialchars($value));
             });
 
         // Use IconableTrait: display the CSS class with a small preview of the FontAwesome icon
         yield TextField::new('icon', 'Classe Icône')
-            ->setHelp('Exemple : fa-github, fa-linkedin, fa-file-pdf (FontAwesome)')
+            ->setHelp('Exemple : flowbite:linkedin-solid (<a href="https://ux.symfony.com/icons" target="_blank">Voir la documentation</a>)')
             ->formatValue(function ($value) {
                 if (!$value) {
                     return '<span class="text-muted">Aucune</span>';
                 }
 
-                return sprintf('<i class="fab %1$s fas %1$s fa-lg me-2"></i> <code>%1$s</code>', htmlspecialchars($value));
+                return sprintf('<code>%1$s</code>', htmlspecialchars($value));
             });
 
         // Switch to display in the Hero on homepage

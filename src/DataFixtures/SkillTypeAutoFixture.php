@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\SkillType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class SkillTypeAutoFixture extends Fixture
+class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -119,5 +120,10 @@ class SkillTypeAutoFixture extends Fixture
         $this->addReference('skillType_18', $skillType8);
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['portfolio'];
     }
 }

@@ -4,9 +4,10 @@ namespace App\DataFixtures;
 
 use App\Entity\Project;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ProjectAutoFixture extends Fixture
+class ProjectAutoFixture extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -18,10 +19,11 @@ class ProjectAutoFixture extends Fixture
         $project0->setCategory('R&D');
         $project0->setTags('C++::Standard Template Library (STL)::Data Mining');
         $project0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project0->setUpdatedAt(new \DateTime('2026-05-26 08:21:52'));
+        $project0->setUpdatedAt(new \DateTime('2026-05-27 17:46:21'));
         $project0->setName('Fouille de données interactive par navigation');
         $project0->setSlug('datamining');
         $project0->setLogo('stagemaitrise.png');
+        $project0->setPublished(true);
         $manager->persist($project0);
         $this->addReference('project_8', $project0);
 
@@ -33,25 +35,27 @@ class ProjectAutoFixture extends Fixture
         $project1->setCategory('R&D Pro');
         $project1->setTags('Java / J2EE::XML::XHTML Compliance');
         $project1->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project1->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project1->setUpdatedAt(new \DateTime('2026-05-27 17:46:21'));
         $project1->setName('Génération de sites Internet valides W3C');
         $project1->setSlug('nevotec');
         $project1->setLogo('nevotec.png');
+        $project1->setPublished(true);
         $manager->persist($project1);
         $this->addReference('project_9', $project1);
 
         $project2 = new Project();
         $project2->setPeriod('De février à novembre 2007');
         $project2->setYear(2007);
-        $project2->setDescription('Conception d\'un framework d\'ingénierie pour la société Actifdesign. Développement du moteur métier pour générer dynamiquement des maquettes de produits imprimés HD.');
-        $project2->setScreenshots('');
+        $project2->setDescription('<div>Conception d\'un framework d\'ingénierie pour la société Actifdesign. Développement du moteur métier pour générer dynamiquement des maquettes de produits imprimés haute définition.</div>');
+        $project2->setScreenshots(null);
         $project2->setCategory('R&D Pro');
         $project2->setTags('Java (Métier)::XML (Stockage)::Librairies PDF');
         $project2->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project2->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project2->setName('Génération de fichiers PDF haute définition');
+        $project2->setUpdatedAt(new \DateTime('2026-05-31 19:50:57'));
+        $project2->setName('Génération de fichiers PDF HD');
         $project2->setSlug('nevoprint');
         $project2->setLogo('nevoprint.png');
+        $project2->setPublished(true);
         $manager->persist($project2);
         $this->addReference('project_10', $project2);
 
@@ -63,10 +67,11 @@ class ProjectAutoFixture extends Fixture
         $project3->setCategory('Web & Dev');
         $project3->setTags('PHP::MySQL::HTML / CSS::Illustrator');
         $project3->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project3->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project3->setUpdatedAt(new \DateTime('2026-05-27 17:46:11'));
         $project3->setName('Création graphique et développement');
         $project3->setSlug('randos');
         $project3->setLogo('randos.png');
+        $project3->setPublished(true);
         $manager->persist($project3);
         $this->addReference('project_11', $project3);
 
@@ -78,10 +83,11 @@ class ProjectAutoFixture extends Fixture
         $project4->setCategory('Web & Dev');
         $project4->setTags('PHP::HTML/CSS');
         $project4->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project4->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project4->setUpdatedAt(new \DateTime('2026-05-27 17:46:10'));
         $project4->setName('Création graphique et Site Internet');
         $project4->setSlug('ttc');
         $project4->setLogo('ttc.png');
+        $project4->setPublished(true);
         $manager->persist($project4);
         $this->addReference('project_12', $project4);
 
@@ -93,10 +99,11 @@ class ProjectAutoFixture extends Fixture
         $project5->setCategory('Print & Digital');
         $project5->setTags('Adobe Illustrator::Figma::Canva');
         $project5->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project5->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project5->setUpdatedAt(new \DateTime('2026-05-27 17:46:10'));
         $project5->setName('Création graphique');
         $project5->setSlug('creations');
         $project5->setLogo('nine.png');
+        $project5->setPublished(true);
         $manager->persist($project5);
         $this->addReference('project_13', $project5);
 
@@ -108,13 +115,19 @@ class ProjectAutoFixture extends Fixture
         $project6->setCategory('Vidéo');
         $project6->setTags('Adobe Premiere::iMovie');
         $project6->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $project6->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $project6->setUpdatedAt(new \DateTime('2026-05-27 17:46:09'));
         $project6->setName('Montage vidéo');
         $project6->setSlug('montages');
         $project6->setLogo('nine.png');
+        $project6->setPublished(true);
         $manager->persist($project6);
         $this->addReference('project_14', $project6);
 
         $manager->flush();
+    }
+
+    public static function getGroups(): array
+    {
+        return ['portfolio'];
     }
 }

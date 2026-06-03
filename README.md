@@ -315,7 +315,14 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 ```bash
     php bin/console importmap:require @symfony/ux-icons
     php bin/console debug:config ux_icons
-    php bin/console ux:icons:search pdf
+
+    # Search icons
+    symfony console ux:icons:search flowbite pdf
+    symfony console ux:icons:search fa7-solid pdf
+    symfony console ux:icons:search fa7-brands github
+
+    # Import icons
+    symfony console ux:icon:import fa7-solid:file-pdf
 ```
 
 * [IconStack](https://iconstack.io/) — Découverte et gestion de sets d'icônes.

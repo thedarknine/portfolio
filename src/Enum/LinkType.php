@@ -34,9 +34,9 @@ enum LinkType: string
     public function getIcon(): string
     {
         return match ($this) {
-            self::DOCUMENT => 'fa-file-word',
-            self::PDF      => 'fa-file-pdf text-danger',
-            self::EXTERNAL => 'fa-external-link-alt',
+            self::DOCUMENT => 'fa7-solid:file-word',
+            self::PDF      => 'flowbite:file-pdf-outline text-danger',
+            self::EXTERNAL => 'fa7-solid:globe-europe',
         };
     }
 }
