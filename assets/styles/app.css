@@ -771,8 +771,3 @@
     }
 }
 
-@media screen and (width <= 992px) {
-    .nine-page-hero {
-        padding: 5rem 0;
-    }
-}

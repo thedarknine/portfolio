@@ -289,7 +289,7 @@
         <div class="grid-cols-4 p-8 md:space-y-0 md:grid md:gap-3 md:grid-rows-2">
             {% for landscape in mental_landscape %}
             <div class="w-full h-full rounded overflow-hidden {% if landscape.big %}col-span-2 row-span-2{% endif %} animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                <img src="{{ absolute_url(landscape.image) }}" alt="{{ landscape.alt }}" class="block h-full w-full grayscale-50 rounded-lg my-4 lg:my-0 object-cover object-center hover:scale-110 transition duration-500">
+                <img src="{{ absolute_url(landscape.image) }}" alt="{{ landscape.alt }}" class="block h-full w-full grayscale-50 rounded-lg my-4 lg:my-0 object-cover object-center hover:scale-110 hover:grayscale-0 transition duration-500">
             </div>
             {% endfor %}
         </div>

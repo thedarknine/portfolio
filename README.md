@@ -265,6 +265,7 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 * `symfony/asset` & `symfony/asset-mapper` : Gestion moderne des assets sans Node.js.
 * `symfony/twig-pack` & `twig/intl-extra` : Extensions Twig avancées (dates, filtres internationaux).
 * `symfonycasts/tailwind-bundle` : Intégration transparente de Tailwind CSS.
+* `symfony/ux-icons` : Icônes SVG via AssetMapper.
 * `symfony/orm-pack` & `doctrine/doctrine-migrations-bundle` : Persistance de données.
 * `gedmo/doctrine-extensions` : Ajout de comportements (Sluggable, Timestampable).
 * `nesbot/carbon` : Manipulation avancée et fluide des dates.
@@ -308,6 +309,14 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 ```
 
 ## 🎨 Ressources Graphiques & Icônes
+
+* Package [UX Icons](https://ux.symfony.com/icons) : Icônes SVG via AssetMapper.
+
+```bash
+    php bin/console importmap:require @symfony/ux-icons
+    php bin/console debug:config ux_icons
+    php bin/console ux:icons:search pdf
+```
 
 * [IconStack](https://iconstack.io/) — Découverte et gestion de sets d'icônes.
 * [HugeIcons](https://hugeicons.com/icons/stroke-rounded?search=inst) — Icônes filaires haut de gamme.
