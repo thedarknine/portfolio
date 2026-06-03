@@ -18,11 +18,12 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo0->setQuote('J’aime transformer des idées en réalisations concrètes, apprendre en faisant et faire évoluer ce que je construis.');
         $pageInfo0->setInHeader(true);
         $pageInfo0->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo0->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
-        $pageInfo0->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $pageInfo0->setCreatedAt(new \DateTime('2026-05-25 09:38:13'));
+        $pageInfo0->setUpdatedAt(new \DateTime('2026-05-27 17:52:27'));
         $pageInfo0->setTitle('Expérience');
         $pageInfo0->setSlug('experience');
         $pageInfo0->setPosition(1);
+        $pageInfo0->setPublished(true);
         $manager->persist($pageInfo0);
         $this->addReference('pageInfo_1', $pageInfo0);
 
@@ -33,11 +34,12 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo1->setQuote('Je cherche à concevoir des produits simples, utiles et durables, avec une approche pragmatique et humaine.');
         $pageInfo1->setInHeader(true);
         $pageInfo1->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo1->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
-        $pageInfo1->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $pageInfo1->setCreatedAt(new \DateTime('2026-05-25 10:06:31'));
+        $pageInfo1->setUpdatedAt(new \DateTime('2026-05-27 17:49:25'));
         $pageInfo1->setTitle('Compétences');
         $pageInfo1->setSlug('competences');
         $pageInfo1->setPosition(2);
+        $pageInfo1->setPublished(true);
         $manager->persist($pageInfo1);
         $this->addReference('pageInfo_2', $pageInfo1);
 
@@ -48,11 +50,12 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo2->setQuote('Pour moi, la veille et l\'apprentissage ne s\'arrêtent jamais. C\'est un cycle permanent d\'expérimentation.');
         $pageInfo2->setInHeader(true);
         $pageInfo2->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo2->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
-        $pageInfo2->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $pageInfo2->setCreatedAt(new \DateTime('2026-05-25 11:05:25'));
+        $pageInfo2->setUpdatedAt(new \DateTime('2026-05-27 17:49:26'));
         $pageInfo2->setTitle('Formation');
         $pageInfo2->setSlug('formation');
         $pageInfo2->setPosition(3);
+        $pageInfo2->setPublished(true);
         $manager->persist($pageInfo2);
         $this->addReference('pageInfo_3', $pageInfo2);
 
@@ -63,11 +66,12 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo3->setQuote('Coder sans contraintes, tester de nouvelles technos et s\'autoriser à chercher juste pour le plaisir de comprendre.');
         $pageInfo3->setInHeader(true);
         $pageInfo3->setCategory(\App\Enum\PageCategory::CAREER);
-        $pageInfo3->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
-        $pageInfo3->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $pageInfo3->setCreatedAt(new \DateTime('2026-05-25 11:06:39'));
+        $pageInfo3->setUpdatedAt(new \DateTime('2026-05-27 17:49:26'));
         $pageInfo3->setTitle('Projets');
         $pageInfo3->setSlug('projets');
         $pageInfo3->setPosition(4);
+        $pageInfo3->setPublished(true);
         $manager->persist($pageInfo3);
         $this->addReference('pageInfo_4', $pageInfo3);
 
@@ -78,11 +82,12 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo4->setQuote('Quand la passion des vieux jeux rencontre le plaisir de bidouiller le hardware.');
         $pageInfo4->setInHeader(true);
         $pageInfo4->setCategory(\App\Enum\PageCategory::INTEREST);
-        $pageInfo4->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
-        $pageInfo4->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $pageInfo4->setCreatedAt(new \DateTime('2026-05-25 12:00:50'));
+        $pageInfo4->setUpdatedAt(new \DateTime('2026-05-27 17:49:27'));
         $pageInfo4->setTitle('Arcade');
         $pageInfo4->setSlug('arcade');
         $pageInfo4->setPosition(5);
+        $pageInfo4->setPublished(true);
         $manager->persist($pageInfo4);
         $this->addReference('pageInfo_5', $pageInfo4);
 
@@ -93,11 +98,12 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo5->setQuote('Poser les écrans et laisser parler la matière et l\'imagination.');
         $pageInfo5->setInHeader(false);
         $pageInfo5->setCategory(\App\Enum\PageCategory::INTEREST);
-        $pageInfo5->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
-        $pageInfo5->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $pageInfo5->setCreatedAt(new \DateTime('2026-05-25 12:07:06'));
+        $pageInfo5->setUpdatedAt(new \DateTime('2026-05-27 17:49:28'));
         $pageInfo5->setTitle('Créations');
         $pageInfo5->setSlug('creations');
         $pageInfo5->setPosition(6);
+        $pageInfo5->setPublished(true);
         $manager->persist($pageInfo5);
         $this->addReference('pageInfo_6', $pageInfo5);
 
@@ -108,11 +114,12 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo6->setQuote('Capturer l\'instant, cadrer une atmosphère et prêter attention aux détails qui échappent au premier coup d\'oeil.');
         $pageInfo6->setInHeader(false);
         $pageInfo6->setCategory(\App\Enum\PageCategory::INTEREST);
-        $pageInfo6->setCreatedAt(new \DateTime('2026-05-27 16:03:19'));
-        $pageInfo6->setUpdatedAt(new \DateTime('2026-05-27 16:03:19'));
+        $pageInfo6->setCreatedAt(new \DateTime('2026-05-25 12:07:40'));
+        $pageInfo6->setUpdatedAt(new \DateTime('2026-05-27 17:49:29'));
         $pageInfo6->setTitle('Photos');
         $pageInfo6->setSlug('photos');
         $pageInfo6->setPosition(7);
+        $pageInfo6->setPublished(true);
         $manager->persist($pageInfo6);
         $this->addReference('pageInfo_7', $pageInfo6);
 

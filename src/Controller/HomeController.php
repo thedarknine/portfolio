@@ -31,11 +31,11 @@ final class HomeController extends AbstractController
             'technicalName' => 'home',
         ];
         $data['mental_landscape'] = [
-            'rugby'    => ['image' => 'images/home/rugby-asm.jpeg', 'alt' => 'Rugby', 'big' => false],
-            'zen'      => ['image' => 'images/home/lac-zen.jpg', 'alt' => 'Sérénité', 'big' => true],
-            'chat'     => ['image' => 'images/home/chat.jpg', 'alt' => 'Chat', 'big' => false],
-            'auvergne' => ['image' => 'images/home/auvergne.jpg', 'alt' => 'Auvergne', 'big' => false],
-            'equipe'   => ['image' => 'images/home/equipe.jpg', 'alt' => 'Equipe', 'big' => false],
+            'rugby'    => ['image' => 'images/home/rugby-asm.webp', 'alt' => 'Rugby', 'big' => false],
+            'zen'      => ['image' => 'images/home/lac-zen.webp', 'alt' => 'Sérénité', 'big' => true],
+            'chat'     => ['image' => 'images/home/chat.webp', 'alt' => 'Chat', 'big' => false],
+            'auvergne' => ['image' => 'images/home/auvergne.webp', 'alt' => 'Auvergne', 'big' => false],
+            'equipe'   => ['image' => 'images/home/equipe.webp', 'alt' => 'Equipe', 'big' => false],
         ];
         $data['last_experiences'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(3);
 

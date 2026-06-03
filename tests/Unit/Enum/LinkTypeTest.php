@@ -30,12 +30,12 @@ class LinkTypeTest extends TestCase
      */
     public function testGetIconReturnsCorrectFontAwesomeClass(): void
     {
-        $this->assertSame('fa-file-word', LinkType::DOCUMENT->getIcon());
+        $this->assertSame('fa7-solid:file-word', LinkType::DOCUMENT->getIcon());
 
         // Valid that PDF keeps its color class
-        $this->assertSame('fa-file-pdf text-danger', LinkType::PDF->getIcon());
+        $this->assertSame('flowbite:file-pdf-outline text-danger', LinkType::PDF->getIcon());
 
-        $this->assertSame('fa-external-link-alt', LinkType::EXTERNAL->getIcon());
+        $this->assertSame('fa7-solid:globe-europe', LinkType::EXTERNAL->getIcon());
     }
 
     /**

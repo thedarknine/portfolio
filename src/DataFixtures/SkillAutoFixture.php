@@ -5,10 +5,11 @@ namespace App\DataFixtures;
 use App\Entity\Skill;
 use App\Entity\SkillType;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class SkillAutoFixture extends Fixture implements DependentFixtureInterface
+class SkillAutoFixture extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -1030,5 +1031,10 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface
         return [
             SkillTypeAutoFixture::class,
         ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['portfolio'];
     }
 }

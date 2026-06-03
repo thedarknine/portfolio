@@ -5,10 +5,11 @@ namespace App\DataFixtures;
 use App\Entity\ExperienceLink;
 use App\Entity\Experience;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ExperienceLinkAutoFixture extends Fixture implements DependentFixtureInterface
+class ExperienceLinkAutoFixture extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -113,5 +114,10 @@ class ExperienceLinkAutoFixture extends Fixture implements DependentFixtureInter
         return [
             ExperienceAutoFixture::class,
         ];
+    }
+
+    public static function getGroups(): array
+    {
+        return ['portfolio'];
     }
 }

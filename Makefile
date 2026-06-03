@@ -502,8 +502,8 @@ test: ## Run PHPUnit tests
 	$(call display_title,Running PHPUnit tests,${ICON_TEST})
 	@$(MAKE) --no-print-directory check-containers
 	@$(call display_subtitle,Generating fixtures...)
-#@$(SYMFONY) cache:clear --env=test
-#$(SYMFONY) app:generate-fixtures --group=test
+	@$(SYMFONY) cache:clear --env=test
+	@$(SYMFONY) app:generate-fixtures --group=test
 	@$(call display_subtitle,Preparing test database...)
 	- @$(SYMFONY) doctrine:schema:drop --env=test --force --full-database
 	@$(SYMFONY) doctrine:schema:update --env=test --force
