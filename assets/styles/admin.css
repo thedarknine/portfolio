@@ -1,6 +1,7 @@
 /* assets/styles/admin.css */
-[data-bs-theme="dark"],
-[data-ea-dark-scheme="dark"] {
+
+.ea-dark-scheme {
+    /* --- Tes variables de marque (Conservées) --- */
     --color-nine-primary: oklch(33.74% 0.071 254.99); /* #1c385b */
     --color-nine-golden: oklch(96.81% 0.0074 80.72); /* #f7f4ef */
     --color-nine-light: oklch(90.81% 0.008 253.86); /* #dde1e6 */
@@ -16,31 +17,63 @@
     --color-nine-gray-light: oklch(90.97% 0 0); /* #e1e1e1 */
     --color-nine-gray-dark: oklch(50.97% 0.035 256.79); /* #64748b */
 
-    /* --- Surcharge d'EasyAdmin --- */
+    /* --- Surcharges Officielles EasyAdmin v5 --- */
+    --body-bg: #1d283c;
+    --sidebar-bg: #324158;
+    --content-bg: #2a384e;
+    --popover-bg: #2a384e;
+    --dropdown-bg: #2a384e;
+
+    /* Barre latérale (Navigation) */
+    --sidebar-menu-color: #e2e8f0;
+    --sidebar-menu-icon-color: #94a3b8;
+    --sidebar-menu-active-item-bg: #222d3e;
+    --sidebar-menu-active-item-color: var(--color-nine-turquoise);
+    --sidebar-border-color: #3b4e6b;
+
+    /* Textes */
+    --text-color: #f8fafc;
+    --text-muted: #94a3b8;
+
+    /* Formulaires & Inputs */
+    --form-control-bg: #161e2d;
+    --form-input-text-color: #f8fafc;
+    --form-input-border-color: #3b4e6b;
+    --form-input-hover-border-color: var(--color-nine-turquoise);
+
+    /* Tableaux & Datagrid */
+    --table-thead-color: #f8fafc;
+    --table-cell-color: #e2e8f0;
+    --table-cell-border-color: #3b4e6b;
+    --table-hover-cell-bg: #243149;
+
+    /* Boutons Primaires & Liens */
+    --color-primary: var(--color-nine-turquoise);
+    --link-color: var(--color-nine-turquoise);
+    --link-hover-color: oklch(66% 0.12 226.51);
 
     --button-primary-bg: var(--color-nine-turquoise);
-    --sidebar-bg: var(--color-nine-blue);
-    --sidebar-text: oklch(85% 0.02 259.27);
-    --sidebar-text-hover: #fff;
-    --sidebar-menu-active-item-bg: oklch(42% 0.09 259.27);
-    --sidebar-menu-active-item-color: oklch(85% 0.02 259.27);
-    --body-bg: oklch(25% 0.05 259.27);
-    --card-bg: oklch(28% 0.06 259.27);
-    --border-color: oklch(38% 0.06 259.27);
-    --border-radius-base: 0.75rem;
-    --table-hover-cell-bg: oklch(30% 0.05 259.27);
-    --form-control-bg: var(--color-nine-blue);
-    --form-type-text-editor-toolbar-bg: oklch(28% 0.06 259.27);
-    --form-type-autocomplete-multi-item-bg: oklch(28% 0.06 259.27);
-    --form-type-autocomplete-multi-item-border-color: transparent;
+    --button-primary-hover-bg: oklch(66% 0.12 226.51);
+    --button-primary-active-bg: oklch(55% 0.11 226.51);
+    --button-primary-border-color: transparent;
+    --button-primary-hover-border-color: transparent;
+
+    --form-switch-checked-bg: var(--color-nine-turquoise);
+
+    /* --- Harmonisation Couches Basses Bootstrap 5 --- */
+    --bs-body-bg: #1d283c;
+    --bs-card-bg: #2a384e;
+    --bs-border-color: #3b4e6b;
+    --bs-border-radius: 0.2rem;
 }
 
+/* --- Vos ajustements structurels de confort --- */
 .table {
     --bs-table-bg: transparent;
 }
 
 td.actions {
-    white-space: nowrap; /* Empêche les boutons de passer à la ligne */
+    white-space: nowrap;
 }
 
 td.actions a[data-action^="ea-"][href*="move"] {
