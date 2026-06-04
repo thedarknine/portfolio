@@ -1,57 +1,69 @@
-{# templates/security/2fa_login.html.twig #}
-{% extends '@EasyAdmin/page/login.html.twig' %}
+{% extends 'layout_login.html.twig' %}
 
-{% block page_title %}Double Authentification{% endblock %}
+{% block title %}Validation 2FA - Dashboard{% endblock %}
 
-{% block wrapper_wrapper %}
-    <div class="login-wrapper">
-        <header class="main-header">
-            <h1 class="logo">
-                <i class="fas fa-shield-alt text-success"></i> Code de Sécurité
-            </h1>
-        </header>
+{% block body %}
+<div class="bg-slate-900/60 backdrop-blur-md py-10 px-6 shadow-2xl rounded-2xl sm:px-12 border border-slate-800/80">
 
-{% if authenticationError %}
-    <div class="alert alert-danger rounded shadow-sm mb-3">
-        <i class="fas fa-exclamation-circle"></i>
-        {{ authenticationError.messageKey|trans(authenticationError.messageData, 'TwoFactorBundle') }}
+    {# Header #}
+    <div class="mb-8 text-center">
+        <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-950 text-cyan-400 mb-3 border border-cyan-800/30">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.959 11.959 0 0 1 3.598 6 11.99 11.99 0 0 0 3 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.57-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.286Z" />
+            </svg>
+        </div>
+        <h2 class="text-2xl font-bold tracking-tight text-white">Double Authentification</h2>
+        <p class="mt-1.5 text-sm text-slate-400">Saisissez le code généré par votre application</p>
+        <p class="mt-1.5 text-sm text-slate-400">
+            Connecté en tant que
+            <span class="font-medium text-slate-300">
+                {{ app.user.email }}
+            </span>
+        </p>
+    </div>
+
+{% if authenticationError is defined and authenticationError %}
+    <div class="rounded-lg bg-red-950/50 p-4 text-sm text-red-400 border border-red-900/50 shadow-xs mb-5">
+        {% if authenticationError is iterable %}
+            {{ authenticationError.messageKey|trans(authenticationError.messageData, 'SchebTwoFactorBundle') }}
+        {% else %}
+            {{ authenticationError|trans({ }, 'SchebTwoFactorBundle') }}
+        {% endif %}
     </div>
 {% endif %}
 
-        <div class="card bg-white p-4 shadow-sm rounded">
-            <p class="text-muted small mb-4 text-center">
-                Veuillez saisir le code de validation à 6 chiffres généré par votre application de sécurité.
-            </p>
-
-            <form action="{{ path('2fa_login_check') }}" method="post" class="w-100">
-                <div class="form-group mb-4">
-                    <label for="_auth_code" class="form-control-label field-label required fw-bold mb-2">
-                        Code d'authentification
-                    </label>
-                    <input
-                        type="text"
-                        id="_auth_code"
-                        name="{{ authCodeParameterName }}"
-                        autocomplete="one-time-code"
-                        inputmode="numeric"
-                        pattern="[0-9]*"
-                        class="form-control form-control-lg text-center font-monospace fs-3"
-                        placeholder="000 000"
-                        required
-                        autofocus
-                    />
-                </div>
-
-                {# Gestion du bouton d'annulation ou déconnexion s'il y a un problème #}
-                <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-primary btn-lg btn-block">
-                        <i class="fas fa-sign-in-alt"></i> Valider et se connecter
-                    </button>
-                    <a href="{{ path('app_logout') }}" class="btn btn-link btn-sm text-muted mt-2 text-center">
-                        Annuler la connexion
-                    </a>
-                </div>
-            </form>
+    <form action="{{ path('2fa_login_check') }}" method="post" class="space-y-5">
+        <div>
+            <label for="_auth_code" class="block text-sm font-medium text-slate-300">Code de vérification</label>
+            <div class="mt-1.5">
+                <input
+                    type="text"
+                    name="{{ authCodeParameterName }}"
+                    id="_auth_code"
+                    inputmode="numeric"
+                    pattern="[0-9]{6}"
+                    autocomplete="one-time-code"
+                    autocorrect="off"
+                    spellcheck="false"
+                    autofocus
+                    required
+                    placeholder="000 000"
+                    class="block w-full rounded-xl border border-slate-700 bg-slate-950/60 px-3.5 py-2.5 text-center text-2xl font-mono tracking-widest text-white placeholder-slate-600 focus:border-cyan-500 focus:bg-slate-950 focus:outline-hidden focus:ring-1 focus:ring-cyan-500 sm:text-lg transition-all"
+                >
+            </div>
         </div>
-    </div>
+
+        <div class="pt-2">
+            <button type="submit" class="flex w-full justify-center rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white shadow-md hover:bg-cyan-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 cursor-pointer transition-colors">
+                Vérifier le code
+            </button>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="{{ path('app_logout') }}" class="text-xs font-medium text-slate-500 hover:text-slate-400 transition-colors">
+                Se déconnecter et annuler
+            </a>
+        </div>
+    </form>
+</div>
 {% endblock %}

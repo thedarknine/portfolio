@@ -1,27 +1,27 @@
 {# templates/security/login.html.twig #}
 {% extends 'layout_login.html.twig' %}
 
-{% block title %}Connexion - Dashboard{% endblock %}
+{% block title %}Connexion - Backstage{% endblock %}
 
 {% block body %}
-<div class="bg-white py-10 px-6 shadow-xl rounded-2xl sm:px-12">
+<div class="bg-slate-900/60 backdrop-blur-md py-10 px-6 shadow-2xl rounded-2xl sm:px-12 border border-slate-800/80">
 
     {# Form header #}
     <div class="mb-8 text-center">
-        <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-50 text-cyan-600 mb-3">
+        <div class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-950 text-cyan-400 mb-3 border border-cyan-800/30">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
             </svg>
         </div>
-        <h2 class="text-2xl font-bold tracking-tight text-slate-900">Espace Administration</h2>
-        <p class="mt-1.5 text-sm text-slate-500">Accès restreint au gestionnaire du portfolio</p>
+        <h2 class="text-2xl font-bold tracking-tight text-white">Backstage</h2>
+        <p class="mt-1.5 text-sm text-slate-400">Accès restreint au gestionnaire du portfolio</p>
     </div>
 
     <form method="post" class="space-y-5">
 
         {# Error handling #}
         {% if error %}
-            <div class="rounded-lg bg-red-50 p-4 text-sm text-red-700 border border-red-100/80 shadow-xs">
+            <div class="rounded-lg bg-red-950/50 p-4 text-sm text-red-400 border border-red-900/50 shadow-xs">
                 {{ error.messageKey|trans(error.messageData, 'security') }}
             </div>
         {% endif %}
@@ -30,29 +30,29 @@
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
         <div>
-            <label for="username" class="block text-sm font-medium text-slate-700">Adresse e-mail</label>
+            <label for="username" class="block text-sm font-medium text-slate-300">Adresse e-mail</label>
             <div class="mt-1.5">
-                <input type="email" value="{{ last_username }}" name="_username" id="username" class="block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2.5 text-slate-900 placeholder-slate-400 focus:border-cyan-500 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-cyan-500 sm:text-sm transition-all" autocomplete="email" required autofocus placeholder="nom@exemple.fr">
+                <input type="email" value="{{ last_username }}" name="_username" id="username" class="block w-full rounded-xl border border-slate-700 bg-slate-950/60 px-3.5 py-2.5 text-white placeholder-slate-500 focus:border-cyan-500 focus:bg-slate-950 focus:outline-hidden focus:ring-1 focus:ring-cyan-500 sm:text-sm transition-all" autocomplete="email" required autofocus placeholder="nom@exemple.fr">
             </div>
         </div>
 
         <div>
-            <label for="password" class="block text-sm font-medium text-slate-700">Mot de passe</label>
+            <label for="password" class="block text-sm font-medium text-slate-300">Mot de passe</label>
             <div class="mt-1.5">
-                <input type="password" name="_password" id="password" class="block w-full rounded-xl border border-slate-300 bg-slate-50/50 px-3.5 py-2.5 text-slate-900 placeholder-slate-400 focus:border-cyan-500 focus:bg-white focus:outline-hidden focus:ring-1 focus:ring-cyan-500 sm:text-sm transition-all" autocomplete="current-password" required placeholder="••••••••">
+                <input type="password" name="_password" id="password" class="block w-full rounded-xl border border-slate-700 bg-slate-950/60 px-3.5 py-2.5 text-white placeholder-slate-500 focus:border-cyan-500 focus:bg-slate-950 focus:outline-hidden focus:ring-1 focus:ring-cyan-500 sm:text-sm transition-all" autocomplete="current-password" required placeholder="••••••••">
             </div>
         </div>
 
         <div class="pt-2">
-            <button type="submit" class="flex w-full justify-center rounded-xl bg-blue-800 px-4 py-3 text-sm font-semibold text-white shadow-md hover:bg-blue-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-600 cursor-pointer transition-colors">
+            <button type="submit" class="flex w-full justify-center rounded-xl bg-cyan-600 px-4 py-3 text-sm font-semibold text-white shadow-md hover:bg-cyan-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-500 cursor-pointer transition-colors">
                 Se connecter
             </button>
         </div>
     </form>
 
     {# Link to return #}
-    <div class="mt-8 text-center border-t border-slate-100 pt-4">
-        <a href="{{ path('app_home') }}" class="text-xs font-medium text-slate-400 hover:text-slate-600 transition-colors inline-flex items-center gap-1">
+    <div class="mt-8 text-center border-t border-slate-800 pt-4">
+        <a href="{{ path('app_home') }}" class="text-xs font-medium text-slate-400 hover:text-white transition-colors inline-flex items-center gap-1">
             ← Retour au site public
         </a>
     </div>
