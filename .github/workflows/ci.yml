@@ -47,6 +47,9 @@ jobs:
           ${{ runner.os }}-composer-
 
     - name: Install Dependencies
+      env:
+          APP_ENV: test
+          DEFAULT_URI: https://localhost
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
     - name: Create Test Directories
