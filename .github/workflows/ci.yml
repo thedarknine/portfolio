@@ -21,6 +21,7 @@ jobs:
     env:
       APP_ENV: test
       DEFAULT_URI: https://localhost
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
     - name: Checkout code
@@ -54,11 +55,21 @@ jobs:
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
+    - name: Valider la configuration Symfony
+      run: |
+        php bin/console cache:clear --env=test
+        php bin/console lint:container
+        php bin/console lint:twig templates/
+        php bin/console lint:yaml config/
+
     - name: Create Test Directories
       run: mkdir -p var/tests/images
 
     - name: Clear Symfony Cache
       run: php bin/console cache:clear --env=test
-    
+
+    - name: Execute PHP-CS-Fixer (Linter)
+      run: vendor/bin/php-cs-fixer fix --dry-run --diff  --config=.tools-config/.php-cs-fixer.php
+       
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --configuration=.tools-config/phpstan.neon
