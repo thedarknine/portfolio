@@ -88,14 +88,14 @@ jobs:
     - name: Create Database
       run: php bin/console doctrine:database:create --env=test --if-not-exists
 
-    - name: Load Fixtures
-      run: php bin/console doctrine:fixtures:load --no-interaction --env=test
-
     - name: Create Database Schema from Entities
       run: php bin/console doctrine:schema:create --env=test
 
     - name: Validate Doctrine Schema
       run: php bin/console doctrine:schema:validate --skip-sync --env=test
+
+    - name: Load Fixtures
+      run: php bin/console doctrine:fixtures:load --no-interaction --env=test
 
     - name: Run PHPUnit Tests
       run: vendor/bin/phpunit --configuration .tools-config/phpunit.xml --exclude-group=UI
