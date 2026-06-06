@@ -58,6 +58,9 @@
     --button-primary-border-color: transparent;
     --button-primary-hover-border-color: transparent;
 
+    --button-secondary-bg: var(--color-nine-gray-dark);
+    --button-secondary-hover-bg: #324158;
+
     --form-switch-checked-bg: var(--color-nine-turquoise);
 
     /* --- Harmonisation Couches Basses Bootstrap 5 --- */
