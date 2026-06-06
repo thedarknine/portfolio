@@ -11,11 +11,14 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Experience;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
@@ -41,6 +44,17 @@ class ExperienceCrudController extends AbstractCrudController
         ;
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
+            ->linkToCrudAction(Action::INDEX)
+            ->setCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $cancelAction)
+            ->add(Crud::PAGE_NEW, $cancelAction);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         // Hide the ID on forms, but show it on the index page
@@ -55,7 +69,7 @@ class ExperienceCrudController extends AbstractCrudController
         yield DateField::new('startDate', 'Date de début')->setFormat('yyyy-MM')->hideOnIndex();
         yield DateField::new('endDate', 'Date de fin')->setFormat('yyyy-MM')->setRequired(false)->hideOnIndex();
 
-        yield TextEditorField::new('summary', 'Résumé (court)')->hideOnIndex();
+        yield TextareaField::new('summary', 'Résumé (court)')->hideOnIndex();
         yield TextEditorField::new('description', 'Missions / Description globale')->hideOnIndex();
 
         // Relation with skills (EasyAdmin will use the __toString() of Skill)

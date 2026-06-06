@@ -43,7 +43,6 @@ class ExperienceItem implements SortableEntityInterface
     #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Experience is required.')]
-    #[Assert\Valid]
     private ?Experience $experience = null;
 
     public function getId(): int

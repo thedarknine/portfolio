@@ -21,7 +21,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Table(name: 'skill_type')]
 #[ORM\Entity(repositoryClass: SkillTypeRepository::class)]
@@ -41,7 +40,6 @@ class SkillType implements SortableEntityInterface
 
     /** @var Collection<int, Skill> */
     #[ORM\OneToMany(mappedBy: 'skillType', targetEntity: Skill::class)]
-    #[Assert\Valid]
     private Collection $skills;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]

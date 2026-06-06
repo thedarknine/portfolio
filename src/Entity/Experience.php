@@ -61,7 +61,6 @@ class Experience
 
     /** @var Collection<int, Skill> */
     #[ORM\ManyToMany(targetEntity: Skill::class, inversedBy: 'experiences')]
-    #[Assert\Valid]
     private Collection $skills;
 
     /** @var Collection<int, ExperienceItem> */

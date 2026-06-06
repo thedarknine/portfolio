@@ -15,6 +15,7 @@ use App\Entity\SkillType;
 use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -25,6 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
@@ -78,10 +80,15 @@ class SkillTypeCrudController extends AbstractCrudController
         yield TextField::new('name', 'Nom du type')
             ->setHelp('Exemple: Back-end, Front-end, Gestion de projet...');
 
+        yield SlugField::new('slug', 'Slug (URL)')
+            ->setTargetFieldName('name')
+            ->setFormTypeOption('disabled', false)
+            ->hideOnIndex();
+
         yield IntegerField::new('position', 'Ordre d\'affichage')
             ->setHelp('Plus le chiffre est bas, plus il apparaît en premier.');
 
-        yield TextField::new('logo', 'Logo')->setHelp('Doit correspondre au nom du fichier dans public/uploads/skills/ (ex: skills-sysadmin.png)')
+        yield TextField::new('logo', 'Logo')->setHelp('Doit correspondre au nom du fichier dans public/uploads/skills/ (ex: skills-sysadmin.webp)')
             ->hideOnIndex(); // Avoid cluttering the index page with logo paths
 
         yield TextEditorField::new('description', 'Description')
@@ -98,6 +105,14 @@ class SkillTypeCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return $this->addSortableActions($actions);
+        $actions = $this->addSortableActions($actions);
+
+        $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
+            ->linkToCrudAction(Action::INDEX)
+            ->setCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $cancelAction)
+            ->add(Crud::PAGE_NEW, $cancelAction);
     }
 }
