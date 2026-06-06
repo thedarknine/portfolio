@@ -61,4 +61,4 @@ jobs:
       run: php bin/console cache:clear --env=test
     
     - name: Run PHPStan
-      run: vendor/bin/phpstan analyse
+      run: vendor/bin/phpstan analyse --configuration=.tools-config/phpstan.neon
