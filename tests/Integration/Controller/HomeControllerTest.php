@@ -73,7 +73,7 @@ class HomeControllerTest extends WebTestCase
             $page = (new PageInfo())
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
-                ->setCategory(PageCategory::CARREER)
+                ->setCategory(PageCategory::CAREER)
                 ->setSubtitle('Du code au produit : mon parcours en mouvement')
                 ->setSlug('experience')
                 ->setTagline('Construire')
