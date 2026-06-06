@@ -175,6 +175,7 @@ class PortfolioControllerTest extends WebTestCase
                 ->setSlug('experience')
                 ->setTagline('Construire')
                 ->setQuote('Le meilleur moyen de prédire l\'avenir, c\'est de le créer.')
+                ->setInHeader(true)
                 ->setPublished(true);
             $this->entityManager->persist($page);
             $this->entityManager->flush();
