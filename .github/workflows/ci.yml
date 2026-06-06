@@ -29,21 +29,25 @@ jobs:
       with:
         php-version: '8.4'
         extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql
+        tools: composer:v2
 
     - name: Copy .env.test.local
-      run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
+      run: php -r "file_exists('.env') || copy('.env.test', '.env');"
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
     - name: Cache Composer packages
-      id: composer-cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
-        path: vendor
-        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: |
-          ${{ runner.os }}-php-
+          ${{ runner.os }}-composer-
 
     - name: Install Dependencies
-      run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
 
     - name: Create Test Directories
       run: mkdir -p var/tests/images
