@@ -84,3 +84,12 @@ jobs:
        
     - name: Run PHPStan
       run: vendor/bin/phpstan analyse --configuration=.tools-config/phpstan.neon
+
+    - name: Create Database
+      run: php bin/console doctrine:database:create --env=test --if-not-exists
+
+    - name: Run Migrations
+      run: php bin/console doctrine:migrations:migrate --no-interaction --env=test
+
+    - name: Run PHPUnit Tests
+      run: vendor/bin/phpunit --configuration .tools-config/phpunit.xml
