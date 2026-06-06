@@ -47,7 +47,7 @@ jobs:
           ${{ runner.os }}-composer-
 
     - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-progress --prefer-dist
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
     - name: Create Test Directories
       run: mkdir -p var/tests/images
