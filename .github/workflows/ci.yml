@@ -97,5 +97,14 @@ jobs:
     - name: Load Fixtures
       run: php bin/console doctrine:fixtures:load --no-interaction --env=test
 
+    - name: Build Tailwind CSS
+      run: php bin/console tailwind:build --env=test
+
+    - name: Cache Tailwind binary
+      uses: actions/cache@v4
+      with:
+        path: var/tailwind
+        key: ${{ runner.os }}-tailwind-${{ hashFiles('**/composer.lock') }}
+
     - name: Run PHPUnit Tests
       run: vendor/bin/phpunit --configuration .tools-config/phpunit.xml --exclude-group=UI
