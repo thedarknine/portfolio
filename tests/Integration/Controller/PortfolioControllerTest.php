@@ -171,6 +171,7 @@ class PortfolioControllerTest extends WebTestCase
             $page = (new PageInfo())
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
+                ->setSubtitle('Du code au produit : mon parcours en mouvement')
                 ->setSlug('experience')
                 ->setTagline('Construire')
                 ->setPublished(true);
