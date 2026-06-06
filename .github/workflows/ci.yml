@@ -48,3 +48,8 @@ jobs:
     - name: Create Test Directories
       run: mkdir -p var/tests/images
 
+    - name: Clear Symfony Cache
+      run: php bin/console cache:clear --env=test
+    
+    - name: Run PHPStan
+      run: vendor/bin/phpstan analyse
