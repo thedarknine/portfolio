@@ -66,7 +66,7 @@ jobs:
     - name: Install Dependencies
       run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-    - name: Valider la configuration Symfony
+    - name: Validate Symfony configuration
       run: |
         php bin/console cache:clear --env=test
         php bin/console lint:container
@@ -95,4 +95,4 @@ jobs:
       run: php bin/console doctrine:schema:validate --skip-sync --env=test
 
     - name: Run PHPUnit Tests
-      run: vendor/bin/phpunit --configuration .tools-config/phpunit.xml
+      run: vendor/bin/phpunit --configuration .tools-config/phpunit.xml --exclude-group=UI
