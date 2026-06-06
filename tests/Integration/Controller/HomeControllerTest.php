@@ -11,6 +11,7 @@
 namespace App\Tests\Integration\Controller;
 
 use App\Entity\PageInfo;
+use App\Enum\PageCategory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -72,6 +73,7 @@ class HomeControllerTest extends WebTestCase
             $page = (new PageInfo())
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
+                ->setCategory(PageCategory::CARREER)
                 ->setSubtitle('Du code au produit : mon parcours en mouvement')
                 ->setSlug('experience')
                 ->setTagline('Construire')
