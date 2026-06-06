@@ -18,9 +18,20 @@ jobs:
   symfony-tests:
     runs-on: ubuntu-latest
 
+    services:
+        mysql:
+          image: mysql:8.0
+          env:
+            MYSQL_ALLOW_EMPTY_PASSWORD: yes
+            MYSQL_DATABASE: portfolio_test
+          ports:
+            - 3306:3306
+          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          
     env:
       APP_ENV: test
       DEFAULT_URI: https://localhost
+      DATABASE_URL: "mysql://root@127.0.0.1:3306/portfolio_test?serverVersion=8.0"
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:
