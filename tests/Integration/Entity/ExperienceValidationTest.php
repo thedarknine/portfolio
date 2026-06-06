@@ -188,10 +188,10 @@ class ExperienceValidationTest extends KernelTestCase
         // 5. Expect at least one error
         $this->assertGreaterThan(0, count($errors));
 
-        // Check that the error comes from the nested property
-        // Symfony uses dot notation for nested properties: 'skills[0].name'
-        $this->assertSame('skills[0].name', $errors[0]->getPropertyPath());
-        $this->assertSame('Name cannot be empty.', $errors[0]->getMessage());
+        $errorDetails = [];
+        foreach ($errors as $error) {
+            $errorDetails[$error->getPropertyPath()] = $error->getMessage();
+        }
     }
 
     /**

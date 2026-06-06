@@ -12,6 +12,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Entity\ResourceLink;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -49,7 +50,15 @@ class ResourceLinkCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return $this->addSortableActions($actions);
+        $actions = $this->addSortableActions($actions);
+
+        $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
+            ->linkToCrudAction(Action::INDEX)
+            ->setCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $cancelAction)
+            ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
     public function configureFields(string $pageName): iterable
@@ -86,7 +95,7 @@ class ResourceLinkCrudController extends AbstractCrudController
             });
 
         // Switch to display in the Hero on homepage
-        yield BooleanField::new('inHero', 'Afficher dans le Hero')
+        yield BooleanField::new('inHero', 'Hero')
             ->setHelp('Si activé, ce lien apparaîtra sous forme d\'icône directement dans l\'en-tête principal du site.')
             ->renderAsSwitch(true);
 

@@ -24,12 +24,13 @@ grumphp:
             triggered_by: ['php']
 
         git_blacklist:
+            regexp_type: "P"
             keywords:
-                - "dd("
-                - "dump("
-                - "var_dump("
-                - "die("
-                - "exit;"
+                - '\bdd\('  # Trigger if "dd(" but NOT "->add(": "P"
+                - 'dump\('
+                - 'var_dump\('
+                - 'die\('
+                - 'exit;'
             triggered_by: [php, twig]
 
         phpunit:

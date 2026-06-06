@@ -11,6 +11,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Company;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -37,6 +39,17 @@ class CompanyCrudController extends AbstractCrudController
         ;
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
+            ->linkToCrudAction(Action::INDEX)
+            ->setCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $cancelAction)
+            ->add(Crud::PAGE_NEW, $cancelAction);
+    }
+
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -46,7 +59,7 @@ class CompanyCrudController extends AbstractCrudController
             ->setHelp('Exemple : Leviia, Perfect, Coffreo...');
 
         // Logo Management (Text file name + HTML preview)
-        yield TextField::new('logo', 'Nom du fichier Logo')
+        yield TextField::new('logo', 'Fichier Logo')
             ->setHelp('Exemple : logo-leviia.svg (doit être dans public/uploads/companies/)')
             ->formatValue(function ($value, $entity) {
                 if (!$value) {

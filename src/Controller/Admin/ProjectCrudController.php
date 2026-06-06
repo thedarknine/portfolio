@@ -11,6 +11,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Project;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -37,6 +39,17 @@ class ProjectCrudController extends AbstractCrudController
             ->setDefaultSort(['year' => 'DESC'])
             ->showEntityActionsInlined()
         ;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
+            ->linkToCrudAction(Action::INDEX)
+            ->setCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $cancelAction)
+            ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
     public function configureFields(string $pageName): iterable

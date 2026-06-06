@@ -13,6 +13,7 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Entity\PageInfo;
 use App\Enum\PageCategory;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
@@ -51,7 +52,15 @@ class PageInfoCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return $this->addSortableActions($actions);
+        $actions = $this->addSortableActions($actions);
+
+        $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
+            ->linkToCrudAction(Action::INDEX)
+            ->setCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $cancelAction)
+            ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
     public function configureFields(string $pageName): iterable
@@ -87,12 +96,13 @@ class PageInfoCrudController extends AbstractCrudController
             ->setFormTypeOption('disabled', false);
 
         yield TextField::new('technicalName', 'Nom technique')
-            ->setHelp('Identifiant interne (ex: "home", "about", "creations").');
+            ->setHelp('Identifiant interne (ex: "home", "about", "creations").')
+            ->hideOnIndex();
 
         yield TextField::new('tagline', 'Tagline')
             ->setHelp('La phrase d\'introduction principale de la page.');
 
-        yield BooleanField::new('inHeader', 'Afficher dans le header')
+        yield BooleanField::new('inHeader', 'Header')
             ->setHelp('Si activé, cette page apparaîtra dans le menu de navigation principal du site.')
             ->renderAsSwitch(true);
 

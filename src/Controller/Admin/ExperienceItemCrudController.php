@@ -12,6 +12,7 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Entity\ExperienceItem;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
@@ -19,7 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\EntityFilter;
 
@@ -59,7 +60,15 @@ class ExperienceItemCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return $this->addSortableActions($actions);
+        $actions = $this->addSortableActions($actions);
+
+        $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
+            ->linkToCrudAction(Action::INDEX)
+            ->setCssClass('btn btn-warning');
+
+        return $actions
+            ->add(Crud::PAGE_EDIT, $cancelAction)
+            ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
     public function configureFields(string $pageName): iterable
@@ -74,7 +83,7 @@ class ExperienceItemCrudController extends AbstractCrudController
         yield TextField::new('title', 'Titre de la réalisation')
             ->setHelp('Exemple : Refonte de l\'architecture, Lead Dev Symfony, Rôle d\'équilibrage...');
 
-        yield TextEditorField::new('details', 'Description')
+        yield TextareaField::new('details', 'Description')
             ->setHelp('Détaillez vos accomplissements majeurs pour ce point.')
             ->hideOnIndex(); // Masqué pour garder le tableau lisible
 
