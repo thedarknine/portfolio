@@ -174,6 +174,7 @@ class PortfolioControllerTest extends WebTestCase
                 ->setSubtitle('Du code au produit : mon parcours en mouvement')
                 ->setSlug('experience')
                 ->setTagline('Construire')
+                ->setQuote('Le meilleur moyen de prédire l\'avenir, c\'est de le créer.')
                 ->setPublished(true);
             $this->entityManager->persist($page);
             $this->entityManager->flush();
