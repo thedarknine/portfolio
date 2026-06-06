@@ -6,6 +6,7 @@
  */
 import $ from 'jquery';
 import './styles/app.css';
+import 'animate.css/animate.min.css';
 import PhotoSwipe from 'photoswipe';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
