@@ -66,6 +66,8 @@ class SecurityControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/login');
 
+        $this->assertResponseIsSuccessful();
+
         $container     = static::getContainer();
         $entityManager = $container->get('doctrine.orm.entity_manager');
         $adminUser     = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
