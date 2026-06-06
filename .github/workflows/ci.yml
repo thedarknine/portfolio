@@ -97,6 +97,15 @@ jobs:
     - name: Load Fixtures
       run: php bin/console doctrine:fixtures:load --no-interaction --env=test
 
+    - name: Install importmap vendors
+      run: php bin/console importmap:install
+
+    - name: Cache importmap vendors
+      uses: actions/cache@v4
+      with:
+        path: assets/vendor
+        key: ${{ runner.os }}-importmap-${{ hashFiles('**/composer.lock') }}
+
     - name: Build Tailwind CSS
       run: php bin/console tailwind:build --env=test
 
