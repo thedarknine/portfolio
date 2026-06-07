@@ -45,7 +45,7 @@ PHPARKITECT	:= $(DC_EXEC) php vendor/bin/phparkitect --config=$(TOOLS_CONFIG_DIR
 DEPTRAC		:= $(DC_EXEC) vendor/bin/deptrac --config-file=$(TOOLS_CONFIG_DIR)/deptrac.yaml
 PHPSTAN		:= $(DC_EXEC) php vendor/bin/phpstan --memory-limit=512M --configuration=$(TOOLS_CONFIG_DIR)/phpstan.neon
 RECTOR		:= $(DC_EXEC) vendor/bin/rector process --config $(TOOLS_CONFIG_DIR)/rector.php
-CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer  --config=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.php --cache-file=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.cache
+CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.php --cache-file=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.cache
 CSTWIG		:= $(DC_EXEC) vendor/bin/twig-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.twig-cs-fixer.php
 ESLINT		:= $(DC_EXEC) pnpm exec eslint --config $(TOOLS_CONFIG_DIR)/eslint.config.mjs
 BIOME		:= $(DC_EXEC) pnpm biome check --config-path=$(TOOLS_CONFIG_DIR)/biome.json
