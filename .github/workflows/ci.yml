@@ -1,0 +1,113 @@
+name: Portfolio CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  symfony-tests:
+    runs-on: ubuntu-latest
+
+    services:
+        mysql:
+          image: mysql:8.0
+          env:
+            MYSQL_ALLOW_EMPTY_PASSWORD: yes
+            MYSQL_DATABASE: portfolio
+          ports:
+            - 3306:3306
+          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+          
+    env:
+      APP_ENV: test
+      DEFAULT_URI: https://localhost
+      DATABASE_URL: "mysql://root@127.0.0.1:3306/portfolio?serverVersion=8.0"
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    #  To automatically get bug fixes and new Php versions for shivammathur/setup-php,
+    # change this to (see https://github.com/shivammathur/setup-php#bookmark-versioning):
+    # uses: shivammathur/setup-php@v2    
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: '8.4'
+        extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql
+        tools: composer:v2
+
+    - name: Copy .env.test
+      run: php -r "file_exists('.env') || copy('.env.test', '.env');"
+
+    - name: Get Composer Cache Directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+    - name: Cache Composer packages
+      uses: actions/cache@v4
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-composer-
+
+    - name: Install Dependencies
+      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+    
+    - name: Cache importmap vendors
+      uses: actions/cache@v4
+      with:
+        path: assets/vendor
+        key: ${{ runner.os }}-importmap-${{ hashFiles('**/composer.lock') }}
+
+    - name: Install importmap vendors
+      run: php bin/console importmap:install
+    
+    - name: Cache Tailwind binary
+      uses: actions/cache@v4
+      with:
+        path: var/tailwind
+        key: ${{ runner.os }}-tailwind-${{ hashFiles('**/composer.lock') }}
+
+    - name: Build Tailwind CSS
+      run: php bin/console tailwind:build --env=test
+
+    - name: Validate Symfony configuration
+      run: |
+        php bin/console lint:container
+        php bin/console lint:twig templates/
+        php bin/console lint:yaml config/
+
+    - name: Create Test Directories
+      run: mkdir -p var/tests/images
+
+    - name: Clear Symfony Cache
+      run: php bin/console cache:clear --env=test
+
+    - name: Execute PHP-CS-Fixer (Linter)
+      run: vendor/bin/php-cs-fixer fix --dry-run --diff  --config=.tools-config/.php-cs-fixer.php
+       
+    - name: Run PHPStan
+      run: vendor/bin/phpstan analyse --configuration=.tools-config/phpstan.neon
+
+    - name: Create Database
+      run: php bin/console doctrine:database:create --env=test --if-not-exists
+
+    - name: Create Database Schema from Entities
+      run: php bin/console doctrine:schema:create --env=test
+
+    - name: Validate Doctrine Schema
+      run: php bin/console doctrine:schema:validate --skip-sync --env=test
+
+    - name: Load Fixtures
+      run: php bin/console doctrine:fixtures:load --no-interaction --env=test
+
+    - name: Run PHPUnit Tests
+      run: vendor/bin/phpunit --configuration .tools-config/phpunit.xml --exclude-group=UI

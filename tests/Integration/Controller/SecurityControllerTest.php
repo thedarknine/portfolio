@@ -66,6 +66,8 @@ class SecurityControllerTest extends WebTestCase
     {
         $crawler = $this->client->request('GET', '/login');
 
+        $this->assertResponseIsSuccessful();
+
         $container     = static::getContainer();
         $entityManager = $container->get('doctrine.orm.entity_manager');
         $adminUser     = $entityManager->getRepository(User::class)->findOneBy(['email' => 'studiotest@carolinenoyer.fr']);
@@ -73,7 +75,7 @@ class SecurityControllerTest extends WebTestCase
         // Select the form button (adjust the text according to your button)
         $form = $crawler->filter('form')->form([
             '_username' => $adminUser->getEmail(),
-            '_password' => '$2y$13$dummyhashedpasswordstrings',
+            '_password' => 'sup3r$ecureP@ssw0rd!123',
         ]);
 
         $this->client->submit($form);
@@ -174,7 +176,7 @@ class SecurityControllerTest extends WebTestCase
             ->setEmail('studiotest@carolinenoyer.fr')
             ->setRoles(['ROLE_ADMIN']);
 
-        $admin->setPassword($passwordHasher->hashPassword($admin, '$2y$13$dummyhashedpasswordstrings'));
+        $admin->setPassword($passwordHasher->hashPassword($admin, 'sup3r$ecureP@ssw0rd!123'));
 
         $this->entityManager->persist($admin);
         $this->entityManager->flush();

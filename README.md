@@ -185,8 +185,8 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 
     # SQL commands to execute if necessary :
     CREATE USER 'test'@'%' IDENTIFIED BY 'test';
-    CREATE DATABASE portfolio_test;
-    GRANT ALL PRIVILEGES ON portfolio_test.* TO 'test'@'%';
+    CREATE DATABASE portfolio_integration_test;
+    GRANT ALL PRIVILEGES ON portfolio_integration_test.* TO 'test'@'%';
     FLUSH PRIVILEGES;
 
     # Initialize schema and fixtures for test environment

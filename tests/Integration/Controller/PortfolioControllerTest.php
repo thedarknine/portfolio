@@ -14,6 +14,7 @@ use App\Entity\ArcadeType;
 use App\Entity\CreationType;
 use App\Entity\PageInfo;
 use App\Entity\PhotoType;
+use App\Enum\PageCategory;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -171,8 +172,12 @@ class PortfolioControllerTest extends WebTestCase
             $page = (new PageInfo())
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
+                ->setCategory(PageCategory::CAREER)
+                ->setSubtitle('Du code au produit : mon parcours en mouvement')
                 ->setSlug('experience')
                 ->setTagline('Construire')
+                ->setQuote('Le meilleur moyen de prédire l\'avenir, c\'est de le créer.')
+                ->setInHeader(true)
                 ->setPublished(true);
             $this->entityManager->persist($page);
             $this->entityManager->flush();
