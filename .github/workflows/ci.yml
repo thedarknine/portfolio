@@ -10,7 +10,24 @@ permissions:
   contents: read
 
 jobs:
+  check-source-branch:
+    name: Validate Source Branch for Main
+    runs-on: ubuntu-latest
+    if: ${{ github.base_ref == 'main' }}
+    steps:
+      - name: Check if source is develop
+        run: |
+          echo "Target branch is: ${{ github.base_ref }}"
+          echo "Source branch is: ${{ github.head_ref }}"
+          if [ "${{ github.head_ref }}" != "develop" ]; then
+            echo "❌ ERROR: Merging into 'main' is only allowed from 'develop'!"
+            echo "Please merge your feature branch into 'develop' first."
+            exit 1
+          fi
+          echo "✅ Source branch is 'develop'. Proceeding..."
+
   symfony-tests:
+    needs: check-source-branch
     runs-on: ubuntu-latest
 
     services:
