@@ -107,4 +107,20 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
     myPhotoSwipe();
+
+    // Toogle theme
+    const toggle = document.getElementById('themeToggle');
+    const root = document.documentElement;
+
+    toggle.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        toggle.setAttribute('data-theme', next);
+        cookieStore.set({
+            name: 'theme',
+            value: next,
+            path: '/',
+            maxAge: 60 * 60 * 24 * 365,
+        });
+    });
 });

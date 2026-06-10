@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="{{ app.request.cookies.get('theme', 'light') }}">
     <head>
         <meta charset="UTF-8">
         <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ owner_name }} — {% block meta_title %}{{ owner_role }}{% endblock %}</title>
