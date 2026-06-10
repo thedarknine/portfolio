@@ -1,0 +1,22 @@
+<header class="bg-transparent nine-sticky-bar {% if current_page.slug != 'home' %}is-sticky{% endif %}">
+    <div class="container bg-transparent">
+        <nav class="bg-transparent flex justify-between items-center py-3">
+            <a class="text-3xl font-semibold leading-none" href="{{ path('app_home') }}" aria-label="{{ owner_name }} — {{ owner_role }}">
+                <img id="logo" class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250-white.svg" alt="">
+            </a>
+            <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-5">
+            {% for page in page_manager.getPublishedPagesInHeader() %}
+                <li class="p-4 nine-menu__item {% if current_page.slug == page.slug %}is-active{% endif %}">
+                    <a class="" href="/{{ page.slug }}" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+            {{ include('components/theme_toggle.html.twig') }}
+            <div class="lg:hidden">
+                <button class="nine-menu__burger flex items-center py-2 px-3 text-nine-cyan-500 hover:text-nine-blue-500" name="Menu">
+                    {{ ux_icon('hugeicons:menu-02', { class: 'w-8 h-8' }) }}
+                </button>
+            </div>
+        </nav>
+    </div>
+</header>

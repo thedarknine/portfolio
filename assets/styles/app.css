@@ -1,533 +1,273 @@
 /* stylelint-disable-next-line import-notation */
 @import "tailwindcss";
 
+/* ============================================================
+ * TOKENS DESIGN SYSTEM
+ * ============================================================ */
 @theme {
+    /* Typo */
     --font-normal: "Oxygen", "Inter", sans-serif;
     --font-accent: "League Spartan", sans-serif;
-    --color-nine-primary: oklch(33.74% 0.071 254.99); /* #1c385b */
-    --color-nine-golden: oklch(96.81% 0.0074 80.72); /* #f7f4ef */
-    --color-nine-light: oklch(90.81% 0.008 253.86); /* #dde1e6 */
-    --color-nine-blue-dark: oklch(24.83% 0.049 253.38); /* #0f2238 */
-    --color-nine-blue-darker: oklch(32.49% 0.0821 255.92); /* #14345d */
-    --color-nine-blue: oklch(35.22% 0.104 259.27); /* #163970 */
-    --color-nine-turquoise: oklch(61.25% 0.116 226.51); /* #0a91b9 */
-    --color-nine-blue-gray: oklch(71.07% 0.035 256.79); /* #94a3b8 */
-    --color-nine-yellow: oklch(80.16% 0.171 73.27); /* #ffaa00 */
-    --color-nine-yellow-dark: oklch(78.59% 0.167 70.04); /* #fca313 */
-    --color-nine-amber: oklch(85.95% 0.0594 82.95); /* #e4cea5 */
-    --color-nine-gray: oklch(71.07% 0.035 256.79); /* #94a3b8 */
-    --color-nine-gray-light: oklch(90.97% 0 0); /* #e1e1e1 */
-    --color-nine-gray-dark: oklch(50.97% 0.035 256.79); /* #64748b */
-    --color-leviia: oklch(73.2% 0.146 169.35); /* #00c599 */
-    --color-perfect: oklch(44.17% 0.102 251.28); /* #215589 */
-    --color-coffreo: oklch(68.6% 0.21 41.14); /* #ff5e02 */
-    --color-nine-error: oklch(44.4% 0.177 26.899); /* #d12727 */
+
+    /* Colors */
+    /* Blues */
+    --color-nine-blue-400: oklch(37.94% 0.1209 259.27); /* #153f81 */
+    --color-nine-blue-500: oklch(35.22% 0.104 259.27); /* #163970 */
+    --color-nine-blue-600: oklch(33.74% 0.071 254.99); /* #1c385b */
+    --color-nine-blue-700: oklch(32.49% 0.0821 255.92); /* #14345d */
+    --color-nine-blue-800: oklch(29.12% 0.0592 255.92);
+    --color-nine-blue-900: oklch(24.83% 0.049 253.38); /* #0f2238 */
+
+    /* Cyan */
+    --color-nine-cyan-500: oklch(61.25% 0.116 226.51); /* #0a91b9 */
+
+    /* Warm neutrals — light mode backgrounds */
+    --color-nine-sand-50: oklch(96.81% 0.0074 80.72); /* #f7f4ef */
+    --color-nine-sand-200: oklch(90.81% 0.008 253.86); /* #dde1e6 */
+    --color-nine-sand-300: oklch(85.95% 0.0594 82.95); /* #e4cea5 */
+
+    /* Grays */
+    --color-nine-gray-200: oklch(90.97% 0 0); /* #e1e1e1 */
+    --color-nine-gray-400: oklch(71.07% 0.035 256.79); /* #94a3b8 */
+    --color-nine-gray-500: oklch(70.31% 0.0407 255.66); /* #8fa1b9 */
+    --color-nine-gray-600: oklch(50.97% 0.035 256.79); /* #64748b */
+    --color-nine-gray-700: oklch(37.25% 0.0444 258.77); /* #324158 */
+    --color-nine-gray-800: oklch(27.66% 0.0404 261.93); /* #1d283c */
+
+    /* Amber / yellow */
+    --color-nine-amber-400: oklch(80.16% 0.171 73.27); /* #ffaa00 */
+    --color-nine-amber-500: oklch(78.59% 0.167 70.04); /* #fca313 */
+    --color-nine-amber-600: oklch(76.86% 0.1647 70.08); /* #f59e0b */
+
+    /* Feedback */
+    --color-nine-red-600: oklch(44.4% 0.177 26.899); /* #d12727 */
+
+    /* Couleurs de marques clientes */
+    --color-brand-leviia: oklch(73.2% 0.146 169.35); /* #00c599 */
+    --color-brand-perfect: oklch(44.17% 0.102 251.28); /* #215589 */
+    --color-brand-coffreo: oklch(68.6% 0.21 41.14); /* #ff5e02 */
+
+    /* ------------------------------------------------------------------
+     * SEMANTIC TOKENS — light mode (default values)
+     * ------------------------------------------------------------------ */
+    --color-nine-primary: var(--color-nine-blue-500);
+    --color-nine-secondary: var(--color-nine-cyan-500);
+
+    /* Surfaces */
+    --color-surface: var(--color-nine-sand-50);
+    --color-surface-alt: var(--color-nine-sand-200);
+    --color-surface-hero: var(--color-nine-blue-700);
+    --color-surface-quote: var(--color-nine-gray-400);
+    --color-surface-card: var(--color-nine-sand-50);
+    --color-surface-footer: var(--color-nine-blue-900);
+
+    /* Textes */
+    --color-on-surface: var(--color-nine-blue-600);
+    --color-on-surface-muted: var(--color-nine-gray-600);
+    --color-on-surface-subheader: var(--color-nine-gray-600);
+    --color-on-surface-hero: var(--color-nine-sand-200);
+    --color-on-surface-quote: var(--color-nine-blue-600);
+    --color-on-surface-card: var(--color-nine-gray-500);
+    --color-on-surface-footer: var(--color-nine-gray-400);
 }
 
 /* Safelist for Tailwind CSS classes used in templates */
-@source inline("fill-leviia");
-@source inline("fill-perfect");
-@source inline("fill-coffreo");
-@source inline("bg-leviia");
-@source inline("bg-perfect");
-@source inline("bg-coffreo");
+@source inline("fill-brand-leviia");
+@source inline("fill-brand-perfect");
+@source inline("fill-brand-coffreo");
+@source inline("bg-brand-leviia");
+@source inline("bg-brand-perfect");
+@source inline("bg-brand-coffreo");
 @source inline("flex-row-reverse");
 
+/* ============================================================
+ * VARIANT DARK — triggered by data-theme="dark" on <html>
+ * ============================================================ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root[data-theme="dark"] {
+    --color-surface: var(--color-nine-blue-900);
+    --color-surface-alt: var(--color-nine-blue-800);
+    --color-surface-hero: var(--color-nine-gray-800);
+    --color-surface-quote: var(--color-nine-gray-800);
+    --color-surface-card: var(--color-nine-gray-700);
+    --color-surface-footer: var(--color-nine-blue-900);
+
+    --color-on-surface: var(--color-nine-gray-200);
+    --color-on-surface-muted: var(--color-nine-gray-400);
+    --color-on-surface-subtle: var(--color-nine-gray-600);
+    --color-on-surface-hero: var(--color-nine-gray-400);
+    --color-on-surface-quote: var(--color-nine-gray-400);
+    --color-on-surface-card: var(--color-nine-sand-200);
+    --color-on-surface-footer: var(--color-nine-gray-400);
+}
+
+/* ============================================================
+ * BASE
+ * ============================================================ */
 @layer base {
     body {
         scroll-behavior: smooth;
         font-family: var(--font-normal);
         font-size: 14px;
-        color: var(--color-nine-primary);
-        background-color: var(--color-nine-golden);
+        color: var(--color-on-surface);
+        background-color: var(--color-surface);
+        transition:
+            background-color 0.4s ease,
+            color 0.4s ease;
     }
 }
 
+/* ============================================================
+ * GLOBAL COMPONENTS
+ * ============================================================ */
 @layer components {
     footer {
-        color: var(--color-nine-blue-gray);
-        background-color: var(--color-nine-blue-dark);
+        color: var(--color-on-surface-footer);
+        background-color: var(--color-surface-footer);
+        transition:
+            background-color 0.4s ease,
+            color 0.4s ease;
     }
 }
 
-@keyframes jump {
-    0% {
-        transform: translate3d(0, 15px, 0);
-    }
-
-    100% {
-        transform: translate3d(0, 0, 0);
-    }
+@utility nine-section-subheader {
+    @apply text-center text-sm uppercase tracking-widest text-on-surface-subheader mb-6;
 }
 
-.jump {
-    transform-origin: 0;
-    animation: jump 1s linear alternate infinite;
+/* ============================================================
+ * COMPOSANTS — Theme toggle
+ * ============================================================ */
+.theme-toggle {
+    position: relative;
+    width: 68px;
+    height: 32px;
+    border-radius: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow:
+        0 2px 12px rgba(245, 158, 11, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    transition:
+        background 0.4s ease,
+        border-color 0.4s ease,
+        box-shadow 0.4s ease;
+    flex-shrink: 0;
 }
 
-@keyframes slide-in {
-    100% {
-        transform: translateX(0%);
-    }
+[data-theme="dark"] .theme-toggle {
+    background: rgba(15, 15, 40, 0.4);
+    border-color: rgba(129, 140, 248, 0.3);
+    box-shadow:
+        0 2px 12px rgba(129, 140, 248, 0.25),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-/* -------------------------------------------------------------------------------------------- *
- * FONTS                                                                                        *
- * -------------------------------------------------------------------------------------------- */
-/* oxygen-300 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Oxygen";
-    font-style: normal;
-    font-weight: 300;
-    src: url("../fonts/oxygen/oxygen-v16-latin-300.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+.theme-toggle:hover {
+    outline: 1.5px solid rgba(255, 255, 255, 0.25);
+    outline-offset: 2px;
 }
 
-/* oxygen-regular - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Oxygen";
-    font-style: normal;
-    font-weight: 400;
-    src: url("../fonts/oxygen/oxygen-v16-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+.toggle-thumb {
+    position: absolute;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow:
+        0 1px 6px rgba(245, 158, 11, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.6);
+    transform: translateX(0px);
+    transition:
+        transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.4s ease,
+        box-shadow 0.4s ease;
+    z-index: 1;
 }
 
-/* oxygen-700 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Oxygen";
-    font-style: normal;
-    font-weight: 700;
-    src: url("../fonts/oxygen/oxygen-v16-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+[data-theme="dark"] .toggle-thumb {
+    transform: translateX(36px);
+    background: rgba(30, 27, 75, 0.9);
+    box-shadow:
+        0 1px 6px rgba(129, 140, 248, 0.45),
+        0 0 0 1px rgba(129, 140, 248, 0.3);
 }
 
-/* league-spartan-100 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 100;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-100.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+.icon-sun,
+.icon-moon {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
 }
 
-/* league-spartan-200 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 200;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-200.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+.icon-sun {
+    color: #f59e0b;
+    opacity: 1;
+    transform: rotate(0deg);
+}
+.icon-moon {
+    color: #818cf8;
+    opacity: 0;
+    transform: rotate(-90deg);
 }
 
-/* league-spartan-300 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 300;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-300.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+[data-theme="dark"] .icon-sun {
+    opacity: 0;
+    transform: rotate(90deg);
+}
+[data-theme="dark"] .icon-moon {
+    opacity: 1;
+    transform: rotate(0deg);
 }
 
-/* league-spartan-regular - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 400;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-regular.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+.toggle-track {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 6px;
+    pointer-events: none;
 }
 
-/* league-spartan-500 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 500;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-500.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+.track-icon {
+    width: 14px;
+    height: 14px;
+    transition: opacity 0.3s ease;
+}
+.track-sun {
+    color: #f59e0b;
+    opacity: 0;
+}
+.track-moon {
+    color: #818cf8;
+    opacity: 0.6;
 }
 
-/* league-spartan-600 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 600;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-600.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+[data-theme="dark"] .track-sun {
+    opacity: 0.6;
+}
+[data-theme="dark"] .track-moon {
+    opacity: 0;
 }
 
-/* league-spartan-700 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 700;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-700.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* league-spartan-800 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 800;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-800.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* league-spartan-900 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "League Spartan";
-    font-style: normal;
-    font-weight: 900;
-    src: url("../fonts/league-spartan/league-spartan-v15-latin-900.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-100 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 100;
-    src: url("../fonts/work-sans/work-sans-v24-latin-100.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-100italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 100;
-    src: url("../fonts/work-sans/work-sans-v24-latin-100italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-200 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 200;
-    src: url("../fonts/work-sans/work-sans-v24-latin-200.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-200italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 200;
-    src: url("../fonts/work-sans/work-sans-v24-latin-200italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-300 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 300;
-    src: url("../fonts/work-sans/work-sans-v24-latin-300.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-300italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 300;
-    src: url("../fonts/work-sans/work-sans-v24-latin-300italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-regular - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 400;
-    src: url("../fonts/work-sans/work-sans-v24-latin-regular.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 400;
-    src: url("../fonts/work-sans/work-sans-v24-latin-italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-500 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 500;
-    src: url("../fonts/work-sans/work-sans-v24-latin-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-500italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 500;
-    src: url("../fonts/work-sans/work-sans-v24-latin-500italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-600 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 600;
-    src: url("../fonts/work-sans/work-sans-v24-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-600italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 600;
-    src: url("../fonts/work-sans/work-sans-v24-latin-600italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-700 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 700;
-    src: url("../fonts/work-sans/work-sans-v24-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-700italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 700;
-    src: url("../fonts/work-sans/work-sans-v24-latin-700italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-800 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 800;
-    src: url("../fonts/work-sans/work-sans-v24-latin-800.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-800italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 800;
-    src: url("../fonts/work-sans/work-sans-v24-latin-800italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-900 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: normal;
-    font-weight: 900;
-    src: url("../fonts/work-sans/work-sans-v24-latin-900.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* work-sans-900italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Work Sans";
-    font-style: italic;
-    font-weight: 900;
-    src: url("../fonts/work-sans/work-sans-v24-latin-900italic.woff2")
-        format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-100 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 100;
-    src: url("../fonts/inter/inter-v20-latin-100.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-100italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 100;
-    src: url("../fonts/inter/inter-v20-latin-100italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-200 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 200;
-    src: url("../fonts/inter/inter-v20-latin-200.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-200italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 200;
-    src: url("../fonts/inter/inter-v20-latin-200italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-300 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 300;
-    src: url("../fonts/inter/inter-v20-latin-300.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-300italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 300;
-    src: url("../fonts/inter/inter-v20-latin-300italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-regular - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 400;
-    src: url("../fonts/inter/inter-v20-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 400;
-    src: url("../fonts/inter/inter-v20-latin-italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-500 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 500;
-    src: url("../fonts/inter/inter-v20-latin-500.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-500italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 500;
-    src: url("../fonts/inter/inter-v20-latin-500italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-600 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    src: url("../fonts/inter/inter-v20-latin-600.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-600italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 600;
-    src: url("../fonts/inter/inter-v20-latin-600italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-700 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 700;
-    src: url("../fonts/inter/inter-v20-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-700italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 700;
-    src: url("../fonts/inter/inter-v20-latin-700italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-800 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 800;
-    src: url("../fonts/inter/inter-v20-latin-800.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-800italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 800;
-    src: url("../fonts/inter/inter-v20-latin-800italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-900 - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 900;
-    src: url("../fonts/inter/inter-v20-latin-900.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* inter-900italic - latin */
-@font-face {
-    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
-    font-family: "Inter";
-    font-style: italic;
-    font-weight: 900;
-    src: url("../fonts/inter/inter-v20-latin-900italic.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
-}
-
-/* -------------------------------------------------------------------------------------------- *
- * COMMON                                                                                       *
- * -------------------------------------------------------------------------------------------- */
+/* ============================================================
+ * UTILITAIRES
+ * RENAME: préfixe nine- → u- pour les utilitaires génériques
+ * ============================================================ */
 .container {
     width: 100%;
     padding-right: 1rem;
@@ -536,24 +276,29 @@
     margin-left: auto;
 }
 
-.nine-gradient {
-    background: linear-gradient(
-        to right bottom,
-        var(--color-nine-blue-dark) 0%,
-        var(--color-nine-turquoise) 51%,
-        var(--color-nine-blue-dark) 100%
-    );
+.util-smallcaps {
+    /* RENAME: .nine-smallcaps */
+    font-variant: small-caps;
 }
 
-.card:hover {
-    border-image: linear-gradient(
-            to right,
-            var(--color-nine-turquoise),
-            var(--color-nine-blue)
-        )
-        1;
+.util-list-inline {
+    /* RENAME: .nine-list-inline */
+    padding-left: 0;
+    list-style: none;
+
+    .util-list-inline__item {
+        /* RENAME: .nine-list-inline-item */
+        display: inline-block;
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
 }
 
+/* ============================================================
+ * COMPOSANTS — Boutons
+ * ============================================================ */
 .nine-btn-primary {
     display: inline-block;
     padding: 0 38px;
@@ -561,18 +306,13 @@
     font-size: 14px;
     font-weight: 500;
     line-height: 40px;
-    color: var(--color-nine-light);
+    color: var(--color-nine-sand-200);
     text-align: center;
     text-transform: uppercase;
     letter-spacing: 0;
     cursor: pointer;
     outline: none !important;
-    background: linear-gradient(
-        to right,
-        var(--color-nine-blue) 0%,
-        var(--color-nine-turquoise) 51%,
-        var(--color-nine-blue) 100%
-    );
+    background: linear-gradient(to right, var(--color-nine-blue-500) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-500) 100%);
     background-size: 200% auto;
     border-radius: 5px;
 
@@ -583,8 +323,53 @@
     }
 }
 
-.nine-smallcaps {
-    font-variant: small-caps;
+.nine-btn-social {
+    @apply text-nine-sand-200 border-nine-gray-400 rounded-full border-2 text-shadow-lg;
+
+    transition: 0.5s;
+    transition-delay: 0.3s;
+
+    &:hover {
+        @apply rounded-full;
+
+        background: linear-gradient(to right bottom, var(--color-nine-blue-900) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-900) 100%);
+        border-color: var(--color-nine-cyan-500);
+    }
+}
+
+/* ============================================================
+ * COMPOSANTS — Gradient de marque
+ * ============================================================ */
+.nine-bg-gradient {
+    /* RENAME: .nine-gradient */
+    background: linear-gradient(to right bottom, var(--color-nine-blue-900) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-900) 100%);
+}
+
+.nine-border-gradient {
+    border-radius: 100%;
+    border: 6px solid transparent;
+    background: linear-gradient(45deg, var(--color-nine-blue-500), var(--color-nine-cyan-500)) border-box;
+}
+
+.card:hover {
+    border-image: linear-gradient(to right, var(--color-nine-cyan-500), var(--color-nine-blue-500)) 1;
+}
+
+/* ============================================================
+ * ANIMATIONS
+ * ============================================================ */
+@keyframes jump {
+    0% {
+        transform: translate3d(0, 15px, 0);
+    }
+    100% {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.nine-jump {
+    transform-origin: 0;
+    animation: jump 1s linear alternate infinite;
 }
 
 [data-animate] {
@@ -592,30 +377,33 @@
     transition: opacity 0.3s ease;
 }
 
-/* -------------------------------------------------------------------------------------------- *
- * HEADER                                                                                       *
- * -------------------------------------------------------------------------------------------- */
+/* ============================================================
+ * COMPOSANTS — Header / Navigation
+ * ============================================================ */
 .nine-sticky-bar {
     position: relative;
     z-index: 3;
     font-family: var(--font-accent);
-    color: var(--color-nine-light);
+    color: var(--color-nine-sand-200);
 
-    .nine-menu-item {
+    .nine-menu__item {
+        /* RENAME: .nine-menu-item */
         font-size: 1.1rem !important;
         font-weight: 400;
         border-bottom: 4px solid transparent;
 
-        &.nine-active {
+        &.is-active {
+            /* RENAME: .nine-active */
             font-weight: 500;
-            color: var(--color-nine-turquoise) !important;
+            color: var(--color-nine-cyan-500) !important;
             text-transform: uppercase;
-            border-bottom: 2px solid var(--color-nine-turquoise);
+            border-bottom: 2px solid var(--color-nine-cyan-500);
         }
 
-        &:hover:not(.nine-active) {
+        &:hover:not(.is-active) {
+            color: var(--color-nine-cyan-500);
             background-color: rgb(106 106 106 / 30%);
-            border-bottom: 4px solid var(--color-nine-turquoise);
+            border-bottom: 4px solid var(--color-nine-cyan-500);
             border-radius: 6px 6px 0 0;
             transition-delay: 0.3s;
             transition-timing-function: ease-out;
@@ -623,70 +411,44 @@
         }
     }
 
-    &.nine-stick {
+    &.is-sticky {
+        /* RENAME: .nine-stick */
         position: fixed;
         top: 0;
         left: 0;
         z-index: 999;
         width: 100%;
         margin-top: 0 !important;
-        color: var(--color-nine-light);
+        color: var(--color-nine-sand-200);
         background-color: rgb(15 34 56 / 94%);
         box-shadow: 0 8px 10px 0 rgb(0 0 0 / 15%);
         animation: fadeInDown 700ms ease-in-out both;
 
-        .nine-menu-item {
-            color: var(--color-nine-light);
+        .nine-menu__item {
+            color: var(--color-nine-sand-200);
 
             &:hover {
-                color: var(--color-nine-turquoise);
+                color: var(--color-nine-cyan-500);
             }
         }
     }
-
-    /* 3. Unstick state
-    &.nine-unstick {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 999;
-        width: 100%;
-        color: var(--color-nine-light);
-        background-color: rgb(15 34 56 / 0.94);
-        box-shadow: 0 8px 10px 0 rgb(0 0 0 / 0.15);
-        pointer-events: none; 
-        animation: fadeOutUp 700ms ease-in-out both;
-    } */
 }
 
-.nine-navbar-menu {
+.nine-menu {
+    /* RENAME: .nine-navbar-menu */
     animation: slide 700ms forwards;
     animation-delay: 2s;
 }
 
-.nine-list-inline {
-    padding-left: 0;
-    list-style: none;
-
-    .nine-list-inline-item {
-        display: inline-block;
-
-        &:not(:last-child) {
-            margin-right: 0.5rem;
-        }
-    }
-}
-
-/* -------------------------------------------------------------------------------------------- *
- * GLOBAL                                                                                       *
- * -------------------------------------------------------------------------------------------- */
+/* ============================================================
+ * COMPOSANTS — Page hero
+ * ============================================================ */
 .nine-page-hero {
     padding: 5rem 0 0;
     overflow: hidden;
-    color: var(--color-nine-light);
-    background: var(--color-nine-blue-darker);
 
-    .nine-section-label {
+    .nine-page-hero__label {
+        /* RENAME: .nine-section-label */
         display: inline-block;
         margin-bottom: 1rem;
         text-transform: uppercase;
@@ -694,7 +456,8 @@
         opacity: 0.7;
     }
 
-    h1.nine-tagline {
+    h1.nine-page-hero__title {
+        /* RENAME: h1.nine-tagline */
         margin-bottom: 2rem;
         font-weight: 800;
         line-height: 1.1;
@@ -707,7 +470,8 @@
         opacity: 0.9;
     }
 
-    .nine-hero-visual {
+    .nine-page-hero__visual {
+        /* RENAME: .nine-hero-visual */
         position: relative;
 
         img {
@@ -717,10 +481,12 @@
     }
 }
 
+/* ============================================================
+ * COMPOSANTS — Page quote
+ * ============================================================ */
 .nine-page-quote {
     padding: 6rem 0;
     text-align: center;
-    background: var(--color-nine-golden);
 
     blockquote {
         max-width: 900px;
@@ -728,42 +494,150 @@
         font-size: 2rem;
         font-weight: 600;
         line-height: 1.6;
-        color: var(--color-nine-blue-darker);
     }
 
-    .nine-quote-icon {
+    .nine-page-quote__icon {
+        /* RENAME: .nine-quote-icon */
         margin: 0 auto;
 
         path {
-            opacity: 0.2;
-            fill: var(--color-nine-turquoise);
+            opacity: 0.4;
+            fill: var(--color-nine-cyan-500);
         }
     }
 }
 
-/* -------------------------------------------------------------------------------------------- *
- * MEDIA QUERIES                                                                                *
- * -------------------------------------------------------------------------------------------- */
+/* ============================================================
+ * MEDIA QUERIES — Container breakpoints
+ * ============================================================ */
 @media (width >= 640px) {
     .container {
         max-width: 640px;
     }
 }
-
 @media (width >= 768px) {
     .container {
         max-width: 768px;
     }
 }
-
 @media (width >= 1024px) {
     .container {
         max-width: 1024px;
     }
 }
-
 @media (width >= 1200px) {
     .container {
         max-width: 1200px;
     }
+}
+
+/* ============================================================
+ * FONTS
+ * Oxygen : 3 weights (300, 400, 700)
+ * League Spartan : 7 weights (400–900) — remove 100/200/300 after DevTools verification
+ * Inter : 2 weights (400, 700) — fallback only, no unnecessary weights
+ * ============================================================ */
+
+/* Oxygen */
+@font-face {
+    font-display: swap;
+    font-family: "Oxygen";
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/oxygen/oxygen-v16-latin-300.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "Oxygen";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/oxygen/oxygen-v16-latin-regular.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "Oxygen";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/oxygen/oxygen-v16-latin-700.woff2") format("woff2");
+}
+
+/* League Spartan — remove light weights after DevTools verification */
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 100;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-100.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 200;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-200.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 300;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-300.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-regular.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-500.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 600;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-600.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-700.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 800;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-800.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 900;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-900.woff2") format("woff2");
+}
+
+/* Inter — fallback only, 400 + 700 */
+@font-face {
+    font-display: swap;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/inter/inter-v20-latin-regular.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/inter/inter-v20-latin-700.woff2") format("woff2");
 }

@@ -55,8 +55,8 @@ class NavigationUiTest extends PantherTestCase
         $client->getWebDriver()->manage()->window()->setSize(new \Facebook\WebDriver\WebDriverDimension(375, 667));
 
         $desktopMenu     = $webDriver->findElement(WebDriverBy::cssSelector('nav ul.hidden.lg\\:flex'));
-        $burgerButton    = $webDriver->findElement(WebDriverBy::cssSelector('.nine-navbar-burger'));
-        $mobileMenuPanel = $webDriver->findElement(WebDriverBy::cssSelector('.nine-navbar-menu'));
+        $burgerButton    = $webDriver->findElement(WebDriverBy::cssSelector('.nine-menu__burger'));
+        $mobileMenuPanel = $webDriver->findElement(WebDriverBy::cssSelector('.nine-menu'));
 
         // 1. Vérification de l'état initial sur mobile
         $this->assertFalse($desktopMenu->isDisplayed(), 'Le menu desktop textuel devrait être masqué sur écran mobile.');
@@ -67,7 +67,7 @@ class NavigationUiTest extends PantherTestCase
         $burgerButton->click();
 
         // On laisse le temps au script ou à la classe CSS de s'exécuter
-        $client->waitForVisibility('.nine-navbar-menu');
+        $client->waitForVisibility('.nine-menu');
 
         // 3. Vérification que le menu mobile s'est bien ouvert
         $this->assertTrue($mobileMenuPanel->isDisplayed(), 'Le panneau latéral du menu mobile devrait être visible après le clic sur le bouton burger.');

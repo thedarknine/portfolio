@@ -3,31 +3,31 @@
 {% block title %}Projets{% endblock %}
 
 {% block body %}
-<section class=" bg-white">
+<section class="bg-surface text-on-surface">
     <div class="max-w-6xl mx-auto px-4 py-16 text-[14px] font-normal">
-    <div class="text-center mb-16 animate__animated animate__fadeIn">
-        <p class="mt-6 text-nine-blue max-w-2xl mx-auto text-lg animate__animated animate__fadeInDown">
-            Un aperçu de mes travaux, mêlant génie logiciel et création graphique à travers les années.
-        </p>
-    </div>
+        <div class="text-center mb-16 animate__animated animate__fadeIn">
+            <p class="mt-6 max-w-2xl mx-auto text-lg text-on-surface animate__animated animate__fadeInDown">
+                Un aperçu de mes travaux, mêlant génie logiciel et création graphique à travers les années.
+            </p>
+        </div>
 
     <!-- Grille Principale (Style Bento / Asymétrique) -->
     <div class="grid grid-cols-1 md:grid-cols-6 gap-12 animate__animated animate__fadeInUp">
 
 {% for project in projects_list %}
-    <div class="md:col-span-3 group bg-white rounded-xl p-6 my-4 shadow-md hover:translate-x-2 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
+    <div class="md:col-span-3 group bg-surface-card rounded-xl p-6 my-4 shadow-md hover:translate-x-2 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
         <div>
             <div class="flex items-start justify-between gap-4 mb-4">
                 <div class="flex items-center gap-3">
                     <img src="{{ absolute_url('images/projects/' ~ project.logo) }}" alt="Logo {{ project.name }}" class="w-12 h-12 rounded-xl object-cover " />
                     <div>
-                        <h3 class="font-accent text-xl font-medium text-nine-turquoise group-hover:text-nine-primary transition-colors">{{ project.name }}</h3>
-                        <p class="text-xs text-nine-blue-gray font-medium uppercase tracking-wider">{{ project.period }}</p>
+                        <h3 class="font-accent text-xl font-medium text-nine-cyan-500 group-hover:text-nine-amber-500 transition-colors">{{ project.name }}</h3>
+                        <p class="text-xs text-nine-gray-400/80 dark:text-nine-sand-200/60 font-medium uppercase tracking-wider">{{ project.period }}</p>
                     </div>
                 </div>
-                <span class="text-[11px] font-bold px-2 py-0.5 bg-nine-yellow/60 text-nine-primary rounded whitespace-nowrap">{{ project.category }}</span>
+                <span class="text-[11px] font-bold px-2 py-0.5 bg-nine-amber-400/60 text-nine-blue-600 rounded whitespace-nowrap">{{ project.category }}</span>
             </div>
-            <p class="text-nine-blue/90 leading-relaxed">
+            <p class="leading-relaxed">
                 {{ project.description|raw }}
             </p>
 {% if project.screenshots is not empty %}
@@ -38,13 +38,13 @@
         <a href="{{ screenshot_url }}"
            target="_blank"
            aria-label="Voir la capture d'écran {{ screenshot }} du projet {{ project.name }}"
-           class="group/thumb pswp9-link relative block overflow-hidden rounded-lg border border-nine-light/30 hover:border-nine-turquoise transition-all duration-300">
+           class="group/thumb pswp9-link relative block overflow-hidden rounded-lg border border-nine-gray-400/30 hover:border-nine-cyan-500 transition-all duration-300">
 
             <img src="{{ screenshot_url }}"
                  alt="Screenshot {{ screenshot }}"
                  class="w-20 h-14 object-cover hover:scale-105 transition-transform duration-300" />
 
-            <div class="absolute inset-0 bg-nine-primary/20 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center">
+            <div class="absolute inset-0 bg-nine-blue-600/20 opacity-0 group-hover/thumb:opacity-100 transition-opacity flex items-center justify-center">
                 {{ ux_icon('flowbite:zoom-in-outline', { class: 'w-4 h-4 text-white' }) }}
             </div>
         </a>
@@ -53,20 +53,20 @@
 {% endif %}
         </div>
 
-        <div class="mt-6 pt-4 border-t border-nine-light/50 flex flex-wrap justify-between items-center gap-4">
+        <div class="mt-6 pt-4 border-t border-nine-sand-200/50 dark:border-nine-gray-600/50 flex flex-wrap justify-between items-center gap-4">
             <!-- Zone screenshots -->
             <div class="flex flex-wrap gap-1.5 text-[11px]">
                 {% set tagsList = project.tags|split('::') %}
                 {% if tagsList is iterable %}
                     {% for tag in tagsList %}
-                    <span class="px-2 py-0.5 bg-nine-golden text-nine-gray-dark rounded whitespace-nowrap">{{ ux_icon('hugeicons:tag-01', { class: 'inline' }) }} {{ tag }}</span>
+                    <span class="px-2 py-0.5 bg-nine-sand-200 dark:bg-nine-gray-400 text-nine-gray-600 dark:text-nine-gray-800 rounded whitespace-nowrap">{{ ux_icon('hugeicons:tag-01', { class: 'inline' }) }} {{ tag }}</span>
                     {% endfor %}
                 {% endif %}
             </div>
             {% if project.screenshots is not empty %}
-            <div class="flex items-center gap-1.5 text-xs text-nine-primary/80">
-                {{ ux_icon('hugeicons:image-composition-oval', { class: 'w-4 h-4 text-nine-turquoise' }) }}
-                <span class="font-semibold text-nine-primary">{{ project.screenshots|split('::')|length }} screenshot{{ project.screenshots|split('::')|length > 1 ? 's' : '' }}</span>
+            <div class="flex items-center gap-1.5 text-xs text-nine-blue-500/80">
+                {{ ux_icon('hugeicons:image-composition-oval', { class: 'w-4 h-4 text-nine-cyan-500' }) }}
+                <span class="font-semibold text-nine-blue-500 dark:text-nine-gray-500">{{ project.screenshots|split('::')|length }} screenshot{{ project.screenshots|split('::')|length > 1 ? 's' : '' }}</span>
             </div>
             {% endif %}
         </div>

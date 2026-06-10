@@ -1,19 +1,17 @@
-import $ from 'jquery';
 import Typed from 'typed.js';
 
 // STICKY HEADER
-const header = $('.nine-sticky-bar');
-const win = $(window);
+document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.nine-sticky-bar');
 
-win.on('scroll', () => {
-    var scroll = win.scrollTop();
-    if (scroll < 40) {
-        if (header.hasClass('nine-stick')) {
-            header.removeClass('nine-stick');
+    window.addEventListener('scroll', () => {
+        var scroll = window.scrollY;
+        if (scroll < 40) {
+            header.classList.remove('is-sticky', 'animate__animated', 'animate__fadeInDown');
+        } else {
+            header.classList.add('is-sticky', 'animate__animated', 'animate__fadeInDown');
         }
-    } else {
-        header.addClass('nine-stick');
-    }
+    });
 });
 
 // TYPED.JS

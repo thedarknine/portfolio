@@ -1,7 +1,6 @@
 .nine-experience-timeline {
     position: relative;
     padding-bottom: 4rem;
-    background: var(--color-nine-golden);
 
     .container {
         position: relative;
@@ -25,8 +24,6 @@
 
 .nine-work-approach {
     padding: 6rem 0;
-    color: white;
-    background: var(--color-nine-blue-darker);
 
     h2 {
         margin-bottom: 4rem;

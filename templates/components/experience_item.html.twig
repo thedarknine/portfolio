@@ -1,0 +1,34 @@
+{% block experience_item %}
+{% if loop.index > 1 %}
+    <div class="flex items-start flex-row{% if loop.index is even %}{% else %}-reverse{% endif %} animate__animated" data-animate="animate__fadeIn" data-delay="600">
+        <div class="border-t-4 {% if loop.index is even %}border-r-4{% else %}border-l-4{% endif %} border-transparent">
+            <div class="w-16 {% if loop.index is even %}ml-16{% else %}mr-16{% endif %} h-16 {% if loop.index is even %}border-l-4{% else %}border-r-4{% endif %} border-nine-sand-300/50 dark:border-nine-gray-600/50 border-dashed border-b-4 {% if loop.index is even %}rounded-bl-full{% else %}rounded-br-full{% endif %}"></div>
+        </div>
+        <div class="border-t-4 border-transparent flex-auto">
+            <div class="h-16 border-b-4 border-nine-sand-300/50 dark:border-nine-gray-600/50 border-dashed"></div>
+        </div>
+        <div class="w-16 mt-16 {% if loop.index is even %}mr-16{% else %}ml-16{% endif %} h-16 {% if loop.index is even %}border-r-4{% else %}border-l-4{% endif %} border-nine-sand-300/50 dark:border-nine-gray-600/50 border-dashed border-t-4 {% if loop.index is even %}rounded-tr-full{% else %}rounded-tl-full{% endif %}"></div>
+    </div>
+{% endif %}
+
+    <div class="flex flex-row{% if loop.index is even %}-reverse{% else %}{% endif %} animate__animated" data-animate="animate__fadeIn" data-delay="600">
+        <div class="hidden md:flex flex-col items-center">
+            <div class="w-32 py-5 {% if loop.index is even %}ml-4{% else %}mr-4{% endif %} uppercase flex flex-col items-center justify-center">
+                <div class="text-3xl font-accent font-semibold text-nine-amber-600">{{ experience.startDate|date('Y') }}</div>
+                <div class="mt-5"><img class="h-20 rounded-md bg-nine-gray-400/50 p-1" src="{{ absolute_url('images/company/' ~ experience.company.logo) }}" /></div>
+            </div>
+            {% if not loop.last %}
+            <div class="h-full {% if loop.index is even %}border-r-4{% else %}border-l-4{% endif %} border-transparent">
+                <div class="border-l-4 {% if loop.index is even %}ml-4{% else %}mr-4{% endif %} h-full border-nine-sand-300/50 dark:border-nine-gray-600/50 border-dashed"></div>
+            </div>
+            {% endif %}
+        </div>
+        <div class="flex-auto">
+            <div class="flex md:flex-row flex-col items-center">
+                <div class="flex-auto">
+                    {{ include('components/experience_details.html.twig', { experience: experience }) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

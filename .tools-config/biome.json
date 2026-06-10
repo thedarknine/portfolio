@@ -8,7 +8,8 @@
 	"formatter": {
 		"enabled": true,
 		"indentStyle": "space",
-		"indentWidth": 4
+		"indentWidth": 4,
+		"lineWidth": 200
 	},
 	"linter": {
 		"enabled": true,
@@ -16,6 +17,12 @@
 			"recommended": true,
 			"complexity": {
 				"noImportantStyles": "off"
+			},
+			"style": {
+				"noUselessElse": "error"
+			},
+			"correctness": {
+				"noUnusedImports": "error"
 			}
 		}
 	},
@@ -29,7 +36,11 @@
 	},
 	"javascript": {
 		"formatter": {
-			"quoteStyle": "single"
+			"quoteStyle": "single",
+			"trailingCommas": "all",
+			"semicolons": "always",
+			"arrowParentheses": "always",
+			"bracketSpacing": true
 		}
 	},
 	"assist": {
