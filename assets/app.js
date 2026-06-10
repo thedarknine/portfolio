@@ -4,15 +4,15 @@
  * This file will be included onto the page via the importmap() Twig function,
  * which should already be in your base.html.twig.
  */
-import $ from 'jquery';
 import './styles/app.css';
-import 'animate.css/animate.min.css';
+import 'animate.css';
+import 'photoswipe/dist/photoswipe.min.css';
 import PhotoSwipe from 'photoswipe';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
-$(document).ready(() => {
+document.addEventListener('DOMContentLoaded', () => {
     // Display animations from animate.css on element visible
     const options = {
         root: null,
@@ -27,8 +27,7 @@ $(document).ready(() => {
                 const animationClass = element.getAttribute('data-animate');
 
                 // On récupère le délai (on met 0 par défaut si l'attribut n'existe pas)
-                const delay =
-                    parseInt(element.getAttribute('data-delay'), 10) || 0;
+                const delay = parseInt(element.getAttribute('data-delay'), 10) || 0;
 
                 // On arrête d'observer l'élément immédiatement pour éviter les doublons
                 observer.unobserve(element);
@@ -73,9 +72,7 @@ $(document).ready(() => {
 
     // Lightbox
     const myPhotoSwipe = () => {
-        const galleryElement = document.querySelector(
-            '.pswp9-lightbox, .pswp9-gallery',
-        );
+        const galleryElement = document.querySelector('.pswp9-lightbox, .pswp9-gallery');
 
         if (galleryElement != null) {
             const lightbox = new PhotoSwipeLightbox({
@@ -96,7 +93,7 @@ $(document).ready(() => {
                 return itemData;
             });
             lightbox.on('pointerdown', (e) => {
-                const linkEl = e.originalEvent.target.closest('.pswp-link');
+                const linkEl = e.originalEvent.target.closest('.pswp9-link');
                 if (linkEl) {
                     const img = new Image();
                     img.src = linkEl.href;

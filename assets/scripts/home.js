@@ -1,9 +1,8 @@
-import $ from 'jquery';
 import Typed from 'typed.js';
 
 // STICKY HEADER
-const header = $('.nine-sticky-bar');
-const win = $(window);
+document.addEventListener('DOMContentLoaded', () => {
+    const header = document.querySelector('.nine-sticky-bar');
 
 win.on('scroll', () => {
     var scroll = win.scrollTop();
