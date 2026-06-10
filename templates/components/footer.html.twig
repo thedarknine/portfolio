@@ -1,0 +1,54 @@
+<footer class="py-20">
+    <section class="py-20">
+        <div class="container px-4 mx-auto">
+            <div class="flex flex-wrap mb-12 lg:mb-20 -mx-3 text-center lg:text-left">
+                <div class="w-full lg:w-2/5 px-3 mb-8 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="600">
+                    <p class="max-w-md mx-auto lg:max-w-full lg:mx-0 lg:pr-32 text-sm leading-relaxed pb-2">
+                        <strong>Product Owner depuis 2019</strong>, j’allie une <strong>solide expertise technique</strong> de 12 ans (PHP/Symfony) à une maîtrise éprouvée du delivery.
+                    </p>
+                    <p class="max-w-md mx-auto lg:max-w-full lg:mx-0 lg:pr-32 text-blue-gray-400 text-sm leading-relaxed pb-2">
+                        Forte d'une double <strong>sensibilité UX/UI</strong>, je pilote des équipes transverses et R&amp;D sur des produits SaaS (B2B/B2C).
+                    </p>
+                    <p class="max-w-md mx-auto lg:max-w-full lg:mx-0 lg:pr-32 text-blue-gray-400 text-sm leading-relaxed">
+                        Mon approche axée sur <strong>la qualité</strong> et <strong>l'automatisation</strong> me permet de résoudre des problématiques complexes, de l'infrastructure à l'expérience utilisateur.
+                    </p>
+                </div>
+                <div class="w-full lg:w-1/5 px-3 mb-6 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="300">
+                    <a class="inline-block mx-auto lg:mx-0 text-3xl font-semibold leading-none" href="{{ site_url }}" aria-label="{{ owner_name }} — {{ owner_role }}">
+                        <img class="h-14 mx-auto" src="{{ asset('images/cnoyer-logo.webp') }}" alt="">
+                    </a>
+                </div>
+                <div class="w-full lg:w-1/5 px-3 mb-8 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="900">
+                    <p class="mb-2 lg:text-lg font-accent util-smallcaps text-nine-cyan-500">Parcours</p>
+                    <ul class="list-unstyled mb-0">
+                    {% for page in page_manager.getPublishedPages() %}
+                        {% if page.category.value == 'career' %}
+                        <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs hover:text-nine-cyan-500" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+                <div class="w-full lg:w-1/5 px-3 animate__animated" data-animate="animate__fadeInUp" data-delay="1200">
+                    <p class="mb-2 lg:text-lg font-accent util-smallcaps text-nine-cyan-500">Centres d'intérêt</p>
+                    <ul class="list-unstyled mb-0">
+                    {% for page in page_manager.getPublishedPages() %}
+                        {% if page.category.value == 'interest' %}
+                        <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs hover:text-nine-cyan-500" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="flex flex-col lg:flex-row items-center lg:justify-between">
+                <p class="text-xs text-blue-gray-400 animate__animated" data-animate="animate__fadeInUp" data-delay="1500"><b>&copy;Nine | Copyright</b> {{ page_manager.getStartCareerYear() }}-{{ 'now'|date('Y') }} {# &bull; <a x-on:click="showPrivacyPolicy = true" class="" href="#"> View Privacy Policy </a> #}</p>
+                <div class="order-first lg:order-last -mx-2 mb-4 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="1800">
+                    <ul class="util-list-inline">
+                    {% for resource in page_manager.getPublishedResourceLinks() %}
+                        <li class="util-list-inline__item"><a href="{{ resource.url }}" target="_blank" title="{{ resource.title }}" aria-label="{{ resource.title }}">{{ ux_icon(resource.icon, { class: 'w-5 h-5 hover:text-nine-cyan-500' }) }}</a></li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+</footer>

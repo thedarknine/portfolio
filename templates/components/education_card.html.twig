@@ -1,0 +1,28 @@
+<div class="bg-surface-card text-on-surface-card mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
+    <div class="px-4 py-5 flex-auto w-full">
+        <div class="flex justify-between items-start mb-3">
+            <h3 class="text-2xl font-accent font-semibold text-nine-cyan-500 dark:text-nine-amber-500">{{ education.year }}</h3>
+            {% if education.mention is not empty %}
+            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-nine-amber-400/10 text-nine-amber-500">Mention {{ education.mention }}</span>
+            {% endif %}
+        </div>
+
+        <div class="md:mr-10">
+            <img src="{{ absolute_url('images/education/' ~ education.school.logo) }}" class="w-20 float-end my-3" alt="{{ education.school.name }}">
+        </div>
+            <h6 class="text-xl font-accent font-semibold text-nine-blue-500 dark:text-nine-gray-200">{{ education.title }}</h6>
+            <p class="text-xs text-nine-blue-500 dark:text-nine-gray-400 mt-0.5">{{ education.school.name }} • <span class="text-xs">{{ education.school.city }} ({{ education.school.department|format_number({ min_integer_digit: '2' }) }})</span></p>
+
+        <div class="mt-4 pt-3 border-t border-nine-sand-200/50 dark:border-nine-gray-500/30 flex items-center gap-2 text-xs text-nine-blue-500/80 dark:text-nine-gray-400/80">
+            <span class="inline-block w-2 h-2 rounded-full bg-nine-cyan-500"></span>
+            <strong>{{ education.details }}</strong>
+        </div>
+
+        {% if education.speciality is not empty %}
+        <div class="flex items-center gap-2 text-xs text-nine-blue-500/80 dark:text-nine-gray-400/80">
+            <span class="inline-block w-2 h-2 rounded-full bg-nine-amber-400"></span>
+            Option {{ education.speciality }}
+        </div>
+        {% endif %}
+    </div>
+</div>

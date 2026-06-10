@@ -46,10 +46,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Menus Burger (Mobile)
-    const burgers = document.querySelectorAll('.nine-navbar-burger');
-    const menus = document.querySelectorAll('.nine-navbar-menu');
-    const closeButtons = document.querySelectorAll('.nine-navbar-close');
-    const backdrops = document.querySelectorAll('.nine-navbar-backdrop');
+    const burgers = document.querySelectorAll('.nine-menu__burger');
+    const menus = document.querySelectorAll('.nine-menu');
+    const closeButtons = document.querySelectorAll('.nine-menu__close');
+    const backdrops = document.querySelectorAll('.nine-menu__backdrop');
 
     const toggleMenu = () => {
         menus.forEach((menu) => {

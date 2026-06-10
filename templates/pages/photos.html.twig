@@ -4,9 +4,9 @@
 
 {% block body %}
 {% for type in photos_data.types %}
-<section class="{% if loop.index is even %}bg-nine-golden{% else %}bg-white{% endif %} py-10">
+<section class="{% if loop.index is even %}bg-surface-alt{% else %}bg-surface{% endif %} py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-medium text-nine-turquoise">{{ type.name }}</h3>
+        <h3 class="my-10 text-2xl font-accent font-medium text-nine-cyan-500">{{ type.name }}</h3>
         {% set listItemsPhotos = photos_data.photos[type.slug] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox">
             {% for photo in listItemsPhotos %}
