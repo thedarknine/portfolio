@@ -123,8 +123,10 @@ class GenerateFixturesCommand extends Command
             $detectedDependencies = array_unique($detectedDependencies);
 
             if ('portfolio' === $group) {
+                // @codeCoverageIgnoreStart
                 $namespace = 'App\DataFixtures';
                 $subFolder = '/src/DataFixtures';
+            // @codeCoverageIgnoreEnd
             } else {
                 // If $group = 'test' -> App\DataFixtures\Testing
                 // If $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
@@ -286,8 +288,10 @@ class GenerateFixturesCommand extends Command
 
             // Dynamic folder structure based on group
             if ('portfolio' === $group) {
+                // @codeCoverageIgnoreStart
                 $namespace = 'App\DataFixtures';
                 $subFolder = '/src/DataFixtures';
+            // @codeCoverageIgnoreEnd
             } else {
                 // If $group = 'test' -> App\DataFixtures\Testing
                 // If $group = 'testing_unit' -> App\DataFixtures\Testing\Unit

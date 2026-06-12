@@ -498,7 +498,7 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 	@printf "\n  ${BOLD}${GREEN}✨ QA passed successfully! Your code is amazing. ✨${RESET}\n\n"
 
 .PHONY: test
-test: ## Run PHPUnit tests
+test: ## Run PHPUnit tests without UI tests
 	$(call display_title,Running PHPUnit tests,${ICON_TEST})
 	@$(MAKE) --no-print-directory check-containers
 	@$(call display_subtitle,Generating fixtures...)
