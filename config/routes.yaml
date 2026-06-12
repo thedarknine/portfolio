@@ -9,3 +9,7 @@
 
 controllers:
     resource: routing.controllers
+
+altcha_bundle:
+    resource: '@AltchaBundle/config/routes.yml'
+    type: yaml

@@ -100,7 +100,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     grum-install              Install GrumPHP hooks                          
     grum-run                  Run GrumPHP checks                             
     qa                        Run complete Quality Assurance suite: Lint, Static Analysis, Tests  
-    test                      Run PHPUnit tests                              
+    test                      Run PHPUnit tests without UI tests             
     qa-analyse                Run static analysis                            
     qa-rector                 Run Rector                                     REC_FIX=1 to actually fix
     test-mutation             Run Infection                                  
@@ -269,6 +269,8 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 * `symfony/orm-pack` & `doctrine/doctrine-migrations-bundle` : Persistance de données.
 * `gedmo/doctrine-extensions` : Ajout de comportements (Sluggable, Timestampable).
 * `nesbot/carbon` : Manipulation avancée et fluide des dates.
+* `symfony/mailer` : Envoi d'emails.
+* `tito10047/altcha-bundle` : Protection anti-spam via Altcha.
 * `easycorp/easyadmin-bundle` : Moteur de Backoffice fluide et moderne (v5).
 * `scheb/2fa-google-authenticator` : Authentification à deux facteurs via Google Authenticator.
 * `symfony/rate-limiter` : Limitation des tentatives de connexion.
