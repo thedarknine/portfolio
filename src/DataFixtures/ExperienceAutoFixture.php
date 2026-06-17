@@ -554,18 +554,11 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience8 = new Experience();
         $experience8->setSubtitle('Encadrement R&D et qualité produit');
         $experience8->setSummary('Perfect Memory est un fournisseur d\'IA sémantique, ces technologies qui permettent de donner du sens et de la valeur à toutes les données générées par une organisation.');
-        $experience8->setDescription('
-<p class="text-justify pt5">Charnière entre les équipes de développement, l\'équipe design et l\'équipe qualité.</p>
-<ul class="missions">
-    <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>Encadrement des équipes de développement</span></li>
-    <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>Qualité Produit</span></li>
-    <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>	
-Rédaction des expressions de besoin et spécifications fonctionnelles</span></li>
-</ul>');
+        $experience8->setDescription('<div>Charnière entre les équipes de développement, l\'équipe design et l\'équipe qualité.</div><ul><li>&nbsp;Encadrement des équipes de développement</li><li>&nbsp;Qualité Produit</li><li>&nbsp; Rédaction des expressions de besoin et spécifications fonctionnelles</li></ul>');
         $experience8->setStartDate(new \DateTime('2022-07-18 00:00:00'));
         $experience8->setEndDate(new \DateTime('2024-04-22 00:00:00'));
         $experience8->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience8->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience8->setUpdatedAt(new \DateTime('2026-06-06 07:43:22'));
         $experience8->setTitle('Product Owner');
         $experience8->setSlug('po-perfect');
         try {
@@ -603,18 +596,12 @@ Rédaction des expressions de besoin et spécifications fonctionnelles</span></l
 
         $experience9 = new Experience();
         $experience9->setSubtitle('Encadrement équipe Drive');
-        $experience9->setSummary('Leviia est une entreprise française dont l\'ensemble de l\'infrastructure est hébergé exclusivement en France. Le code source est 100 % open source, sans aucune dépendance technologique américaine ou chinoise');
-        $experience9->setDescription('<p class="pb-4">Coordination de l\'équipe technique.</p>
-<ul class="missions">
-<li><i class="fas fa-tasks"></i> <span>Développements basés sur la solution Nextcloud. Equipe de 4 développeurs et 5 administrateurs système. Suivi de déploiements clients. </span></li>
-    <li><i class="fas fa-tasks"></i> <span>Documentation technique et utilisateur à destination externe.</span></li>
-    <li><i class="fas fa-tasks"></i> <span>Mise en place d’un outil de data visualisation : Superset.</span></li>
-    <li><i class="fas fa-tasks"></i> <span>Respect des exigences relatives à la norme ISO-27001 et HDS.</span></li>
-</ul>');
+        $experience9->setSummary('Leviia est une entreprise française dont l\'ensemble de l\'infrastructure est hébergé exclusivement en France. Le code source est 100 % open source, sans aucune dépendance technologique américaine ou chinoise.');
+        $experience9->setDescription('<div>Coordination de l\'équipe technique.</div><ul><li>&nbsp;Développements basés sur la solution Nextcloud. Equipe de 4 développeurs et 5 administrateurs système. Suivi de déploiements clients.&nbsp;</li><li>&nbsp;Documentation technique et utilisateur à destination externe.</li><li>&nbsp;Mise en place d’un outil de data visualisation : Superset.</li><li>&nbsp;Respect des exigences relatives à la norme ISO-27001 et HDS.</li></ul>');
         $experience9->setStartDate(new \DateTime('2024-08-21 00:00:00'));
         $experience9->setEndDate(null);
         $experience9->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience9->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $experience9->setUpdatedAt(new \DateTime('2026-06-06 07:43:05'));
         $experience9->setTitle('Technical Product Owner');
         $experience9->setSlug('po-leviia');
         try {

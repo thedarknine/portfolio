@@ -3,82 +3,33 @@
 {% block title %}Formation{% endblock %}
 
 {% block body %}
-<section class="bg-nine-golden py-10">
+<section class="bg-surface py-10">
     <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
         <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600">
-            <h3 class="text-2xl text-nine-turquoise font-semibold mb-6">Formation professionnelle</h3>
+            <h3 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation professionnelle</h3>
             <div class="line h-1"></div>
             <img src="{{ absolute_url('images/education/formation-professionnelle.webp') }}" alt="Formation professionnelle" width="250px" />
         </div>
 
         <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
             {% for education in educations_professional_list %}
-                <div class="bg-white mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
-                    <div class="px-4 py-5 flex-auto w-full">
-                        <div class="flex justify-between items-start mb-3">
-                            <h3 class="text-2xl font-accent font-semibold text-nine-turquoise">{{ education.year }}</h3>
-                            <span class="text-xs text-nine-blue-gray font-medium">{{ education.school.city }} ({{ education.school.department|format_number({ min_integer_digit: '2' }) }})</span>
-                        </div>
-
-                        <div class="md:mr-10">
-                            <img src="{{ absolute_url('images/education/' ~ education.school.logo) }}" class="w-20 float-end my-3" alt="{{ education.school.name }}">
-                        </div>
-                            <h6 class="text-xl font-accent font-semibold text-perfect">{{ education.title }}</h6>
-                            <p class="text-xs text-nine-blue font-semibold mt-0.5">{{ education.school.name }}</p>
-
-                        <div class="mt-4 pt-3 border-t border-nine-light/50 flex items-center gap-2 text-xs text-nine-primary/80">
-                            <span class="inline-block w-2 h-2 rounded-full bg-nine-turquoise"></span>
-                            {{ education.details }}
-                        </div>
-                    </div>
-                </div>
+                {{ include('components/education_card.html.twig', { education: education }) }}
             {% endfor %}
         </div>
     </div>
 </section>
 
-<section class="bg-white py-10">
+<section class="bg-surface-alt py-10">
     <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
         <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600">
-            <h3 class="text-2xl text-nine-turquoise font-semibold mb-6">Formation universitaire</h3>
+            <h3 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation universitaire</h3>
             <div class="line h-1"></div>
             <img src="{{ absolute_url('images/education/formation-universitaire.webp') }}" alt="Formation universitaire " width="250px" />
         </div>
 
         <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
             {% for education in educations_universitary_list %}
-                <div class="bg-white mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
-                    <div class="px-4 py-5 flex-auto w-full">
-                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
-                            <h3 class="text-2xl font-accent font-semibold text-nine-turquoise">{{ education.year }}</h3>
-                            {% if education.mention is not empty %}
-                            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-nine-yellow/10 text-nine-yellow-dark">Mention {{ education.mention }}</span>
-                            {% endif %}
-                        </div>
-
-                        <h6 class="text-xl font-accent font-semibold text-perfect">{{ education.title }}</h6>
-                        <p class="text-xs text-nine-gray font-normal">{{ education.school.name }}
-                            • <span class="text-xs">{{ education.school.city }} ({{ education.school.department|format_number({ min_integer_digit: '2' }) }})</span>
-                        </p>
-                        <div class=" w-full">
-                            <img src="{{ absolute_url('images/education/' ~ education.school.logo) }}" class="w-20 md:float-end my-3" alt="{{ education.school.name }}">
-                        </div>
-
-                        <div class="mt-4 pt-3 border-t border-nine-light/50  gap-2 text-md text-nine-primary/80">
-                            <div class="flex items-center gap-2">
-                                <span class="inline-block w-2 h-2 rounded-full bg-nine-turquoise"></span>
-                                <strong>{{ education.details }}</strong>
-                            </div>
-                            {% if education.speciality is not empty %}
-                            <div class="flex items-center gap-2">
-                                <span class="inline-block w-2 h-2 rounded-full bg-nine-yellow"></span>
-                                Option {{ education.speciality }}
-                            </div>
-                            {% endif %}
-                        </div>
-
-                    </div>
-                </div>
+                {{ include('components/education_card.html.twig', { education: education }) }}
             {% endfor %}
         </div>
     </div>

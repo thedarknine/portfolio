@@ -741,7 +741,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface, Fix
         $skill38->setLevel(8);
         $skill38->setDisplay(true);
         $skill38->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skill38->setUpdatedAt(new \DateTime('2026-05-25 08:09:01'));
+        $skill38->setUpdatedAt(new \DateTime('2026-06-06 08:13:02'));
         $skill38->setName('MacOS X');
         $skill38->setSlug('macos');
         $skill38->setLogo('macos.png');

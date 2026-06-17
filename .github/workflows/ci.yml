@@ -27,6 +27,7 @@ jobs:
       APP_ENV: test
       DEFAULT_URI: https://localhost
       DATABASE_URL: "mysql://root@127.0.0.1:3306/portfolio?serverVersion=8.0"
+      MAILER_DSN: "null://default"
       FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
     steps:

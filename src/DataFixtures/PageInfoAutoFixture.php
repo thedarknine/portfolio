@@ -67,7 +67,7 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo3->setInHeader(true);
         $pageInfo3->setCategory(\App\Enum\PageCategory::CAREER);
         $pageInfo3->setCreatedAt(new \DateTime('2026-05-25 11:06:39'));
-        $pageInfo3->setUpdatedAt(new \DateTime('2026-05-27 17:49:26'));
+        $pageInfo3->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
         $pageInfo3->setTitle('Projets');
         $pageInfo3->setSlug('projets');
         $pageInfo3->setPosition(4);
@@ -83,7 +83,7 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo4->setInHeader(true);
         $pageInfo4->setCategory(\App\Enum\PageCategory::INTEREST);
         $pageInfo4->setCreatedAt(new \DateTime('2026-05-25 12:00:50'));
-        $pageInfo4->setUpdatedAt(new \DateTime('2026-05-27 17:49:27'));
+        $pageInfo4->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
         $pageInfo4->setTitle('Arcade');
         $pageInfo4->setSlug('arcade');
         $pageInfo4->setPosition(5);
@@ -99,7 +99,7 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo5->setInHeader(false);
         $pageInfo5->setCategory(\App\Enum\PageCategory::INTEREST);
         $pageInfo5->setCreatedAt(new \DateTime('2026-05-25 12:07:06'));
-        $pageInfo5->setUpdatedAt(new \DateTime('2026-05-27 17:49:28'));
+        $pageInfo5->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
         $pageInfo5->setTitle('Créations');
         $pageInfo5->setSlug('creations');
         $pageInfo5->setPosition(6);
@@ -115,13 +115,29 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo6->setInHeader(false);
         $pageInfo6->setCategory(\App\Enum\PageCategory::INTEREST);
         $pageInfo6->setCreatedAt(new \DateTime('2026-05-25 12:07:40'));
-        $pageInfo6->setUpdatedAt(new \DateTime('2026-05-27 17:49:29'));
+        $pageInfo6->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
         $pageInfo6->setTitle('Photos');
         $pageInfo6->setSlug('photos');
         $pageInfo6->setPosition(7);
         $pageInfo6->setPublished(true);
         $manager->persist($pageInfo6);
         $this->addReference('pageInfo_7', $pageInfo6);
+
+        $pageInfo7 = new PageInfo();
+        $pageInfo7->setTechnicalName('contact');
+        $pageInfo7->setTagline('Echanger');
+        $pageInfo7->setSubtitle('Un projet, une question ou juste envie de discuter ?');
+        $pageInfo7->setQuote('Que ce soit pour parler produit, partager une astuce tech ou échanger autour d\'une passion commune, ma boîte mail est grande ouverte.');
+        $pageInfo7->setInHeader(true);
+        $pageInfo7->setCategory(\App\Enum\PageCategory::INTEREST);
+        $pageInfo7->setCreatedAt(new \DateTime('2026-06-10 21:53:19'));
+        $pageInfo7->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
+        $pageInfo7->setTitle('Contact');
+        $pageInfo7->setSlug('contact');
+        $pageInfo7->setPosition(8);
+        $pageInfo7->setPublished(true);
+        $manager->persist($pageInfo7);
+        $this->addReference('pageInfo_176', $pageInfo7);
 
         $manager->flush();
     }

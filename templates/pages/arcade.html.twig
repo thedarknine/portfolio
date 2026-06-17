@@ -3,7 +3,7 @@
 {% block title %}Arcade{% endblock %}
 
 {% block body %}
-<section class="bg-white py-10">
+<section class="bg-surface text-on-surface my-15">
     <div class="container">
         <img src="{{ absolute_url('images/arcade/cnoyer-arcade.png') }}" class="sm:float-right sm:ml-14 mx-auto w-48 animate__animated" data-animate="animate__fadeInTopRight" data-delay="600">
         <div class="mb-10 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="600">
@@ -15,9 +15,9 @@
     </div>
 </section>
 
-<section class="bg-nine-gray-light py-10">
+<section class="bg-surface-alt text-on-surface-alt py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">This is it!</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">This is it!</h3>
         {% set listItemsArcade = arcade_data.items['final'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
@@ -31,9 +31,9 @@
     </div>
 </section>
 
-<section class="bg-white py-10">
+<section class="bg-surface text-on-surface py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#1: les plans.</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#1: les plans.</h3>
         <p class="mb-10 animate__animated" data-animate="animate__fadeIn">Je regarde ce qu’il se fait... Les plans pour bartop n’envahissent pas le web, et ne
             correspondent pas entièrement à ce que j’ai en tête. Ok, alors allons-y pour un plan
             personnalisé. Je suis partie des plans mis à dispo par
@@ -54,12 +54,12 @@
     </div>
 </section>
 
-<section class="bg-nine-gray-light py-10">
+<section class="bg-surface-alt text-on-surface-alt py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#2 : la découpe.</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#2 : la découpe.</h3>
         <p class="mb-10">L'étape la plus importante, et aussi la plus délicate quand on est perfectionniste !</p>
 
-        <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h4>
+        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h4>
         {% set listItemsArcade = arcade_data.items['side-panels'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
@@ -73,7 +73,7 @@
             {% endfor %}
         </div>
 
-        <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h4>
+        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h4>
         {% set listItemsArcade = arcade_data.items['control-panel'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
@@ -87,7 +87,7 @@
             {% endfor %}
         </div>
 
-        <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h4>
+        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h4>
         {% set listItemsArcade = arcade_data.items['upper-part'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
@@ -101,7 +101,7 @@
             {% endfor %}
         </div>
 
-        <h4 class="text-perfect text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h4>
+        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h4>
         {% set listItemsArcade = arcade_data.items['back-side'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
@@ -117,9 +117,9 @@
     </div>
 </section>
 
-<section class="bg-white py-10">
+<section class="bg-surface text-on-surface py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#3 : l’assemblage.</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#3 : l’assemblage.</h3>
         <p class="mb-10">Les différentes pièces se finalisent petit à petit, on monte et on redémonte histoire de
             contrôler que tout est ok. Au passage un petit coup de peinture. Ca se précise !</p>
         {% set listItemsArcade = arcade_data.items['assembling'] %}
@@ -137,9 +137,9 @@
     </div>
 </section>
 
-<section class="bg-nine-gray-light py-10">
+<section class="bg-surface-alt text-on-surface-alt py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#4 : le design.</h3>
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#4 : le design.</h3>
         <p class="mb-10">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario
             et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez
             modernes malgré tout.</p>
@@ -156,13 +156,12 @@
     </div>
 </section>
 
-
-    <section class="bg-white py-10">
-        <div class="container">
-            <h3 class="my-10 text-2xl font-accent font-semibold text-nine-turquoise animate__animated" data-animate="animate__fadeInDown">Step#5 : l’émulateur.</h3>
-            <p class="mb-10">Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
-                <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
-                s’installer dans ma borne.</p>
+<section class="bg-surface text-on-surface py-10">
+    <div class="container">
+        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#5 : l’émulateur.</h3>
+        <p class="mb-10">Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
+            <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
+            s’installer dans ma borne.</p>
             {% set listItemsArcade = arcade_data.items['recalbox'] %}
             <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
                 {% for arcade in listItemsArcade %}

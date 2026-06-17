@@ -16,31 +16,33 @@
 <section class="nine-home-area -mt-24 pt-24 static">
     <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
         <div class="md:pt-12">
-            <img class="lg:h-80 h-40 mx-auto jump rounded animate__animated" data-animate="animate__fadeInUp" data-delay="1s" src="{{ absolute_url(asset('images/cnoyer-logo.webp')) }}" alt="Caroline Noyer - Logo">
+            <div class="animate__animated animate__fadeInUp" data-delay="1000">
+                <img class="lg:h-80 h-40 mx-auto nine-jump rounded " src="{{ absolute_url(asset('images/cnoyer-logo.webp')) }}" alt="Caroline Noyer - Logo">
+            </div>
         </div>
         <div class="mb-16 mt-12 lg:mt-32 xl:mt-40 xl:mr-12">
             <div class="max-w-2xl mx-auto mb-8">
                 <h2 class="text-3xl text-white lg:text-5xl lg:leading-normal mb-4 font-bold font-heading animate__animated" data-animate="animate__fadeIn" data-delay="0.5s">Passionnée par le <span class="text-turquoise">digital</span> depuis 2005</h2>
-                <p class="text-nine-turquoise text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1s" ><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
+                <p class="text-nine-cyan-500 text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1000" ><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
             </div>
             <div class="max-w-2xl mx-auto">
                 {% for resource in page_manager.getPublishedResourceLinksInHero() %}
-                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}">
-                    <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank" aria-label="{{ resource.title }}">{{ ux_icon(resource.icon, { class: 'text-nine-light' }) }}</a>
+                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray-400 border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}">
+                    <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank" aria-label="{{ resource.title }}">{{ ux_icon(resource.icon, { class: 'text-nine-sand-200' }) }}</a>
                 </span>
                 {% endfor %}
             </div>
         </div>
-    </div> {# end of container #}
+    </div>
 </section>
 <div class="relative bottom-0 z-50">
-    <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-0 w-full block" viewBox="0 0 1440 320" style="height:140px;top:-139px" preserveAspectRatio="none"><path class="fill-nine-golden" fill-opacity="1" d="M 0 288 L 80 288 C 160 288 320 288 480 245.3 C 640 203 800 117 960 96 C 1120 75 1280 117 1360 138.7 L 1440 160 L 1440 320 L 0 320 Z"></path></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-0 w-full block" viewBox="0 0 1440 320" style="height:140px;top:-139px" preserveAspectRatio="none"><path class="fill-surface" fill-opacity="1" d="M 0 288 L 80 288 C 160 288 320 288 480 245.3 C 640 203 800 117 960 96 C 1120 75 1280 117 1360 138.7 L 1440 160 L 1440 320 L 0 320 Z"></path></svg>
 </div>
 
-{# Competences section #}
-<section id="competences" class="bg-nine-golden py-10">
+{# Positionnement section #}
+<section id="competences" class="bg-surface text-on-surface py-10">
     <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
-        <p class="text-sm uppercase tracking-widest text-slate-500 mb-3">
+        <p class="nine-section-subheader">
             Mon positionnement
         </p>
         <h2 class="text-3xl md:text-4xl font-semibold">
@@ -52,7 +54,7 @@
         {# CARD #}
         <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="0">
             {# ICON #}
-            <div class="mb-6 text-3xl" style="color:#0C91B9">🧭</div>
+            <div class="mb-6 text-3xl">🧭</div>
             {# MINI TITLE #}
             <p class="text-sm text-slate-500 mb-2">Du développement au produit</p>
             {# TITLE #}
@@ -71,7 +73,7 @@
 
         {# CARD #}
         <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="400">
-            <div class="mb-6 text-3xl" style="color:#0C91B9">⚙️</div>
+            <div class="mb-6 text-3xl">⚙️</div>
             <p class="text-sm text-slate-500 mb-2">Faire le lien métier / tech</p>
             <h3 class="text-xl font-semibold mb-4">Expertise</h3>
 
@@ -86,7 +88,7 @@
 
         {# CARD #}
         <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="800">
-            <div class="mb-6 text-3xl" style="color:#ff5e00">✨</div>
+            <div class="mb-6 text-3xl">✨</div>
             <p class="text-sm text-slate-500 mb-2">Structurer &amp; simplifier</p>
             <h3 class="text-xl font-semibold mb-4">Approche</h3>
 
@@ -102,9 +104,9 @@
 </section>
 
 {# Parcours section #}
-<section class="bg-nine-primary text-white py-10">
+<section class="bg-nine-blue-800 text-nine-gray-200 py-10">
   <div class="text-center max-w-2xl mx-auto mb-20 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
-    <p class="text-sm uppercase tracking-widest text-slate-500 mb-3">
+    <p class="nine-section-subheader">
       Mon parcours
     </p>
     <h2 class="text-3xl md:text-4xl font-semibold">
@@ -116,18 +118,18 @@
   <div class="relative max-w-3xl mx-auto">
 
     {# ligne #}
-    <div class="absolute left-4 top-0 w-px h-full bg-slate-300 dark:bg-white/10"></div>
+    <div class="absolute left-4 top-0 w-px h-full bg-white/10"></div>
 
     {# ITEM #}
     <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-yellow flex items-center justify-center text-blue-medium text-md">
-            {{ ux_icon('hugeicons:plant-04', { class: 'w-6 h-6 text-nine-blue-darker' }) }}
+        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-md">
+            {{ ux_icon('hugeicons:plant-04', { class: 'w-6 h-6 text-nine-blue-500' }) }}
         </div>
 
         <div class="p-2 rounded-2xl backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
             <h3 class="text-xl font-semibold mb-1">Développement</h3>
-            <h4 class="text-md font-bold mb-2 text-turquoise">Les fondations</h4>
-            <p class="text-slate-600 dark:text-slate-400">
+            <h4 class="text-md font-bold mb-2 text-nine-gray-400">Les fondations</h4>
+            <p>
                 15 ans en développement web (PHP, Symfony, bases de données).<br>
                 Une expertise construite sur des projets concrets : jeux vidéo, santé, contrats courts, assets management...<br>
                 Une vision transverse des environnements techniques et métier.
@@ -136,14 +138,14 @@
     </div>
 
     <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-yellow flex items-center justify-center text-nine-primary text-md">
-            {{ ux_icon('hugeicons:certificate-01', { class: 'w-6 h-6 text-nine-blue-darker' }) }}
+        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-md">
+            {{ ux_icon('hugeicons:certificate-01', { class: 'w-6 h-6 text-nine-blue-500' }) }}
         </div>
 
         <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
             <h3 class="text-xl font-semibold mb-1">Expertise technique</h3>
-            <h4 class="text-md font-bold mb-2 text-turquoise">Comprendre en profondeur</h4>
-            <p class="text-slate-600 dark:text-slate-400">
+            <h4 class="text-md font-bold mb-2 text-nine-gray-400">Comprendre en profondeur</h4>
+            <p>
                 Architecture, performance, automatisation...<br>
                 Une maîtrise des systèmes qui permet d’anticiper les contraintes et de faire des choix solides.
             </p>
@@ -151,14 +153,14 @@
     </div>
 
     <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-yellow flex items-center justify-center text-nine-primary text-lg">
-            {{ ux_icon('hugeicons:package-moving', { class: 'w-6 h-6 text-nine-blue-darker' }) }}
+        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-lg">
+            {{ ux_icon('hugeicons:package-moving', { class: 'w-6 h-6 text-nine-blue-500' }) }}
         </div>
 
         <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
             <h3 class="text-xl font-semibold mb-1">Transition produit</h3>
-            <h4 class="text-md font-bold mb-2 text-turquoise">Faire le lien</h4>
-            <p class="text-slate-600 dark:text-slate-400">
+            <h4 class="text-md font-bold mb-2 text-nine-gray-400">Faire le lien</h4>
+            <p>
                 Cadrage, priorisation, échanges avec les métiers.<br>
                 Une évolution naturelle vers un rôle d’interface entre les équipes.
             </p>
@@ -166,14 +168,14 @@
     </div>
 
     <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-yellow flex items-center justify-center text-nine-primary text-lg">
-            {{ ux_icon('hugeicons:checkmark-badge-04', { class: 'w-6 h-6 text-nine-blue-darker' }) }}
+        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-lg">
+            {{ ux_icon('hugeicons:checkmark-badge-04', { class: 'w-6 h-6 text-nine-blue-500' }) }}
         </div>
 
         <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
             <h3 class="text-xl font-semibold mb-1">Product Owner technique</h3>
-            <h4 class="text-md font-bold mb-2 text-turquoise">Structurer et livrer</h4>
-            <p class="text-slate-600 dark:text-slate-400">
+            <h4 class="text-md font-bold mb-2 text-nine-gray-400">Structurer et livrer</h4>
+            <p>
                 Pilotage produit, coordination des équipes, décisions éclairées.<br>
                 Une approche orientée valeur, impact et qualité.
             </p>
@@ -181,14 +183,14 @@
     </div>
 
     <div class="relative pl-12 mb-8group animate__animated" data-animate="animate__fadeInLeft">
-        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-yellow flex items-center justify-center text-nine-primary text-lg">
-            {{ ux_icon('hugeicons:paint-board', { class: 'w-6 h-6 text-nine-blue-darker' }) }}
+        <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-lg">
+            {{ ux_icon('hugeicons:paint-board', { class: 'w-6 h-6 text-nine-blue-500' }) }}
         </div>
 
         <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
             <h3 class="text-xl font-semibold mb-1">Culture UX</h3>
-            <h4 class="text-md font-bold mb-2 text-turquoise">Penser l’expérience</h4>
-            <p class="text-slate-600 dark:text-slate-400">
+            <h4 class="text-md font-bold mb-2 text-nine-gray-400">Penser l’expérience</h4>
+            <p>
                 UX, prototypage, design produit.<br>
                 Une attention portée à la clarté, à l’usage et à la cohérence des interfaces.
             </p>
@@ -199,9 +201,9 @@
 </section>
 
 {# Experience section #}
-<section id="experience" class="bg-nine-golden py-10">
+<section id="experience" class="bg-surface py-10">
     <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
-        <p class="text-sm uppercase tracking-widest text-slate-500 mb-3">
+        <p class="nine-section-subheader">
             Mes expériences
         </p>
         <h2 class="text-3xl md:text-4xl font-semibold">
@@ -214,13 +216,13 @@
         <div class="lg:col-span-5">
             <div class="mb-16 lg:mb-0 xl:mt-16 animate__animated" data-animate="animate__fadeInLeft">
                 <div class="w-10/12 sm:w-12/12 mx-auto">
-                    <div class="relative flex flex-col min-w-0 wrap-break-words w-full mb-6 shadow-lg rounded-lg bg-{{ experience.company.slug }}">
+                    <div class="relative flex flex-col min-w-0 wrap-break-words w-full mb-6 shadow-lg rounded-lg bg-brand-{{ experience.company.slug }}">
                         <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.slug ~ '.webp') }}" class="w-full align-middle rounded-t-lg">
                         <blockquote class="relative p-8 mb-4">
-                            <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px"><polygon points="-30,95 583,95 583,65" class="fill-{{ experience.company.slug }}"></polygon></svg>
+                            <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px"><polygon points="-30,95 583,95 583,65" class="fill-brand-{{ experience.company.slug }}"></polygon></svg>
                             <h4 class="text-xl font-bold text-white">{{ experience.title }}</h4>
                             <h5 class="mb-8 font-semibold text-white/70">{{ experience.subtitle }}</h5>
-                            <p class="text-md font-light mt-2 text-white">{{ experience.summary }}</p>
+                            <p class="text-md font-light mt-2 text-nine-sand-200">{{ experience.summary }}</p>
                         </blockquote>
                     </div>
                 </div>
@@ -234,7 +236,7 @@
                         <li class="flex">
                             <p class="h-lh w-5.5 shrink-0 pt-1">{{ item.picto }}</p>
                             <div class="pl-4 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-xl transition duration-500">
-                                <h6 class="text-xl mb-1 font-semibold text-perfect">{{ item.title }}</h6>
+                                <h6 class="text-xl mb-1 font-semibold text-nine-blue-500 dark:text-nine-gray-400">{{ item.title }}</h6>
                                 <p class="mb-5">
                                 {{ item.details }}
                                 </p>
@@ -246,11 +248,11 @@
             </div>
         </div>
     </div>
-
 {% endfor %}
+
     <div class="text-center mt-10 animate__animated" data-animate="animate__fadeIn">
     <a href="{{ path('app_experience') }}" aria-label="Découvrez mon parcours professionnel" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-white/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
-        <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue)] to-[var(--color-nine-turquoise)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
+        <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue-500)] to-[var(--color-nine-cyan-500)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
         <span class="relative z-10 flex items-center gap-2">
             <span>En savoir plus</span>
             {{ ux_icon('fa7-solid:right-long', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
@@ -260,10 +262,10 @@
 </section>
 
 {# Moodboard section #}
-<section id="paysage" class="bg-nine-primary text-white py-10">
+<section id="paysage" class="bg-nine-blue-800 text-on-surface-alt py-10">
     <div class="container mx-auto py-8">
         <div class="text-center animate__animated" data-animate="animate__fadeInUp" data-delay="0.6s">
-            <p class="text-sm uppercase tracking-widest text-slate-500 mb-3">
+            <p class="nine-section-subheader">
                 Moodboard
             </p>
         </div>
@@ -278,9 +280,9 @@
 </section>
 
 {# About me section #}
-<section id="about" class="bg-nine-golden py-10">
-    <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
-        <p class="text-sm uppercase tracking-widest text-slate-500 mb-3">
+<section id="about" class="bg-surface py-10">
+    <div class="text-center max-w-2xl mx-auto mb-8 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
+        <p class="nine-section-subheader">
             A propos de moi
         </p>
         <h2 class="text-3xl md:text-4xl font-semibold">
@@ -288,7 +290,7 @@
         </h2>
     </div>
 
-    <div class="container flex flex-wrap">
+    <div class="container flex flex-wrap text-on-surface-muted">
         <div class="w-5/6 sm:w-1/3 p-6 animate__animated" data-animate="animate__zoomInUp">
             <img src="{{ absolute_url('images/cnoyer.webp') }}" alt="Caroline Noyer • Technical Product Owner &amp; Développeur web senior" class="drop-shadow-xl rounded-full w-3/4 mx-auto mt-10 nine-border-gradient">
         </div>

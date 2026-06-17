@@ -54,7 +54,7 @@ class ResourceLinkAutoFixture extends Fixture implements FixtureGroupInterface
         $resourceLink3->setUrl('https://open.spotify.com/playlist/3g3bePO9Jddljzgx5wS4IM?si=c4a65cd590b04b94');
         $resourceLink3->setInHero(false);
         $resourceLink3->setCreatedAt(new \DateTime('2026-05-26 07:46:49'));
-        $resourceLink3->setUpdatedAt(new \DateTime('2026-06-03 20:13:49'));
+        $resourceLink3->setUpdatedAt(new \DateTime('2026-06-06 07:27:44'));
         $resourceLink3->setIcon('fa7-brands:spotify');
         $resourceLink3->setTitle('Spotify');
         $resourceLink3->setSlug('spotify');
