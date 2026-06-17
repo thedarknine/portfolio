@@ -1,0 +1,103 @@
+.nine-experience-timeline {
+    position: relative;
+    padding-bottom: 4rem;
+
+    .container {
+        position: relative;
+    }
+
+    .nine-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+        margin-top: 2rem;
+
+        span {
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            color: #14345d;
+            background: #efe7d8;
+            border-radius: 999px;
+        }
+    }
+}
+
+.nine-work-approach {
+    padding: 6rem 0;
+
+    h2 {
+        margin-bottom: 4rem;
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    .nine-approach-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+
+        article {
+            padding: 2rem;
+
+            h3 {
+                margin-top: 1.2rem;
+                margin-bottom: 1rem;
+                font-size: 1.4rem;
+                font-weight: 700;
+            }
+
+            p {
+                line-height: 1.8;
+                opacity: 0.8;
+            }
+        }
+
+        article:not(:first-child) {
+            border-left: 1px solid rgb(255 255 255 / 15%);
+        }
+    }
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fade-up 1s ease forwards;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fade-in 1.2s ease forwards;
+}
+
+@keyframes fade-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fade-in {
+    to {
+        opacity: 1;
+    }
+}
+
+@media screen and (width <= 992px) {
+    .nine-page-hero,
+    .nine-skills-overview .cards-grid,
+    .nine-work-approach .nine-approach-grid,
+    .nine-experience-timeline .nine-timeline-item {
+        grid-template-columns: 1fr;
+    }
+
+    .nine-experience-timeline {
+        .timeline-line,
+        .timeline-dot {
+            display: none;
+        }
+    }
+
+    .nine-page-hero {
+        padding: 5rem 0;
+    }
+}

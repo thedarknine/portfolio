@@ -1,0 +1,35 @@
+.nine-home-area {
+    position: relative;
+    z-index: 1;
+    height: 100vh;
+    padding-top: 130px;
+
+    &::before {
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        content: "";
+        background: url("https://carolinenoyer.fr/images/volcans-cnoyer.webp") no-repeat 50%;
+        background-size: cover;
+    }
+}
+
+.nine-btn-social {
+    @apply text-nine-sand-200 border-blue-gray-400 rounded-full border-2 text-shadow-lg;
+
+    transition: 0.5s;
+    transition-delay: 0.3s;
+
+    &:hover {
+        @apply rounded-full;
+
+        background: linear-gradient(to right bottom, var(--color-nine-blue-900) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-900) 100%);
+        border-color: var(--color-nine-cyan-500);
+    }
+}
+
+.nine-border-gradient {
+    border-radius: 100%;
+    border: 6px solid transparent;
+    background: linear-gradient(45deg, var(--color-nine-blue-500), var(--color-nine-cyan-500)) border-box;
+}
