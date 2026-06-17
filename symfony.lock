@@ -222,6 +222,18 @@
             ".editorconfig"
         ]
     },
+    "symfony/mailer": {
+        "version": "8.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "4.3",
+            "ref": "09051cfde49476e3c12cd3a0e44289ace1c75a4f"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
     "symfony/maker-bundle": {
         "version": "1.67",
         "recipe": {
@@ -372,6 +384,19 @@
         },
         "files": [
             "config/packages/symfonycasts_tailwind.yaml"
+        ]
+    },
+    "tito10047/altcha-bundle": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "2.0",
+            "ref": "64d5bc8d22b01ee6917ed754613fa5befc1ac486"
+        },
+        "files": [
+            "config/packages/altcha.yaml",
+            "config/routes/altcha.yaml"
         ]
     },
     "twig/extra-bundle": {

@@ -569,7 +569,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         }>,
  *     },
  *     mailer?: bool|array{ // Mailer configuration
- *         enabled?: bool|Param, // Default: false
+ *         enabled?: bool|Param, // Default: true
  *         message_bus?: scalar|Param|null, // The message bus to use. Defaults to the default bus if the Messenger component is installed. // Default: null
  *         dsn?: scalar|Param|null, // Default: null
  *         transports?: array<string, scalar|Param|null>,
@@ -802,7 +802,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *             servicename?: scalar|Param|null, // Overrules dbname parameter if given and used as SERVICE_NAME or SID connection parameter for Oracle depending on the service parameter.
  *             sessionMode?: scalar|Param|null, // The session mode to use for the oci8 driver
  *             server?: scalar|Param|null, // The name of a running database server to connect to for SQL Anywhere.
- *             default_dbname?: scalar|Param|null, // Override the default database (postgres) to connect to for PostgreSQL connexion.
+ *             default_dbname?: scalar|Param|null, // Override the default database (postgres) to connect to for PostgreSQL connection.
  *             sslmode?: scalar|Param|null, // Determines whether or with what priority a SSL TCP/IP connection will be negotiated with the server for PostgreSQL.
  *             sslrootcert?: scalar|Param|null, // The name of a file containing SSL certificate authority (CA) certificate(s). If the file exists, the server's certificate will be verified to be signed by one of these authorities.
  *             sslcert?: scalar|Param|null, // The path to the SSL client certificate file for PostgreSQL.
@@ -848,7 +848,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *                 servicename?: scalar|Param|null, // Overrules dbname parameter if given and used as SERVICE_NAME or SID connection parameter for Oracle depending on the service parameter.
  *                 sessionMode?: scalar|Param|null, // The session mode to use for the oci8 driver
  *                 server?: scalar|Param|null, // The name of a running database server to connect to for SQL Anywhere.
- *                 default_dbname?: scalar|Param|null, // Override the default database (postgres) to connect to for PostgreSQL connexion.
+ *                 default_dbname?: scalar|Param|null, // Override the default database (postgres) to connect to for PostgreSQL connection.
  *                 sslmode?: scalar|Param|null, // Determines whether or with what priority a SSL TCP/IP connection will be negotiated with the server for PostgreSQL.
  *                 sslrootcert?: scalar|Param|null, // The name of a file containing SSL certificate authority (CA) certificate(s). If the file exists, the server's certificate will be verified to be signed by one of these authorities.
  *                 sslcert?: scalar|Param|null, // The path to the SSL client certificate file for PostgreSQL.
@@ -927,7 +927,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *                     lock_path?: scalar|Param|null, // Default: "%kernel.cache_dir%/doctrine/orm/slc/filelock"
  *                     lock_lifetime?: scalar|Param|null, // Default: 60
  *                     type?: scalar|Param|null, // Default: "default"
- *                     lifetime?: scalar|Param|null, // Default: 0
+ *                     lifetime?: scalar|Param|null, // Default: null
  *                     service?: scalar|Param|null,
  *                     name?: scalar|Param|null,
  *                 }>,
@@ -1590,6 +1590,35 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     },
  *     ignore_not_found?: bool|Param, // Ignore error when an icon is not found. Set to 'true' to fail silently. // Default: false
  * }
+ * @psalm-type AltchaConfig = array{
+ *     enable?: bool|Param, // Default: true
+ *     floating?: bool|Param, // Default: false
+ *     overlay?: array{
+ *         enabled?: bool|Param, // Default: false
+ *         content?: scalar|Param|null, // CSS selector for overlay content // Default: null
+ *     },
+ *     use_stimulus?: bool|Param|null, // Default: null
+ *     cost?: int|Param, // Default: 5000
+ *     counter_min?: int|Param, // Default: 5000
+ *     counter_max?: int|Param, // Default: 10000
+ *     timeout?: float|Param, // Default: 30.0
+ *     max_number?: int|Param, // Deprecated: The "max_number" option is deprecated and will be removed. // Default: 100000
+ *     expires?: scalar|Param|null, // Default: "+15 minute"
+ *     include_script?: bool|Param|null, // Default: null
+ *     hide_logo?: bool|Param, // Default: false
+ *     hide_footer?: bool|Param, // Default: false
+ *     altcha_js_path?: scalar|Param|null, // Default: "https://cdn.jsdelivr.net/npm/altcha/dist/main/altcha.min.js"
+ *     altcha_js_i18n_path?: scalar|Param|null, // Default: "https://cdn.jsdelivr.net/npm/altcha/dist/i18n/all.min.js"
+ *     hmacKey?: scalar|Param|null, // Deprecated: The "hmacKey" option is deprecated, use "hmacSignature" instead. // Default: null
+ *     hmacAlgorithm?: scalar|Param|null, // Default: "SHA-256"
+ *     hmacSignature?: scalar|Param|null,
+ *     hmacKeySignature?: scalar|Param|null, // Default: null
+ *     sentinel?: bool|array{ // Enable usage of sentinel, if enabled: - the widget will use the /v1/challenge endpoint to retrieve a new challenge instead of your app; - the challenge resolution will be validated againt /v1/verify/signature endpoint that ensure protection againt replay attacks; - the hmacKey provided in configuration is not used anymore. More information available at https://altcha.org/docs/v2/server-integration/
+ *         enabled?: bool|Param, // Default: false
+ *         base_url?: scalar|Param|null, // Your sentinel instance url, eg: https://sentinel.example.com
+ *         api_key?: scalar|Param|null, // Your sentinel client api key
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1607,6 +1636,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     presta_sitemap?: PrestaSitemapConfig,
  *     scheb_two_factor?: SchebTwoFactorConfig,
  *     ux_icons?: UxIconsConfig,
+ *     altcha?: AltchaConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1625,6 +1655,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         presta_sitemap?: PrestaSitemapConfig,
  *         scheb_two_factor?: SchebTwoFactorConfig,
  *         ux_icons?: UxIconsConfig,
+ *         altcha?: AltchaConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1643,6 +1674,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         presta_sitemap?: PrestaSitemapConfig,
  *         scheb_two_factor?: SchebTwoFactorConfig,
  *         ux_icons?: UxIconsConfig,
+ *         altcha?: AltchaConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1662,6 +1694,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         presta_sitemap?: PrestaSitemapConfig,
  *         scheb_two_factor?: SchebTwoFactorConfig,
  *         ux_icons?: UxIconsConfig,
+ *         altcha?: AltchaConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

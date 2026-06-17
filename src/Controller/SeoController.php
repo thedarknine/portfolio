@@ -26,6 +26,7 @@ class SeoController extends AbstractController
             $content = "User-agent: *\nDisallow: /";
         } else {
             // In production, open and protect admin and 2FA
+            // @codeCoverageIgnoreStart
             $content = "User-agent: *\n";
             $content .= "Allow: /\n";
             $content .= "Disallow: /admin/\n";
@@ -34,6 +35,7 @@ class SeoController extends AbstractController
             $content .= "Disallow: /2fa/\n";
             $content .= "Disallow: /2fa_check/\n";
             $content .= 'Sitemap: https://www.carolinenoyer.fr/sitemap.xml';
+            // @codeCoverageIgnoreEnd
         }
 
         return new Response($content, Response::HTTP_OK, ['Content-Type' => 'text/plain']);
