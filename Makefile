@@ -121,7 +121,7 @@ define display_title
 endef
 
 define display_subtitle
-	printf "\n$(RESET)$(BG_BLUE)  $(RESET)  $(BLUE)📎$(RESET) $(1)\n\n"
+	printf "\n$(RESET)$(BG_BLUE)  $(RESET)  $(BLUE)$(RESET) $(1)\n\n"
 endef
 
 define display_success
@@ -155,14 +155,14 @@ CHECKMAKE := $(DC_EXEC) checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
 CHECKMAKE_BIN := checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
 .PHONY: cs-makefile
 cs-makefile: ## Lint Makefile with checkmake
-	@$(call display_subtitle,Checking if checkmake is installed...)
+	@$(call display_subtitle,📎 Checking if checkmake is installed...)
 	@success_msg=""; \
 	if [ -f /.dockerenv ]; then \
 		if ! command -v checkmake >/dev/null 2>&1; then \
 			$(call display_error,checkmake is not installed in the Docker container.); \
 			exit 1; \
 		fi; \
-		$(call display_subtitle,Running checkmake...); \
+		$(call display_subtitle,🔄 Running checkmake...); \
 		$(CHECKMAKE_BIN) Makefile; \
 	else \
 		if ! $(DC) exec -T app bash -c "command -v checkmake" >/dev/null 2>&1; then \
@@ -170,7 +170,7 @@ cs-makefile: ## Lint Makefile with checkmake
 			exit 1; \
 		fi; \
 		success_msg="$$success_msg|Checkmake is ready via Docker Compose"; \
-		$(call display_subtitle,Running checkmake via Docker...); \
+		$(call display_subtitle,🔄 Running checkmake via Docker...); \
 		$(DC) exec -T app $(CHECKMAKE_BIN) Makefile; \
 		success_msg="$$success_msg|Checkmake passed"; \
 		success_msg="$$success_msg|Makefile formatting is perfect!"; \
@@ -293,7 +293,7 @@ doctor: ## Check system requirements and project health
 
 .PHONY: check-docker
 check-docker: ## Check Docker is running
-	@$(call display_subtitle,Checking Docker daemon...)
+	@$(call display_subtitle,🔎 Checking Docker daemon...)
 	@if ! docker info >/dev/null 2>&1; then \
 		$(call display_error,Docker daemon unavailable. Please start Docker Desktop.); \
 		exit 1; \
@@ -304,7 +304,7 @@ check-docker: ## Check Docker is running
 
 .PHONY: check-containers
 check-containers: ## Check if Docker containers are running
-	@$(call display_subtitle,Checking Docker containers...)
+	@$(call display_subtitle,🔎 Checking Docker containers...)
 	@if ! $(DC) ps | grep -q "app.*Up"; then \
 		$(call display_error,Containers are not running. Use 'make up' to start them); \
 	fi
@@ -314,7 +314,7 @@ check-containers: ## Check if Docker containers are running
 
 .PHONY: check-ports
 check-ports: ## Check if required ports are available or used by this project
-	@$(call display_subtitle,Checking network ports...)
+	@$(call display_subtitle,🔎 Checking network ports...)
 	@ports_conflict=0; \
 	summary=""; \
 	current_project_ids=$$(docker compose ps -q 2>/dev/null | tr '\n' ' '); \
@@ -348,7 +348,7 @@ check-ports: ## Check if required ports are available or used by this project
 
 .PHONY: check-env
 check-env: ## Check .env file
-	@$(call display_subtitle,Checking .env file...)
+	@$(call display_subtitle,🔎 Checking .env file...)
 	@if [ ! -f .env ]; then \
 		$(call display_error,.env file is missing. Please create it from .env.dist.); \
 		exit 1; \
@@ -359,7 +359,7 @@ check-env: ## Check .env file
 
 .PHONY: check-dependencies
 check-dependencies: ## Check if PHP dependencies - vendor directory - are installed
-	@$(call display_subtitle,Checking PHP dependencies...)
+	@$(call display_subtitle,🔎 Checking PHP dependencies...)
 	@if $(DC) ps app | grep -q "Up"; then \
 		if ! $(DC_EXEC) [ -d vendor ]; then \
 			$(call display_error,'vendor' directory is missing. Run installation.); \
@@ -375,7 +375,7 @@ check-dependencies: ## Check if PHP dependencies - vendor directory - are instal
 
 .PHONY: check-tools-config
 check-tools-config: ## Check if tools configuration directory exists
-	@$(call display_subtitle,Checking tools configuration...)
+	@$(call display_subtitle,🔎 Checking tools configuration...)
 	@if [ ! -d $(TOOLS_CONFIG_DIR) ]; then \
 		printf "\n${RED}✗ ERROR${RESET}: %s\n\n" ".tools-config directory is missing." >&2; \
 		exit 1; \
@@ -424,9 +424,9 @@ pnpm-clear: ## Clear pnpm cache and reinstall dependencies
 .PHONY: pnpm-prune
 pnpm-prune: ## Prune unused packages
 	$(call display_title,Pruning unused packages,${ICON_CLEAN})
-	@$(call display_subtitle,Removing unused packages...)
+	@$(call display_subtitle,🧹 Removing unused packages...)
 	@$(PNPM) store prune
-	@$(call display_subtitle,Checking for unused packages...)
+	@$(call display_subtitle,🔍 Checking for unused packages...)
 	@$(PNPX) depcheck --ignores="animate.css,@biomejs/biome"
 	if [ "$(MAKELEVEL)" = "0" ]; then \
 		$(call display_success,Unused packages check completed.); \
@@ -492,12 +492,12 @@ PHP_FIX ?= 0
 cs-php: ## PHP CS Fixer (PHP_FIX=1 to actually fix)
 	$(call assert_not_prod)
 	@if [ "$(PHP_FIX)" = "1" ]; then \
-		$(call display_subtitle, PHP CS Fixer in verbose mode...); \
+		$(call display_subtitle,🪛 PHP CS Fixer in verbose mode...); \
 		$(CSPHP) fix --verbose; \
 	else \
- 		$(call display_subtitle,Dry running PHP coding standards...); \
+ 		$(call display_subtitle,🔄 Dry running PHP coding standards...); \
 		$(CSPHP) check --verbose; \
-		$(call display_subtitle,Running PHPStan analysis...); \
+		$(call display_subtitle,🔭 Running PHPStan analysis...); \
 		$(PHPSTAN) analyse; \
 	fi; \
 	if [ "$(MAKELEVEL)" = "0" ]; then \
@@ -511,7 +511,7 @@ cs-php: ## PHP CS Fixer (PHP_FIX=1 to actually fix)
 .PHONY: cs-yaml
 cs-yaml: ## Validate YAML files
 	$(call assert_not_prod)
-	@$(call display_subtitle,Validate YAML files from config directory...)
+	@$(call display_subtitle,🔭 Validate YAML files from config directory...)
 	@$(SYMFONY) lint:yaml config/
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
 		$(call display_success,YAML linting completed.); \
@@ -522,11 +522,11 @@ TWIG_FIX ?= 0
 cs-twig: ## Twig CS Fixer (TWIG_FIX=1 to actually fix)
 	$(call assert_not_prod)
 	@if [ "$(TWIG_FIX)" = "1" ]; then \
-		$(call display_subtitle,Running Twig CS Fixer in fix mode...); \
+		$(call display_subtitle,🪛 Running Twig CS Fixer in fix mode...); \
 		$(CSTWIG) fix templates/; \
 		$(SYMFONY) lint:twig templates/; \
 	else \
-		$(call display_subtitle,Dry running Twig CS Fixer and display diff...); \
+		$(call display_subtitle,🔭 Dry running Twig CS Fixer and display diff...); \
 		$(CSTWIG) check templates/; \
 	fi; \
 	if [ "$(MAKELEVEL)" = "0" ]; then \
@@ -538,14 +538,14 @@ FRONT_FIX ?= 0
 cs-front: ## Run linters for CSS and JS (FRONT_FIX=1 to actually fix)
 	$(call assert_not_prod)
 	@if [ "$(FRONT_FIX)" = "1" ]; then \
-		$(call display_subtitle,Running ESLint in fix mode...); \
+		$(call display_subtitle,🪛 Running ESLint in fix mode...); \
 		$(ESLINT) assets/scripts/ --fix; \
-		$(call display_subtitle,Running Biome in fix mode...); \
+		$(call display_subtitle,🪛 Running Biome in fix mode...); \
 		$(BIOME) --write assets/; \
 	else \
-		$(call display_subtitle,Running ESLint...); \
+		$(call display_subtitle,🔍 Running ESLint...); \
 		$(ESLINT) assets/scripts/; \
-		$(call display_subtitle,Running Biome...); \
+		$(call display_subtitle,🔭 Running Biome...); \
 		$(BIOME) assets/; \
 	fi; \
 	if [ "$(MAKELEVEL)" = "0" ]; then \
@@ -617,26 +617,26 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 test: ## Run PHPUnit tests without UI tests
 	$(call display_title,Running PHPUnit tests,${ICON_TEST})
 	@$(MAKE) --no-print-directory check-containers
-	@$(call display_subtitle,Generating fixtures...)
+	@$(call display_subtitle,💾 Generating fixtures...)
 	@$(SYMFONY) cache:clear --env=test
 	@$(SYMFONY) app:generate-fixtures --group=test
-	@$(call display_subtitle,Preparing test database...)
+	@$(call display_subtitle,🎬 Preparing test database...)
 	- @$(SYMFONY) doctrine:schema:drop --env=test --force --full-database
 	@$(SYMFONY) doctrine:schema:update --env=test --force
 	@$(SYMFONY) doctrine:fixtures:load --env=test --group=test --no-interaction
-	@$(call display_subtitle,Running PHPUnit tests...)
+	@$(call display_subtitle,🧪 Running PHPUnit tests...)
 	@$(PHPUNIT) --exclude-group=UI
 
 .PHONY: qa-analyse
 qa-analyse: ## Run static analysis
-	@$(call display_subtitle,Running static analysis...);  \
+	@$(call display_subtitle,🔎 Running static analysis...);  \
 	success_msg=""; \
 	$(PHPSTAN) analyse; \
 	success_msg="$$success_msg|PHPStan passed."; \
-	$(call display_subtitle,Running Deptrac...); \
+	$(call display_subtitle,🔎 Running Deptrac...); \
 	$(DEPTRAC) analyse; \
 	success_msg="$$success_msg|Deptrac passed."; \
-	$(call display_subtitle,Running Rector...); \
+	$(call display_subtitle,🔎 Running Rector...); \
 	$(RECTOR) --dry-run; \
 	success_msg="$$success_msg|Rector passed."; \
 	success_msg="$${success_msg#|}"; \
@@ -645,7 +645,7 @@ qa-analyse: ## Run static analysis
 .PHONY: qa-rector
 REC_FIX ?= 0
 qa-rector: ## Run Rector (REC_FIX=1 to actually fix)
-	@$(call display_subtitle,Running Rector...);
+	@$(call display_subtitle,🔎 Running Rector...);
 	@if [ "$(REC_FIX)" = "1" ]; then \
 		$(RECTOR); \
 	else \
@@ -657,7 +657,7 @@ qa-rector: ## Run Rector (REC_FIX=1 to actually fix)
 
 .PHONY: test-mutation
 test-mutation: ## Run Infection
-	@$(call display_subtitle,Running Infection...)
+	@$(call display_subtitle,🧪 Running Infection...)
 	@$(INFECTION) --threads=4
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
 		$(call display_success,Infection analysis complete); \
@@ -665,7 +665,7 @@ test-mutation: ## Run Infection
 
 .PHONY: test-arch
 test-arch: ## Run phparkitect
-	@$(call display_subtitle,Running PHPArkitect...)
+	@$(call display_subtitle,🔬 Running PHPArkitect...)
 	@$(PHPARKITECT) check
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
 		$(call display_success,PHPArkitect analysis complete); \
@@ -673,7 +673,7 @@ test-arch: ## Run phparkitect
 
 .PHONY: test-ui
 test-ui: ## Run PHPUnit tests for UI group
-	@$(call display_subtitle,Running PHPUnit tests for UI group...)
+	@$(call display_subtitle,🧪 Running PHPUnit tests for UI group...)
 	@$(PHPUNIT) --group=UI
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
 		$(call display_success,PHPUnit UI tests complete); \
@@ -681,9 +681,9 @@ test-ui: ## Run PHPUnit tests for UI group
 
 .PHONY: cover
 cover: ## Run PHPUnit tests with coverage
-	@$(call display_subtitle,Clearing cache...)
+	@$(call display_subtitle,🧹 Clearing cache...)
 	@$(SYMFONY) cache:clear --env=test
-	@$(call display_subtitle,Running PHPUnit tests with coverage...)
+	@$(call display_subtitle,🧪 Running PHPUnit tests with coverage...)
 	@$(PHPUNIT) --coverage-html coverage/ --exclude-group=UI
 	@if [ "$(MAKELEVEL)" = "0" ]; then \
 		$(call display_success,Coverage report generated in 'coverage/' directory.); \
@@ -778,7 +778,7 @@ dev: ## Switch back to development environment
 
 .PHONY: readme
 readme: ## Update README.md Makefile section
-	@$(call display_subtitle,Updating README.md...)
+	@$(call display_subtitle,🔄 Updating README.md...)
 
 	@if [ ! -f README.md ]; then \
 		echo "README.md not found"; \
