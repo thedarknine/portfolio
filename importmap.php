@@ -43,4 +43,10 @@ return [
     'photoswipe/lightbox' => [
         'version' => '5.4.4',
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
+    'altcha/dist/main/altcha.i18n.js' => [
+        'version' => '3.1.0',
+    ],
 ];

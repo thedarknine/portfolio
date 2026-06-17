@@ -70,6 +70,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     restart                   Docker restart                                 FORCE=1 to destroy and rebuild
     shell                     Run a shell in the PHP container               
     logs                      Show Docker logs                               LOGS_SERVICE=app|db|nginx
+    update-project            Update docker, composer and pnpm dependencies in a safe way  
 
   CHECKERS
     doctor                    Check system requirements and project health   
@@ -78,6 +79,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     check-ports               Check if required ports are available or used by this project  
     check-env                 Check .env file                                
     check-dependencies        Check if PHP dependencies - vendor directory - are installed  
+    check-tools-config        Check if tools configuration directory exists  
 
   DEVELOPMENT
     cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
@@ -97,6 +99,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     cs-fix                    Fix all coding standards: PHP, Twig, CSS       
 
   TESTS
+    pre-commit                Run pre-commit checks                          
     grum-install              Install GrumPHP hooks                          
     grum-run                  Run GrumPHP checks                             
     qa                        Run complete Quality Assurance suite: Lint, Static Analysis, Tests  
@@ -110,7 +113,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
 
   ENVIRONMENT
     db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous
-    prod-pull                 Pull from remote server                        
+    prod-deploy               Deploy to remote server                        
     prod-build                Build production version                       
     dev                       Switch back to development environment         
 
@@ -120,9 +123,12 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     help                      Show this help message                         
 
   Examples:
-    make test              # Run PHPUnit tests
-    make cs                # Check and fix coding standards
-    make cs-php PHP_FIX=1  # Run linter and apply changes
+    make test              # Run PHPUnit tests (excluding UI)
+    make cover             # Run tests with coverage
+    make cs-php PHP_FIX=1  # Fix PHP coding standards
+    make qa                # Run full QA suite
+    make prod-deploy       # Deploy to production
+    make dev               # Restore development environment
 
 ```
 <!-- MAKEFILE:END -->

@@ -18,5 +18,5 @@ return [
     Presta\SitemapBundle\PrestaSitemapBundle::class => ['all' => true],
     Scheb\TwoFactorBundle\SchebTwoFactorBundle::class => ['all' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
-    Tito10047\AltchaBundle\AltchaBundle::class => ['all' => true]
+    Tito10047\AltchaBundle\AltchaBundle::class => ['all' => true],
 ];
