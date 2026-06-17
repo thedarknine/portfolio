@@ -26,10 +26,10 @@ class CompanyAutoFixture extends Fixture implements FixtureGroupInterface
         $company1 = new Company();
         $company1->setUrl(null);
         $company1->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $company1->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $company1->setUpdatedAt(new \DateTime('2026-06-06 07:34:47'));
         $company1->setName('Periscope Créations');
         $company1->setSlug('periscope-creations');
-        $company1->setLogo('periscope.png');
+        $company1->setLogo('periscope2.png');
         $company1->setCity('Clermont-Ferrand');
         $company1->setDepartment(63);
         $manager->persist($company1);
