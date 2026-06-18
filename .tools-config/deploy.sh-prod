@@ -8,17 +8,18 @@ cd $TARGET
 echo " "
 echo "📥 Retrieving the latest code from the remote repository..."
 # The -f forces overwriting if there were accidental local changes in prod
-git fetch origin main
-git reset --hard origin/main
-
-echo " "
-echo "🧹 Cleaning up dev files..."
-rm -rf tests/ .tools-config/ .docker/ docker-compose.yml
+git fetch origin production
+git reset --hard origin/production
 
 echo " "
 echo "📦 Installing Composer dependencies (prod)..."
 export APP_ENV=prod
 composer install --no-dev --optimize-autoloader --no-interaction
+
+echo " "
+echo "🔗 Installation des assets Symfony..."
+php bin/console assets:install
+php bin/console importmap:install
 
 echo " "
 echo "⚡️ Cleaning up and optimizing Symfony cache..."
