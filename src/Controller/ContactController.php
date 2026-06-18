@@ -25,7 +25,7 @@ final class ContactController extends AbstractController
     {
     }
 
-    #[Route('/contact', name: 'app_contact')]
+    #[Route('/contact', name: 'app_contact', options: ['sitemap' => true])]
     public function index(Request $request, MailerInterface $mailer): Response
     {
         $page = $this->pageService->getActivePageBySlug('contact');

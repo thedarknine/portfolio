@@ -24,6 +24,7 @@ echo " "
 echo "⚡️ Cleaning up and optimizing Symfony cache..."
 php bin/console cache:clear --env=prod
 php bin/console cache:warmup
+php bin/console presta:sitemaps:dump
 
 echo " "
 echo "✅ Git Pull deployment completed successfully!"
