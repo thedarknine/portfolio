@@ -14,12 +14,14 @@ enum PageCategory: string
 {
     case CAREER   = 'career';
     case INTEREST = 'interest';
+    case ABOUT    = 'about';
 
     public function getLabel(): string
     {
         return match ($this) {
             self::CAREER   => 'Parcours',
             self::INTEREST => 'Centres d\'intérêt',
+            self::ABOUT    => 'À propos',
         };
     }
 }

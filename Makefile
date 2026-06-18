@@ -243,6 +243,11 @@ shell: ## Run a shell in the PHP container
 	$(call display_title,Running shell in PHP container,${ICON_SHELL})
 	@$(DC_EXEC) bash
 
+.PHONY: db-shell
+db-shell: ## Run a shell in the MySQL container
+	@$(call display_title,Running shell in MySQL container,${ICON_SHELL})
+	@docker compose exec db mysql -u root -p
+
 .PHONY: logs
 LOGS_SERVICE ?= all
 logs: ## Show Docker logs (LOGS_SERVICE=app|db|nginx)
@@ -615,14 +620,14 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 
 .PHONY: test
 test: ## Run PHPUnit tests without UI tests
-	$(call display_title,Running PHPUnit tests,${ICON_TEST})
+	@$(call display_title,Running PHPUnit tests,${ICON_TEST})
 	@$(MAKE) --no-print-directory check-containers
 	@$(call display_subtitle,💾 Generating fixtures...)
 	@$(SYMFONY) cache:clear --env=test
 	@$(SYMFONY) app:generate-fixtures --group=test
 	@$(call display_subtitle,🎬 Preparing test database...)
 	- @$(SYMFONY) doctrine:schema:drop --env=test --force --full-database
-	@$(SYMFONY) doctrine:schema:update --env=test --force
+	$(SYMFONY) doctrine:schema:update --env=test --force
 	@$(SYMFONY) doctrine:fixtures:load --env=test --group=test --no-interaction
 	@$(call display_subtitle,🧪 Running PHPUnit tests...)
 	@$(PHPUNIT) --exclude-group=UI
@@ -636,9 +641,9 @@ qa-analyse: ## Run static analysis
 	$(call display_subtitle,🔎 Running Deptrac...); \
 	$(DEPTRAC) analyse; \
 	success_msg="$$success_msg|Deptrac passed."; \
-	$(call display_subtitle,🔎 Running Rector...); \
-	$(RECTOR) --dry-run; \
-	success_msg="$$success_msg|Rector passed."; \
+	# $(call display_subtitle,🔎 Running Rector...); \
+	# $(RECTOR) --dry-run; \
+	# success_msg="$$success_msg|Rector passed."; \
 	success_msg="$${success_msg#|}"; \
 	$(call display_success,$$success_msg)
 

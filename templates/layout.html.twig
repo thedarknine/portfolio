@@ -109,13 +109,13 @@
             {{ include('components/menu_mobile.html.twig') }}
 
             <main>
-                {% if current_page.slug != 'home' %}
+                {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
                     {{ include('components/page_hero.html.twig') }}
                 {% endif %}
 
                 {% block body %}{% endblock %}
 
-                {% if current_page.slug != 'home' %}
+                {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
                     {{ include('components/page_quote.html.twig') }}
                 {% endif %}
             </main>

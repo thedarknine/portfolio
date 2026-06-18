@@ -74,6 +74,7 @@ class PageInfoCrudController extends AbstractCrudController
             ->setChoices([
                 'Parcours'          => PageCategory::CAREER,
                 'Centre d\'intérêt' => PageCategory::INTEREST,
+                'À propos'          => PageCategory::ABOUT,
             ])
             ->formatValue(function ($value, $entity) {
                 return $value instanceof PageCategory ? $value->getLabel() : $value;

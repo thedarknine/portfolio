@@ -69,6 +69,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     destroy                   Stop and remove Docker containers              
     restart                   Docker restart                                 FORCE=1 to destroy and rebuild
     shell                     Run a shell in the PHP container               
+    db-shell                  Run a shell in the MySQL container             
     logs                      Show Docker logs                               LOGS_SERVICE=app|db|nginx
     update-project            Update docker, composer and pnpm dependencies in a safe way  
 
@@ -113,7 +114,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
 
   ENVIRONMENT
     db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous
-    prod-deploy               Deploy to remote server                        
+    deploy                    Build and push assets to production branch     
     prod-build                Build production version                       
     dev                       Switch back to development environment         
 
