@@ -608,7 +608,7 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 	success_msg="$$success_msg|Architecture tests passed."; \
 	$(MAKE) --no-print-directory test-ui || exit 1; \
 	success_msg="$$success_msg|UI tests passed."; \
-	success_msg="$$success_msg|${GREEN}✨ QA passed successfully! Your code is amazing. ✨${RESET}"; \
+	success_msg="$$success_msg|✨ QA passed successfully! Your code is amazing. ✨"; \
 	success_msg="$${success_msg#|}"; \
 	$(call display_elapsed,$$start_time); \
 	$(call display_success,$$success_msg)
@@ -707,15 +707,37 @@ db-dump: ## Dump database (FILES_CLEAN=1 to clean previous)
 	@$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE) 
 	@$(call display_success,Database dumped to:|$(EXPORT_DIR)/$(SQL_FILE))
 
-.PHONY: prod-deploy
+.PHONY: deploy
 # deploy.sh should be copied to remote server in user folder
 # Find it into .tools-config directory if needed
-prod-deploy: ## Deploy to remote server
-	@$(call display_title,Deploying to remote server...,$(ICON_UPLOAD))
-	$(MAKE) -s check-remote-vars
-	$(MAKE) -s db-dump
-	@ssh -i $(REMOTE_SSH_KEY) -p $(REMOTE_PORT) $(REMOTE_USER)@$(REMOTE_HOST) "~/deploy.sh"
-	@$(call display_success,Production deployed successfully!)
+deploy: ## Build and push assets to production branch
+	@$(call display_title,🚀 Deploying to production branch...,$(ICON_UPLOAD))
+	@start_time=$$(date +%s); \
+	$(MAKE) -s check-remote-vars; \
+	$(call display_subtitle,🚀 Preparing assets build for production...); \
+	$(SYMFONY) tailwind:build --minify --env=prod; \
+	$(SYMFONY) importmap:install --env=prod; \
+	$(SYMFONY) assets:install --env=prod; \
+	$(SYMFONY) asset-map:compile --env=prod; \
+	$(SYMFONY) cache:clear --env=prod; \
+	$(call display_subtitle,📦 Committing compiled assets...); \
+	git add -f public/assets/*.js public/assets/styles/  public/assets/*.json; \
+	git stash push -m "deploy: assets compiled" -- public/assets/; \
+	git checkout production; \
+	git merge main --no-edit; \
+	git stash pop; \
+	git add public/assets/; \
+	git commit --no-verify -m "chore: assets compiled for production $$(date +'%Y-%m-%d %H:%M')"; \
+	$(call display_subtitle,⬆️ Pushing to production branch...); \
+	git push origin production; \
+	$(call display_subtitle,⚡️ Deploying to remote server...); \
+	ssh -i $(REMOTE_SSH_KEY) -p $(REMOTE_PORT) $(REMOTE_USER)@$(REMOTE_HOST) "~/deploy.sh"; \
+	$(call display_subtitle,🔁 Back to main branch...); \
+	git checkout main; \
+	$(call display_subtitle,🔁 And dev environment...); \
+	$(MAKE) dev; \
+	$(call display_elapsed,$$start_time); \
+	$(call display_success,Production deployed successfully!)
 
 .PHONY: prod-build
 prod-build: ## Build production version
@@ -766,7 +788,7 @@ dev: ## Switch back to development environment
 	$(call display_subtitle,🧹 [5/5] Cleaning archive...); \
 	rm -f $(ZIP_NAME); \
 	success_msg="$$success_msg|Archive cleaned."; \
-	success_msg="$$success_msg|${GREEN}✅ Development environment restored!${RESET}"; \
+	success_msg="$$success_msg|✅ Development environment restored!"; \
 	success_msg="$${success_msg#|}"; \
 	$(call display_elapsed,$$start_time); \
 	$(call display_success,$$success_msg)
