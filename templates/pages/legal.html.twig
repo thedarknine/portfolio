@@ -1,0 +1,89 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Mentions légales{% endblock %}
+
+{% block body %}
+<div class="container bg-surface text-on-surface">
+    <div class="nine-no-hero">
+        <h1 class="text-3xl font-bold mt-8">Mentions légales</h1>
+    </div>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">1. Éditeur du site</h2>
+        <p>Conformément à l’<em>article 6 de la loi n° 2004-575 du 21 juin 2004</em> (LCEN),
+        le site <strong>carolinenoyer.fr</strong> est édité par :</p>
+        <p class="mt-2 pl-5">
+            <span class="text-nine-gray-600">Editeur :</span> Caroline Noyer<br>
+            <span class="text-nine-gray-600">Contact :</span>  Via le formulaire de <a href="{{ path('app_contact') }}" class="text-nine-cyan-500">contact</a> du site<br>
+            <span class="text-nine-gray-600">Adresse :</span> <em>Coordonnées masquées conformément aux dispositions de la LCEN et communiquées à l'hébergeur</em><br>
+            <span class="text-nine-gray-600">Publication :</span> Caroline Noyer
+        </p>
+    </section>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">2. Hébergeur du site</h2>
+        <p>Le site est hébergé par :</p>
+        <p class="mt-2 pl-5">
+            <strong>Hostinger International Ltd.</strong><br>
+            61 Lordou Vironos Street, 6023 Larnaca, Chypre<br>
+            <span class="text-nine-gray-600">Site web :</span> https://www.hostinger.fr<br>
+            <span class="text-nine-gray-600">Contact :</span> https://www.hostinger.fr/contact
+        </p>
+    </section>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">3. Propriété intellectuelle</h2>
+        <p>Tous les contenus du site (textes, graphismes, logos, code, icônes) sont la propriété exclusive de <strong>Caroline Noyer</strong>, sauf mention contraire.
+        Toute reproduction, modification ou diffusion partielle ou totale est <strong>interdite sans autorisation écrite préalable</strong>.</p>
+    </section>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">4. Crédits</h2>
+        <p class="">
+            Ce site est propulsé par l'écosystème Open-Source :
+            <a href="https://symfony.com" target="_blank" class="underline text-nine-cyan-500">Symfony 8</a> et de nombreuses autres dépendances.
+        </p>
+        <p class="mt-2 pl-5">• <strong>Icônes</strong> : <a href="https://www.flaticon.com" target="_blank" class="underline text-nine-cyan-500">Huge Icons</a> Free, utilisées conformément à leur licence d'utilisation.</p>
+        <p class="mt-2 pl-5">• <strong>Illustrations</strong> : Certaines illustrations proviennent de <a href="https://unsplash.com" target="_blank" class="underline text-nine-cyan-500">Unsplash</a> et sont utilisées conformément à leur licence d'utilisation.</p>
+        <div class="mt-2 pl-5">• <strong>Librairies</strong> :
+            <ul class="pl-10">
+                <li><a href="https://symfony.com" target="_blank" class="underline text-nine-cyan-500">Symfony</a> - Framework PHP</li>
+                <li><a href="https://twig.symfony.com" target="_blank" class="underline text-nine-cyan-500">Twig</a> - Moteur de template</li>
+                <li><a href="https://www.doctrine-project.org" target="_blank" class="underline text-nine-cyan-500">Doctrine</a> - ORM</li>
+                <li><a href="https://tailwindcss.com" target="_blank" class="underline text-nine-cyan-500">Tailwind CSS</a> - Framework CSS</li>
+                <li><a href="https://animate.style" target="_blank" class="underline text-nine-cyan-500">Animate.css</a> - Animations</li>
+                <li><a href="https://photoswipe.com" target="_blank" class="underline text-nine-cyan-500">PhotoSwipe</a> - Galerie d'images</li>
+                <li><a href="https://matomo.org" target="_blank" class="underline text-nine-cyan-500">Matomo</a> - Analytics</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">5. Responsabilité</h2>
+        <p>L’éditrice s’efforce de fournir sur ce site des informations aussi précises et à jour que possible. Toutefois, elle ne saurait garantir l’exactitude, l’exhaustivité ou l’actualité des informations diffusées.</p>
+        <p class="mt-2">L’éditrice ne pourra être tenue responsable des dommages directs ou indirects résultant de l’utilisation du site ou de l’impossibilité d’y accéder.</p>
+        <p class="mt-2">Le site peut contenir des liens vers des sites tiers. L’éditrice décline toute responsabilité quant au contenu de ces sites et invite les utilisateurs à vérifier les politiques de confidentialité des sites visités.</p>
+    </section>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">6. Protection des données personnelles (RGPD)</h2>
+        <p>Conformément au Règlement Général sur la Protection des Données (RGPD), les informations recueillies via le formulaire de contact (nom, adresse e-mail, message) sont uniquement utilisées pour traiter votre demande d'échange ou de collaboration.</p>
+        <p class="mt-2">Ces données ne sont jamais cédées ou vendues à des tiers et sont conservées pour une durée maximale de 3 ans à compter du dernier contact émanant de l'utilisateur. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation du traitement et d'opposition concernant les données vous concernant.</p>
+    </section>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">7. Cookies et traceurs</h2>
+        <p>Ce site utilise uniquement des cookies techniques nécessaires à son bon fonctionnement (par exemple, pour mémoriser votre préférence de thème sombre/clair). Aucun cookie tiers à des fins publicitaires ou de traçage analytique n'est déposé sans votre consentement.</p>
+        <p class="mt-2">Ce site utilise <strong>Matomo</strong> (auto-hébergé) pour des statistiques anonymes. Aucune donnée personnelle n’est partagée avec des tiers.
+        Matomo est un outil d'analyse anonymisé sans suivi publicitaire. Les statistiques sont collectées via Matomo auto-hébergé avec anonymisation des adresses IP, conformément aux recommandations de la CNIL.</p>
+        <p class="mt-2">Vous pouvez désactiver le suivi ci-dessous :</p>
+        <div id="matomo-opt-out"></div>
+        <script src="https://analytics.carolinenoyer.fr/index.php?module=CoreAdminHome&action=optOutJS&divId=matomo-opt-out&language=fr&backgroundColor=F5F5F5&fontColor=333333&fontSize=14px&fontFamily=Helvetica&showIntro=1"></script>
+    </section>
+
+    <section class="my-10 leading-relaxed">
+        <h2 class="text-xl mb-2 text-on-surface-subheader">8. Droit applicable</h2>
+        <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, les juridictions françaises compétentes seront seules compétentes.</p>
+    </section>
+</div>
+{% endblock %}

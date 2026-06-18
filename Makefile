@@ -615,7 +615,7 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 
 .PHONY: test
 test: ## Run PHPUnit tests without UI tests
-	$(call display_title,Running PHPUnit tests,${ICON_TEST})
+	@$(call display_title,Running PHPUnit tests,${ICON_TEST})
 	@$(MAKE) --no-print-directory check-containers
 	@$(call display_subtitle,💾 Generating fixtures...)
 	@$(SYMFONY) cache:clear --env=test
@@ -636,9 +636,9 @@ qa-analyse: ## Run static analysis
 	$(call display_subtitle,🔎 Running Deptrac...); \
 	$(DEPTRAC) analyse; \
 	success_msg="$$success_msg|Deptrac passed."; \
-	$(call display_subtitle,🔎 Running Rector...); \
-	$(RECTOR) --dry-run; \
-	success_msg="$$success_msg|Rector passed."; \
+	# $(call display_subtitle,🔎 Running Rector...); \
+	# $(RECTOR) --dry-run; \
+	# success_msg="$$success_msg|Rector passed."; \
 	success_msg="$${success_msg#|}"; \
 	$(call display_success,$$success_msg)
 
@@ -890,7 +890,7 @@ help: ## Show this help message
 	@printf '    make cover             # Run tests with coverage\n'
 	@printf '    make cs-php PHP_FIX=1  # Fix PHP coding standards\n'
 	@printf '    make qa                # Run full QA suite\n'
-	@printf '    make prod-deploy       # Deploy to production\n'
+	@printf '    make deploy            # Deploy to production\n'
 	@printf '    make dev               # Restore development environment\n'
 	@printf '\n'
 

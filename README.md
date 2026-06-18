@@ -113,7 +113,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
 
   ENVIRONMENT
     db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous
-    prod-deploy               Deploy to remote server                        
+    deploy                    Build and push assets to production branch     
     prod-build                Build production version                       
     dev                       Switch back to development environment         
 
@@ -127,7 +127,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     make cover             # Run tests with coverage
     make cs-php PHP_FIX=1  # Fix PHP coding standards
     make qa                # Run full QA suite
-    make prod-deploy       # Deploy to production
+    make deploy            # Deploy to production
     make dev               # Restore development environment
 
 ```
