@@ -5,6 +5,14 @@ SHELL := /bin/bash
 export LANG := C.UTF-8
 export LC_ALL := C.UTF-8
 
+# Required environment variables for production deployment:
+# REMOTE_USER - SSH user
+# REMOTE_HOST - Remote server hostname
+# REMOTE_SSH_KEY - Path to SSH private key
+# REMOTE_PORT - SSH port (default: 22)
+# DB_ROOT_PASSWORD - Database root password
+# DB_NAME - Database name
+
 MAKEFLAGS += --no-print-directory
 
 # =====================================================================
@@ -307,6 +315,9 @@ doctor: ## Check system requirements and project health
 	success_msg=""
 	start_time=$$(date +%s)
 
+	$(MAKE) check-tools
+	success_msg="$$success_msg|Tools are installed"
+
 	$(MAKE) check-docker
 	success_msg="$$success_msg|Docker is running"
 
@@ -329,6 +340,14 @@ doctor: ## Check system requirements and project health
 	success_msg="$${success_msg#|}"
 	$(call display_elapsed,$$start_time)
 	$(call display_success,$$success_msg)
+
+.PHONY: check-tools
+check-tools: ## Check if required CLI tools are installed
+	@$(call display_subtitle,🔍 Checking required tools...)
+	@command -v docker >/dev/null || { $(call display_error,docker not found); exit 1; }
+	@command -v jq >/dev/null || { $(call display_error,jq not found); exit 1; }
+	@command -v lsof >/dev/null || { $(call display_error,lsof not found); exit 1; }
+	@$(call display_success,All required tools are installed)
 
 .PHONY: check-docker
 check-docker: ## Check Docker is running
@@ -469,8 +488,22 @@ pnpm-prune: ## Prune unused packages
 clean: ## Clean temporary files: cache, coverage, logs, public build
 	@$(call display_title,🧹 Cleaning temporary files)
 
-	rm -rf var/cache/* var/log/* public/build/* coverage/ .phpunit.result.cache 
+	$(MAKE) clean-build
+	$(MAKE) clean-cache
+	$(MAKE) clean-test
 	$(call display_success_root,Temporary files cleaned.)
+
+.PHONY: clean-build
+clean-build: ## Clean only build artifacts
+	@rm -rf public/build/* public/assets/*
+
+.PHONY: clean-cache
+clean-cache: ## Clean only cache and logs
+	@rm -rf var/cache/* var/log/*
+
+.PHONY: clean-test
+clean-test: ## Clean PHPUnit cache and code coverage
+	@rm -rf coverage/ .phpunit.result.cache
 
 .PHONY: watch
 watch: ## Watch Tailwind CSS changes and re-build
@@ -889,11 +922,14 @@ prod-build: ## Build production version
 	$(call display_success,Database dumped|Local cache cleaned|Tailwind compiled and minified|Assets compiled with AssetMapper|DEV tools removed and Composer optimized|PROD cache warmed up|Archive $(ZIP_NAME) created")
 	printf "\n  $(BOLD)$(GREEN)✨ Archive $(ZIP_NAME) ready for manual transfer! ✨$(RESET)\n\n"
 
+.PHONY: check-remote-vars
 check-remote-vars:
-	@if [ -z "$(REMOTE_USER)" ] || [ -z "$(REMOTE_HOST)" ] || [ -z "$(REMOTE_SSH_KEY)" ] || [ -z "$(REMOTE_PATH)" ]; then 
-		$(call display_error,REMOTE_USER, REMOTE_HOST, REMOTE_SSH_KEY, and REMOTE_PATH must be set)
-		$(MAKE) _fatal msg="REMOTE_USER, REMOTE_HOST, REMOTE_SSH_KEY, and REMOTE_PATH must be set"
-	fi
+	@$(call display_subtitle,🔍 Checking remote configuration...)
+	[ -n "$(REMOTE_USER)" ] || { $(call display_error,REMOTE_USER not set); false; }
+	[ -n "$(REMOTE_HOST)" ] || { $(call display_error,REMOTE_HOST not set); false; }
+	[ -n "$(REMOTE_SSH_KEY)" ] || { $(call display_error,REMOTE_SSH_KEY not set); false; }
+	[ -n "$(REMOTE_PATH)" ] || { $(call display_error,REMOTE_PATH not set); false; }
+	$(call display_success_root,Remote configuration valid)
 
 .PHONY: dev
 dev: ## Switch back to development environment
@@ -1016,10 +1052,10 @@ help: ## Show this help message
 		}'  $(MAKEFILE_LIST)
 	@printf '\n'
 	@printf '  $(BOLD)Examples:$(RESET)\n'
-	@printf '    make test              	# Run PHPUnit tests (excluding UI)\n'
-	@printf '    make cover             	# Run tests with coverage\n'
-	@printf '    make cs-php PHP_FIX=1  	# Fix PHP coding standards\n'
-	@printf '    make qa                	# Run full QA suite\n'
-	@printf '    make deploy            	# Deploy to production\n'
-	@printf '    make dev               	# Restore development environment\n'
+	@printf '    $(YELLOW)make$(RESET) test              	# Run PHPUnit tests (excluding UI)\n'
+	@printf '    $(YELLOW)make$(RESET) cover             	# Run tests with coverage\n'
+	@printf '    $(YELLOW)make$(RESET) cs-php PHP_FIX=1  	# Fix PHP coding standards\n'
+	@printf '    $(YELLOW)make$(RESET) qa                	# Run full QA suite\n'
+	@printf '    $(YELLOW)make$(RESET) deploy            	# Deploy to production\n'
+	@printf '    $(YELLOW)make$(RESET) dev               	# Restore development environment\n'
 	@printf '\n'
