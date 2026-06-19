@@ -123,12 +123,12 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     help                      Show this help message                         
 
   Examples:
-    make test              # Run PHPUnit tests (excluding UI)
-    make cover             # Run tests with coverage
-    make cs-php PHP_FIX=1  # Fix PHP coding standards
-    make qa                # Run full QA suite
-    make deploy            # Deploy to production
-    make dev               # Restore development environment
+    make test              	# Run PHPUnit tests (excluding UI)
+    make cover             	# Run tests with coverage
+    make cs-php PHP_FIX=1  	# Fix PHP coding standards
+    make qa                	# Run full QA suite
+    make deploy            	# Deploy to production
+    make dev               	# Restore development environment
 
 ```
 <!-- MAKEFILE:END -->
