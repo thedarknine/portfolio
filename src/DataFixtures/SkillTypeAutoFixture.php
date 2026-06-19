@@ -15,10 +15,10 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType0->setDescription(null);
         $skillType0->setDeleted(true);
         $skillType0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType0->setUpdatedAt(new \DateTime('2026-06-05 22:30:19'));
+        $skillType0->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $skillType0->setName('Méthodologie et Agilité');
         $skillType0->setSlug('methodo');
-        $skillType0->setLogo('skills-methodologie.webp');
+        $skillType0->setLogo('skills-methodologie.png');
         $skillType0->setPosition(1);
         $manager->persist($skillType0);
         $this->addReference('skillType_10', $skillType0);
@@ -75,7 +75,7 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType5->setDescription('<div>Mon cœur de métier historique. J\'aime concevoir des architectures back-end propres, scalables et performantes.</div>');
         $skillType5->setDeleted(false);
         $skillType5->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType5->setUpdatedAt(new \DateTime('2026-06-05 22:37:01'));
+        $skillType5->setUpdatedAt(new \DateTime('2026-06-09 14:37:31'));
         $skillType5->setName('Architecture & Développement');
         $skillType5->setSlug('development');
         $skillType5->setLogo('skills-development.webp');
@@ -87,7 +87,7 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType6->setDescription('<div>Faire le pont entre la vision business, le design et les contraintes techniques de l\'équipe de R&amp;D.</div>');
         $skillType6->setDeleted(false);
         $skillType6->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType6->setUpdatedAt(new \DateTime('2026-06-05 22:37:18'));
+        $skillType6->setUpdatedAt(new \DateTime('2026-06-09 14:38:12'));
         $skillType6->setName('Product Ownership');
         $skillType6->setSlug('product');
         $skillType6->setLogo('skills-product.webp');
@@ -99,7 +99,7 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType7->setDescription('<div>Parce qu\'un bon code ou une bonne feature ne valent rien sans une expérience utilisateur fluide et intuitive.</div>');
         $skillType7->setDeleted(false);
         $skillType7->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType7->setUpdatedAt(new \DateTime('2026-06-05 22:37:27'));
+        $skillType7->setUpdatedAt(new \DateTime('2026-06-09 14:38:19'));
         $skillType7->setName('Design & UX/UI');
         $skillType7->setSlug('design');
         $skillType7->setLogo('skills-design.webp');
@@ -111,7 +111,7 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType8->setDescription('<div>Les indispensables qui fluidifient mon workflow et mes collaborations en équipe.</div>');
         $skillType8->setDeleted(false);
         $skillType8->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType8->setUpdatedAt(new \DateTime('2026-06-05 22:36:41'));
+        $skillType8->setUpdatedAt(new \DateTime('2026-06-09 14:38:05'));
         $skillType8->setName('Méthodologies & Outils du quotidien');
         $skillType8->setSlug('methodologies');
         $skillType8->setLogo('skills-methodologies.webp');
