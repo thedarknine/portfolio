@@ -22,6 +22,7 @@ class PageCategoryTest extends TestCase
     {
         $this->assertEquals('career', PageCategory::CAREER->value);
         $this->assertEquals('interest', PageCategory::INTEREST->value);
+        $this->assertEquals('about', PageCategory::ABOUT->value);
     }
 
     /**
@@ -31,5 +32,6 @@ class PageCategoryTest extends TestCase
     {
         $this->assertEquals('Parcours', PageCategory::CAREER->getLabel());
         $this->assertEquals('Centres d\'intérêt', PageCategory::INTEREST->getLabel());
+        $this->assertEquals('À propos', PageCategory::ABOUT->getLabel());
     }
 }

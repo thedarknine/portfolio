@@ -51,10 +51,10 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo2->setInHeader(true);
         $pageInfo2->setCategory(\App\Enum\PageCategory::CAREER);
         $pageInfo2->setCreatedAt(new \DateTime('2026-05-25 11:05:25'));
-        $pageInfo2->setUpdatedAt(new \DateTime('2026-05-27 17:49:26'));
+        $pageInfo2->setUpdatedAt(new \DateTime('2026-06-18 21:57:55'));
         $pageInfo2->setTitle('Formation');
         $pageInfo2->setSlug('formation');
-        $pageInfo2->setPosition(3);
+        $pageInfo2->setPosition(4);
         $pageInfo2->setPublished(true);
         $manager->persist($pageInfo2);
         $this->addReference('pageInfo_3', $pageInfo2);
@@ -67,10 +67,10 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo3->setInHeader(true);
         $pageInfo3->setCategory(\App\Enum\PageCategory::CAREER);
         $pageInfo3->setCreatedAt(new \DateTime('2026-05-25 11:06:39'));
-        $pageInfo3->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
+        $pageInfo3->setUpdatedAt(new \DateTime('2026-06-18 21:57:55'));
         $pageInfo3->setTitle('Projets');
         $pageInfo3->setSlug('projets');
-        $pageInfo3->setPosition(4);
+        $pageInfo3->setPosition(5);
         $pageInfo3->setPublished(true);
         $manager->persist($pageInfo3);
         $this->addReference('pageInfo_4', $pageInfo3);
@@ -83,10 +83,10 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo4->setInHeader(true);
         $pageInfo4->setCategory(\App\Enum\PageCategory::INTEREST);
         $pageInfo4->setCreatedAt(new \DateTime('2026-05-25 12:00:50'));
-        $pageInfo4->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
+        $pageInfo4->setUpdatedAt(new \DateTime('2026-06-18 21:57:55'));
         $pageInfo4->setTitle('Arcade');
         $pageInfo4->setSlug('arcade');
-        $pageInfo4->setPosition(5);
+        $pageInfo4->setPosition(6);
         $pageInfo4->setPublished(true);
         $manager->persist($pageInfo4);
         $this->addReference('pageInfo_5', $pageInfo4);
@@ -99,10 +99,10 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo5->setInHeader(false);
         $pageInfo5->setCategory(\App\Enum\PageCategory::INTEREST);
         $pageInfo5->setCreatedAt(new \DateTime('2026-05-25 12:07:06'));
-        $pageInfo5->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
+        $pageInfo5->setUpdatedAt(new \DateTime('2026-06-18 21:57:55'));
         $pageInfo5->setTitle('Créations');
         $pageInfo5->setSlug('creations');
-        $pageInfo5->setPosition(6);
+        $pageInfo5->setPosition(7);
         $pageInfo5->setPublished(true);
         $manager->persist($pageInfo5);
         $this->addReference('pageInfo_6', $pageInfo5);
@@ -115,10 +115,10 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo6->setInHeader(false);
         $pageInfo6->setCategory(\App\Enum\PageCategory::INTEREST);
         $pageInfo6->setCreatedAt(new \DateTime('2026-05-25 12:07:40'));
-        $pageInfo6->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
+        $pageInfo6->setUpdatedAt(new \DateTime('2026-06-18 21:57:55'));
         $pageInfo6->setTitle('Photos');
         $pageInfo6->setSlug('photos');
-        $pageInfo6->setPosition(7);
+        $pageInfo6->setPosition(8);
         $pageInfo6->setPublished(true);
         $manager->persist($pageInfo6);
         $this->addReference('pageInfo_7', $pageInfo6);
@@ -130,14 +130,30 @@ class PageInfoAutoFixture extends Fixture implements FixtureGroupInterface
         $pageInfo7->setQuote('Que ce soit pour parler produit, partager une astuce tech ou échanger autour d\'une passion commune, ma boîte mail est grande ouverte.');
         $pageInfo7->setInHeader(true);
         $pageInfo7->setCategory(\App\Enum\PageCategory::INTEREST);
-        $pageInfo7->setCreatedAt(new \DateTime('2026-06-10 21:53:19'));
-        $pageInfo7->setUpdatedAt(new \DateTime('2026-06-17 16:15:51'));
+        $pageInfo7->setCreatedAt(new \DateTime('2026-06-17 18:48:45'));
+        $pageInfo7->setUpdatedAt(new \DateTime('2026-06-18 21:57:55'));
         $pageInfo7->setTitle('Contact');
         $pageInfo7->setSlug('contact');
-        $pageInfo7->setPosition(8);
+        $pageInfo7->setPosition(9);
         $pageInfo7->setPublished(true);
         $manager->persist($pageInfo7);
         $this->addReference('pageInfo_176', $pageInfo7);
+
+        $pageInfo8 = new PageInfo();
+        $pageInfo8->setTechnicalName('legal');
+        $pageInfo8->setTagline('None');
+        $pageInfo8->setSubtitle('None');
+        $pageInfo8->setQuote('None');
+        $pageInfo8->setInHeader(false);
+        $pageInfo8->setCategory(\App\Enum\PageCategory::ABOUT);
+        $pageInfo8->setCreatedAt(new \DateTime('2026-06-18 21:57:55'));
+        $pageInfo8->setUpdatedAt(new \DateTime('2026-06-18 22:47:23'));
+        $pageInfo8->setTitle('Mentions légales');
+        $pageInfo8->setSlug('mentions-legales');
+        $pageInfo8->setPosition(3);
+        $pageInfo8->setPublished(true);
+        $manager->persist($pageInfo8);
+        $this->addReference('pageInfo_177', $pageInfo8);
 
         $manager->flush();
     }

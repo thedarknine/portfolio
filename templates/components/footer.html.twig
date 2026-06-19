@@ -30,9 +30,18 @@
                 </div>
                 <div class="w-full lg:w-1/5 px-3 animate__animated" data-animate="animate__fadeInUp" data-delay="1200">
                     <p class="mb-2 lg:text-lg font-accent util-smallcaps text-nine-cyan-500">Centres d'intérêt</p>
-                    <ul class="list-unstyled mb-0">
+                    <ul class="list-unstyled mb-8">
                     {% for page in page_manager.getPublishedPages() %}
                         {% if page.category.value == 'interest' %}
+                        <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs hover:text-nine-cyan-500" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+
+                    <p class="mb-2 lg:text-lg font-accent util-smallcaps text-nine-cyan-500">À propos</p>
+                    <ul class="list-unstyled mb-0">
+                    {% for page in page_manager.getPublishedPages() %}
+                        {% if page.category.value == 'about' %}
                         <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs hover:text-nine-cyan-500" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
                         {% endif %}
                     {% endfor %}
