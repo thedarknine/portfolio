@@ -51,3 +51,13 @@ Thumbs.db
 ###> symfony/asset-mapper ###
 /assets/vendor/
 ###< symfony/asset-mapper ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+/.tools-config/.phpunit.cache
+/coverage/
+###< phpunit/phpunit ###
+
+###> deptrac/deptrac ###
+/.deptrac.cache
+###< deptrac/deptrac ###
