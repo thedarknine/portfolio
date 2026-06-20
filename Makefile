@@ -803,12 +803,13 @@ deploy: ## Build and push assets to production branch
 		$(call display_error,Failed to checkout production branch. Aborting.)
 		$(MAKE) _fatal msg="Failed to checkout production branch. Aborting."
 	fi
-	if ! git merge main --no-edit; then
+	if ! git merge -X theirs main --no-edit; then
 		$(call display_error,Failed to merge main into production. Aborting.)
 		git checkout main
 		git stash pop 2>/dev/null || true
 		$(MAKE) _fatal msg="Failed to merge main into production. Aborting."
 	fi
+	cp .tools-config/.gitignore.production .gitignore
 
 	$(call display_subtitle,📦 Applying stashed assets...)
 	if ! git stash list | grep -q "deploy: assets compiled"; then
