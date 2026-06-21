@@ -1,0 +1,50 @@
+{
+    "app": {
+        "path": "\/assets\/app-CUR9-fr.js",
+        "type": "js"
+    },
+    "\/assets\/styles\/app.css": {
+        "path": "\/assets\/styles\/app-spCwZF6.css",
+        "type": "css"
+    },
+    "jquery": {
+        "path": "\/assets\/vendor\/jquery\/jquery.index--3KIaCE.js",
+        "type": "js"
+    },
+    "home": {
+        "path": "\/assets\/scripts\/home-we2YN3p.js",
+        "type": "js"
+    },
+    "typed.js": {
+        "path": "\/assets\/vendor\/typed.js\/typed.js.index-DU94zjw.js",
+        "type": "js"
+    },
+    "animate.css": {
+        "path": "\/assets\/vendor\/animate.css\/animate.css.index-sQzUbZN.js",
+        "type": "js"
+    },
+    "animate.css\/animate.min.css": {
+        "path": "\/assets\/vendor\/animate.css\/animate.min-QZ5-rDR.css",
+        "type": "css"
+    },
+    "photoswipe": {
+        "path": "\/assets\/vendor\/photoswipe\/photoswipe.index-8vQaliZ.js",
+        "type": "js"
+    },
+    "photoswipe\/dist\/photoswipe.min.css": {
+        "path": "\/assets\/vendor\/photoswipe\/dist\/photoswipe.min-sCgyG8X.css",
+        "type": "css"
+    },
+    "photoswipe\/lightbox": {
+        "path": "\/assets\/vendor\/photoswipe\/lightbox-0Vj9izR.js",
+        "type": "js"
+    },
+    "@hotwired\/stimulus": {
+        "path": "\/assets\/vendor\/@hotwired\/stimulus\/stimulus.index-S4zNcea.js",
+        "type": "js"
+    },
+    "altcha\/dist\/main\/altcha.i18n.js": {
+        "path": "\/assets\/vendor\/altcha\/dist\/main\/altcha.i18n-Ua7aUtH.js",
+        "type": "js"
+    }
+}
