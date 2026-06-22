@@ -51,7 +51,8 @@ DOCKER_NGINX_SERVICE := engine
 DOCKER_PORTS := 8000 3306 8088 4444
 
 #= GLOBAL VARIABLES ===================================================
-TOOLS_CONFIG_DIR	:= .tools-config
+TOOLS_CONFIG_DIR	:= .tools
+SCRIPTS_DIR 		:= .tools/scripts
 TARGET_MAX_CHAR_NUM	:= 24
 DESC_MAX_CHAR_NUM	:= 45
 
@@ -304,6 +305,7 @@ update-project: ## Update docker, composer and pnpm dependencies in a safe way
 	$(DC_EXEC) composer update
 
 	$(call display_title,🔄 Updating pnpm dependencies (JS/CSS)...)
+	$(DC_EXEC) pnpm self-update
 	$(DC_EXEC) pnpm update
 
 # =====================================================================
@@ -333,7 +335,7 @@ doctor: ## Check system requirements and project health
 	$(MAKE) check-dependencies
 	success_msg="$$success_msg|Dependencies are installed"
 	
-	$(MAKE) check-tools-config
+	$(MAKE) check-tools-directory
 	success_msg="$$success_msg|Tools are configured"
 
 	success_msg="$$success_msg|All systems are ok! The project is ready."
@@ -431,15 +433,15 @@ check-dependencies: ## Check if PHP dependencies - vendor directory - are instal
 		$(call display_warning,Containers are not running. Cannot check 'vendor' (run 'make up').)
 	fi
 
-.PHONY: check-tools-config
-check-tools-config: ## Check if tools configuration directory exists
-	@$(call display_subtitle,🔎 Checking tools configuration...)
+.PHONY: check-tools-directory
+check-tools-directory: ## Check if tools configuration directory exists
+	@$(call display_subtitle,🔎 Checking tools directory...)
 	
 	if [ ! -d $(TOOLS_CONFIG_DIR) ]; then
-		$(call display_error,.tools-config directory is missing.)
-		$(MAKE) _fatal msg=".tools-config directory is missing."
+		$(call display_error,.tools directory is missing.)
+		$(MAKE) _fatal msg=".tools directory is missing."
 	fi
-	$(call display_success_root,Tools configuration directory exists.)
+	$(call display_success_root,Tools directory exists.)
 
 # =====================================================================
 ##@ DEVELOPMENT
@@ -556,7 +558,7 @@ cs: ## Check all coding standards: PHP, Twig, CSS (CS_TARGET=all|php|yaml|twig|f
 
 		success_msg="$${success_msg#|}"
 		$(call display_elapsed,$$start_time)
-		$(call display_success,$$success_msg)
+		$(call display_success_root,$$success_msg)
 	else
 		$(MAKE) cs-$(CS_TARGET)
 	fi
@@ -726,7 +728,7 @@ qa-analyse: ## Run static analysis
 	# success_msg="$$success_msg|Rector passed."
 	
 	success_msg="$${success_msg#|}"
-	$(call display_success,$$success_msg)
+	$(call display_success_root,$$success_msg)
 
 .PHONY: qa-rector
 REC_FIX ?= 0
@@ -791,145 +793,21 @@ db-dump: ## Dump database (FILES_CLEAN=1 to clean previous)
 
 .PHONY: deploy
 # deploy.sh should be copied to remote server in user folder
-# Find it into .tools-config directory if needed
-deploy: ## Build and push assets to production branch
-	@$(call display_title,🚀 Deploying to production branch...)
-	start_time=$$(date +%s)
-
-	read -p "⚠️  Are you sure you want to deploy to production? [y/N] " answer
-	if [ "$${answer}" != "y" ] && [ "$${answer}" != "Y" ]; then
-		$(call display_warning,Deployment cancelled.)
-		exit 0
-	fi
-
-	$(MAKE) -s check-remote-vars
-	if [ "$$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
-		$(call display_error,You must be on the 'main' branch to deploy.|Current branch: $$(git rev-parse --abbrev-ref HEAD))
-		$(MAKE) _fatal msg="You must be on the 'main' branch to deploy." 
-	fi
-
-	if ! git diff-index --quiet HEAD --; then
-		$(call display_error,You have uncommitted changes.|Commit or stash them before deploying.)
-		$(MAKE) _fatal msg="You have uncommitted changes. Commit or stash them before deploying."
-	fi
-	if ! git show-ref --quiet refs/heads/production; then
-		$(call display_error,The 'production' branch does not exist. Create it with: git checkout -b production)
-		$(MAKE) _fatal msg="The 'production' branch does not exist. Create it with: git checkout -b production"
-	fi
-
-	$(call display_subtitle,🚀 Preparing assets build for production...)
-	$(SYMFONY) "tailwind:build" --minify --env=prod
-	$(SYMFONY) "importmap:install" --env=prod
-	$(SYMFONY) "assets:install" --env=prod
-	$(SYMFONY) "asset-map:compile" --env=prod
-	$(SYMFONY) "cache:clear" --env=prod
-
-	$(call display_subtitle,📦 Stashing compiled assets...)
-	git add -f public/assets/*.js public/assets/styles/  public/assets/*.json
-	if ! git stash push -m "deploy: assets compiled" -- public/assets/; then
-		$(call display_error,Failed to stash compiled assets. Check for conflicts or errors.)
-		$(MAKE) _fatal msg="Failed to stash compiled assets. Check for conflicts or errors."
-	fi
-
-	$(call display_subtitle,🔄 Switching to production branch...)
-	if ! git checkout production; then
-		$(call display_error,Failed to checkout production branch. Aborting.)
-		$(MAKE) _fatal msg="Failed to checkout production branch. Aborting."
-	fi
-	if ! git merge main --no-edit; then
-		$(call display_error,Failed to merge main into production. Aborting.)
-		git checkout main
-		git stash pop 2>/dev/null || true
-		$(MAKE) _fatal msg="Failed to merge main into production. Aborting."
-	fi
-
-	$(call display_subtitle,📦 Applying stashed assets...)
-	if ! git stash list | grep -q "deploy: assets compiled"; then
-		$(call display_error,No stash found for compiled assets. Aborting.)
-		git checkout main
-		$(MAKE) _fatal msg="No stash found for compiled assets. Aborting."
-	fi
-	if ! git stash pop; then
-		$(call display_error,Failed to apply stashed assets. Aborting.)
-		git checkout main
-		git stash drop 2>/dev/null || true
-		$(MAKE) _fatal msg="Failed to apply stashed assets. Aborting."
-	fi
-
-	$(call display_subtitle,📝 Committing assets...)
-	git add public/assets/
-	if ! git commit --no-verify -m "chore: assets compiled for production $$(date +'%Y-%m-%d %H:%M')"; then
-		$(call display_error,Failed to commit assets. Aborting.)
-		git checkout main
-		git stash drop 2>/dev/null || true
-		$(MAKE) _fatal msg="Failed to commit assets. Aborting."
-	fi
-
-	$(call display_subtitle,⬆️ Pushing to production branch...)
-	if ! git push origin production; then
-		$(call display_error,Failed to push to production branch. Aborting.)
-		git checkout main
-		git reset --hard HEAD~1
-		$(MAKE) _fatal msg="Failed to push to production branch. Aborting."
-	fi
-
-	$(call display_subtitle,⚡️ Deploying to remote server...)
-	if ! ssh -i $(REMOTE_SSH_KEY) -p $(REMOTE_PORT) $(REMOTE_USER)@$(REMOTE_HOST) "~/deploy.sh"; then
-		$(call display_error,Remote deployment failed. Check the server logs.)
-		git checkout main
-		git reset --hard HEAD~1
-		git push origin production --force
-		$(MAKE) _fatal msg="Remote deployment failed. Check the server logs."
-	fi
-	
-	$(call display_subtitle,🔁 Back to main branch...)
-	git checkout main
-	
-	$(call display_subtitle,🔁 And dev environment...)
+# Find it into .tools/ directory if needed
+deploy: ## Full production deployment - build + push to remote
+	@$(call display_title,🚀 Starting full production deployment)
+	@./$(SCRIPTS_DIR)/prod-build.sh
+	@./$(SCRIPTS_DIR)/prod-deploy.sh
 	$(MAKE) dev
-
-	$(call display_elapsed,$$start_time)
-	$(call display_success,Production deployed successfully!)
+	@$(call display_success_root,Full production deployment completed!)
 
 .PHONY: prod-build
-prod-build: ## Build production version
-	@$(call display_title,Building production version...)
-	start_time=$$(date +%s)
+prod-build: ## Build and commit assets to production branch
+	@./$(SCRIPTS_DIR)/prod-build.sh
 
-	$(call display_subtitle,🗜️ [1/7] Dumping database...)
-	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE)
-
-	$(call display_subtitle,🧹 [2/7] Cleaning of the local cache...)
-	$(SYMFONY_PROD) "cache:clear" --env=prod
-
-	$(call display_subtitle,🎨 [3/7] Compilation and minification of Tailwind v4...)
-	$(SYMFONY_PROD) "tailwind:build" --minify --env=prod
-
-	$(call display_subtitle,🎨 [4/7] Compilation of assets with AssetMapper for PROD...)
-	$(SYMFONY_PROD) "asset-map:compile" --env=prod
-
-	$(call display_subtitle,📦 [5/7] Removal of DEV tools and optimization of Composer...)
-	docker compose exec $(TTY_FLAG) -e APP_ENV=prod app composer install --no-dev --optimize-autoloader
-	
-	$(call display_subtitle,✨ [6/7] Warming up the PROD cache...)
-	$(SYMFONY_PROD) "cache:warmup" --env=prod
-	
-	$(call display_subtitle,📦 [7/7] Zipping the production build...)
-	rm -f $(EXPORT_DIR)/*.zip
-	zip -r $(EXPORT_DIR)/$(ZIP_NAME) . -x "*.git*" "node_modules/*" "tests/*" "var/cache/*" "var/log/*" ".env.local" "Makefile" "$(TOOLS_CONFIG_DIR)/*" ".docker/*" "docker-compose.yml" > /dev/null
-	
-	$(call display_elapsed,$$start_time)
-	$(call display_success,Database dumped|Local cache cleaned|Tailwind compiled and minified|Assets compiled with AssetMapper|DEV tools removed and Composer optimized|PROD cache warmed up|Archive $(ZIP_NAME) created")
-	printf "\n  $(BOLD)$(GREEN)✨ Archive $(ZIP_NAME) ready for manual transfer! ✨$(RESET)\n\n"
-
-.PHONY: check-remote-vars
-check-remote-vars:
-	@$(call display_subtitle,🔍 Checking remote configuration...)
-	[ -n "$(REMOTE_USER)" ] || { $(call display_error,REMOTE_USER not set); false; }
-	[ -n "$(REMOTE_HOST)" ] || { $(call display_error,REMOTE_HOST not set); false; }
-	[ -n "$(REMOTE_SSH_KEY)" ] || { $(call display_error,REMOTE_SSH_KEY not set); false; }
-	[ -n "$(REMOTE_PATH)" ] || { $(call display_error,REMOTE_PATH not set); false; }
-	$(call display_success_root,Remote configuration valid)
+.PHONY: prod-deploy
+prod-deploy: ## Deploy to remote server - requires assets already built
+	@./$(SCRIPTS_DIR)/prod-deploy.sh
 
 .PHONY: dev
 dev: ## Switch back to development environment

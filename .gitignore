@@ -8,7 +8,7 @@ Thumbs.db
 # INFRASTRUCTURE (DOCKER & DATABASES)
 # ==============================================================================
 .env
-.tools-config/export/
+.tools/export/
 
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
@@ -61,13 +61,13 @@ error_log
 
 ###> phpunit/phpunit ###
 /phpunit.xml
-/.tools-config/.phpunit.cache
+/.tools/.phpunit.cache
 /coverage/
 ###< phpunit/phpunit ###
 
 ###> infection/infection ###
-/.tools-config/infection.log
-/.tools-config/infection-report.*
+/.tools/infection.log
+/.tools/infection-report.*
 ###< infection/infection ###
 
 ###> deptrac/deptrac ###
@@ -75,9 +75,9 @@ error_log
 ###< deptrac/deptrac ###
 
 ###> friendsofphp/php-cs-fixer ###
-/.tools-config/.php-cs-fixer.cache
+/.tools/.php-cs-fixer.cache
 ###< friendsofphp/php-cs-fixer ###
 
 ###> vincentlanglet/twig-cs-fixer ###
-/.tools-config/.twig-cs-fixer.cache
+/.tools/.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
