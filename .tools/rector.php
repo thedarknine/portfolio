@@ -19,7 +19,7 @@ return RectorConfig::configure()
         __DIR__ . '/../var',
         __DIR__ . '/../vendor',
         __DIR__ . '/../public',
-        __DIR__ . '/../.tools-config',
+        __DIR__ . '/../.tools',
         __DIR__ . '/../src/DataFixtures/Testing',
     ])
     

@@ -11,9 +11,6 @@ importers:
       animate.css:
         specifier: ^4.1.1
         version: 4.1.1
-      jquery:
-        specifier: ^4.0.0
-        version: 4.0.0
       photoswipe:
         specifier: ^5.4.4
         version: 5.4.4
@@ -297,9 +294,6 @@ packages:
 
   isexe@2.0.0:
     resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
-
-  jquery@4.0.0:
-    resolution: {integrity: sha512-TXCHVR3Lb6TZdtw1l3RTLf8RBWVGexdxL6AC8/e0xZKEpBflBsjh9/8LXw+dkNFuOyW9B7iB3O1sP7hS0Kiacg==}
 
   json-buffer@3.0.1:
     resolution: {integrity: sha512-4bV5BfR2mqfQTJm+V5tPPdf+ZpuhiIvTuAB5g8kcrXOZpTT/QwwVRWBywX1ozr6lEuPdbHxwaJlm9G6mI2sfSQ==}
@@ -625,8 +619,6 @@ snapshots:
       is-extglob: 2.1.1
 
   isexe@2.0.0: {}
-
-  jquery@4.0.0: {}
 
   json-buffer@3.0.1: {}
 

@@ -11,14 +11,14 @@ grumphp:
             no_check_publish: true
 
         phpcsfixer:
-            config: .tools-config/.php-cs-fixer.php
-            cache_file: .tools-config/.php-cs-fixer.cache
+            config: .tools/.php-cs-fixer.php
+            cache_file: .tools/.php-cs-fixer.cache
             allow_risky: true
             verbose: true
             diff: true
 
         phpstan:
-            configuration: .tools-config/phpstan.neon
+            configuration: .tools/phpstan.neon
             memory_limit: "-1"
             use_grumphp_paths: false
             triggered_by: ['php']
@@ -34,11 +34,11 @@ grumphp:
             triggered_by: [php, twig]
 
         phpunit:
-            config_file: .tools-config/phpunit.xml
+            config_file: .tools/phpunit.xml
             always_execute: false
         
         shell:
             scripts:
-                - '.tools-config/run-pre-commit.sh'
+                - '.tools/run-pre-commit.sh'
             metadata:
                 priority: 100

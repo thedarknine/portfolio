@@ -17,7 +17,7 @@ $finder = (new PhpCsFixer\Finder())
         'public/build', 
         'config',
         'node_modules',
-        '.tools-config', 
+        '.tools', 
         'src/DataFixtures',
     ])
 
