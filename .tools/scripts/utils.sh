@@ -1,41 +1,86 @@
 #!/bin/bash
 # scripts/utils.sh - Fonctions communes
 
-# Colors
+# =====================================================================
+# COLORS
+# =====================================================================
+
+RESET='\033[0m'
+BOLD='\033[1m'
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[0;33m'
+BLUE='\033[0;34m'
+PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
-RESET='\033[0m'
+
+BG_RED='\033[41m'
+BG_GREEN='\033[42m'
+BG_YELLOW='\033[43m'
+BG_BLUE='\033[44m'
+BG_PURPLE='\033[45m'
+BG_CYAN='\033[46m'
+
+display_box() {
+    local bg_color="$1"
+    local fg_color="$2"
+    local label="$3"
+
+    shift 3
+
+    {
+        printf "\n"
+        printf "${RESET}${bg_color}  ${RESET}  ${fg_color}┌────────────────────────────────────────────────────────────────────┐${RESET}\n"
+        printf "${RESET}${bg_color}  ${RESET}  ${BOLD}${fg_color}%s${RESET}\n" "$label"
+
+        if [ "$#" -gt 0 ]; then
+            printf "${RESET}${bg_color}  ${RESET}\n"
+
+            for line in "$@"; do
+                printf "${RESET}${bg_color}  ${RESET}    ${fg_color}•${RESET} %s\n" "$line"
+            done
+        fi
+
+        printf "${RESET}${bg_color}  ${RESET}  ${fg_color}└────────────────────────────────────────────────────────────────────┘${RESET}\n"
+    }
+}
 
 display_title() {
-    printf "\n${GREEN}=== %s ===${RESET}\n" "$1"
+    display_box "$BG_PURPLE" "$PURPLE" "$@"
+    printf "\n"
 }
 
 display_subtitle() {
-    printf "\n${YELLOW}→ %s${RESET}\n" "$1"
+    printf "\n${BG_YELLOW}  ${RESET}${YELLOW}  → %s${RESET}\n" "$@"
 }
 
 display_success() {
-    printf "${GREEN}✅ %s${RESET}\n" "$1"
+    if [ "${MAKELEVEL:-0}" -le 1 ]; then
+        display_box "$BG_GREEN" "$GREEN" "✅ SUCCESS" "$@"
+    fi
 }
 
 display_error() {
-    printf "${RED}❌ %s${RESET}\n" "$1" >&2
+    display_box "$BG_RED" "$RED" "❌ ERROR" "$@" >&2
 }
 
 display_warning() {
-    printf "${YELLOW}⚠️ %s${RESET}\n" "$1" >&2
+    display_box "$BG_YELLOW" "$YELLOW" "⚠️ WARNING" "$@" >&2
 }
 
 display_info() {
-    printf "${BLUE}ℹ️ %s${RESET}\n" "$1"
+    display_box "$BG_BLUE" "$BLUE" "ℹ️ INFO" "$@"
 }
 
 display_elapsed() {
     local start_time=$1
     local elapsed=$(($(date +%s) - start_time))
-    printf "\n${CYAN}⏱️  Duration: %dm %ds${RESET}\n" "$((elapsed / 60))" "$((elapsed % 60))"
+    printf "\n${BG_CYAN}  ${RESET}${CYAN}  ⏱️  Duration: %dm %ds${RESET}\n" "$((elapsed / 60))" "$((elapsed % 60))"
+}
+
+color_green() {
+    printf '%b' "${GREEN}$1${RESET}"
 }
 
 check_remote_vars() {
