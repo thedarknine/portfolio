@@ -3,7 +3,7 @@ set -euo pipefail
 
 # Chargement des utilities et config
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-PROJECT_ROOT="$(pwd)"
+PROJECT_ROOT="${PROJECT_ROOT:-$(pwd)}"
 
 source "$SCRIPT_DIR/utils.sh"
 
@@ -47,14 +47,14 @@ docker compose exec -T -e APP_ENV=dev app php bin/console tailwind:build || {
 success_msgs+=("Assets regenerated for development.")
 
 display_subtitle "[4/5] 🧹 Cleaning public assets..."
-rm -rf public/assets/* || {
+rm -rf "$PROJECT_ROOT/public/assets/"* || {
     display_error "Failed to clean public assets"
     exit 1
 }
 success_msgs+=("Public assets cleaned.")
 
 display_subtitle "[5/5] 🧹 Cleaning archive..."
-rm -rf var/cache/dev/* || {
+rm -rf "$PROJECT_ROOT/var/cache/dev/"* || {
     display_error "Failed to clean archive"
     exit 1
 }
