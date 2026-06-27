@@ -107,7 +107,6 @@ class ResourceLinkCrudController extends AbstractCrudController
         // Use SortableTrait: hidden in form to let Gedmo place it at the end automatically
         yield IntegerField::new('position', 'Ordre')
             ->setRequired(false)
-            ->hideOnIndex()
-            ->hideOnForm();
+            ->hideOnIndex();
     }
 }

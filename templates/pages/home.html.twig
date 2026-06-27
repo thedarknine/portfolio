@@ -67,7 +67,7 @@
             </p>
             {# CTA #}
             <a href="{{ path('app_experience') }}" aria-label="En savoir plus sur mon parcours" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-            En savoir plus {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
+            Découvrir mon parcours {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
             </a>
         </div>
 
@@ -97,7 +97,7 @@
             Que ce soit en produit, en code ou en création, je privilégie précision et simplicité.
             </p>
             <a href="{{ path('app_projects') }}" aria-label="En savoir plus sur mon approche" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-            En savoir plus {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
+            Voir mes réalisations {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
             </a>
         </div>
     </div>
@@ -251,10 +251,10 @@
 {% endfor %}
 
     <div class="text-center mt-10 animate__animated" data-animate="animate__fadeIn">
-    <a href="{{ path('app_experience') }}" aria-label="Découvrez mon parcours professionnel" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-white/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
+    <a href="{{ path('app_experience') }}" aria-label="Découvrez mon parcours professionnel" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-gray-400/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
         <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue-500)] to-[var(--color-nine-cyan-500)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
         <span class="relative z-10 flex items-center gap-2">
-            <span>En savoir plus</span>
+            <span>Découvrir mon parcours</span>
             {{ ux_icon('fa7-solid:right-long', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
         </span>
     </a>
@@ -276,6 +276,7 @@
             </div>
             {% endfor %}
         </div>
+        <p class="col-span-4 text-center text-on-surface-muted w-3/5 mx-auto">Mon moodboard : une source d’inspiration pour allier esthétique, fonctionnalité et harmonie dans mes projets. Chaque image reflète une valeur ou une approche qui guide mon travail : la collaboration, la précision, la sérénité, et l’innovation.</p>
     </div>
 </section>
 
@@ -324,6 +325,31 @@
                 d'ouverture d'esprit pour continuer à grandir, et faire grandir vos produits.
             </p>
         </div>
+    </div>
+</section>
+
+{# Section Contact #}
+<section id="contact" class="bg-surface-alt text-on-surface py-16">
+    <div class="max-w-4xl mx-auto text-center px-4">
+        <p class="nine-section-subheader mb-4">Me contacter</p>
+        <h2 class="text-3xl md:text-4xl font-semibold mb-6">
+            Prêt à collaborer ?
+        </h2>
+
+        {# Texte d'introduction #}
+        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
+            Que ce soit pour discuter d’un projet, d’une opportunité ou simplement échanger sur le produit et la technique,
+            n’hésitez pas à me contacter. Je serai ravie d’échanger avec vous.
+        </p>
+
+        {# Bouton vers la page de contact #}
+        <a href="{{ path('app_contact') }}" aria-label="Me contacter" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-gray-400/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
+            <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue-500)] to-[var(--color-nine-cyan-500)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
+            <span class="relative z-10 flex items-center gap-2">
+                <span>Me contacter</span>
+                {{ ux_icon('fa7-solid:paper-plane', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
+            </span>
+        </a>
     </div>
 </section>
 {% endblock %}
