@@ -85,12 +85,10 @@ YELLOW       := \033[0;33m
 BLUE         := \033[0;34m
 CYAN         := \033[0;36m
 PURPLE       := \033[0;35m
-LIGHTPURPLE  := \033[1;35m
 WHITE        := \033[0;37m
 BG_GREEN     := \033[42m
 BG_YELLOW    := \033[43m
 BG_RED       := \033[41m
-BG_PURPLE    := \033[45m
 BG_BLUE      := \033[44m
 BG_CYAN      := \033[46m
 BOLD         := \033[1m
@@ -234,12 +232,12 @@ update-project: ## Update docker, composer and pnpm dependencies in a safe way
 	start_time=$$(date +%s)
 
 	display_title "⬇️ Downloading latest Docker images..."
-	docker compose pull
+	$(DC) pull
 	success_msgs+=("Docker images updated")
 
 	display_title "🏗️ Rebuilding and restarting containers..."
-	docker compose down
-	docker compose up -d --build
+	$(DC) down
+	$(DC) up -d --build
 	success_msgs+=("Containers rebuilt and restarted")
 
 	display_title "🔄 Updating Composer dependencies (PHP)..."
@@ -286,7 +284,7 @@ doctor: ## Check system requirements and project health
 	success_msgs+=("Tools are configured")
 
 	success_msgs+=("All systems are ok! The project is ready.")
-	display_elapsed $$start_time
+	display_elapsed "$$start_time"
 	display_success "$${success_msgs[@]}"
 
 .PHONY: check-tools
@@ -296,6 +294,12 @@ check-tools: ## Check if required CLI tools are installed
 	command -v docker >/dev/null || { display_error "docker not found"; exit 1; }
 	command -v jq >/dev/null || { display_error "jq not found"; exit 1; }
 	command -v lsof >/dev/null || { display_error "lsof not found"; exit 1; }
+	if ! command -v bats &> /dev/null; then
+		display_error "Bats is not installed. To install Bats :" \
+			"   On macOS : brew install bats-core" \
+			"   On Linux (Debian/Ubuntu) : sudo apt-get install bats"
+		exit 1
+	fi
 	display_success "All required tools are installed"
 
 .PHONY: check-docker
@@ -520,7 +524,7 @@ cs: ## Check all coding standards: PHP, Twig, CSS (CS_TARGET=all|php|yaml|twig|f
 		$(MAKE) cs-front
 		success_msgs+=("CSS and JS coding standards check completed.")
 
-		display_elapsed $$start_time
+		display_elapsed "$$start_time"
 		display_success "$${success_msgs[@]}"
 	else
 		$(MAKE) cs-$(CS_TARGET)
@@ -540,7 +544,9 @@ cs-php: ## PHP CS Fixer (PHP_FIX=1 to actually fix)
 		$(CSPHP) check --verbose
 		display_subtitle "🔭 Running PHPStan analysis..."
 		$(PHPSTAN) analyse
-		display_success "Dry running PHP coding standards completed.|PHPStan analysis completed."
+		display_success \
+			"Dry running PHP coding standards completed." \
+			"PHPStan analysis completed."
 	fi
 
 .PHONY: cs-yaml
@@ -602,7 +608,7 @@ cs-fix: ## Fix all coding standards: PHP, Twig, CSS
 	$(MAKE) cs-front FRONT_FIX=1
 	success_msgs+=("CSS and JS coding standards fixed.")
 	
-	display_elapsed $$start_time
+	display_elapsed "$$start_time"
 	display_success "$${success_msgs[@]}"
 
 # =====================================================================
@@ -660,7 +666,7 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 	success_msgs+=("UI tests passed.")
 
 	success_msgs+=("$${GREEN}✨ QA passed successfully! Your code is amazing. ✨$${RESET}")
-	display_elapsed $$start_time
+	display_elapsed "$$start_time"
 	display_success "$${success_msgs[@]}"
 
 .PHONY: test
@@ -680,6 +686,12 @@ test: ## Run PHPUnit tests without UI tests
 	
 	display_subtitle "🧪 Running PHPUnit tests..."
 	$(PHPUNIT) --exclude-group=UI
+
+.PHONY: test-bash
+test-bash: ## Run Bats tests
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧪 Running Bats tests"
+	bats tests/bash/
 
 .PHONY: qa-analyse
 qa-analyse: ## Run static analysis
@@ -763,7 +775,7 @@ db-dump: ## Dump database (FILES_CLEAN=1 to clean previous)
 	if [ "$(FILES_CLEAN)" = "1" ]; then
 		rm -f $(EXPORT_DIR)/*.sql
 	fi
-	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE) 
+	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE)
 	display_success "Database dumped to: $${GREEN}$(EXPORT_DIR)/$(SQL_FILE)$${RESET}"
 
 .PHONY: deploy

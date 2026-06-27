@@ -108,6 +108,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     grum-run                  Run GrumPHP checks                             
     qa                        Run complete Quality Assurance suite: Lint, Static Analysis, Tests  
     test                      Run PHPUnit tests without UI tests             
+    test-bash                 Run Bats tests                                 
     qa-analyse                Run static analysis                            
     qa-rector                 Run Rector                                     REC_FIX=1 to actually fix
     test-mutation             Run Infection                                  
