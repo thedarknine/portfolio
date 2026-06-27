@@ -83,6 +83,12 @@ color_green() {
     printf '%b' "${GREEN}$1${RESET}"
 }
 
+print_link() {
+    local url="$1"
+    local text="$2"
+    printf "\e]8;;%s\e\\%s\e]8;;\e\\\\\n" "$url" "$text"
+}
+
 check_remote_vars() {
     [ -n "${REMOTE_USER:-}" ] || { display_error "REMOTE_USER not set"; exit 1; }
     [ -n "${REMOTE_HOST:-}" ] || { display_error "REMOTE_HOST not set"; exit 1; }
