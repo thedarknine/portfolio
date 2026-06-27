@@ -39,6 +39,6 @@ grumphp:
         
         shell:
             scripts:
-                - '.tools/run-pre-commit.sh'
+                - '.tools/scripts/run-pre-commit.sh'
             metadata:
                 priority: 100

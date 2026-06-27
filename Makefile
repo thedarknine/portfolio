@@ -53,6 +53,7 @@ DOCKER_PORTS := 8000 3306 8088 4444
 #= GLOBAL VARIABLES ===================================================
 TOOLS_CONFIG_DIR	:= .tools
 SCRIPTS_DIR 		:= .tools/scripts
+REPORTS_DIR 		:= .tools/reports
 TARGET_MAX_CHAR_NUM	:= 24
 DESC_MAX_CHAR_NUM	:= 45
 
@@ -400,6 +401,17 @@ check-tools-directory: ## Check if tools configuration directory exists
 	display_success "Tools directory exists."
 
 # =====================================================================
+##@ AUDIT
+
+.PHONY: audit
+audit: ## Run local audit
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🔍 Local audit"
+	
+# 	$(DC_EXEC) bash ./.tools/scripts/audit.sh
+	@./$(SCRIPTS_DIR)/audit.sh
+
+# =====================================================================
 ##@ DEVELOPMENT
 
 .PHONY: cc
@@ -665,7 +677,8 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 	$(MAKE) test-ui || exit 1
 	success_msgs+=("UI tests passed.")
 
-	success_msgs+=("$${GREEN}✨ QA passed successfully! Your code is amazing. ✨$${RESET}")
+	summary="$$(color_green "✨ QA passed successfully! Your code is amazing. ✨")"
+	success_msgs+=("$${summary}")
 	display_elapsed "$$start_time"
 	display_success "$${success_msgs[@]}"
 
