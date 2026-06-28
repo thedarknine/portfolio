@@ -58,7 +58,7 @@ display_success "Remote configuration verified"
 display_subtitle "🚀 Connecting to remote server ($REMOTE_USER@$REMOTE_HOST:$REMOTE_PORT)..."
 
 # Commande de déploiement sur le serveur distant
-REMOTE_DEPLOY_CMD=~/"deploy.sh"
+REMOTE_DEPLOY_CMD="~/deploy.sh"
 
 if ! ssh -i "$REMOTE_SSH_KEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "$REMOTE_DEPLOY_CMD"; then
     display_error "Remote deployment failed"
