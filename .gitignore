@@ -22,6 +22,7 @@ Thumbs.db
 # ==============================================================================
 .env
 .tools/export/
+.tools/reports/
 
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
