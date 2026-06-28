@@ -1,17 +1,17 @@
     <section class="nine-page-hero bg-surface-hero text-on-surface-hero">
         <div class="grid grid-cols-1 md:grid-cols-3 md:gap-16 items-center pr-0 mr-0">
-            <div class="col-span-2 ml-40 nine-hero-content animate__animated" data-animate="animate__fadeInLeft">
+            <div class="col-span-2 md:ml-40 nine-hero-content animate__animated" data-animate="animate__fadeInLeft">
                 <span class="nine-page-hero__label">{{ current_page.tagline }}</span>
                 <h1 class="nine-page-hero__title text-3xl font-bold mb-6">{{ current_page.subtitle }}</h1>
             </div>
 
-            <div class="nine-page-hero__visual min-h-50 overflow-hidden animate__animated" data-animate="animate__fadeInRight">
-                <img
-                    src="images/pages/hero-{{ current_page.technicalName }}.webp"
-                    alt="{{ current_page.title }}"
-                    class="w-full object-cover"
-                    style="clip-path: ellipse(100% 140% at 100% 50%);"
-                />
+            <div class="nine-page-hero__visual animate__animated" data-animate="animate__fadeInRight">
+                <div class="nine-hero-image-wrapper">
+                    <img
+                        src="images/pages/hero-{{ current_page.technicalName }}.webp"
+                        alt="{{ current_page.title }}"
+                    />
+                </div>
             </div>
         </div>
     </section>
