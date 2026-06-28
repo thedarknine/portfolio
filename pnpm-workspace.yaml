@@ -1,2 +1,6 @@
 allowBuilds:
+  '@parcel/watcher': false
   core-js: set this to true or false
+  esbuild: true
+  puppeteer: true
+  vue-demi: false

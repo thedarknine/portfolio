@@ -82,6 +82,9 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     check-dependencies        Check if PHP dependencies - vendor directory - are installed  
     check-tools-directory     Check if tools configuration directory exists  
 
+  AUDIT
+    audit                     Run local audit                                
+
   DEVELOPMENT
     cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
     composer-clear            Clear Composer cache and reinstall dependencies  
@@ -341,6 +344,14 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 
 * [IconStack](https://iconstack.io/) — Découverte et gestion de sets d'icônes.
 * [HugeIcons](https://hugeicons.com/icons/stroke-rounded?search=inst) — Icônes filaires haut de gamme.
+
+## 📊 Librairies d'audit SEO
+
+* lighthouse
+* unlighthouse
+
+* [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) — Audit d'accessibilité et performance.
+* [PageSpeed Insights](https://pagespeed.web.dev/) — Analyse de la performance des pages web.
 
 ---
 

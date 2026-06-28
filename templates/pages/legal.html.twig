@@ -2,6 +2,11 @@
 
 {% block title %}Mentions légales{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('styles/pages/legal.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="container bg-surface text-on-surface">
     <div class="nine-no-hero">

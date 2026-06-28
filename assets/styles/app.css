@@ -444,11 +444,10 @@
  * COMPOSANTS — Page hero
  * ============================================================ */
 .nine-page-hero {
-    padding: 5rem 0 0;
+    padding: 4.5rem 0 0;
     overflow: hidden;
 
     .nine-page-hero__label {
-        /* RENAME: .nine-section-label */
         display: inline-block;
         margin-bottom: 1rem;
         text-transform: uppercase;
@@ -457,7 +456,6 @@
     }
 
     h1.nine-page-hero__title {
-        /* RENAME: h1.nine-tagline */
         margin-bottom: 2rem;
         font-weight: 800;
         line-height: 1.1;
@@ -471,12 +469,34 @@
     }
 
     .nine-page-hero__visual {
-        /* RENAME: .nine-hero-visual */
         position: relative;
+        /*min-height: 280px;*/
+
+        @media (max-width: 767px) {
+            /*min-height: 200px;*/
+            margin: 0 -1rem;
+        }
+    }
+
+    .nine-hero-image-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
 
         img {
             width: 100%;
+            height: 100%;
             object-fit: cover;
+            object-position: center;
+            display: block;
+
+            @media (min-width: 768px) {
+                clip-path: ellipse(100% 140% at 100% 12%);
+            }
+
+            @media (max-width: 767px) {
+                max-height: 220px;
+            }
         }
     }
 }
