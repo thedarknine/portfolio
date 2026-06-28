@@ -16,9 +16,6 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    'jquery' => [
-        'version' => '4.0.0',
-    ],
     'home' => [
         'path' => './assets/scripts/home.js',
         'entrypoint' => true,

@@ -93,10 +93,10 @@ jobs:
       run: php bin/console cache:clear --env=test
 
     - name: Execute PHP-CS-Fixer (Linter)
-      run: vendor/bin/php-cs-fixer fix --dry-run --diff  --config=.tools-config/.php-cs-fixer.php
+      run: vendor/bin/php-cs-fixer fix --dry-run --diff  --config=.tools/.php-cs-fixer.php
        
     - name: Run PHPStan
-      run: vendor/bin/phpstan analyse --configuration=.tools-config/phpstan.neon
+      run: vendor/bin/phpstan analyse --configuration=.tools/phpstan.neon
 
     - name: Create Database
       run: php bin/console doctrine:database:create --env=test --if-not-exists
@@ -111,4 +111,4 @@ jobs:
       run: php bin/console doctrine:fixtures:load --no-interaction --env=test
 
     - name: Run PHPUnit Tests
-      run: vendor/bin/phpunit --configuration .tools-config/phpunit.xml --exclude-group=UI
+      run: vendor/bin/phpunit --configuration .tools/phpunit.xml --exclude-group=UI

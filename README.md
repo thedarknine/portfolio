@@ -28,7 +28,7 @@ Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laborato
 
 ## 📐 Qualité de Code & Automatisation
 
-Pour garantir la maintenabilité et la robustesse de l'application, une suite complète d'outils d'analyse statique et d'automatisation est intégrée via **GrumPHP** (les configurations sont centralisées dans le dossier `.tools-config/`).
+Pour garantir la maintenabilité et la robustesse de l'application, une suite complète d'outils d'analyse statique et d'automatisation est intégrée via **GrumPHP** (les configurations sont centralisées dans le dossier `.tools/`).
 
 Le projet intègre notamment :
 
@@ -74,12 +74,13 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
 
   CHECKERS
     doctor                    Check system requirements and project health   
+    check-tools               Check if required CLI tools are installed      
     check-docker              Check Docker is running                        
     check-containers          Check if Docker containers are running         
     check-ports               Check if required ports are available or used by this project  
     check-env                 Check .env file                                
     check-dependencies        Check if PHP dependencies - vendor directory - are installed  
-    check-tools-config        Check if tools configuration directory exists  
+    check-tools-directory     Check if tools configuration directory exists  
 
   DEVELOPMENT
     cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
@@ -87,6 +88,9 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     pnpm-clear                Clear pnpm cache and reinstall dependencies    
     pnpm-prune                Prune unused packages                          
     clean                     Clean temporary files: cache, coverage, logs, public build  
+    clean-build               Clean only build artifacts                     
+    clean-cache               Clean only cache and logs                      
+    clean-test                Clean PHPUnit cache and code coverage          
     watch                     Watch Tailwind CSS changes and re-build        
     secret                    Generate a new APP_SECRET and display it       
     migration                 Run Doctrine migrations                        
@@ -104,6 +108,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     grum-run                  Run GrumPHP checks                             
     qa                        Run complete Quality Assurance suite: Lint, Static Analysis, Tests  
     test                      Run PHPUnit tests without UI tests             
+    test-bash                 Run Bats tests                                 
     qa-analyse                Run static analysis                            
     qa-rector                 Run Rector                                     REC_FIX=1 to actually fix
     test-mutation             Run Infection                                  
@@ -113,8 +118,9 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
 
   ENVIRONMENT
     db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous
-    deploy                    Build and push assets to production branch     
-    prod-build                Build production version                       
+    deploy                    Full production deployment - build + push to remote  
+    prod-build                Build and commit assets to production branch   
+    prod-deploy               Deploy to remote server - requires assets already built  
     dev                       Switch back to development environment         
 
   HELP
@@ -159,7 +165,7 @@ Cette section regroupe les workflows, commandes natives Symfony/Docker et paquet
 
     # Initialize frontend
     php bin/console tailwind:init
-    php bin/console importmap:require jquery
+    # php bin/console importmap:require jquery
 ```
 
 ### 🗄️ Gestion de la Base de données
@@ -229,11 +235,11 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
     composer require --dev qossmic/deptrac-shim
     vendor/bin/deptrac init
     vendor/bin/deptrac analyse --config-file=deptrac.yaml
-    vendor/bin/deptrac debug:layer --config-file=.tools-config/deptrac.yaml
+    vendor/bin/deptrac debug:layer --config-file=.tools/deptrac.yaml
 
     # Rector (Analysis of refactoring rules / Dry-run)
     composer require --dev rector/rector
-    vendor/bin/rector process --dry-run --config .tools-config/rector.php
+    vendor/bin/rector process --dry-run --config .tools/rector.php
 ```
 
 ### 🏗️ Backoffice & Sécurité (EasyAdmin)

@@ -5,6 +5,14 @@ SHELL := /bin/bash
 export LANG := C.UTF-8
 export LC_ALL := C.UTF-8
 
+# Required environment variables for production deployment:
+# REMOTE_USER - SSH user
+# REMOTE_HOST - Remote server hostname
+# REMOTE_SSH_KEY - Path to SSH private key
+# REMOTE_PORT - SSH port (default: 22)
+# DB_ROOT_PASSWORD - Database root password
+# DB_NAME - Database name
+
 MAKEFLAGS += --no-print-directory
 
 # =====================================================================
@@ -43,7 +51,8 @@ DOCKER_NGINX_SERVICE := engine
 DOCKER_PORTS := 8000 3306 8088 4444
 
 #= GLOBAL VARIABLES ===================================================
-TOOLS_CONFIG_DIR	:= .tools-config
+TOOLS_CONFIG_DIR	:= .tools
+SCRIPTS_DIR 		:= .tools/scripts
 TARGET_MAX_CHAR_NUM	:= 24
 DESC_MAX_CHAR_NUM	:= 45
 
@@ -76,12 +85,10 @@ YELLOW       := \033[0;33m
 BLUE         := \033[0;34m
 CYAN         := \033[0;36m
 PURPLE       := \033[0;35m
-LIGHTPURPLE  := \033[1;35m
 WHITE        := \033[0;37m
 BG_GREEN     := \033[42m
 BG_YELLOW    := \033[43m
 BG_RED       := \033[41m
-BG_PURPLE    := \033[45m
 BG_BLUE      := \033[44m
 BG_CYAN      := \033[46m
 BOLD         := \033[1m
@@ -89,77 +96,10 @@ RESET        := \033[0m
 
 #= FONCTIONS ===========================================================
 
-# display_box BG_COLOR FG_COLOR LABEL MESSAGE|msg1|msg2 [REDIRECT]
-# Message simple : $(call display_box,BG_GREEN,GREEN,✓ SUCCESS,Mon message,)
-# Matrice        : $(call display_box,BG_RED,RED,✗ ERROR,msg1|msg2|msg3,)
-define display_box
-{
-	_msg="$(4)"
-
-	printf "\n" $(6)
-	printf "$(RESET)$($(1))  $(RESET)  $($(2))┌────────────────────────────────────────────────────────────────────┐$(RESET)\n" $(5)
-	printf "$(RESET)$($(1))  $(RESET)  $(BOLD)$($(2))$(3)$(RESET)\n" $(5)
-
-	if [ -n "$$_msg" ]; then
-		printf "$(RESET)$($(1))  $(RESET)\n" $(5)
-
-		case "$$_msg" in
-			*\|*)
-				_IFS_BAK="$$IFS"
-				IFS="|"
-
-				for _line in $$_msg; do
-					printf "$(RESET)$($(1))  $(RESET)    $($(2))•$(RESET) %s\n" "$$_line" $(5)
-				done
-
-				IFS="$$_IFS_BAK"
-				;;
-
-			*)
-				printf "$(RESET)$($(1))  $(RESET)    $($(2))•$(RESET) %s\n" "$$_msg" $(5)
-				;;
-		esac
-	fi
-
-	printf "$(RESET)$($(1))  $(RESET)  $($(2))└────────────────────────────────────────────────────────────────────┘$(RESET)\n\n" $(5)
-}
-endef
-
-define display_title
-	$(call display_box,BG_PURPLE,PURPLE,$(1),,)
-endef
-
-define display_subtitle
-	printf "\n$(RESET)$(BG_BLUE)  $(RESET)  $(BLUE)$(RESET) $(1)\n\n"
-endef
-
-define display_success
-    $(call display_box,BG_GREEN,GREEN,✅ SUCCESS,$(1),)
-endef
-
-define display_error
-    $(call display_box,BG_RED,RED,❌ ERROR,$(1),>&2)
-endef
-
-define display_warning
-	$(call display_box,BG_YELLOW,YELLOW,⚠️ WARNING,$(1),>&2)
-endef
-
-define display_success_root
-if [ "$(MAKELEVEL)" = "0" ]; then
-	$(call display_success,$(1))
-fi
-endef
-
-define display_elapsed
-	elapsed=$$(($$(date +%s) - $(1)))
-	$(call display_box,BG_CYAN,CYAN,⏱️ Duration: $$((elapsed / 60))m $$((elapsed % 60))s,,)
-endef
-
 # Avoid some execution from prod environment
 define assert_not_prod
 if [ "$(ENVIRONMENT)" = "prod" ] || [ "$(ENVIRONMENT)" = "production" ]; then 
-	$(call display_error,Authorised only in development environment)
+	display_error "Authorised only in development environment"
 	$(MAKE) _fatal msg="Authorised only in development environment"
 fi
 endef
@@ -175,105 +115,108 @@ CHECKMAKE_BIN := checkmake --config=$(TOOLS_CONFIG_DIR)/checkmake.ini
 
 .PHONY: cs-makefile
 cs-makefile: ## Lint Makefile with checkmake
-	@$(call display_title,📎 Checking if checkmake is installed...)
-
-	success_msg=""
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "📎 Checking if checkmake is installed..."
+	success_msgs=()
 
 	if [ -f /.dockerenv ]; then
 		if ! command -v checkmake >/dev/null 2>&1; then
-			$(call display_error,checkmake is not installed in the Docker container.)
+			display_error "checkmake is not installed in the Docker container."
 			$(MAKE) _fatal msg="checkmake is not installed in the Docker container"
 		fi
 
-		$(call display_subtitle,🔄 Running checkmake...)
+		display_subtitle "🔄 Running checkmake..."
 		$(CHECKMAKE_BIN) Makefile
 	else
 		if ! $(DC) exec -T app bash -c "command -v checkmake" >/dev/null 2>&1; then
-			$(call display_error,checkmake is not installed in the Docker container. Please rebuild it.)
+			display_error "checkmake is not installed in the Docker container. Please rebuild it."
 			$(MAKE) _fatal msg="checkmake is not installed in the Docker container. Please rebuild it."
 		fi
 
-		success_msg="$$success_msg|Checkmake is ready via Docker Compose"
+		success_msgs+=("Checkmake is ready via Docker Compose")
 
-		$(call display_subtitle,🔄 Running checkmake via Docker...)
+		display_subtitle "🔄 Running checkmake via Docker..."
 		$(DC) exec -T app $(CHECKMAKE_BIN) Makefile
 
-		success_msg="$$success_msg|Checkmake passed"
-		success_msg="$$success_msg|Makefile formatting is perfect!"
-		success_msg="$${success_msg#|}"
+		success_msgs+=("Checkmake passed")
+		success_msgs+=("Makefile formatting is perfect!")
 
-		$(call display_success,$$success_msg)
+		display_success "$${success_msgs[@]}"
 	fi
 
 # =====================================================================
 ##@ DOCKER
 .PHONY: build
 build: ## Docker build
-	@$(call display_title,🏗️ Building Docker)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🏗️ Building Docker"
 
 	$(DC) build
-	$(call display_success_root,Docker built successfully)
+	display_success "Docker built successfully"
 
 .PHONY: up
 up: ## Run Docker containers
-	@$(call display_title,🐳 Starting containers)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🐳 Starting containers"
 
 	$(DC) up -d
-	$(call display_success_root,Containers started successfully)
+	display_success "Containers started successfully"
 
 .PHONY: down
 down: ## Stop Docker containers
-	@$(call display_title,🐳 Stopping containers)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🐳 Stopping containers"
 
 	$(DC) down
-	$(call display_success_root,Containers stopped successfully)
+	display_success "Containers stopped successfully"
 
 .PHONY: destroy
 destroy: ## Stop and remove Docker containers
-	@$(call display_title,🐳 Stopping and removing containers)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🐳 Stopping and removing containers"
 
 	$(DC) down --remove-orphans
-	$(call display_success_root,Containers destroyed successfully)
+	display_success "Containers destroyed successfully"
 
 .PHONY: restart
 FORCE ?= 0
 restart: ## Docker restart (FORCE=1 to destroy and rebuild)
-	@success_msg=""
-
+	@source $(SCRIPTS_DIR)/utils.sh
+	success_msgs=()
 	start_time=$$(date +%s)
 
 	if [ "$(FORCE)" = "1" ]; then
 		$(MAKE) destroy
-		success_msg="$$success_msg|Project destroyed"
+		success_msgs+=("Project destroyed")
 
 		$(MAKE) build
-		success_msg="$$success_msg|Project built"
+		success_msgs+=("Project built")
 
 		$(MAKE) up
-		success_msg="$$success_msg|Containers started successfully"
+		success_msgs+=("Containers started successfully")
 	else
 		$(MAKE) down
-		success_msg="$$success_msg|Containers stopped"
+		success_msgs+=("Containers stopped")
 
 		$(MAKE) up
-		success_msg="$$success_msg|Containers restarted successfully"
+		success_msgs+=("Containers restarted successfully")
 	fi
 
-	success_msg="$${success_msg#|}"
-
-	$(call display_success,$$success_msg)
-	$(call display_elapsed,$$start_time)
+	display_elapsed "$$start_time"
+	display_success "$${success_msgs[@]}"
 
 .PHONY: shell
 shell: ## Run a shell in the PHP container
-	@$(call display_title,🐚 Running shell in PHP container)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🐚 Running shell in PHP container"
 
 	$(DC_EXEC) bash
 
 .PHONY: logs
 LOGS_SERVICE ?= all
 logs: ## Show Docker logs (LOGS_SERVICE=app|db|nginx)
-	@$(call display_title,🪲 Displaying Docker logs)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🪲 Displaying Docker logs"
 
 	if [ "$(LOGS_SERVICE)" = "all" ]; then
 		$(DC) logs -f --tail=100
@@ -283,83 +226,115 @@ logs: ## Show Docker logs (LOGS_SERVICE=app|db|nginx)
 
 .PHONY: update-project
 update-project: ## Update docker, composer and pnpm dependencies in a safe way
-	@$(call assert_not_prod)
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	success_msgs=()
+	start_time=$$(date +%s)
 
-	$(call display_title,⬇️ Downloading latest Docker images...)
-	docker compose pull
+	display_title "⬇️ Downloading latest Docker images..."
+	$(DC) pull
+	success_msgs+=("Docker images updated")
 
-	$(call display_title,🏗️ Rebuilding and restarting containers...)
-	docker compose down
-	docker compose up -d --build
+	display_title "🏗️ Rebuilding and restarting containers..."
+	$(DC) down
+	$(DC) up -d --build
+	success_msgs+=("Containers rebuilt and restarted")
 
-	$(call display_title,🔄 Updating Composer dependencies (PHP)...)
+	display_title "🔄 Updating Composer dependencies (PHP)..."
 	$(DC_EXEC) composer update
+	success_msgs+=("Composer dependencies updated")
 
-	$(call display_title,🔄 Updating pnpm dependencies (JS/CSS)...)
+	display_title "🔄 Updating pnpm dependencies (JS/CSS)..."
+	$(DC_EXEC) pnpm self-update
 	$(DC_EXEC) pnpm update
+	success_msgs+=("PNPM dependencies updated")
+
+	display_elapsed "$$start_time"
+	display_success "$${success_msgs[@]}"
 
 # =====================================================================
 ##@ CHECKERS
 
 .PHONY: doctor
 doctor: ## Check system requirements and project health
-	@$(call display_title,🪲 Running health check)
-	success_msg=""
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🪲 Running health check"
+	success_msgs=()
 	start_time=$$(date +%s)
 
+	$(MAKE) check-tools
+	success_msgs+=("Tools are installed")
+
 	$(MAKE) check-docker
-	success_msg="$$success_msg|Docker is running"
+	success_msgs+=("Docker is running")
 
 	$(MAKE) check-containers
-	success_msg="$$success_msg|Containers are running"
+	success_msgs+=("Containers are running")
 
 	$(MAKE) check-env
-	success_msg="$$success_msg|Environment is configured"
+	success_msgs+=("Environment is configured")
 
 	$(MAKE) check-ports
-	success_msg="$$success_msg|Ports are available"
+	success_msgs+=("Ports are available")
 
 	$(MAKE) check-dependencies
-	success_msg="$$success_msg|Dependencies are installed"
+	success_msgs+=("Dependencies are installed")
 	
-	$(MAKE) check-tools-config
-	success_msg="$$success_msg|Tools are configured"
+	$(MAKE) check-tools-directory
+	success_msgs+=("Tools are configured")
 
-	success_msg="$$success_msg|All systems are ok! The project is ready."
-	success_msg="$${success_msg#|}"
-	$(call display_elapsed,$$start_time)
-	$(call display_success,$$success_msg)
+	success_msgs+=("All systems are ok! The project is ready.")
+	display_elapsed "$$start_time"
+	display_success "$${success_msgs[@]}"
+
+.PHONY: check-tools
+check-tools: ## Check if required CLI tools are installed
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Checking required tools..."
+	command -v docker >/dev/null || { display_error "docker not found"; exit 1; }
+	command -v jq >/dev/null || { display_error "jq not found"; exit 1; }
+	command -v lsof >/dev/null || { display_error "lsof not found"; exit 1; }
+	if ! command -v bats &> /dev/null; then
+		display_error "Bats is not installed. To install Bats :" \
+			"   On macOS : brew install bats-core" \
+			"   On Linux (Debian/Ubuntu) : sudo apt-get install bats"
+		exit 1
+	fi
+	display_success "All required tools are installed"
 
 .PHONY: check-docker
 check-docker: ## Check Docker is running
-	@$(call display_subtitle,🔎 Checking Docker daemon...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Checking Docker daemon..."
 
 	if ! docker info >/dev/null 2>&1; then
-		$(call display_error,Docker daemon unavailable. Please start Docker Desktop.)
+		display_error "Docker daemon unavailable. Please start Docker Desktop."
 		$(MAKE) _fatal msg="Docker daemon is not running."
 	fi
-	$(call display_success_root,Docker is running.)
+	display_success "Docker is running."
 
 .PHONY: check-containers
 check-containers: ## Check if Docker containers are running
-	@$(call display_subtitle,🔎 Checking Docker containers...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Checking Docker containers..."
 
 	if ! command -v jq >/dev/null 2>&1; then
-		$(call display_error,jq is required but not installed. Install it with: brew install jq)
+		display_error "jq is required but not installed. Install it with: brew install jq"
 		$(MAKE) _fatal msg="jq is required but not installed"
 	fi
 	if ! $(DC) ps --format json | jq -e -s 'any(.[]; .Service == "app" and (.Status | startswith("Up")))' > /dev/null; then
-		$(call display_error,Containers are not running. Use 'make up' to start them) && \
+		display_error "Containers are not running. Use 'make up' to start them" && \
 		$(MAKE) _fatal msg="Containers are not running."
 	fi
-	$(call display_success_root,Containers are running.)
+	display_success "Containers are running."
 
 .PHONY: check-ports
 check-ports: ## Check if required ports are available or used by this project
-	@$(call display_subtitle,🔎 Checking network ports...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Checking network ports..."
 
 	ports_conflict=0
-	summary=""
+	success_msgs=()
 	current_project_ids=$$(docker compose ps -q 2>/dev/null | tr '\n' ' ')
 	for port in $(DOCKER_PORTS); do
 		blocking_pid=$$(lsof -Pi :$$port -sTCP:LISTEN -t 2>/dev/null)
@@ -367,60 +342,62 @@ check-ports: ## Check if required ports are available or used by this project
 			container_owning_port=$$(docker ps -q --no-trunc --filter "publish=$$port" 2>/dev/null)
 			if [ ! -z "$$container_owning_port" ]; then
 				if echo "$$current_project_ids" | grep -q -w "$$container_owning_port"; then
-					summary="$$summary|Port $$port is used by this project (already up)"
+					success_msgs+=("Port $$port is used by this project - already up")
 				else
-					summary="$$summary|Port $$port is blocked by ANOTHER Docker project"
+					success_msgs+=("Port $$port is blocked by ANOTHER Docker project")
 					ports_conflict=1
 				fi
 			else
-				summary="$$summary|Port $$port is blocked by ANOTHER native application (PID: $$blocking_pid)"
+				success_msgs+=("Port $$port is blocked by ANOTHER native application - PID: $$blocking_pid")
 				ports_conflict=1
 			fi
 		else
-			summary="$$summary|Port $$port is free and ready"
+			success_msgs+=("Port $$port is free and ready")
 		fi
 	done
 	if [ $$ports_conflict -eq 1 ]; then
-		$(call display_error,Some ports are blocked by other services. Run 'make down' elsewhere.)
+		display_error "Some ports are blocked by other services. Run 'make down' elsewhere."
 		$(MAKE) _fatal msg="Some ports are blocked by other services."
 	fi
-	summary="$${summary#|}"
-	$(call display_success_root,$$summary)
+	display_success "$${success_msgs[@]}"
 
 .PHONY: check-env
 check-env: ## Check .env file
-	@$(call display_subtitle,🔎 Checking .env file...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Checking .env file..."
 	
 	if [ ! -f .env ]; then
-		$(call display_error,.env file is missing. Please create it from .env.sample.)
+		display_error ".env file is missing. Please create it from .env.sample."
 		$(MAKE) _fatal msg=".env file is missing."
 	fi
-	$(call display_success_root,.env file exists.)
+	display_success ".env file exists."
 
 .PHONY: check-dependencies
 check-dependencies: ## Check if PHP dependencies - vendor directory - are installed
-	@$(call display_subtitle,🔎 Checking PHP dependencies...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Checking PHP dependencies..."
 
 	if $(DC) ps app | grep -q "Up"; then
 		if ! $(DC_EXEC) [ -d vendor ]; then
-			$(call display_error,'vendor' directory is missing. Run installation.)
+			display_error "'vendor' directory is missing. Run installation."
 			$(MAKE) _fatal msg="PHP dependencies (vendor) are missing."
 		else
-			$(call display_success_root,PHP dependencies (vendor) are installed.)
+			display_success "PHP dependencies - vendor - are installed."
 		fi
 	else
-		$(call display_warning,Containers are not running. Cannot check 'vendor' (run 'make up').)
+		display_warning "Containers are not running. Cannot check 'vendor' (run 'make up')."
 	fi
 
-.PHONY: check-tools-config
-check-tools-config: ## Check if tools configuration directory exists
-	@$(call display_subtitle,🔎 Checking tools configuration...)
+.PHONY: check-tools-directory
+check-tools-directory: ## Check if tools configuration directory exists
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Checking tools directory..."
 	
 	if [ ! -d $(TOOLS_CONFIG_DIR) ]; then
-		$(call display_error,.tools-config directory is missing.)
-		$(MAKE) _fatal msg=".tools-config directory is missing."
+		display_error ".tools directory is missing."
+		$(MAKE) _fatal msg=".tools directory is missing."
 	fi
-	$(call display_success_root,Tools configuration directory exists.)
+	display_success "Tools directory exists."
 
 # =====================================================================
 ##@ DEVELOPMENT
@@ -428,181 +405,211 @@ check-tools-config: ## Check if tools configuration directory exists
 .PHONY: cc
 CC_ENV ?= 
 cc: ## Run bin/console cache:clear from docker (CC_ENV=prod|dev|test)
-	@$(call display_title,🧹 Clearing Symfony cache)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧹 Clearing Symfony cache"
 
 	if [ -n "$(CC_ENV)" ]; then
 		$(SYMFONY) "cache:clear" --env=$(CC_ENV)
 	else
 		$(SYMFONY) "cache:clear"
 	fi
-	$(call display_success_root,Cache cleared successfully.)
+	display_success "Cache cleared successfully."
 
 .PHONY: composer-clear
 composer-clear: ## Clear Composer cache and reinstall dependencies
-	@$(call display_title,🧹 Clearing Composer cache and reinstalling dependencies)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧹 Clearing Composer cache and reinstalling dependencies"
 
 	rm -rf vendor/
 	$(COMPOSER) clear-cache
 	$(COMPOSER) install
-	$(call display_success_root,Composer cache cleared and dependencies reinstalled.)
+	display_success "Composer cache cleared and dependencies reinstalled."
 
 .PHONY: pnpm-clear
 pnpm-clear: ## Clear pnpm cache and reinstall dependencies
-	@$(call display_title,🧹 Clearing pnpm cache and reinstalling dependencies)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧹 Clearing pnpm cache and reinstalling dependencies"
 
 	rm -rf node_modules/
 	$(PNPM) store prune
 	$(PNPM) install
-	$(call display_success_root,pnpm cache cleared and dependencies reinstalled.)
+	display_success "pnpm cache cleared and dependencies reinstalled."
 
 .PHONY: pnpm-prune
 pnpm-prune: ## Prune unused packages
-	@$(call display_title,🧹 Pruning unused packages)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧹 Pruning unused packages"
 
-	$(call display_subtitle,🧹 Removing unused packages...)
+	display_subtitle "🧹 Removing unused packages..."
 	$(PNPM) store prune
-	$(call display_subtitle,🔍 Checking for unused packages...)
+	display_subtitle "🔍 Checking for unused packages..."
 	$(PNPX) depcheck --ignores="animate.css,@biomejs/biome"
-	$(call display_success_root,Unused packages check completed.)
+	display_success "Unused packages check completed."
 
 .PHONY: clean
 clean: ## Clean temporary files: cache, coverage, logs, public build
-	@$(call display_title,🧹 Cleaning temporary files)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧹 Cleaning temporary files"
 
-	rm -rf var/cache/* var/log/* public/build/* coverage/ .phpunit.result.cache 
-	$(call display_success_root,Temporary files cleaned.)
+	$(MAKE) clean-build
+	$(MAKE) clean-cache
+	$(MAKE) clean-test
+	display_success "Temporary files cleaned."
+
+.PHONY: clean-build
+clean-build: ## Clean only build artifacts
+	@rm -rf public/build/* public/assets/*
+
+.PHONY: clean-cache
+clean-cache: ## Clean only cache and logs
+	@rm -rf var/cache/* var/log/*
+
+.PHONY: clean-test
+clean-test: ## Clean PHPUnit cache and code coverage
+	@rm -rf coverage/ .phpunit.result.cache
 
 .PHONY: watch
 watch: ## Watch Tailwind CSS changes and re-build
-	@$(call display_title,🔍 Watching Tailwind CSS changes and re-building)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🔍 Watching Tailwind CSS changes and re-building"
 
 	$(SYMFONY) "tailwind:build" --watch
 
 .PHONY: secret
 secret: ## Generate a new APP_SECRET and display it
-	@$(call display_title,🔑 Generating new APP_SECRET)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🔑 Generating new APP_SECRET"
 
 	secret=$$($(DC_EXEC) openssl rand -hex 32)
-	$(call display_success,APP_SECRET generated successfully.|$(GREEN)$$secret$(RESET))
+	display_success \
+		"APP_SECRET generated successfully." \
+		"$${GREEN}$${secret}$${RESET}"
 
 .PHONY: migration
 migration: ## Run Doctrine migrations
-	@$(call assert_not_prod)
-	$(call display_title,💾 Running Doctrine migrations)
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_title "💾 Running Doctrine migrations"
 
 	$(SYMFONY) "make:migration"
 	$(SYMFONY) "doctrine:migrations:migrate"
 
 .PHONY: fixtures
 fixtures: ## Load Doctrine fixtures
-	@$(call assert_not_prod)
-	$(call display_title,💾 Loading Doctrine fixtures)
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_title "💾 Loading Doctrine fixtures"
 	
 	$(SYMFONY) "doctrine:fixtures:load"
 
 .PHONY: cs
 CS_TARGET ?= all
 cs: ## Check all coding standards: PHP, Twig, CSS (CS_TARGET=all|php|yaml|twig|front)
-	@$(call display_title,🎨 Checking coding standards)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🎨 Checking coding standards"
 	
 	if [ "$(CS_TARGET)" = "all" ]; then 
-		success_msg=""
+		success_msgs=()
 		start_time=$$(date +%s)
 
 		$(MAKE) cs-php
-		success_msg="$$success_msg|PHP coding standards check completed."
+		success_msgs+=("PHP coding standards check completed.")
 
 		$(MAKE) cs-yaml
-		success_msg="$$success_msg|YAML linting completed."
+		success_msgs+=("YAML linting completed.")
 
 		$(MAKE) cs-twig
-		success_msg="$$success_msg|Twig coding standards check completed."
+		success_msgs+=("Twig coding standards check completed.")
 
 		$(MAKE) cs-front
-		success_msg="$$success_msg|CSS and JS coding standards check completed."
+		success_msgs+=("CSS and JS coding standards check completed.")
 
-		success_msg="$${success_msg#|}"
-		$(call display_elapsed,$$start_time)
-		$(call display_success,$$success_msg)
+		display_elapsed "$$start_time"
+		display_success "$${success_msgs[@]}"
 	else
 		$(MAKE) cs-$(CS_TARGET)
 	fi
-	
 
 .PHONY: cs-php
 PHP_FIX ?= 0
 cs-php: ## PHP CS Fixer (PHP_FIX=1 to actually fix)
-	@$(call assert_not_prod)
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
 	if [ "$(PHP_FIX)" = "1" ]; then
-		$(call display_subtitle,🪛 PHP CS Fixer in verbose mode...)
+		display_subtitle "🪛 PHP CS Fixer in verbose mode..."
 		$(CSPHP) fix --verbose
-		$(call display_success_root,PHP coding standards check completed.)
+		display_success "PHP coding standards check completed."
 	else
-		$(call display_subtitle,🔄 Dry running PHP coding standards...)
+		display_subtitle "🔄 Dry running PHP coding standards..."
 		$(CSPHP) check --verbose
-		$(call display_subtitle,🔭 Running PHPStan analysis...)
+		display_subtitle "🔭 Running PHPStan analysis..."
 		$(PHPSTAN) analyse
-		$(call display_success_root,Dry running PHP coding standards completed.|PHPStan analysis completed.)
+		display_success \
+			"Dry running PHP coding standards completed." \
+			"PHPStan analysis completed."
 	fi
 
 .PHONY: cs-yaml
 cs-yaml: ## Validate YAML files
-	@$(call assert_not_prod)
-	$(call display_subtitle,🔭 Validate YAML files from config directory...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_subtitle "🔭 Validate YAML files from config directory..."
 
 	$(SYMFONY) "lint:yaml" config/
-	$(call display_success_root,YAML linting completed.)
+	display_success "YAML linting completed."
 
 .PHONY: cs-twig
 TWIG_FIX ?= 0
 cs-twig: ## Twig CS Fixer (TWIG_FIX=1 to actually fix)
-	@$(call assert_not_prod)
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
 	if [ "$(TWIG_FIX)" = "1" ]; then
-		$(call display_subtitle,🪛 Running Twig CS Fixer in fix mode...)
+		display_subtitle "🪛 Running Twig CS Fixer in fix mode..."
 		$(CSTWIG) fix templates/
 		$(SYMFONY) "lint:twig" templates/
 	else
-		$(call display_subtitle,🔭 Dry running Twig CS Fixer and display diff...)
+		display_subtitle "🔭 Dry running Twig CS Fixer and display diff..."
 		$(CSTWIG) check templates/
 	fi
-	$(call display_success_root,Twig coding standards check completed.)
+	display_success "Twig coding standards check completed."
 
 .PHONY: cs-front
 FRONT_FIX ?= 0
 cs-front: ## Run linters for CSS and JS (FRONT_FIX=1 to actually fix)
-	@$(call assert_not_prod)
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
 	if [ "$(FRONT_FIX)" = "1" ]; then
-		$(call display_subtitle,🪛 Running ESLint in fix mode...)
+		display_subtitle "🪛 Running ESLint in fix mode..."
 		$(ESLINT) assets/scripts/ --fix
-		$(call display_subtitle,🪛 Running Biome in fix mode...)
+		display_subtitle "🪛 Running Biome in fix mode..."
 		$(BIOME) --write assets/
 	else
-		$(call display_subtitle,🔍 Running ESLint...)
+		display_subtitle "🔍 Running ESLint..."
 		$(ESLINT) assets/scripts/
-		$(call display_subtitle,🔭 Running Biome...)
+		display_subtitle "🔭 Running Biome..."
 		$(BIOME) assets/
 	fi
-	$(call display_success_root,Frontend coding standards check completed (ESLint + Biome).)
+	display_success "Frontend coding standards check completed (ESLint + Biome)."
 
 .PHONY: cs-fix
 cs-fix: ## Fix all coding standards: PHP, Twig, CSS
-	@$(call assert_not_prod)
-	$(call display_title,🎨 Fixing coding standards)
-	success_msg=""
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_title "🎨 Fixing coding standards"
+	success_msgs=()
 	start_time=$$(date +%s)
 
 	$(MAKE) cs-php PHP_FIX=1
-	success_msg="$$success_msg|PHP coding standards fixed."
+	success_msgs+=("PHP coding standards fixed.")
 
 	$(MAKE) cs-twig TWIG_FIX=1
-	success_msg="$$success_msg|Twig coding standards fixed."
+	success_msgs+=("Twig coding standards fixed.")
 	
 	$(MAKE) cs-front FRONT_FIX=1
-	success_msg="$$success_msg|CSS and JS coding standards fixed."
+	success_msgs+=("CSS and JS coding standards fixed.")
 	
-	success_msg="$${success_msg#|}"
-	$(call display_elapsed,$$start_time)
-	$(call display_success,$$success_msg)
+	display_elapsed "$$start_time"
+	display_success "$${success_msgs[@]}"
 
 # =====================================================================
 ##@ TESTS
@@ -614,128 +621,143 @@ pre-commit: ## Run pre-commit checks
 
 .PHONY: grum-install
 grum-install: ## Install GrumPHP hooks
-	@$(call display_title,🪲 Installing GrumPHP hooks)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🪲 Installing GrumPHP hooks"
 
 	$(GRUMPHP) "git:init"
 
 .PHONY: grum-run
 grum-run: ## Run GrumPHP checks
-	@$(call display_title,🧪 Running GrumPHP checks)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧪 Running GrumPHP checks"
 
 	$(GRUMPHP) run
 
 .PHONY: grum-pre-commit
 grum-pre-commit:
-	@$(call display_title,🧪 Running GrumPHP pre-commit hooks)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧪 Running GrumPHP pre-commit hooks"
 	
 	$(GRUMPHP) "git:pre-commit"
 
 .PHONY: qa
 qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
-	@$(call assert_not_prod)
-	success_msg=""
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	success_msgs=()
 	start_time=$$(date +%s)
 
 	$(MAKE) cs || exit 1
-	success_msg="$$success_msg|PHP coding standards checked."
+	success_msgs+=("PHP coding standards checked.")
 
 	$(MAKE) qa-analyse || exit 1
-	success_msg="$$success_msg|Static analysis passed."
+	success_msgs+=("Static analysis passed.")
 	
 	$(MAKE) cover || exit 1
-	success_msg="$$success_msg|Tests passed."
+	success_msgs+=("Tests passed.")
 	
 	$(MAKE) test-mutation || exit 1
-	success_msg="$$success_msg|Infection tests passed."
+	success_msgs+=("Infection tests passed.")
 	
 	$(MAKE) test-arch || exit 1
-	success_msg="$$success_msg|Architecture tests passed."
+	success_msgs+=("Architecture tests passed.")
 	
 	$(MAKE) test-ui || exit 1
-	success_msg="$$success_msg|UI tests passed."
+	success_msgs+=("UI tests passed.")
 
-	success_msg="$$success_msg|✨ QA passed successfully! Your code is amazing. ✨"
-	success_msg="$${success_msg#|}"
-	$(call display_elapsed,$$start_time)
-	$(call display_success,$$success_msg)
+	success_msgs+=("$${GREEN}✨ QA passed successfully! Your code is amazing. ✨$${RESET}")
+	display_elapsed "$$start_time"
+	display_success "$${success_msgs[@]}"
 
 .PHONY: test
 test: ## Run PHPUnit tests without UI tests
-	@$(call display_title,🧪 Running PHPUnit tests)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧪 Running PHPUnit tests"
 	
 	$(MAKE) check-containers
-	$(call display_subtitle,💾 Generating fixtures...)
+	display_subtitle "💾 Generating fixtures..."
 	$(SYMFONY) "cache:clear" --env=test
 	$(SYMFONY) "app:generate-fixtures" --group=test
 	
-	$(call display_subtitle,🎬 Preparing test database...)
+	display_subtitle "🎬 Preparing test database..."
 	- $(SYMFONY) "doctrine:schema:drop" --env=test --force --full-database
 	$(SYMFONY) "doctrine:schema:update" --env=test --force
 	$(SYMFONY) "doctrine:fixtures:load" --env=test --group=test --no-interaction
 	
-	$(call display_subtitle,🧪 Running PHPUnit tests...)
+	display_subtitle "🧪 Running PHPUnit tests..."
 	$(PHPUNIT) --exclude-group=UI
+
+.PHONY: test-bash
+test-bash: ## Run Bats tests
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🧪 Running Bats tests"
+	bats tests/bash/
 
 .PHONY: qa-analyse
 qa-analyse: ## Run static analysis
-	@$(call display_subtitle,🔎 Running static analysis...)
-	success_msg=""
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Running static analysis..."
+	success_msgs=()
 
 	$(PHPSTAN) analyse
-	success_msg="$$success_msg|PHPStan passed."
+	success_msgs+=("PHPStan passed.")
 
-	$(call display_subtitle,🔎 Running Deptrac...)
+	display_subtitle "🔎 Running Deptrac..."
 	$(DEPTRAC) analyse
-	success_msg="$$success_msg|Deptrac passed."
+	success_msgs+=("Deptrac passed.")
 	
-	# $(call display_subtitle,🔎 Running Rector...)
+	# display_subtitle "🔎 Running Rector..."
 	# $(RECTOR) --dry-run
-	# success_msg="$$success_msg|Rector passed."
+	# success_msg+=("Rector passed.")
 	
-	success_msg="$${success_msg#|}"
-	$(call display_success,$$success_msg)
+	display_success "$${success_msgs[@]}"
 
 .PHONY: qa-rector
 REC_FIX ?= 0
 qa-rector: ## Run Rector (REC_FIX=1 to actually fix)
-	@$(call display_subtitle,🔎 Running Rector...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔎 Running Rector..."
 
 	if [ "$(REC_FIX)" = "1" ]; then
 		$(RECTOR)
 	else
 		$(RECTOR) --dry-run
 	fi
-	$(call display_success_root,Rector analysis complete)
+	display_success "Rector analysis complete"
 
 .PHONY: test-mutation
 test-mutation: ## Run Infection
-	@$(call display_subtitle,🧪 Running Infection...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🧪 Running Infection..."
 	
 	$(INFECTION) --threads=4
-	$(call display_success_root,Infection analysis complete)
+	display_success "Infection analysis complete"
 
 .PHONY: test-arch
 test-arch: ## Run phparkitect
-	@$(call display_subtitle,🔬 Running PHPArkitect...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔬 Running PHPArkitect..."
 	
 	$(PHPARKITECT) check
-	$(call display_success_root,PHPArkitect analysis complete)
+	display_success "PHPArkitect analysis complete"
 
 .PHONY: test-ui
 test-ui: ## Run PHPUnit tests for UI group
-	@$(call display_subtitle,🧪 Running PHPUnit tests for UI group...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🧪 Running PHPUnit tests for UI group..."
 
 	$(PHPUNIT) --group=UI
-	$(call display_success_root,PHPUnit UI tests complete)
+	display_success "PHPUnit UI tests complete"
 
 .PHONY: cover
 cover: ## Run PHPUnit tests with coverage
-	@$(call display_subtitle,🧹 Clearing cache...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🧹 Clearing cache..."
 
 	$(SYMFONY) "cache:clear" --env=test
-	$(call display_subtitle,🧪 Running PHPUnit tests with coverage...)
+	display_subtitle "🧪 Running PHPUnit tests with coverage..."
 	$(PHPUNIT) --coverage-html coverage/ --exclude-group=UI
-	$(call display_success_root,Coverage report generated in 'coverage/' directory.)
+	display_success "Coverage report generated in 'coverage/' directory."
 
 # =====================================================================
 ##@ ENVIRONMENT
@@ -743,201 +765,52 @@ EXPORT_DIR=$(TOOLS_CONFIG_DIR)/export
 ZIP_NAME=portfolio_prod-$(TODAY).zip
 SQL_FILE=portfolio_db-$(NOW).sql
 # CMD_PROD=zip -r archive-portfolio-$(TODAY).zip * -x analytics/* -x medias/movies/*
-REMOTE_PATH=/home/$(REMOTE_USER)/domains/carolinenoyer.fr/public_html
 
 .PHONY: db-dump
 FILES_CLEAN ?= 0
 db-dump: ## Dump database (FILES_CLEAN=1 to clean previous)
-	@$(call display_title,💾 Dumping database...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "💾 Dumping database..."
 
 	if [ "$(FILES_CLEAN)" = "1" ]; then
 		rm -f $(EXPORT_DIR)/*.sql
 	fi
-	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE) 
-	$(call display_success_root,Database dumped to:|$(EXPORT_DIR)/$(SQL_FILE))
+	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE)
+	display_success "Database dumped to: $${GREEN}$(EXPORT_DIR)/$(SQL_FILE)$${RESET}"
 
 .PHONY: deploy
 # deploy.sh should be copied to remote server in user folder
-# Find it into .tools-config directory if needed
-deploy: ## Build and push assets to production branch
-	@$(call display_title,🚀 Deploying to production branch...)
-	start_time=$$(date +%s)
-
-	read -p "⚠️  Are you sure you want to deploy to production? [y/N] " answer
-	if [ "$${answer}" != "y" ] && [ "$${answer}" != "Y" ]; then
-		$(call display_warning,Deployment cancelled.)
-		exit 0
-	fi
-
-	$(MAKE) -s check-remote-vars
-	if [ "$$(git rev-parse --abbrev-ref HEAD)" != "main" ]; then
-		$(call display_error,You must be on the 'main' branch to deploy.|Current branch: $$(git rev-parse --abbrev-ref HEAD))
-		$(MAKE) _fatal msg="You must be on the 'main' branch to deploy." 
-	fi
-
-	if ! git diff-index --quiet HEAD --; then
-		$(call display_error,You have uncommitted changes.|Commit or stash them before deploying.)
-		$(MAKE) _fatal msg="You have uncommitted changes. Commit or stash them before deploying."
-	fi
-	if ! git show-ref --quiet refs/heads/production; then
-		$(call display_error,The 'production' branch does not exist. Create it with: git checkout -b production)
-		$(MAKE) _fatal msg="The 'production' branch does not exist. Create it with: git checkout -b production"
-	fi
-
-	$(call display_subtitle,🚀 Preparing assets build for production...)
-	$(SYMFONY) "tailwind:build" --minify --env=prod
-	$(SYMFONY) "importmap:install" --env=prod
-	$(SYMFONY) "assets:install" --env=prod
-	$(SYMFONY) "asset-map:compile" --env=prod
-	$(SYMFONY) "cache:clear" --env=prod
-
-	$(call display_subtitle,📦 Stashing compiled assets...)
-	git add -f public/assets/*.js public/assets/styles/  public/assets/*.json
-	if ! git stash push -m "deploy: assets compiled" -- public/assets/; then
-		$(call display_error,Failed to stash compiled assets. Check for conflicts or errors.)
-		$(MAKE) _fatal msg="Failed to stash compiled assets. Check for conflicts or errors."
-	fi
-
-	$(call display_subtitle,🔄 Switching to production branch...)
-	if ! git checkout production; then
-		$(call display_error,Failed to checkout production branch. Aborting.)
-		$(MAKE) _fatal msg="Failed to checkout production branch. Aborting."
-	fi
-	if ! git merge -X theirs main --no-edit; then
-		$(call display_error,Failed to merge main into production. Aborting.)
-		git checkout main
-		git stash pop 2>/dev/null || true
-		$(MAKE) _fatal msg="Failed to merge main into production. Aborting."
-	fi
-	cp .tools-config/.gitignore.production .gitignore
-
-	$(call display_subtitle,📦 Applying stashed assets...)
-	if ! git stash list | grep -q "deploy: assets compiled"; then
-		$(call display_error,No stash found for compiled assets. Aborting.)
-		git checkout main
-		$(MAKE) _fatal msg="No stash found for compiled assets. Aborting."
-	fi
-	if ! git stash pop; then
-		$(call display_error,Failed to apply stashed assets. Aborting.)
-		git checkout main
-		git stash drop 2>/dev/null || true
-		$(MAKE) _fatal msg="Failed to apply stashed assets. Aborting."
-	fi
-
-	$(call display_subtitle,📝 Committing assets...)
-	git add public/assets/
-	if ! git commit --no-verify -m "chore: assets compiled for production $$(date +'%Y-%m-%d %H:%M')"; then
-		$(call display_error,Failed to commit assets. Aborting.)
-		git checkout main
-		git stash drop 2>/dev/null || true
-		$(MAKE) _fatal msg="Failed to commit assets. Aborting."
-	fi
-
-	$(call display_subtitle,⬆️ Pushing to production branch...)
-	if ! git push origin production; then
-		$(call display_error,Failed to push to production branch. Aborting.)
-		git checkout main
-		git reset --hard HEAD~1
-		$(MAKE) _fatal msg="Failed to push to production branch. Aborting."
-	fi
-
-	$(call display_subtitle,⚡️ Deploying to remote server...)
-	if ! ssh -i $(REMOTE_SSH_KEY) -p $(REMOTE_PORT) $(REMOTE_USER)@$(REMOTE_HOST) "~/deploy.sh"; then
-		$(call display_error,Remote deployment failed. Check the server logs.)
-		git checkout main
-		git reset --hard HEAD~1
-		git push origin production --force
-		$(MAKE) _fatal msg="Remote deployment failed. Check the server logs."
-	fi
-	
-	$(call display_subtitle,🔁 Back to main branch...)
-	git checkout main
-	
-	$(call display_subtitle,🔁 And dev environment...)
+# Find it into .tools/ directory if needed
+deploy: ## Full production deployment - build + push to remote
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🚀 Starting full production deployment"
+	@./$(SCRIPTS_DIR)/prod-build.sh
+	@./$(SCRIPTS_DIR)/prod-deploy.sh
 	$(MAKE) dev
-
-	$(call display_elapsed,$$start_time)
-	$(call display_success,Production deployed successfully!)
+	display_success "Full production deployment completed!"
 
 .PHONY: prod-build
-prod-build: ## Build production version
-	@$(call display_title,Building production version...)
-	start_time=$$(date +%s)
+prod-build: ## Build and commit assets to production branch
+	@./$(SCRIPTS_DIR)/prod-build.sh
 
-	$(call display_subtitle,🗜️ [1/7] Dumping database...)
-	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE)
-
-	$(call display_subtitle,🧹 [2/7] Cleaning of the local cache...)
-	$(SYMFONY_PROD) "cache:clear" --env=prod
-
-	$(call display_subtitle,🎨 [3/7] Compilation and minification of Tailwind v4...)
-	$(SYMFONY_PROD) "tailwind:build" --minify --env=prod
-
-	$(call display_subtitle,🎨 [4/7] Compilation of assets with AssetMapper for PROD...)
-	$(SYMFONY_PROD) "asset-map:compile" --env=prod
-
-	$(call display_subtitle,📦 [5/7] Removal of DEV tools and optimization of Composer...)
-	docker compose exec $(TTY_FLAG) -e APP_ENV=prod app composer install --no-dev --optimize-autoloader
-	
-	$(call display_subtitle,✨ [6/7] Warming up the PROD cache...)
-	$(SYMFONY_PROD) "cache:warmup" --env=prod
-	
-	$(call display_subtitle,📦 [7/7] Zipping the production build...)
-	rm -f $(EXPORT_DIR)/*.zip
-	zip -r $(EXPORT_DIR)/$(ZIP_NAME) . -x "*.git*" "node_modules/*" "tests/*" "var/cache/*" "var/log/*" ".env.local" "Makefile" "$(TOOLS_CONFIG_DIR)/*" ".docker/*" "docker-compose.yml" > /dev/null
-	
-	$(call display_elapsed,$$start_time)
-	$(call display_success,Database dumped|Local cache cleaned|Tailwind compiled and minified|Assets compiled with AssetMapper|DEV tools removed and Composer optimized|PROD cache warmed up|Archive $(ZIP_NAME) created")
-	printf "\n  $(BOLD)$(GREEN)✨ Archive $(ZIP_NAME) ready for manual transfer! ✨$(RESET)\n\n"
-
-check-remote-vars:
-	@if [ -z "$(REMOTE_USER)" ] || [ -z "$(REMOTE_HOST)" ] || [ -z "$(REMOTE_SSH_KEY)" ] || [ -z "$(REMOTE_PATH)" ]; then 
-		$(call display_error,REMOTE_USER, REMOTE_HOST, REMOTE_SSH_KEY, and REMOTE_PATH must be set)
-		$(MAKE) _fatal msg="REMOTE_USER, REMOTE_HOST, REMOTE_SSH_KEY, and REMOTE_PATH must be set"
-	fi
+.PHONY: prod-deploy
+prod-deploy: ## Deploy to remote server - requires assets already built
+	@./$(SCRIPTS_DIR)/prod-deploy.sh
 
 .PHONY: dev
 dev: ## Switch back to development environment
-	@$(call display_title,🔄 Switching back to development environment...)
-	start_time=$$(date +%s)
-	success_msg=""
-
-	$(call display_subtitle,🔄 [1/5] Restoring dev dependencies...)
-	docker compose exec $(TTY_FLAG) -e APP_ENV=dev app composer install
-	success_msg="$$success_msg|Dev dependencies restored."
-	
-	$(call display_subtitle,🧹 [2/5] Cleaning dev cache...)
-	$(SYMFONY) "cache:clear" --env=dev
-	success_msg="$$success_msg|Dev cache cleaned."
-
-	$(call display_subtitle,🎨 [3/5] Regenerating assets for development...)
-	$(SYMFONY) "tailwind:build" --env=dev
-	success_msg="$$success_msg|Assets regenerated for development."
-
-	$(call display_subtitle,🧹 [4/5] Cleaning public assets...)
-	rm -rf public/assets/*
-	success_msg="$$success_msg|Public assets cleaned."
-
-	$(call display_subtitle,🧹 [5/5] Cleaning archive...)
-	rm -f $(ZIP_NAME)
-	success_msg="$$success_msg|Archive cleaned."
-
-	success_msg="$$success_msg|✅ Development environment restored!"
-	success_msg="$${success_msg#|}"
-	$(call display_elapsed,$$start_time)
-	$(call display_success,$$success_msg)
-
-	
+	@./$(SCRIPTS_DIR)/dev.sh
 
 # =====================================================================
 ##@ HELP
 
 .PHONY: readme
 readme: ## Update README.md Makefile section
-	@$(call display_subtitle,🔄 Updating README.md...)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔄 Updating README.md..."
 
 	if [ ! -f README.md ]; then
-		$(call display_error,README.md not found)
+		display_error "README.md not found"
 		$(MAKE) _fatal msg="README.md not found"
 	fi
 
@@ -967,18 +840,21 @@ readme: ## Update README.md Makefile section
 	rm -f $$tmp_help
 	git add README.md
 
-	$(call display_success,README.md updated successfully!)
+	display_success "README.md updated successfully!"
 
 .PHONY: readme-check
 readme-check: ## Check if README.md is up to date
-	@tmp=$$(mktemp)
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_subtitle "🔄 Checking README.md..."
+
+	tmp=$$(mktemp)
 	cp README.md $$tmp
 	$(MAKE) readme > /dev/null
 	if ! diff -q README.md $$tmp >/dev/null; then 
 		mv $$tmp README.md
-		$(call display_warning,README.md is outdated. Run 'make readme'.)
+		display_warning "README.md is outdated. Run 'make readme'."
 	else 
-		$(call display_success,README.md is up to date.)
+		display_success "README.md is up to date."
 	fi
 	rm -f $$tmp
 
@@ -1017,10 +893,10 @@ help: ## Show this help message
 		}'  $(MAKEFILE_LIST)
 	@printf '\n'
 	@printf '  $(BOLD)Examples:$(RESET)\n'
-	@printf '    make test              	# Run PHPUnit tests (excluding UI)\n'
-	@printf '    make cover             	# Run tests with coverage\n'
-	@printf '    make cs-php PHP_FIX=1  	# Fix PHP coding standards\n'
-	@printf '    make qa                	# Run full QA suite\n'
-	@printf '    make deploy            	# Deploy to production\n'
-	@printf '    make dev               	# Restore development environment\n'
+	@printf '    $(YELLOW)make$(RESET) test              	# Run PHPUnit tests (excluding UI)\n'
+	@printf '    $(YELLOW)make$(RESET) cover             	# Run tests with coverage\n'
+	@printf '    $(YELLOW)make$(RESET) cs-php PHP_FIX=1  	# Fix PHP coding standards\n'
+	@printf '    $(YELLOW)make$(RESET) qa                	# Run full QA suite\n'
+	@printf '    $(YELLOW)make$(RESET) deploy            	# Deploy to production\n'
+	@printf '    $(YELLOW)make$(RESET) dev               	# Restore development environment\n'
 	@printf '\n'
