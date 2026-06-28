@@ -1,0 +1,10 @@
+div#matomo-opt-out {
+    p {
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    input {
+        margin: 10px;
+    }
+}
