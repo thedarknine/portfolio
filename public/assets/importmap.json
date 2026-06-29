@@ -1,27 +1,23 @@
 {
     "app": {
-        "path": "\/assets\/app-CUR9-fr.js",
+        "path": "\/assets\/app-VRo-PkA.js",
         "type": "js"
     },
     "\/assets\/styles\/app.css": {
-        "path": "\/assets\/styles\/app-WepzI-h.css",
+        "path": "\/assets\/styles\/app-34lKQ74.css",
         "type": "css"
     },
     "home": {
         "path": "\/assets\/scripts\/home-we2YN3p.js",
         "type": "js"
     },
+    "gallery": {
+        "path": "\/assets\/scripts\/gallery-pdDbB36.js",
+        "type": "js"
+    },
     "typed.js": {
         "path": "\/assets\/vendor\/typed.js\/typed.js.index-DU94zjw.js",
         "type": "js"
-    },
-    "animate.css": {
-        "path": "\/assets\/vendor\/animate.css\/animate.css.index-sQzUbZN.js",
-        "type": "js"
-    },
-    "animate.css\/animate.min.css": {
-        "path": "\/assets\/vendor\/animate.css\/animate.min-QZ5-rDR.css",
-        "type": "css"
     },
     "photoswipe": {
         "path": "\/assets\/vendor\/photoswipe\/photoswipe.index-8vQaliZ.js",
