@@ -1,0 +1,40 @@
+/* ============================================================
+ * COMPOSANTS — Boutons
+ * ============================================================ */
+.nine-btn-primary {
+    display: inline-block;
+    padding: 0 38px;
+    font-family: var(--font-accent);
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 40px;
+    color: var(--color-nine-sand-200);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0;
+    cursor: pointer;
+    outline: none !important;
+    background: linear-gradient(to right, var(--color-nine-blue-500) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-500) 100%);
+    background-size: 200% auto;
+    border-radius: 5px;
+
+    &:hover {
+        color: var(--color-white);
+        background-position: right center;
+        box-shadow: 0 0 30px -15px rgb(46 54 78 / 20%);
+    }
+}
+
+.nine-btn-social {
+    @apply text-nine-sand-200 border-nine-gray-400 rounded-full border-2 text-shadow-lg;
+
+    transition: 0.5s;
+    transition-delay: 0.3s;
+
+    &:hover {
+        @apply rounded-full;
+
+        background: linear-gradient(to right bottom, var(--color-nine-blue-900) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-900) 100%);
+        border-color: var(--color-nine-cyan-500);
+    }
+}
