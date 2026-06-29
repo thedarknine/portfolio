@@ -9,7 +9,6 @@
     "unlighthouse": "^0.17.10"
   },
   "dependencies": {
-    "animate.css": "^4.1.1",
     "photoswipe": "^5.4.4",
     "typed.js": "^3.0.0"
   }

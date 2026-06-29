@@ -5,13 +5,13 @@
 {% block body %}
 <section class="bg-surface py-10">
     <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
-        <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600">
+        <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600ms">
             <h3 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation professionnelle</h3>
             <div class="line h-1"></div>
             <img src="{{ absolute_url('images/education/formation-professionnelle.webp') }}" alt="Formation professionnelle" width="250px" />
         </div>
 
-        <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
+        <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600ms">
             {% for education in educations_professional_list %}
                 {{ include('components/education_card.html.twig', { education: education }) }}
             {% endfor %}
@@ -21,13 +21,13 @@
 
 <section class="bg-surface-alt py-10">
     <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
-        <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600">
+        <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600ms">
             <h3 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation universitaire</h3>
             <div class="line h-1"></div>
             <img src="{{ absolute_url('images/education/formation-universitaire.webp') }}" alt="Formation universitaire " width="250px" />
         </div>
 
-        <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600">
+        <div class="w-full max-w-xl p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-3/4 animate__animated" data-animate="animate__fadeInRight" data-delay="600ms">
             {% for education in educations_universitary_list %}
                 {{ include('components/education_card.html.twig', { education: education }) }}
             {% endfor %}

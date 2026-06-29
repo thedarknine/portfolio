@@ -1,0 +1,68 @@
+/* ============================================================
+ * FONTS
+ * Oxygen : 2 weights (400, 700)
+ * League Spartan : 4 weights (400, 500, 600, 700)
+ * Inter : 2 weights (400, 700) — fallback only, no unnecessary weights
+ * ============================================================ */
+
+/* Oxygen */
+@font-face {
+    font-display: swap;
+    font-family: "Oxygen";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/oxygen/oxygen-v16-latin-regular.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "Oxygen";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/oxygen/oxygen-v16-latin-700.woff2") format("woff2");
+}
+
+/* League Spartan */
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-regular.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-500.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 600;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-600.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "League Spartan";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/league-spartan/league-spartan-v15-latin-700.woff2") format("woff2");
+}
+
+/* Inter — fallback only, 400 + 700 */
+@font-face {
+    font-display: swap;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/inter/inter-v20-latin-regular.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/inter/inter-v20-latin-700.woff2") format("woff2");
+}
