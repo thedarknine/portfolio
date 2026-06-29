@@ -16,7 +16,9 @@ RUN apk add --no-cache \
     nodejs \
     npm \
     bash \
-    make
+    make \
+    chromium \
+    chromium-chromedriver
 
 # Install php extensions using mlocati/php-extension-installer
 # This is the recommended tool to manage dependencies and extensions
