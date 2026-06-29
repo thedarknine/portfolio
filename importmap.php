@@ -27,13 +27,6 @@ return [
     'typed.js' => [
         'version' => '3.0.0',
     ],
-    'animate.css' => [
-        'version' => '4.1.1',
-    ],
-    'animate.css/animate.min.css' => [
-        'version' => '4.1.1',
-        'type' => 'css',
-    ],
     'photoswipe' => [
         'version' => '5.4.4',
     ],

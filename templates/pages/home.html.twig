@@ -14,20 +14,21 @@
 {% block body %}
 {# Hero section #}
 <section class="nine-home-area -mt-24 pt-24 static">
+    <img src="{{ asset('images/volcans-cnoyer.webp') }}" alt="Volcans d'Auvergne" class="hero-background" fetchpriority="high">
     <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
         <div class="md:pt-12">
-            <div class="animate__animated animate__fadeInUp" data-delay="1000">
+            <div class="animate__animated animate__fadeInUp" data-delay="1000ms">
                 <img class="lg:h-80 h-40 mx-auto nine-jump rounded " src="{{ absolute_url(asset('images/cnoyer-logo.webp')) }}" alt="Caroline Noyer - Logo">
             </div>
         </div>
         <div class="mb-16 mt-12 lg:mt-32 xl:mt-40 xl:mr-12">
             <div class="max-w-2xl mx-auto mb-8">
                 <h2 class="text-3xl text-white lg:text-5xl lg:leading-normal mb-4 font-bold font-heading animate__animated" data-animate="animate__fadeIn" data-delay="0.5s">Passionnée par le <span class="text-turquoise">digital</span> depuis 2005</h2>
-                <p class="text-nine-cyan-500 text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1000" ><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
+                <p class="text-nine-cyan-500 text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1000ms" ><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
             </div>
             <div class="max-w-2xl mx-auto">
                 {% for resource in page_manager.getPublishedResourceLinksInHero() %}
-                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray-400 border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}">
+                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray-400 border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}ms">
                     <a href="{{ resource.url }}" title="{{ resource.title }}" class="text-2xl" target="_blank" aria-label="{{ resource.title }}">{{ ux_icon(resource.icon, { class: 'text-nine-sand-200' }) }}</a>
                 </span>
                 {% endfor %}
@@ -41,7 +42,7 @@
 
 {# Positionnement section #}
 <section id="competences" class="bg-surface text-on-surface py-10">
-    <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
+    <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
         <p class="nine-section-subheader">
             Mon positionnement
         </p>
@@ -52,7 +53,7 @@
 
     <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
         {# CARD #}
-        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="0">
+        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="0ms">
             {# ICON #}
             <div class="mb-6 text-3xl">🧭</div>
             {# MINI TITLE #}
@@ -72,7 +73,7 @@
         </div>
 
         {# CARD #}
-        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="400">
+        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="400ms">
             <div class="mb-6 text-3xl">⚙️</div>
             <p class="text-sm text-slate-500 mb-2">Faire le lien métier / tech</p>
             <h3 class="text-xl font-semibold mb-4">Expertise</h3>
@@ -87,7 +88,7 @@
         </div>
 
         {# CARD #}
-        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="800">
+        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="800ms">
             <div class="mb-6 text-3xl">✨</div>
             <p class="text-sm text-slate-500 mb-2">Structurer &amp; simplifier</p>
             <h3 class="text-xl font-semibold mb-4">Approche</h3>
@@ -105,7 +106,7 @@
 
 {# Parcours section #}
 <section class="bg-nine-blue-800 text-nine-gray-200 py-10">
-  <div class="text-center max-w-2xl mx-auto mb-20 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
+  <div class="text-center max-w-2xl mx-auto mb-20 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
     <p class="nine-section-subheader">
       Mon parcours
     </p>
@@ -202,7 +203,7 @@
 
 {# Experience section #}
 <section id="experience" class="bg-surface py-10">
-    <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
+    <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
         <p class="nine-section-subheader">
             Mes expériences
         </p>
@@ -282,7 +283,7 @@
 
 {# About me section #}
 <section id="about" class="bg-surface py-10">
-    <div class="text-center max-w-2xl mx-auto mb-8 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200">
+    <div class="text-center max-w-2xl mx-auto mb-8 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
         <p class="nine-section-subheader">
             A propos de moi
         </p>

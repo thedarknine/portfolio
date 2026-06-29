@@ -5,10 +5,6 @@
  * which should already be in your base.html.twig.
  */
 import './styles/app.css';
-import 'animate.css';
-import 'photoswipe/dist/photoswipe.min.css';
-import PhotoSwipe from 'photoswipe';
-import PhotoSwipeLightbox from 'photoswipe/lightbox';
 
 // console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');
 
@@ -22,27 +18,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                const element = entry.target;
-                const animationClass = element.getAttribute('data-animate');
-
-                // On récupère le délai (on met 0 par défaut si l'attribut n'existe pas)
-                const delay = parseInt(element.getAttribute('data-delay'), 10) || 0;
-
-                // On arrête d'observer l'élément immédiatement pour éviter les doublons
-                observer.unobserve(element);
-
-                setTimeout(() => {
-                    element.classList.add('animate__animated', animationClass);
-                    element.removeAttribute('data-animate');
-                }, delay);
+            if (!entry.isIntersecting) {
+                return;
             }
+
+            const element = entry.target;
+
+            observer.unobserve(element);
+
+            if (element.dataset.delay) {
+                element.style.animationDelay = element.dataset.delay;
+            }
+
+            element.classList.add('animate__animated', element.dataset.animate);
+
+            element.removeAttribute('data-animate');
+            element.removeAttribute('data-delay');
         });
     }, options);
 
     const elementsToAnimate = document.querySelectorAll('[data-animate]');
-    elementsToAnimate.forEach((el) => {
-        observer.observe(el);
+
+    elementsToAnimate.forEach((element) => {
+        observer.observe(element);
     });
 
     // Menus Burger (Mobile)
