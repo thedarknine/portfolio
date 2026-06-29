@@ -36,6 +36,9 @@ check_no_uncommitted_changes
 check_production_branch_exists
 display_success "All checks passed!"
 
+# Pull latest changes
+git pull origin main
+
 # =====================================================================
 # BUILD POUR PRODUCTION
 # =====================================================================
