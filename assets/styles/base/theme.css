@@ -1,0 +1,101 @@
+/* ============================================================
+ * TOKENS DESIGN SYSTEM
+ * ============================================================ */
+@theme {
+    /* Typo */
+    --font-normal: "Oxygen", "Inter", sans-serif;
+    --font-accent: "League Spartan", sans-serif;
+
+    /* Colors */
+    /* Blues */
+    --color-nine-blue-400: oklch(37.94% 0.1209 259.27); /* #153f81 */
+    --color-nine-blue-500: oklch(35.22% 0.104 259.27); /* #163970 */
+    --color-nine-blue-600: oklch(33.74% 0.071 254.99); /* #1c385b */
+    --color-nine-blue-700: oklch(32.49% 0.0821 255.92); /* #14345d */
+    --color-nine-blue-800: oklch(29.12% 0.0592 255.92);
+    --color-nine-blue-900: oklch(24.83% 0.049 253.38); /* #0f2238 */
+
+    /* Cyan */
+    --color-nine-cyan-500: oklch(61.25% 0.116 226.51); /* #0a91b9 */
+
+    /* Warm neutrals — light mode backgrounds */
+    --color-nine-sand-50: oklch(96.81% 0.0074 80.72); /* #f7f4ef */
+    --color-nine-sand-200: oklch(90.81% 0.008 253.86); /* #dde1e6 */
+    --color-nine-sand-300: oklch(85.95% 0.0594 82.95); /* #e4cea5 */
+
+    /* Grays */
+    --color-nine-gray-200: oklch(90.97% 0 0); /* #e1e1e1 */
+    --color-nine-gray-400: oklch(71.07% 0.035 256.79); /* #94a3b8 */
+    --color-nine-gray-500: oklch(70.31% 0.0407 255.66); /* #8fa1b9 */
+    --color-nine-gray-600: oklch(50.97% 0.035 256.79); /* #64748b */
+    --color-nine-gray-700: oklch(37.25% 0.0444 258.77); /* #324158 */
+    --color-nine-gray-800: oklch(27.66% 0.0404 261.93); /* #1d283c */
+
+    /* Amber / yellow */
+    --color-nine-amber-400: oklch(80.16% 0.171 73.27); /* #ffaa00 */
+    --color-nine-amber-500: oklch(78.59% 0.167 70.04); /* #fca313 */
+    --color-nine-amber-600: oklch(76.86% 0.1647 70.08); /* #f59e0b */
+
+    /* Feedback */
+    --color-nine-red-600: oklch(44.4% 0.177 26.899); /* #d12727 */
+
+    /* Couleurs de marques clientes */
+    --color-brand-leviia: oklch(73.2% 0.146 169.35); /* #00c599 */
+    --color-brand-perfect: oklch(44.17% 0.102 251.28); /* #215589 */
+    --color-brand-coffreo: oklch(68.6% 0.21 41.14); /* #ff5e02 */
+
+    /* ------------------------------------------------------------------
+     * SEMANTIC TOKENS — light mode (default values)
+     * ------------------------------------------------------------------ */
+    --color-nine-primary: var(--color-nine-blue-500);
+    --color-nine-secondary: var(--color-nine-cyan-500);
+
+    /* Surfaces */
+    --color-surface: var(--color-nine-sand-50);
+    --color-surface-alt: var(--color-nine-sand-200);
+    --color-surface-hero: var(--color-nine-blue-700);
+    --color-surface-quote: var(--color-nine-gray-400);
+    --color-surface-card: var(--color-nine-sand-50);
+    --color-surface-footer: var(--color-nine-blue-900);
+
+    /* Textes */
+    --color-on-surface: var(--color-nine-blue-600);
+    --color-on-surface-muted: var(--color-nine-gray-600);
+    --color-on-surface-subheader: var(--color-nine-gray-600);
+    --color-on-surface-hero: var(--color-nine-sand-200);
+    --color-on-surface-quote: var(--color-nine-blue-600);
+    --color-on-surface-card: var(--color-nine-gray-500);
+    --color-on-surface-footer: var(--color-nine-gray-400);
+}
+
+/* Safelist for Tailwind CSS classes used in templates */
+@source inline("fill-brand-leviia");
+@source inline("fill-brand-perfect");
+@source inline("fill-brand-coffreo");
+@source inline("bg-brand-leviia");
+@source inline("bg-brand-perfect");
+@source inline("bg-brand-coffreo");
+@source inline("flex-row-reverse");
+
+/* ============================================================
+ * VARIANT DARK — triggered by data-theme="dark" on <html>
+ * ============================================================ */
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root[data-theme="dark"] {
+    --color-surface: var(--color-nine-blue-900);
+    --color-surface-alt: var(--color-nine-blue-800);
+    --color-surface-hero: var(--color-nine-gray-800);
+    --color-surface-quote: var(--color-nine-gray-800);
+    --color-surface-card: var(--color-nine-gray-700);
+    --color-surface-footer: var(--color-nine-blue-900);
+
+    --color-on-surface: var(--color-nine-gray-200);
+    --color-on-surface-muted: var(--color-nine-gray-400);
+    --color-on-surface-subtle: var(--color-nine-gray-600);
+    --color-on-surface-hero: var(--color-nine-gray-400);
+    --color-on-surface-quote: var(--color-nine-gray-400);
+    --color-on-surface-card: var(--color-nine-sand-200);
+    --color-on-surface-footer: var(--color-nine-gray-400);
+}
