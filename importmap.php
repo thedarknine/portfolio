@@ -20,6 +20,10 @@ return [
         'path' => './assets/scripts/home.js',
         'entrypoint' => true,
     ],
+    'gallery' => [
+        'path' => './assets/scripts/gallery.js',
+        'entrypoint' => true,
+    ],
     'typed.js' => [
         'version' => '3.0.0',
     ],

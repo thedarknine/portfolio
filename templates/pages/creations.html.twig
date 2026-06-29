@@ -2,6 +2,11 @@
 
 {% block title %}Créations{% endblock %}
 
+{% block importmap %}
+    {{ parent() }}
+    {{ importmap('gallery') }}
+{% endblock %}
+
 {% block body %}
 {% for type in creations_data.types %}
 <section class="{% if loop.index is even %}bg-surface-alt{% else %}bg-surface{% endif %} py-10">
