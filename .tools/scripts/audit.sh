@@ -24,7 +24,7 @@ display_subtitle "🔄 Regenerating sitemaps..."
 docker compose exec app php bin/console presta:sitemaps:dump --base-url=http://engine
 
 # 1. Lighthouse (audit détaillé page d'accueil)
-display_subtitle "📊 [1/2] Lighthouse (page d'accueil)..."
+display_subtitle "📊 [1/3] Lighthouse (page d'accueil)..."
 docker compose exec app npx lighthouse http://engine:80 \
   --chrome-path=/usr/bin/chromium \
   --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --no-zygote" \
@@ -36,8 +36,8 @@ summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/lighthouse/index.html" 
 success_msgs+=("📄 Audit: $summary <- Open in browser")
 
 # 2. Unlighthouse (perf + SEO + a11y sur tout le site)
-display_subtitle "🔍 [2/2] Unlighthouse (tout le site)..."
-UNLIGHTHOUSE_OUT=".tools/reports/unlighthouse"
+display_subtitle "🔍 [2/3] Unlighthouse (tout le site)..."
+UNLIGHTHOUSE_OUT="$REPORTS_DIR/unlighthouse"
 link="$(print_link "http://localhost:5678" "http://localhost:5678")"
 display_info "   Dashboard disponible sur $link pendant le scan"
 docker compose exec app pnpm unlighthouse --config-file .tools/unlighthouse.config.ts --build-static --output-path "$UNLIGHTHOUSE_OUT"
@@ -46,10 +46,19 @@ success_msgs+=("📄 Generated Unlighthouse reports:")
 while read -r f; do
     file="$(print_link "file://$PROJECT_ROOT/$f" "$f")"
     success_msgs+=("  → $file")
-done < <(find .tools/reports/unlighthouse -name "lighthouse.html")
+done < <(find "$UNLIGHTHOUSE_OUT" -name "lighthouse.html")
 
-# summary="$(print_link "file://$PROJECT_ROOT/$UNLIGHTHOUSE_REPORT" "Unlighthouse Report")"
-# success_msgs+=("Audit: $summary - Open in browser")
+display_subtitle "🔍 [3/3] Pa11y parsing sitemap..."
+if ! docker compose exec app npx pa11y-ci --config .tools/pa11y.json --sitemap http://engine/sitemap.default.xml; then
+  warning_msgs=("Pa11y failed")
+  summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/pa11y/index.html" "Pa11y Report")"
+  warning_msgs+=("Check: $summary - Open in browser")
+  display_warning "${warning_msgs[@]}"
+  exit 1
+fi
+
+summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/pa11y/index.html" "Pa11y Report")"
+success_msgs+=("Pa11y report: $summary - Open in browser")
 
 # Clean up sitemaps
 rm -f public/sitemap*.xml

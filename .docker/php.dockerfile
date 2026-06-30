@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     libzip-dev \
     zip \
     unzip \
+    jq \
     nodejs \
     npm \
     bash \

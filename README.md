@@ -349,6 +349,7 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 
 * lighthouse
 * unlighthouse
+* pa11y pa11y-ci
 
 * [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) — Audit d'accessibilité et performance.
 * [PageSpeed Insights](https://pagespeed.web.dev/) — Analyse de la performance des pages web.
