@@ -1,5 +1,9 @@
 {% extends 'layout.html.twig' %}
 
+{% block meta_description %}
+Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline Noyer, Technical Product Owner.
+{% endblock %}
+
 {% form_theme form _self %}
 {% block form_errors %}
   {% if errors|length > 0 %}

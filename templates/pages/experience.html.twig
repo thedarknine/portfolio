@@ -1,6 +1,10 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Expérience{% endblock %}
+{# Expérience #}
+
+{% block meta_description %}
+Découvrez mon parcours professionnel : 15 ans en développement web, évolution vers le rôle de Product Owner technique, et interventions à la croisée du produit et de la technique.
+{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -24,19 +28,19 @@
                 <div class="nine-approach-grid">
                     <article>
                         {{ ux_icon('hugeicons:user-group-03', { class: 'w-14 h-14 text-nine-gray-600' }) }}
-                        <h3>Construire collectivement</h3>
+                        <h2>Construire collectivement</h2>
                         <p>J’apprécie les environnements collaboratifs où chacun contribue à faire avancer le produit.</p>
                     </article>
 
                     <article>
                         {{ ux_icon('hugeicons:link-01', { class: 'w-14 h-14 text-nine-gray-600' }) }}
-                        <h3>Faire le lien</h3>
+                        <h2>Faire le lien</h2>
                         <p>Créer des passerelles entre technique, produit et utilisateurs fait partie de ce qui me motive.</p>
                     </article>
 
                     <article>
                         {{ ux_icon('hugeicons:healtcare', { class: 'w-14 h-14 text-nine-gray-600' }) }}
-                        <h3>Concevoir avec sens</h3>
+                        <h2>Concevoir avec sens</h2>
                         <p>Je porte une attention particulière à la clarté des interfaces et des parcours.</p>
                     </article>
                 </div>

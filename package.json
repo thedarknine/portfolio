@@ -13,7 +13,6 @@
     "unlighthouse": "^0.17.10"
   },
   "dependencies": {
-    "photoswipe": "^5.4.4",
-    "typed.js": "^3.0.0"
+    "photoswipe": "^5.4.4"
   }
 }
