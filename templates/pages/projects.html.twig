@@ -1,6 +1,10 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Projets{% endblock %}
+{# Projets #}
+
+{% block meta_description %}
+Découvrez mes projets phares : applications SaaS, structuration de pôles produits, et solutions techniques menées en tant que Product Owner et développeuse PHP.
+{% endblock %}
 
 {% block importmap %}
     {{ parent() }}
@@ -26,7 +30,7 @@
                 <div class="flex items-center gap-3">
                     <img src="{{ absolute_url('images/projects/' ~ project.logo) }}" alt="Logo {{ project.name }}" class="w-12 h-12 rounded-xl object-cover " />
                     <div>
-                        <h3 class="font-accent text-xl font-medium text-nine-cyan-500 group-hover:text-nine-amber-500 transition-colors">{{ project.name }}</h3>
+                        <h2 class="font-accent text-xl font-medium text-nine-cyan-500 group-hover:text-nine-amber-500 transition-colors">{{ project.name }}</h2>
                         <p class="text-xs text-nine-gray-400/80 dark:text-nine-sand-200/60 font-medium uppercase tracking-wider">{{ project.period }}</p>
                     </div>
                 </div>

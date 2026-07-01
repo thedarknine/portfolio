@@ -1,6 +1,10 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Arcade{% endblock %}
+{# Arcade #}
+
+{% block meta_description %}
+Mon projet ludique et expérimental : conception, assemblage et design pour le plaisir de créer et d'allier technique à créativité.
+{% endblock %}
 
 {% block importmap %}
     {{ parent() }}
@@ -22,13 +26,13 @@
 
 <section class="bg-surface-alt text-on-surface-alt py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">This is it!</h3>
+        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">This is it!</h2>
         {% set listItemsArcade = arcade_data.items['final'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
             <div class="w-full h-full rounded overflow-hidden shadow-lg animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
                 <a href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" aria-label="This is it! | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                    <img src="{{ absolute_url('images/arcade/final/' ~ arcade) }}" alt="" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
+                    <img src="{{ absolute_url('images/arcade/final/' ~ arcade) }}" alt="This is it! | Voir la photo {{ arcade }}" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
                 </a>
             </div>
             {% endfor %}
@@ -38,7 +42,7 @@
 
 <section class="bg-surface text-on-surface py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#1: les plans.</h3>
+        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#1: les plans.</h2>
         <p class="mb-10 animate__animated" data-animate="animate__fadeIn">Je regarde ce qu’il se fait... Les plans pour bartop n’envahissent pas le web, et ne
             correspondent pas entièrement à ce que j’ai en tête. Ok, alors allons-y pour un plan
             personnalisé. Je suis partie des plans mis à dispo par
@@ -50,7 +54,7 @@
                 <div class="shadow-lg mb-4">
                     <div>
                         <a href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" aria-label="Step#1: les plans | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" alt="" class="rounded-lg">
+                            <img src="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" alt="Step#1: les plans | Voir la photo {{ arcade }}" class="rounded-lg">
                         </a>
                     </div>
                 </div>
@@ -61,59 +65,59 @@
 
 <section class="bg-surface-alt text-on-surface-alt py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#2 : la découpe.</h3>
+        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#2 : la découpe.</h2>
         <p class="mb-10">L'étape la plus importante, et aussi la plus délicate quand on est perfectionniste !</p>
 
-        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h4>
+        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h3>
         {% set listItemsArcade = arcade_data.items['side-panels'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
                         <a href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" aria-label="Step#2 : la découpe | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" alt="Step#2 : la découpe" class="rounded-lg">
+                            <img src="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" alt="Step#2 : la découpe | Voir la photo {{ arcade }}" class="rounded-lg">
                         </a>
                     </div>
                 </div>
             {% endfor %}
         </div>
 
-        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h4>
+        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h3>
         {% set listItemsArcade = arcade_data.items['control-panel'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
                         <a href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" aria-label="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" alt="Step#2 : la découpe [Control Panel]" class="rounded-lg">
+                            <img src="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" alt="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" class="rounded-lg">
                         </a>
                     </div>
                 </div>
             {% endfor %}
         </div>
 
-        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h4>
+        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h3>
         {% set listItemsArcade = arcade_data.items['upper-part'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
                         <a href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" aria-label="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" alt="Step#2 : la découpe [Upper Part]" class="rounded-lg">
+                            <img src="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" alt="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" class="rounded-lg">
                         </a>
                     </div>
                 </div>
             {% endfor %}
         </div>
 
-        <h4 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h4>
+        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h3>
         {% set listItemsArcade = arcade_data.items['back-side'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
                 <div class="shadow-lg mb-4">
                     <div>
                         <a href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" aria-label="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" alt="Step#2 : la découpe [Back Side]" class="rounded-lg">
+                            <img src="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" alt="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" class="rounded-lg">
                         </a>
                     </div>
                 </div>
@@ -124,7 +128,7 @@
 
 <section class="bg-surface text-on-surface py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#3 : l’assemblage.</h3>
+        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#3 : l’assemblage.</h2>
         <p class="mb-10">Les différentes pièces se finalisent petit à petit, on monte et on redémonte histoire de
             contrôler que tout est ok. Au passage un petit coup de peinture. Ca se précise !</p>
         {% set listItemsArcade = arcade_data.items['assembling'] %}
@@ -133,7 +137,7 @@
                 <div class="shadow-lg mb-4">
                     <div>
                         <a href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" aria-label="Step#3 : l'assemblage | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" alt="Step#3 : l'assemblage" class="rounded-lg">
+                            <img src="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" alt="Step#3 : l'assemblage | Voir la photo {{ arcade }}" class="rounded-lg">
                         </a>
                     </div>
                 </div>
@@ -144,7 +148,7 @@
 
 <section class="bg-surface-alt text-on-surface-alt py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#4 : le design.</h3>
+        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#4 : le design.</h2>
         <p class="mb-10">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario
             et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez
             modernes malgré tout.</p>
@@ -163,7 +167,7 @@
 
 <section class="bg-surface text-on-surface py-10">
     <div class="container">
-        <h3 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#5 : l’émulateur.</h3>
+        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#5 : l’émulateur.</h2>
         <p class="mb-10">Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
             <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
             s’installer dans ma borne.</p>
@@ -173,7 +177,7 @@
                     <div class="shadow-lg mb-4">
                         <div>
                             <a href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" aria-label="Step#5 : l'émulateur | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                                <img src="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" alt="Step#5 : l'émulateur" class="rounded-lg">
+                                <img src="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" alt="Step#5 : l'émulateur | Voir la photo {{ arcade }}" class="rounded-lg">
                             </a>
                         </div>
                     </div>

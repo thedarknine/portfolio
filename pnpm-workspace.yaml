@@ -1,6 +1,8 @@
 allowBuilds:
   '@parcel/watcher': false
-  core-js: set this to true or false
+  better-sqlite3: false
+  chromedriver: false
+  core-js: false
   esbuild: true
   puppeteer: true
   vue-demi: false

@@ -1,0 +1,35 @@
+nelmio_security:
+    # prevents framing of the entire site
+    # X-Frame-Options: SAMEORIGIN (anti-clickjacking)
+    clickjacking:
+        paths:
+            '^/.*': SAMEORIGIN
+
+    # disables content type sniffing for script resources
+    # X-Content-Type-Options: nosniff
+    content_type:
+        nosniff: true
+
+    # Send a full URL in the `Referer` header when performing a same-origin request,
+    # only send the origin of the document to secure destination (HTTPS->HTTPS),
+    # and send no header to a less secure destination (HTTPS->HTTP).
+    # If `strict-origin-when-cross-origin` is not supported, use `no-referrer` policy,
+    # no referrer information is sent along with requests.
+    # Referrer-Policy
+    referrer_policy:
+        enabled: true
+        policies:
+            - 'no-referrer'
+            - 'strict-origin-when-cross-origin'
+    
+    # Content-Security-Policy
+    csp:
+        enforce:
+            default-src: ["'self'"]
+            script-src: ["'self'", "data:", "'unsafe-inline'", "https://analytics.carolinenoyer.fr"]
+            connect-src: ["'self'", "https://analytics.carolinenoyer.fr"]
+            img-src: ["'self'", "data:", "https://analytics.carolinenoyer.fr", "https://medias.carolinenoyer.fr"]
+            style-src: ["'self'", "'unsafe-inline'"]
+            font-src: ["'self'"]
+            base-uri: ["'self'"]
+            form-action: ["'self'"]

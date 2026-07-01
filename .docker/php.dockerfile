@@ -13,6 +13,7 @@ RUN apk add --no-cache \
     libzip-dev \
     zip \
     unzip \
+    jq \
     nodejs \
     npm \
     bash \
@@ -42,6 +43,13 @@ RUN install-php-extensions \
 # Install checkmake for Makefile QA
 RUN curl -L "https://github.com/checkmake/checkmake/releases/download/v0.3.2/checkmake-v0.3.2.linux.arm64" -o /usr/local/bin/checkmake \
     && chmod +x /usr/local/bin/checkmake
+
+# Install SiteOne Crawler (musl variant for Alpine)
+RUN mkdir -p /opt/siteone-crawler \
+    && wget -qO- https://github.com/janreges/siteone-crawler/releases/download/v2.5.1/siteone-crawler-v2.5.1-linux-musl-arm64.tar.gz \
+       | tar -xz -C /opt \
+    && chmod +x /opt/siteone-crawler/siteone-crawler \
+    && ln -s /opt/siteone-crawler/siteone-crawler /usr/local/bin/siteone-crawler
 
 # Install Symfony CLI and pnpm
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash \
