@@ -2,7 +2,13 @@
 <html lang="fr" data-theme="{{ app.request.cookies.get('theme', 'light') }}">
     <head>
         <meta charset="UTF-8">
-        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}{{ owner_name }} — {% block meta_title %}{{ owner_role }}{% endblock %}</title>
+        <title>{% if app.environment == 'dev' %}[DEV] {% endif %}
+            {% if current_page.slug == 'home' %}
+                {{ owner_name }} — {% block meta_title %}{{ owner_role }}{% endblock %}
+            {% else %}
+                {{ current_page.title }} | {{ owner_name }}
+            {% endif %}
+        </title>
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ absolute_url(asset('images/global/favicon.ico')) }}">
         <link rel="apple-touch-icon" sizes="180x180" href="{{ absolute_url(asset('images/global/apple-touch-icon.png')) }}">

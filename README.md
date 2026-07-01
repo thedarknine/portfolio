@@ -83,7 +83,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     check-tools-directory     Check if tools configuration directory exists  
 
   AUDIT
-    audit                     Run local audit                                
+    audit                     Run audit                                      AUDIT_ENV=prod|dev
 
   DEVELOPMENT
     cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
@@ -349,6 +349,7 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 
 * lighthouse
 * unlighthouse
+* pa11y pa11y-ci
 
 * [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) — Audit d'accessibilité et performance.
 * [PageSpeed Insights](https://pagespeed.web.dev/) — Analyse de la performance des pages web.

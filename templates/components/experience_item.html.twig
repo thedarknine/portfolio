@@ -15,7 +15,7 @@
         <div class="hidden md:flex flex-col items-center">
             <div class="w-32 py-5 {% if loop.index is even %}ml-4{% else %}mr-4{% endif %} uppercase flex flex-col items-center justify-center">
                 <div class="text-3xl font-accent font-semibold text-nine-amber-600">{{ experience.startDate|date('Y') }}</div>
-                <div class="mt-5"><img class="h-20 rounded-md bg-nine-gray-400/50 p-1" src="{{ absolute_url('images/company/' ~ experience.company.logo) }}" /></div>
+                <div class="mt-5"><img class="h-20 rounded-md bg-nine-gray-400/50 p-1" src="{{ absolute_url('images/company/' ~ experience.company.logo) }}" alt="{{ experience.company.name }}" /></div>
             </div>
             {% if not loop.last %}
             <div class="h-full {% if loop.index is even %}border-r-4{% else %}border-l-4{% endif %} border-transparent">

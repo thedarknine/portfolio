@@ -25,12 +25,6 @@
 .nine-work-approach {
     padding: 6rem 0;
 
-    h2 {
-        margin-bottom: 4rem;
-        font-size: 3rem;
-        text-align: center;
-    }
-
     .nine-approach-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -39,7 +33,7 @@
         article {
             padding: 2rem;
 
-            h3 {
+            h2 {
                 margin-top: 1.2rem;
                 margin-bottom: 1rem;
                 font-size: 1.4rem;
