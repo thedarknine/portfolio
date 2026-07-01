@@ -14,6 +14,7 @@
         "doctrine/orm": "^3.6.7",
         "easycorp/easyadmin-bundle": "^5.1.0",
         "gedmo/doctrine-extensions": "^3.22",
+        "nelmio/security-bundle": "^3.9",
         "nesbot/carbon": "^3.13.0",
         "presta/sitemap-bundle": "^4.3",
         "scheb/2fa-google-authenticator": "^8.5",

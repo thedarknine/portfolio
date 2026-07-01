@@ -404,12 +404,13 @@ check-tools-directory: ## Check if tools configuration directory exists
 ##@ AUDIT
 
 .PHONY: audit
-audit: ## Run local audit
+AUDIT_ENV ?= dev
+audit: ## Run audit (AUDIT_ENV=prod|dev)
 	@source $(SCRIPTS_DIR)/utils.sh
 	display_title "🔍 Local audit"
 	
 # 	$(DC_EXEC) bash ./.tools/scripts/audit.sh
-	@./$(SCRIPTS_DIR)/audit.sh
+	@./$(SCRIPTS_DIR)/audit.sh $(AUDIT_ENV)
 
 # =====================================================================
 ##@ DEVELOPMENT

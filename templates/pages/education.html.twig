@@ -1,12 +1,16 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Formation{% endblock %}
+{# Formation #}
+
+{% block meta_description %}
+Mon parcours de formation : développement web, product management et UX. Les bases qui fondent mon approche de Technical Product Owner.
+{% endblock %}
 
 {% block body %}
 <section class="bg-surface py-10">
     <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
         <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600ms">
-            <h3 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation professionnelle</h3>
+            <h2 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation professionnelle</h2>
             <div class="line h-1"></div>
             <img src="{{ absolute_url('images/education/formation-professionnelle.webp') }}" alt="Formation professionnelle" width="250px" />
         </div>
@@ -22,7 +26,7 @@
 <section class="bg-surface-alt py-10">
     <div class="items-start flex flex-col w-full mt-0 lg:flex-row sm:mt-10 lg:mt-10">
         <div class="lg:sticky md:top-36 w-full max-w-md p-4 mx-auto mb-0 sm:mb-16 lg:mb-0 lg:w-1/4 animate__animated" data-animate="animate__fadeInLeft" data-delay="600ms">
-            <h3 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation universitaire</h3>
+            <h2 class="text-2xl text-nine-cyan-500 font-semibold mb-6">Formation universitaire</h2>
             <div class="line h-1"></div>
             <img src="{{ absolute_url('images/education/formation-universitaire.webp') }}" alt="Formation universitaire " width="250px" />
         </div>

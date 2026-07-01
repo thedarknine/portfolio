@@ -1,6 +1,10 @@
 {% extends 'layout.html.twig' %}
 
-{% block title %}Technical Product Owner{% endblock %}
+{# Homepage #}
+
+{# % block meta_description %}
+15 ans en développement web, aujourd'hui Product Owner technique. Je structure des produits SaaS alignés sur les besoins métiers et techniques.
+{% endblock % #}
 
 {% block stylesheets %}
     {{ parent() }}
@@ -23,7 +27,7 @@
         </div>
         <div class="mb-16 mt-12 lg:mt-32 xl:mt-40 xl:mr-12">
             <div class="max-w-2xl mx-auto mb-8">
-                <h2 class="text-3xl text-white lg:text-5xl lg:leading-normal mb-4 font-bold font-heading animate__animated" data-animate="animate__fadeIn" data-delay="0.5s">Passionnée par le <span class="text-turquoise">digital</span> depuis 2005</h2>
+                <h1 class="text-3xl text-white lg:text-5xl lg:leading-normal mb-4 font-bold font-heading animate__animated" data-animate="animate__fadeIn" data-delay="0.5s">Passionnée par le <span class="text-turquoise">digital</span> depuis 2005</h1>
                 <p class="text-nine-cyan-500 text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1000ms" ><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
             </div>
             <div class="max-w-2xl mx-auto">
@@ -221,8 +225,8 @@
                         <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.slug ~ '.webp') }}" class="w-full align-middle rounded-t-lg">
                         <blockquote class="relative p-8 mb-4">
                             <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px"><polygon points="-30,95 583,95 583,65" class="fill-brand-{{ experience.company.slug }}"></polygon></svg>
-                            <h4 class="text-xl font-bold text-white">{{ experience.title }}</h4>
-                            <h5 class="mb-8 font-semibold text-white/70">{{ experience.subtitle }}</h5>
+                            <h3 class="text-xl font-bold text-white">{{ experience.title }}</h3>
+                            <h4 class="mb-8 font-semibold text-white/70">{{ experience.subtitle }}</h4>
                             <p class="text-md font-light mt-2 text-nine-sand-200">{{ experience.summary }}</p>
                         </blockquote>
                     </div>
@@ -237,7 +241,7 @@
                         <li class="flex">
                             <p class="h-lh w-5.5 shrink-0 pt-1">{{ item.picto }}</p>
                             <div class="pl-4 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-xl transition duration-500">
-                                <h6 class="text-xl mb-1 font-semibold text-nine-blue-500 dark:text-nine-gray-400">{{ item.title }}</h6>
+                                <h5 class="text-xl mb-1 font-semibold text-nine-blue-500 dark:text-nine-gray-400">{{ item.title }}</h5>
                                 <p class="mb-5">
                                 {{ item.details }}
                                 </p>
