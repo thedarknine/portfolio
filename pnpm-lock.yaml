@@ -42,6 +42,9 @@ importers:
       pa11y-ci-reporter-html:
         specifier: ^8.1.1
         version: 8.1.1
+      site-audit-seo:
+        specifier: ^6.0.1
+        version: 6.0.1(redis@2.8.0)
       unlighthouse:
         specifier: ^0.17.10
         version: 0.17.10(70006bc167f5acc9c29319830412b414)
