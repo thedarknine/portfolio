@@ -83,7 +83,7 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     check-tools-directory     Check if tools configuration directory exists  
 
   AUDIT
-    audit                     Run local audit                                
+    audit                     Run audit                                      AUDIT_ENV=prod|dev
 
   DEVELOPMENT
     cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
