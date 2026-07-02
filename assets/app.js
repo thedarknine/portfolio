@@ -76,11 +76,21 @@ document.addEventListener('DOMContentLoaded', () => {
         const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
         root.setAttribute('data-theme', next);
         toggle.setAttribute('data-theme', next);
-        cookieStore.set({
-            name: 'theme',
-            value: next,
-            path: '/',
-            maxAge: 60 * 60 * 24 * 365,
-        });
+
+        const maxAge = 60 * 60 * 24 * 365;
+        const secure = location.protocol === 'https:' ? '; Secure' : '';
+        if ('cookieStore' in window) {
+            window.cookieStore.set({
+                name: 'theme',
+                value: next,
+                path: '/',
+                maxAge: maxAge,
+                sameSite: 'Lax',
+                secure: location.protocol === 'https:',
+            });
+        } else {
+            // Fallback for older browsers that don't support Cookie Store API
+            document.cookie = `theme=${next}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
+        }
     });
 });

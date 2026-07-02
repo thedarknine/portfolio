@@ -91,7 +91,7 @@
         {% endblock %}
 
         {% block importmap %}
-            {{ importmap('app') }}
+            {{ importmap('app', { nonce: csp_nonce('script') }) }}
         {% endblock %}
 
         {# Start Matomo #}
