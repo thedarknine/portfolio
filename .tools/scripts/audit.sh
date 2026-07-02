@@ -3,15 +3,16 @@ set -euo pipefail
 
 # Parse arguments
 if [ "$1" = "prod" ]; then
-  URL="https://carolinenoyer.fr"
+    URL="https://carolinenoyer.fr"
 else
-  URL="http://engine:80"
+    URL="http://engine:80"
 fi
 
 # Chargement des utilities et config
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="${PROJECT_ROOT:-$(pwd)}"
 
+# shellcheck source=.tools/scripts/utils.sh
 source "$SCRIPT_DIR/utils.sh"
 
 REPORTS_DIR=".tools/reports"
@@ -33,11 +34,11 @@ docker compose exec app php bin/console presta:sitemaps:dump --base-url=$URL
 # 1. Lighthouse (audit détaillé page d'accueil)
 display_subtitle "📊 [1/5] Lighthouse (page d'accueil)..."
 docker compose exec app npx lighthouse $URL \
-  --chrome-path=/usr/bin/chromium \
-  --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --no-zygote" \
-  --output=html \
-  --output-path="$REPORTS_DIR/lighthouse/index.html" \
-  --no-enable-error-reporting
+    --chrome-path=/usr/bin/chromium \
+    --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage --disable-gpu --no-zygote" \
+    --output=html \
+    --output-path="$REPORTS_DIR/lighthouse/index.html" \
+    --no-enable-error-reporting
 
 summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/lighthouse/index.html" "Lighthouse Report")"
 success_msgs+=("📄 Audit: $summary <- Open in browser")
@@ -57,11 +58,11 @@ success_msgs+=("📄 Audit: $summary <- Open in browser")
 
 display_subtitle "🔍 [3/5] Pa11y parsing sitemap..."
 if ! docker compose exec app npx pa11y-ci --config .tools/pa11y.json --sitemap $URL/sitemap.default.xml; then
-  warning_msgs=("Pa11y failed")
-  summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/pa11y/index.html" "Pa11y Report")"
-  warning_msgs+=("Check: $summary - Open in browser")
-  display_warning "${warning_msgs[@]}"
-  exit 1
+    warning_msgs=("Pa11y failed")
+    summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/pa11y/index.html" "Pa11y Report")"
+    warning_msgs+=("Check: $summary - Open in browser")
+    display_warning "${warning_msgs[@]}"
+    exit 1
 fi
 
 summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/pa11y/index.html" "Pa11y Report")"
@@ -70,11 +71,11 @@ success_msgs+=("Pa11y report: $summary - Open in browser")
 # --ignore-regex='/^.*\/assets\/scripts\/typed\.js$/ exclude typed.js because Symfony has known bug with importmap
 display_subtitle "🕷️ [4/5] SiteOne Crawler..."
 docker compose exec app siteone-crawler --url=$URL \
-  --device=desktop \
-  --no-cache \
-  --ignore-robots-txt \
-  --ignore-regex='/^.*\/assets\/scripts\/typed\.js$/' \
-  --output-html-report="$REPORTS_DIR/siteone/report.html"
+    --device=desktop \
+    --no-cache \
+    --ignore-robots-txt \
+    --ignore-regex='/^.*\/assets\/scripts\/typed\.js$/' \
+    --output-html-report="$REPORTS_DIR/siteone/report.html"
 
 summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/siteone/report.html" "SiteOne Crawler Report")"
 success_msgs+=("SiteOne Crawler report: $summary - Open in browser")

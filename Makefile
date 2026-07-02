@@ -624,6 +624,15 @@ cs-fix: ## Fix all coding standards: PHP, Twig, CSS
 	display_elapsed "$$start_time"
 	display_success "$${success_msgs[@]}"
 
+.PHONY: cs-shell
+cs-shell: ## Run shellcheck on shell scripts
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_title "🐚 Running shellcheck"
+	$(DC_EXEC) shellcheck -x -P $(SCRIPTS_DIR)/*.sh
+	$(DC_EXEC) shfmt -d $(SCRIPTS_DIR)/*.sh
+	display_success "Shellcheck completed."
+
 # =====================================================================
 ##@ TESTS
 

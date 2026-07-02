@@ -18,6 +18,8 @@ RUN apk add --no-cache \
     npm \
     bash \
     make \
+    shellcheck \
+    shfmt \
     chromium \
     chromium-chromedriver
 

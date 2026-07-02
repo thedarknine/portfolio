@@ -5,11 +5,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="${PROJECT_ROOT:-$(pwd)}"
 
+# shellcheck source=.tools/scripts/utils.sh
 source "$SCRIPT_DIR/utils.sh"
 
 # Charger .env depuis la racine du projet
 if [ -f "$PROJECT_ROOT/.env" ]; then
-    set +u  # Désactiver la vérification des variables non-définies temporairement
+    set +u # Désactiver la vérification des variables non-définies temporairement
     source "$PROJECT_ROOT/.env"
     set -u
 else
