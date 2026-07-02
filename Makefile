@@ -641,6 +641,14 @@ cs-docker: ## Validate Dockerfiles with hadolint
 	$(DC_EXEC) hadolint .docker/*.dockerfile
 	display_success "Dockerfile validation completed."
 
+.PHONY: cs-md
+cs-md: ## Validate Markdown files with markdownlint
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_title "📝 Validating Markdown files"
+	$(PNPX) markdownlint-cli2 --config .tools/markdownlint-cli2.yaml
+	display_success "Markdown validation completed."
+
 # =====================================================================
 ##@ TESTS
 
