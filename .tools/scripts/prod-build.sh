@@ -40,6 +40,20 @@ display_success "All checks passed!"
 git pull origin main
 
 # =====================================================================
+# COPIER LES FICHIERS SOURCES DES DÉPENDANCES DANS PUBLIC/
+# =====================================================================
+
+display_subtitle "📦 Copying vendor assets to public/..."
+
+# Copier assets/vendor
+mkdir -p public/assets/vendor/
+cp -r assets/vendor/* public/assets/vendor/ || {
+    display_error "Failed to copy assets to public/"
+    exit 1
+}
+display_success "Vendor assets copied"
+
+# =====================================================================
 # BUILD POUR PRODUCTION
 # =====================================================================
 
@@ -127,8 +141,10 @@ display_success "Main merged into production"
 
 display_subtitle "📦 Restoring compiled assets..."
 
+# Supprimer les anciens assets en production
+rm -rf public/assets
+
 if [ -d "$TEMP_ASSETS_DIR/assets" ]; then
-    rm -rf public/assets
     cp -r "$TEMP_ASSETS_DIR/assets" public/ || {
         display_error "Failed to restore assets"
         git checkout main
@@ -137,6 +153,8 @@ if [ -d "$TEMP_ASSETS_DIR/assets" ]; then
     display_success "Assets restored"
 else
     display_warning "No assets to restore"
+    git checkout main
+    exit 1
 fi
 
 # =====================================================================
