@@ -633,6 +633,14 @@ cs-shell: ## Run shellcheck on shell scripts
 	$(DC_EXEC) shfmt -d $(SCRIPTS_DIR)/*.sh
 	display_success "Shellcheck completed."
 
+.PHONY: cs-docker
+cs-docker: ## Validate Dockerfiles with hadolint
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_title "🐳 Validating Dockerfiles with hadolint"
+	$(DC_EXEC) hadolint .docker/*.dockerfile
+	display_success "Dockerfile validation completed."
+
 # =====================================================================
 ##@ TESTS
 
