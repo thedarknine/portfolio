@@ -57,6 +57,10 @@ RUN curl -fL --progress-bar \
     -o /usr/local/bin/hadolint \
     && chmod +x /usr/local/bin/hadolint
 
+RUN curl -sSL https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_arm64.tar.gz \
+    | tar -xz -C /usr/local/bin gitleaks \
+    && chmod +x /usr/local/bin/gitleaks
+
 RUN mkdir -p /opt/siteone-crawler \
     && curl -fL "https://github.com/janreges/siteone-crawler/releases/download/v2.5.1/siteone-crawler-v2.5.1-linux-musl-arm64.tar.gz" \
        | tar -xz -C /opt \

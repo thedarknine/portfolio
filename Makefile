@@ -646,7 +646,15 @@ cs-docker: ## Validate Dockerfiles with hadolint
 
 .PHONY: pre-commit
 pre-commit: ## Run pre-commit checks
-	@$(MAKE) cs-makefile
+	@source $(SCRIPTS_DIR)/utils.sh
+	if [ -f /.dockerenv ]; then
+		display_subtitle "🔍 Running gitleaks"
+		gitleaks detect --source . -v -c .tools/gitleaks.toml
+	else
+		display_subtitle "🔍 Running gitleaks"
+		$(DC_EXEC) gitleaks detect --source . -v -c .tools/gitleaks.toml
+	fi
+	$(MAKE) cs-makefile
 	$(MAKE) readme
 
 .PHONY: grum-install

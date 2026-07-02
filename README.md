@@ -104,6 +104,8 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     cs-twig                   Twig CS Fixer                                  TWIG_FIX=1 to actually fix
     cs-front                  Run linters for CSS and JS                     FRONT_FIX=1 to actually fix
     cs-fix                    Fix all coding standards: PHP, Twig, CSS       
+    cs-shell                  Run shellcheck on shell scripts                
+    cs-docker                 Validate Dockerfiles with hadolint             
 
   TESTS
     pre-commit                Run pre-commit checks                          
