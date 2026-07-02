@@ -33,3 +33,13 @@ nelmio_security:
             font-src: ["'self'"]
             base-uri: ["'self'"]
             form-action: ["'self'"]
+
+    # Permissions-Policy
+    permissions_policy:
+        enabled: true
+        policies:
+            geolocation: []
+            microphone: []
+            camera: []
+            payment: []
+            usb: []
