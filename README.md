@@ -110,9 +110,10 @@ orchestrer les conteneurs Docker, le serveur de développement et les outils de 
     cs-twig                   Twig CS Fixer                                  TWIG_FIX=1 to actually fix
     cs-front                  Run linters for CSS and JS                     FRONT_FIX=1 to actually fix
     cs-fix                    Fix all coding standards: PHP, Twig, CSS       
-    cs-shell                  Run shellcheck on shell scripts                
-    cs-docker                 Validate Dockerfiles with hadolint             
-    cs-md                     Validate Markdown files with markdownlint      
+    lint                      Run all linting checks                         
+    lint-shell                Run shellcheck on shell scripts                
+    lint-docker               Validate Dockerfiles with hadolint             
+    lint-md                   Validate Markdown files with markdownlint      
 
   TESTS
     pre-commit                Run pre-commit checks                          
@@ -141,12 +142,12 @@ orchestrer les conteneurs Docker, le serveur de développement et les outils de 
     help                      Show this help message                         
 
   Examples:
-    make test              	# Run PHPUnit tests (excluding UI)
-    make cover             	# Run tests with coverage
-    make cs-php PHP_FIX=1  	# Fix PHP coding standards
-    make qa                	# Run full QA suite
-    make deploy            	# Deploy to production
-    make dev               	# Restore development environment
+    make test.             # Run PHPUnit tests (excluding UI)
+    make cover.            # Run tests with coverage
+    make cs-php PHP_FIX=1  # Fix PHP coding standards
+    make qa                # Run full QA suite
+    make deploy            # Deploy to production
+    make dev               # Restore development environment
 
 ```
 <!-- MAKEFILE:END -->
