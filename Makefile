@@ -569,6 +569,7 @@ cs-yaml: ## Validate YAML files
 	display_subtitle "🔭 Validate YAML files from config directory..."
 
 	$(SYMFONY) "lint:yaml" config/
+	$(DC_EXEC) yamllint -d "{extends: default, rules: {document-start: {present: false}}}" .tools docker-compose.yml
 	display_success "YAML linting completed."
 
 .PHONY: cs-twig

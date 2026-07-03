@@ -45,12 +45,12 @@ deptrac:
       collectors:
         - type: classNameRegex
           value: '#^EasyCorp\\.*#'
-    
+
     - name: Carbon
       collectors:
         - type: classNameRegex
           value: '#^Carbon\\.*#'
-    
+
     - name: Gedmo
       collectors:
         - type: classNameRegex
@@ -106,7 +106,7 @@ deptrac:
       - Carbon
       - Gedmo
       - Vendor
-    
+
     Kernel:
       - Symfony
       - Vendor

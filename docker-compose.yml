@@ -62,7 +62,7 @@ services:
             PMA_ARBITRARY: 1
         networks:
             - thedarknine-ntwk
-    
+
     mailpit:
         image: axllent/mailpit:latest
         container_name: ${PROJECT_SLUG}-mailpit
@@ -74,13 +74,13 @@ services:
             - MP_SMTP_AUTH_ALLOW_INSECURE=1
         networks:
             - thedarknine-ntwk
-    
+
     # To run Panther tests
     chrome:
         image: seleniarm/standalone-chromium:latest
         container_name: ${PROJECT_SLUG}-chrome
         volumes:
-            - /dev/shm:/dev/shm # Avoid Chrome memory crashes
+            - /dev/shm:/dev/shm  # Avoid Chrome memory crashes
         ports:
             - "4444:4444"
         networks:
@@ -89,4 +89,4 @@ services:
 networks:
     thedarknine-ntwk:
         driver: bridge
-        name: ${PROJECT_SLUG:-nine}ntwk 
+        name: ${PROJECT_SLUG:-nine}ntwk

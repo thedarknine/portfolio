@@ -23,6 +23,7 @@ RUN apk add --no-cache \
     make \
     shellcheck \
     shfmt \
+    yamllint \
     chromium \
     chromium-chromedriver
 
