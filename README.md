@@ -2,7 +2,9 @@
 
 Bienvenue sur le dépôt de mon site personnel et portfolio (**carolinenoyer.fr**).
 
-Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laboratoire technique** qui me sert de terrain d'expérimentation pour appliquer les meilleures pratiques de développement web full-stack, de l'architecture backend au design moderne, en passant par l'automatisation de la qualité de code.
+Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laboratoire technique** qui me sert de
+terrain d'expérimentation pour appliquer les meilleures pratiques de développement web full-stack, de
+l'architecture backend au design moderne, en passant par l'automatisation de la qualité de code.
 
 ---
 
@@ -16,7 +18,8 @@ Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laborato
 
 ### Frontend
 
-* **Tailwind CSS v4** (Design moderne basé sur le *Glassmorphism*, animations CSS fluides via `animate.css` et transitions soignées)
+* **Tailwind CSS v4** (Design moderne basé sur le *Glassmorphism*, animations CSS fluides via `animate.css`
+et transitions soignées)
 * **Twig 3.x** (Moteur de templates structuré pour une intégration propre des composants)
 
 ### DevOps & Outillage
@@ -28,7 +31,9 @@ Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laborato
 
 ## 📐 Qualité de Code & Automatisation
 
-Pour garantir la maintenabilité et la robustesse de l'application, une suite complète d'outils d'analyse statique et d'automatisation est intégrée via **GrumPHP** (les configurations sont centralisées dans le dossier `.tools/`).
+Pour garantir la maintenabilité et la robustesse de l'application, une suite complète d'outils d'analyse
+statique et d'automatisation est intégrée via **GrumPHP** (les configurations sont centralisées dans le
+dossier `.tools/`).
 
 Le projet intègre notamment :
 
@@ -46,7 +51,8 @@ Le projet intègre notamment :
 
 ## 🧰 Commandes du Makefile
 
-Le projet est entièrement piloté par un `Makefile` situé à la racine. Il sert d'interface unique pour orchestrer les conteneurs Docker, le serveur de développement et les outils de QA.
+Le projet est entièrement piloté par un `Makefile` situé à la racine. Il sert d'interface unique pour
+orchestrer les conteneurs Docker, le serveur de développement et les outils de QA.
 
 *(Cette section sera automatiquement écrasée et mise à jour textuellement lors de l'exécution de la commande `make readme`)*
 
@@ -104,6 +110,10 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     cs-twig                   Twig CS Fixer                                  TWIG_FIX=1 to actually fix
     cs-front                  Run linters for CSS and JS                     FRONT_FIX=1 to actually fix
     cs-fix                    Fix all coding standards: PHP, Twig, CSS       
+    lint                      Run all linting checks                         
+    lint-shell                Run shellcheck on shell scripts                
+    lint-docker               Validate Dockerfiles with hadolint             
+    lint-md                   Validate Markdown files with markdownlint      
 
   TESTS
     pre-commit                Run pre-commit checks                          
@@ -132,12 +142,12 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
     help                      Show this help message                         
 
   Examples:
-    make test              	# Run PHPUnit tests (excluding UI)
-    make cover             	# Run tests with coverage
-    make cs-php PHP_FIX=1  	# Fix PHP coding standards
-    make qa                	# Run full QA suite
-    make deploy            	# Deploy to production
-    make dev               	# Restore development environment
+    make test.             # Run PHPUnit tests (excluding UI)
+    make cover.            # Run tests with coverage
+    make cs-php PHP_FIX=1  # Fix PHP coding standards
+    make qa                # Run full QA suite
+    make deploy            # Deploy to production
+    make dev               # Restore development environment
 
 ```
 <!-- MAKEFILE:END -->
@@ -146,7 +156,8 @@ Le projet est entièrement piloté par un `Makefile` situé à la racine. Il ser
 
 ## 🧠 Cheat Sheet
 
-Cette section regroupe les workflows, commandes natives Symfony/Docker et paquets utiles à conserver pour l'initialisation ou la maintenance de projets similaires.
+Cette section regroupe les workflows, commandes natives Symfony/Docker et paquets utiles à conserver pour
+l'initialisation ou la maintenance de projets similaires.
 
 ### 🛠️ Initialisation d'un nouveau projet (Dans Docker)
 
@@ -358,4 +369,5 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
 
 ## 📝 Licence
 
-Ce projet est personnel et son contenu textuel/visuel m'appartient. Le code source est partagé à des fins de démonstration technique.
+Ce projet est personnel et son contenu textuel/visuel m'appartient. Le code source est partagé à des fins de
+démonstration technique.

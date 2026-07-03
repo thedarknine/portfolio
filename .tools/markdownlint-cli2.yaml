@@ -1,0 +1,19 @@
+config:
+  # MD013 - Line length: 80 est trop strict pour du contenu moderne.
+  # 120 reste lisible tout en évitant de reformater tout le README.
+  MD013:
+    line_length: 120
+    code_blocks: false  # ignore les blocs de code (ex: commandes/URLs longues)
+    tables: false       # ignore les tableaux (colonnes rarement compressibles)
+    headings: false     # ignore les titres
+
+  # Règles par défaut conservées pour tout le reste
+  default: true
+
+globs:
+  - "**/*.md"
+
+ignores:
+  - "vendor"
+  - "node_modules"
+  - ".pnpm-store"

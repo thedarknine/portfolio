@@ -569,6 +569,7 @@ cs-yaml: ## Validate YAML files
 	display_subtitle "🔭 Validate YAML files from config directory..."
 
 	$(SYMFONY) "lint:yaml" config/
+	$(DC_EXEC) yamllint -d "{extends: default, rules: {document-start: {present: false}}}" .tools docker-compose.yml
 	display_success "YAML linting completed."
 
 .PHONY: cs-twig
@@ -624,12 +625,57 @@ cs-fix: ## Fix all coding standards: PHP, Twig, CSS
 	display_elapsed "$$start_time"
 	display_success "$${success_msgs[@]}"
 
+.PHONY: lint
+lint: ## Run all linting checks
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_title "🔍 Running all linting checks"
+	
+	$(MAKE) lint-shell
+	$(MAKE) lint-docker
+	$(MAKE) lint-md
+	
+	display_success "All linting checks completed."
+
+.PHONY: lint-shell
+lint-shell: ## Run shellcheck on shell scripts
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_subtitle "🐚 Running shellcheck"
+	$(DC_EXEC) shellcheck -x -P $(SCRIPTS_DIR)/*.sh
+	$(DC_EXEC) shfmt -d $(SCRIPTS_DIR)/*.sh
+	display_success "Shellcheck completed."
+
+.PHONY: lint-docker
+lint-docker: ## Validate Dockerfiles with hadolint
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_subtitle "🐳 Validating Dockerfiles with hadolint"
+	$(DC_EXEC) hadolint .docker/*.dockerfile
+	display_success "Dockerfile validation completed."
+
+.PHONY: lint-md
+lint-md: ## Validate Markdown files with markdownlint
+	@source $(SCRIPTS_DIR)/utils.sh
+	$(call assert_not_prod)
+	display_subtitle "📝 Validating Markdown files"
+	$(PNPX) markdownlint-cli2 --config .tools/markdownlint-cli2.yaml
+	display_success "Markdown validation completed."
+
 # =====================================================================
 ##@ TESTS
 
 .PHONY: pre-commit
 pre-commit: ## Run pre-commit checks
-	@$(MAKE) cs-makefile
+	@source $(SCRIPTS_DIR)/utils.sh
+	if [ -f /.dockerenv ]; then
+		display_subtitle "🔍 Running gitleaks"
+		gitleaks detect --source . -v -c .tools/gitleaks.toml
+	else
+		display_subtitle "🔍 Running gitleaks"
+		$(DC_EXEC) gitleaks detect --source . -v -c .tools/gitleaks.toml
+	fi
+	$(MAKE) cs-makefile
 	$(MAKE) readme
 
 .PHONY: grum-install
@@ -660,8 +706,11 @@ qa: ## Run complete Quality Assurance suite: Lint, Static Analysis, Tests
 	success_msgs=()
 	start_time=$$(date +%s)
 
+	$(MAKE) lint || exit 1
+	success_msgs+=("All linting checks passed.")
+
 	$(MAKE) cs || exit 1
-	success_msgs+=("PHP coding standards checked.")
+	success_msgs+=("All coding standards checked (PHP, Twig, CSS).")
 
 	$(MAKE) qa-analyse || exit 1
 	success_msgs+=("Static analysis passed.")
@@ -907,10 +956,10 @@ help: ## Show this help message
 		}'  $(MAKEFILE_LIST)
 	@printf '\n'
 	@printf '  $(BOLD)Examples:$(RESET)\n'
-	@printf '    $(YELLOW)make$(RESET) test              	# Run PHPUnit tests (excluding UI)\n'
-	@printf '    $(YELLOW)make$(RESET) cover             	# Run tests with coverage\n'
-	@printf '    $(YELLOW)make$(RESET) cs-php PHP_FIX=1  	# Fix PHP coding standards\n'
-	@printf '    $(YELLOW)make$(RESET) qa                	# Run full QA suite\n'
-	@printf '    $(YELLOW)make$(RESET) deploy            	# Deploy to production\n'
-	@printf '    $(YELLOW)make$(RESET) dev               	# Restore development environment\n'
+	@printf '    $(YELLOW)make$(RESET) test.             # Run PHPUnit tests (excluding UI)\n'
+	@printf '    $(YELLOW)make$(RESET) cover.            # Run tests with coverage\n'
+	@printf '    $(YELLOW)make$(RESET) cs-php PHP_FIX=1  # Fix PHP coding standards\n'
+	@printf '    $(YELLOW)make$(RESET) qa                # Run full QA suite\n'
+	@printf '    $(YELLOW)make$(RESET) deploy            # Deploy to production\n'
+	@printf '    $(YELLOW)make$(RESET) dev               # Restore development environment\n'
 	@printf '\n'

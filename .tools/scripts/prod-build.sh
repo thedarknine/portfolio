@@ -5,11 +5,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(pwd)"
 
+# shellcheck source=.tools/scripts/utils.sh
 source "$SCRIPT_DIR/utils.sh"
 
 # Charger .env depuis la racine du projet
 if [ -f "$PROJECT_ROOT/.env" ]; then
-    set +u  # Désactiver la vérification des variables non-définies temporairement
+    set +u # Désactiver la vérification des variables non-définies temporairement
     source "$PROJECT_ROOT/.env"
     set -u
 else
@@ -79,7 +80,7 @@ display_success "Assets built successfully!"
 display_subtitle "💾 Saving compiled assets to temporary location..."
 
 TEMP_ASSETS_DIR=$(mktemp -d)
-trap 'rm -rf $TEMP_ASSETS_DIR' EXIT  # Nettoyer à la fin
+trap 'rm -rf $TEMP_ASSETS_DIR' EXIT # Nettoyer à la fin
 
 # Copier les assets compilés
 if [ -d "public/assets" ]; then
