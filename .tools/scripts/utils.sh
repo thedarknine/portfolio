@@ -31,18 +31,18 @@ display_box() {
 
     {
         printf "\n"
-        printf "${RESET}${bg_color}  ${RESET}  ${fg_color}┌────────────────────────────────────────────────────────────────────┐${RESET}\n"
-        printf "${RESET}${bg_color}  ${RESET}  ${BOLD}${fg_color}%s${RESET}\n" "$label"
+        printf "%b┌────────────────────────────────────────────────────────────────────┐%b\n" "${RESET}${bg_color}  ${RESET}  ${fg_color}" "$RESET"
+        printf "%b%s%b\n" "${RESET}${bg_color}  ${RESET}  ${BOLD}${fg_color}" "$label" "$RESET"
 
         if [ "$#" -gt 0 ]; then
-            printf "${RESET}${bg_color}  ${RESET}\n"
+            printf "%b \n" "${RESET}${bg_color}  ${RESET}"
 
             for line in "$@"; do
-                printf "${RESET}${bg_color}  ${RESET}    ${fg_color}•${RESET} %s\n" "$line"
+                printf "%b %b  %b•%b %s\n" "${RESET}${bg_color}  ${RESET}" "$RESET" "$fg_color" "$RESET" "$line"
             done
         fi
 
-        printf "${RESET}${bg_color}  ${RESET}  ${fg_color}└────────────────────────────────────────────────────────────────────┘${RESET}\n"
+        printf "%b└────────────────────────────────────────────────────────────────────┘%b\n" "${RESET}${bg_color}  ${RESET}  ${fg_color}" "$RESET"
     }
 }
 
@@ -90,10 +90,22 @@ print_link() {
 }
 
 check_remote_vars() {
-    [ -n "${REMOTE_USER:-}" ] || { display_error "REMOTE_USER not set"; exit 1; }
-    [ -n "${REMOTE_HOST:-}" ] || { display_error "REMOTE_HOST not set"; exit 1; }
-    [ -n "${REMOTE_SSH_KEY:-}" ] || { display_error "REMOTE_SSH_KEY not set"; exit 1; }
-    [ -f "${REMOTE_SSH_KEY}" ] || { display_error "SSH key not found"; exit 1; }
+    [ -n "${REMOTE_USER:-}" ] || {
+        display_error "REMOTE_USER not set"
+        exit 1
+    }
+    [ -n "${REMOTE_HOST:-}" ] || {
+        display_error "REMOTE_HOST not set"
+        exit 1
+    }
+    [ -n "${REMOTE_SSH_KEY:-}" ] || {
+        display_error "REMOTE_SSH_KEY not set"
+        exit 1
+    }
+    [ -f "${REMOTE_SSH_KEY}" ] || {
+        display_error "SSH key not found"
+        exit 1
+    }
 }
 
 check_on_main_branch() {
