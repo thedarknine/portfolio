@@ -11,6 +11,8 @@
 namespace App\Tests\Integration\Entity;
 
 use App\Entity\Project;
+use App\Entity\ProjectTag;
+use App\Entity\Screenshot;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -38,8 +40,9 @@ class ProjectValidationTest extends KernelTestCase
             ->setYear(2026)
             ->setDescription('Construction d’une borne d’arcade de A à Z.')
             ->setCategory('Hobby / Tech')
-            ->setScreenshots('arcade_v1.png')
-            ->setTags('Raspberry, PHP, Retro');
+            // ->setScreenshots('arcade_v1.png')
+            // ->setTags('Raspberry, PHP, Retro')
+        ;
 
         $errors = $this->validator->validate($project);
         $this->assertCount(0, $errors);
@@ -48,9 +51,9 @@ class ProjectValidationTest extends KernelTestCase
         $this->assertSame('3 mois', $project->getPeriod());
         $this->assertSame(2026, $project->getYear());
         $this->assertSame('Construction d’une borne d’arcade de A à Z.', $project->getDescription());
-        $this->assertSame('arcade_v1.png', $project->getScreenshots());
+        // $this->assertSame('arcade_v1.png', $project->getScreenshots());
         $this->assertSame('Hobby / Tech', $project->getCategory());
-        $this->assertSame('Raspberry, PHP, Retro', $project->getTags());
+        // $this->assertSame('Raspberry, PHP, Retro', $project->getTags());
     }
 
     /**
@@ -107,5 +110,80 @@ class ProjectValidationTest extends KernelTestCase
         $property->setValue($project, 1337);
 
         $this->assertSame(1337, $project->getId());
+    }
+
+    public function testGetTagsReturnsEmptyCollection(): void
+    {
+        $project = new Project();
+
+        self::assertCount(0, $project->getTags());
+    }
+
+    public function testAddTagShouldAddTagToProject(): void
+    {
+        $project = new Project();
+        $tag     = new ProjectTag();
+
+        $project->addTag($tag);
+
+        self::assertTrue($project->getTags()->contains($tag));
+        self::assertTrue($tag->getProjects()->contains($project));
+    }
+
+    public function testAddTagDoesNotDuplicate(): void
+    {
+        $project = new Project();
+        $tag     = new ProjectTag();
+
+        $project->addTag($tag);
+        $project->addTag($tag);
+
+        self::assertCount(1, $project->getTags());
+    }
+
+    public function testRemoveTagShouldRemoveTagFromProject(): void
+    {
+        $project = new Project();
+        $tag     = new ProjectTag();
+
+        $project->addTag($tag);
+        $project->removeTag($tag);
+
+        self::assertFalse($project->getTags()->contains($tag));
+        self::assertFalse($tag->getProjects()->contains($project));
+    }
+
+    public function testAddScreenshotShouldAddScreenshotToProject(): void
+    {
+        $project    = new Project();
+        $screenshot = new Screenshot();
+
+        $project->addScreenshot($screenshot);
+
+        self::assertTrue($project->getScreenshots()->contains($screenshot));
+        self::assertSame($project, $screenshot->getProject());
+    }
+
+    public function testAddScreenshotDoesNotDuplicate(): void
+    {
+        $project    = new Project();
+        $screenshot = new Screenshot();
+
+        $project->addScreenshot($screenshot);
+        $project->addScreenshot($screenshot);
+
+        self::assertCount(1, $project->getScreenshots());
+    }
+
+    public function testRemoveScreenshotShouldRemoveScreenshotFromProject(): void
+    {
+        $project    = new Project();
+        $screenshot = new Screenshot();
+
+        $project->addScreenshot($screenshot);
+        $project->removeScreenshot($screenshot);
+
+        self::assertFalse($project->getScreenshots()->contains($screenshot));
+        self::assertNull($screenshot->getProject());
     }
 }
