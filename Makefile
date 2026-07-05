@@ -51,6 +51,7 @@ DOCKER_NGINX_SERVICE := engine
 DOCKER_PORTS := 8000 3306 8088 4444
 
 #= GLOBAL VARIABLES ===================================================
+PROJECT_ROOT 		:= $(shell pwd)
 TOOLS_CONFIG_DIR	:= .tools
 SCRIPTS_DIR 		:= .tools/scripts
 REPORTS_DIR 		:= .tools/reports
@@ -820,7 +821,9 @@ cover: ## Run PHPUnit tests with coverage
 	$(SYMFONY) "cache:clear" --env=test
 	display_subtitle "🧪 Running PHPUnit tests with coverage..."
 	$(PHPUNIT) --coverage-html coverage/ --exclude-group=UI
-	display_success "Coverage report generated in 'coverage/' directory."
+
+	summary=$$(print_link "file://$(PROJECT_ROOT)/coverage/index.html" "Coverage Report")
+	display_success "Coverage report generated: $$summary <- Open in browser"
 
 # =====================================================================
 ##@ ENVIRONMENT

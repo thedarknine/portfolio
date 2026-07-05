@@ -65,6 +65,7 @@ class Experience
 
     /** @var Collection<int, ExperienceItem> */
     #[ORM\OneToMany(targetEntity: ExperienceItem::class, mappedBy: 'experience')]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     #[Assert\Valid]
     private Collection $items;
 

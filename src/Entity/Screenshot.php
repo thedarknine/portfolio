@@ -15,7 +15,7 @@ use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ScreenshotRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;  
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScreenshotRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
