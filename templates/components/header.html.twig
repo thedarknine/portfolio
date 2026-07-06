@@ -5,7 +5,7 @@
                 <img id="logo" class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250-white.svg" alt="Caroline Noyer | Accueil">
             </a>
             <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-5">
-            {% for page in page_manager.getPublishedPagesInHeader() %}
+            {% for page in page_manager.getPublishedRootPagesInHeader() %}
                 <li class="p-4 nine-menu__item {% if current_page.slug == page.slug %}is-active{% endif %}">
                     <a class="" href="/{{ page.slug }}" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a>
                 </li>

@@ -11,7 +11,7 @@
         </div>
         <div>
             <ul class="nine-menu__list">
-            {% for page in page_manager.getPublishedPages() %}
+            {% for page in page_manager.getPublishedRootPages() %}
                 <li class="mb-1"><a class="block p-4 text-blueGray-500" href="/{{ page.slug }}" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
             {% endfor %}
             </ul>

@@ -46,6 +46,14 @@ class PageService
     }
 
     /**
+     * @return PageInfo[]
+     */
+    public function getPublishedRootPages(): array
+    {
+        return $this->pageInfoRepository->findRootPages();
+    }
+
+    /**
      * @return array<int, array<string, mixed>>
      */
     public function getPublishedPages(?bool $inHeader = null): array
@@ -64,6 +72,14 @@ class PageService
     public function getPublishedPagesInHeader(): array
     {
         return $this->getPublishedPages(true);
+    }
+
+    /**
+     * @return PageInfo[]
+     */
+    public function getPublishedRootPagesInHeader(): array
+    {
+        return $this->pageInfoRepository->findPublishedRootPagesInHeader();
     }
 
     /**

@@ -43,6 +43,41 @@ class PageInfoRepository extends ServiceEntityRepository
             ->getArrayResult(); // Associative array
     }
 
+    /**
+     * @return PageInfo[]
+     */
+    public function findRootPages(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.parent IS NULL')
+            ->andWhere('p.published = :published')
+            ->setParameter('published', true)
+            ->orderBy('p.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Published root pages displayed in the header, with their children.
+     *
+     * @return PageInfo[]
+     */
+    public function findPublishedRootPagesInHeader(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.children', 'c')
+            ->addSelect('c')
+            ->andWhere('p.parent IS NULL')
+            ->andWhere('p.published = :published')
+            ->andWhere('p.inHeader = :inHeader')
+            ->setParameter('published', true)
+            ->setParameter('inHeader', true)
+            ->orderBy('p.position', 'ASC')
+            ->addOrderBy('c.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Page[] Returns an array of Page objects
     //     */
