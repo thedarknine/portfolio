@@ -38,7 +38,7 @@
         "tito10047/altcha-bundle": "*",
         "twig/extra-bundle": "^2.12|^3.24",
         "twig/intl-extra": "^3.26",
-        "twig/twig": "^2.12|^3.27.1"
+        "twig/twig": "^2.12|^3.28.0"
     },
     "config": {
         "allow-plugins": {
@@ -110,16 +110,16 @@
     "require-dev": {
         "dama/doctrine-test-bundle": "^8.6",
         "dbrekelmans/bdi": "^1.4.1",
-        "deptrac/deptrac": "^4.6",
+        "deptrac/deptrac": "^4.6.2",
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
         "friendsofphp/php-cs-fixer": "^3.95.11",
         "infection/infection": "^0.33.3",
-        "phparkitect/phparkitect": "^1.1.1",
+        "phparkitect/phparkitect": "^1.2.0",
         "phpro/grumphp": "^2.22",
-        "phpstan/phpstan": "^2.2.1",
+        "phpstan/phpstan": "^2.2.5",
         "phpstan/phpstan-doctrine": "^2.0.25",
         "phpunit/phpunit": "^13.1.13",
-        "rector/rector": "^2.5.2",
+        "rector/rector": "^2.5.4",
         "symfony/browser-kit": "8.0.*",
         "symfony/css-selector": "8.0.*",
         "symfony/maker-bundle": "^1.67",
