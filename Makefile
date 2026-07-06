@@ -71,7 +71,7 @@ GRUMPHP		:= $(DC_EXEC) vendor/bin/grumphp --config=$(TOOLS_CONFIG_DIR)/grumphp.y
 PHPUNIT		:= $(DC_EXEC) php vendor/bin/phpunit --configuration $(TOOLS_CONFIG_DIR)/phpunit.xml
 INFECTION	:= $(DC_EXEC) php vendor/bin/infection --configuration=$(TOOLS_CONFIG_DIR)/infection.json
 PHPARKITECT	:= $(DC_EXEC) php vendor/bin/phparkitect --config=$(TOOLS_CONFIG_DIR)/phparkitect.php
-DEPTRAC		:= $(DC_EXEC) vendor/bin/deptrac --config-file=$(TOOLS_CONFIG_DIR)/deptrac.yaml
+DEPTRAC		:= $(DC_EXEC) vendor/bin/deptrac --config-file=$(TOOLS_CONFIG_DIR)/deptrac.yaml  --cache-file=$(TOOLS_CONFIG_DIR)/.deptrac.cache
 PHPSTAN		:= $(DC_EXEC) php vendor/bin/phpstan --memory-limit=512M --configuration=$(TOOLS_CONFIG_DIR)/phpstan.neon
 RECTOR		:= $(DC_EXEC) vendor/bin/rector process --config $(TOOLS_CONFIG_DIR)/rector.php
 CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.php --cache-file=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.cache
@@ -250,6 +250,28 @@ update-project: ## Update docker, composer and pnpm dependencies in a safe way
 	$(DC_EXEC) pnpm self-update
 	$(DC_EXEC) pnpm update
 	success_msgs+=("PNPM dependencies updated")
+
+	display_elapsed "$$start_time"
+	display_success "$${success_msgs[@]}"
+
+.PHONY: check-project
+check-project: ## Check project security audit
+	@source $(SCRIPTS_DIR)/utils.sh
+	display_title "🪲 Running project security check"
+	success_msgs=()
+	start_time=$$(date +%s)
+
+	display_subtitle "Checking Docker configuration..."
+	$(DC) config --quiet
+	success_msgs+=("Docker configuration is valid")
+
+	display_subtitle "Checking Composer dependencies..."
+	$(COMPOSER) audit
+	success_msgs+=("Composer dependencies are secure")
+
+	display_subtitle "Checking pnpm dependencies..."
+	$(PNPM) audit
+	success_msgs+=("PNPM dependencies are secure")
 
 	display_elapsed "$$start_time"
 	display_success "$${success_msgs[@]}"
@@ -495,9 +517,10 @@ secret: ## Generate a new APP_SECRET and display it
 	display_title "🔑 Generating new APP_SECRET"
 
 	secret=$$($(DC_EXEC) openssl rand -hex 32)
+	summary="$$(color_green $${secret})"
 	display_success \
 		"APP_SECRET generated successfully." \
-		"$${GREEN}$${secret}$${RESET}"
+		$${summary}
 
 .PHONY: migration
 migration: ## Run Doctrine migrations

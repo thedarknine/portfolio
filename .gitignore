@@ -10,6 +10,7 @@ Thumbs.db
 .env
 .tools/export/
 .tools/reports/
+.tools/.infection/
 
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
