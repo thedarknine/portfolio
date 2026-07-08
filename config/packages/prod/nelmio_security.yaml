@@ -2,14 +2,30 @@ nelmio_security:
     forced_ssl:
         hsts_max_age: 31536000
         hsts_subdomains: true
-    
+
     # Content-Security-Policy
     csp:
         enforce:
             default-src: ["'self'"]
-            script-src: ["'self'", "data:", "'unsafe-inline'", "'unsafe-hashes'", "https://analytics.carolinenoyer.fr", "https://cdn.jsdelivr.net"]
-            connect-src: ["'self'", "https://analytics.carolinenoyer.fr", "https://cdn.jsdelivr.net"]
-            img-src: ["'self'", "data:", "https://analytics.carolinenoyer.fr", "https://medias.carolinenoyer.fr"]
+            script-src: [
+                "'self'",
+                "data:",
+                "'unsafe-inline'",
+                "'unsafe-hashes'",
+                "https://analytics.carolinenoyer.fr",
+                "https://cdn.jsdelivr.net"
+            ]
+            connect-src: [
+                "'self'",
+                "https://analytics.carolinenoyer.fr",
+                "https://cdn.jsdelivr.net"
+            ]
+            img-src: [
+                "'self'",
+                "data:",
+                "https://analytics.carolinenoyer.fr",
+                "https://medias.carolinenoyer.fr"
+            ]
             style-src: ["'self'", "'unsafe-inline'"]
             font-src: ["'self'"]
             base-uri: ["'self'"]

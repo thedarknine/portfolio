@@ -8,8 +8,8 @@ framework:
         cookie_httponly: true
         cookie_samesite: lax
 
-    #esi: true
-    #fragments: true
+    # esi: true
+    # fragments: true
 
 when@test:
     framework:
