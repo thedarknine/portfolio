@@ -247,7 +247,7 @@ update-project: ## Update docker, composer and pnpm dependencies in a safe way
 	success_msgs+=("Composer dependencies updated")
 
 	display_title "🔄 Updating pnpm dependencies (JS/CSS)..."
-	$(DC_EXEC) pnpm self-update
+#	$(DC_EXEC) pnpm self-update
 	$(DC_EXEC) pnpm update
 	success_msgs+=("PNPM dependencies updated")
 

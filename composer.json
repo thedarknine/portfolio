@@ -112,7 +112,7 @@
         "dbrekelmans/bdi": "^1.4.1",
         "deptrac/deptrac": "^4.6.2",
         "doctrine/doctrine-fixtures-bundle": "^4.3.1",
-        "friendsofphp/php-cs-fixer": "^3.95.11",
+        "friendsofphp/php-cs-fixer": "^3.95.12",
         "infection/infection": "^0.33.3",
         "phparkitect/phparkitect": "^1.2.0",
         "phpro/grumphp": "^2.22",
