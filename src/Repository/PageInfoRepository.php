@@ -25,6 +25,18 @@ class PageInfoRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return PageInfo[]
+     */
+    public function findByParentId(int $parentId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.parent = :parentId')
+            ->setParameter('parentId', $parentId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param array<string, mixed> $filters
      *
      * @return array<int, array<string, mixed>>

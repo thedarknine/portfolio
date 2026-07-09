@@ -762,6 +762,7 @@ test: ## Run PHPUnit tests without UI tests
 	display_title "🧪 Running PHPUnit tests"
 	
 	$(MAKE) check-containers
+	rm -rf src/DataFixtures/Testing/*
 	display_subtitle "💾 Generating fixtures..."
 	$(SYMFONY) "cache:clear" --env=test
 	$(SYMFONY) "app:generate-fixtures" --group=test

@@ -44,38 +44,12 @@ class PageInfoRepositoryTest extends KernelTestCase
     public function testFindAllAsArrayReturnsSortedArrays(): void
     {
         // 1. Insert 3 pages in random order by position
-        $pageArcade = (new PageInfo())
-            ->setTitle('Arcade')
-            ->setTechnicalName('arcade')
-            ->setSlug('arcade')
-            ->setTagline('Mes bornes')
-            ->setSubtitle('Mes bornes')
-            ->setQuote('Mes bornes')
-            ->setPosition(2)
-            ->setInHeader(true)
-            ->setCategory(PageCategory::INTEREST);
-
-        $pagePhotos = (new PageInfo())
-            ->setTitle('Photos')
-            ->setTechnicalName('photos')
-            ->setSlug('photos')
-            ->setTagline('Mes fragments de lumière')
-            ->setSubtitle('Mes fragments de lumière')
-            ->setQuote('Mes fragments de lumière')
-            ->setPosition(3)
-            ->setInHeader(false)
-            ->setCategory(PageCategory::INTEREST);
-
-        $pageProjets = (new PageInfo())
-            ->setTitle('Projets')
-            ->setTechnicalName('projets')
-            ->setSlug('projets')
-            ->setTagline('Mes réalisations')
-            ->setSubtitle('Mes réalisations')
-            ->setQuote('Mes réalisations')
-            ->setPosition(1)
-            ->setInHeader(true)
-            ->setCategory(PageCategory::CAREER);
+        $pageArcade = $this->createPage('Arcade', 'arcade', PageCategory::INTEREST);
+        $pageArcade->setPosition(2);
+        $pagePhotos = $this->createPage('Photos', 'photos', PageCategory::INTEREST);
+        $pagePhotos->setPosition(3);
+        $pageProjets = $this->createPage('Projets', 'projets', PageCategory::CAREER);
+        $pageProjets->setPosition(1);
 
         $this->entityManager->persist($pageArcade);
         $this->entityManager->persist($pagePhotos);
@@ -99,6 +73,70 @@ class PageInfoRepositoryTest extends KernelTestCase
         // Optional: Ensure the expected entity keys are present
         $this->assertArrayHasKey('title', $results[0]);
         $this->assertArrayHasKey('tagline', $results[0]);
+    }
+
+    /**
+     * Test that findByParentId returns only the children of the given parent.
+     */
+    public function testFindByParentIdReturnsChildrenOfGivenParent(): void
+    {
+        $parent1 = $this->createPage('Parent 1', 'parent-1');
+        $parent2 = $this->createPage('Parent 2', 'parent-2');
+
+        $child1     = $this->createPage('Child 1', 'child-1', PageCategory::CAREER, $parent1);
+        $child2     = $this->createPage('Child 2', 'child-2', PageCategory::CAREER, $parent1);
+        $otherChild = $this->createPage('Other Child', 'other-child', PageCategory::CAREER, $parent2);
+
+        foreach ([$parent1, $parent2, $child1, $child2, $otherChild] as $page) {
+            $this->entityManager->persist($page);
+        }
+
+        $this->entityManager->flush();
+
+        $results = $this->pageInfoRepository->findByParentId($parent1->getId());
+
+        $this->assertCount(2, $results);
+        $this->assertContains($child1, $results);
+        $this->assertContains($child2, $results);
+        $this->assertNotContains($otherChild, $results);
+
+        foreach ($results as $page) {
+            $this->assertSame($parent1->getId(), $page->getParent()?->getId());
+        }
+    }
+
+    /**
+     * Test that findByParentId returns an empty array when no child exists.
+     */
+    public function testFindByParentIdReturnsEmptyArrayWhenNoChildrenExist(): void
+    {
+        $parent = $this->createPage('Parent', 'parent');
+
+        $this->entityManager->persist($parent);
+        $this->entityManager->flush();
+
+        $results = $this->pageInfoRepository->findByParentId($parent->getId());
+
+        $this->assertSame([], $results);
+    }
+
+    private function createPage(
+        string $title,
+        string $slug,
+        PageCategory $category = PageCategory::CAREER,
+        ?PageInfo $parent = null,
+    ): PageInfo {
+        return (new PageInfo())
+            ->setTitle($title)
+            ->setTechnicalName($slug)
+            ->setSlug($slug)
+            ->setTagline($title)
+            ->setSubtitle($title)
+            ->setQuote($title)
+            ->setPosition(1)
+            ->setInHeader(true)
+            ->setCategory($category)
+            ->setParent($parent);
     }
 
     /**
