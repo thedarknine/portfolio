@@ -15,6 +15,8 @@ enum LinkType: string
     case DOCUMENT = 'document';
     case PDF      = 'pdf';
     case EXTERNAL = 'external';
+    case INTERNAL = 'internal';
+    case DETAIL   = 'detail';
 
     /**
      * Return a user-friendly label for forms and display.
@@ -25,6 +27,8 @@ enum LinkType: string
             self::DOCUMENT => 'Document',
             self::PDF      => 'Fichier PDF',
             self::EXTERNAL => 'Lien externe',
+            self::INTERNAL => 'Lien interne',
+            self::DETAIL   => 'Détail',
         };
     }
 
@@ -37,6 +41,8 @@ enum LinkType: string
             self::DOCUMENT => 'fa7-solid:file-word',
             self::PDF      => 'flowbite:file-pdf-outline text-danger',
             self::EXTERNAL => 'fa7-solid:globe-europe',
+            self::INTERNAL => 'fa7-solid:link',
+            self::DETAIL   => 'fa7-solid:eye',
         };
     }
 }

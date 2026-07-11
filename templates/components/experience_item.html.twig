@@ -11,7 +11,7 @@
     </div>
 {% endif %}
 
-    <div class="flex flex-row{% if loop.index is even %}-reverse{% else %}{% endif %} animate__animated" data-animate="animate__fadeIn" data-delay="600ms">
+    <div class="flex flex-row{% if loop.index is even %}-reverse{% else %}{% endif %} scroll-mt-24 animate__animated" data-animate="animate__fadeIn" data-delay="600ms" id="{{ experience.slug }}">
         <div class="hidden md:flex flex-col items-center">
             <div class="w-32 py-5 {% if loop.index is even %}ml-4{% else %}mr-4{% endif %} uppercase flex flex-col items-center justify-center">
                 <div class="text-3xl font-accent font-semibold text-nine-amber-600">{{ experience.startDate|date('Y') }}</div>

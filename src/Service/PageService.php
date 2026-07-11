@@ -42,6 +42,13 @@ class PageService
             throw new NotFoundHttpException("La page demandée n'existe pas.");
         }
 
+        if ($page->getParent()?->getId()) {
+            $parentPage = $this->pageInfoRepository->findOneBy([
+                'id' => $page->getParent()->getId(),
+            ]);
+            $page->setParent($parentPage);
+        }
+
         return $page;
     }
 

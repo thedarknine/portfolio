@@ -90,6 +90,30 @@ class PageInfoRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * @return PageInfo[]
+     */
+    public function findChildrenPages(bool $published = true, ?int $parentId = null): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.position', 'ASC');
+
+        if (null !== $parentId) {
+            $query->andWhere('p.parent = :parentId')
+                ->setParameter('parentId', $parentId);
+        } else {
+            $query->andWhere('p.parent IS NOT NULL');
+        }
+
+        if ($published) {
+            $query->andWhere('p.published = :published')
+                ->setParameter('published', true);
+        }
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Page[] Returns an array of Page objects
     //     */

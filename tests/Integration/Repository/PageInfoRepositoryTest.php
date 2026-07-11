@@ -120,11 +120,80 @@ class PageInfoRepositoryTest extends KernelTestCase
         $this->assertSame([], $results);
     }
 
+    public function testFindChildrenPagesReturnsPublishedChildrenOfGivenParent(): void
+    {
+        $parent           = $this->createPage('parent-page', 'parent-page', PageCategory::CAREER, null);
+        $publishedChild   = $this->createPage('published-child', 'published-child', PageCategory::CAREER, $parent);
+        $unpublishedChild = $this->createPage('unpublished-child', 'unpublished-child', PageCategory::CAREER, $parent, false);
+
+        $this->entityManager->persist($parent);
+        $this->entityManager->persist($publishedChild);
+        $this->entityManager->persist($unpublishedChild);
+        $this->entityManager->flush();
+
+        $result = $this->pageInfoRepository->findChildrenPages(published: true, parentId: $parent->getId());
+
+        $slugs = array_map(fn (PageInfo $page) => $page->getSlug(), $result);
+
+        $this->assertContains($publishedChild->getSlug(), $slugs);
+        $this->assertNotContains($unpublishedChild->getSlug(), $slugs);
+    }
+
+    public function testFindChildrenPagesIncludesUnpublishedWhenPublishedFalse(): void
+    {
+        $parent           = $this->createPage('parent-page-2', 'parent-page-2', PageCategory::CAREER, null);
+        $unpublishedChild = $this->createPage('unpublished-child-2', 'unpublished-child-2', PageCategory::CAREER, $parent, false);
+
+        $this->entityManager->persist($parent);
+        $this->entityManager->persist($unpublishedChild);
+        $this->entityManager->flush();
+
+        $result = $this->pageInfoRepository->findChildrenPages(published: false, parentId: $parent->getId());
+
+        $slugs = array_map(fn (PageInfo $page) => $page->getSlug(), $result);
+
+        $this->assertContains($unpublishedChild->getSlug(), $slugs);
+    }
+
+    public function testFindChildrenPagesReturnsAllChildrenWhenParentIdIsNull(): void
+    {
+        $parent1 = $this->createPage('parent-a', 'parent-a', PageCategory::CAREER, null);
+        $parent2 = $this->createPage('parent-b', 'parent-b', PageCategory::CAREER, null);
+        $child1  = $this->createPage('child-of-a', 'child-of-a', PageCategory::CAREER, $parent1);
+        $child2  = $this->createPage('child-of-b', 'child-of-b', PageCategory::CAREER, $parent2);
+
+        $this->entityManager->persist($parent1);
+        $this->entityManager->persist($parent2);
+        $this->entityManager->persist($child1);
+        $this->entityManager->persist($child2);
+        $this->entityManager->flush();
+
+        $result = $this->pageInfoRepository->findChildrenPages(published: true, parentId: null);
+
+        $slugs = array_map(fn (PageInfo $page) => $page->getSlug(), $result);
+
+        $this->assertContains($child1->getSlug(), $slugs);
+        $this->assertContains($child2->getSlug(), $slugs);
+    }
+
+    public function testFindChildrenPagesReturnsEmptyArrayWhenParentHasNoChildren(): void
+    {
+        $parent = $this->createPage('lonely-parent', 'lonely-parent', PageCategory::CAREER, null);
+
+        $this->entityManager->persist($parent);
+        $this->entityManager->flush();
+
+        $result = $this->pageInfoRepository->findChildrenPages(published: true, parentId: $parent->getId());
+
+        $this->assertCount(0, $result);
+    }
+
     private function createPage(
         string $title,
         string $slug,
         PageCategory $category = PageCategory::CAREER,
         ?PageInfo $parent = null,
+        bool $published = true,
     ): PageInfo {
         return (new PageInfo())
             ->setTitle($title)
@@ -136,7 +205,8 @@ class PageInfoRepositoryTest extends KernelTestCase
             ->setPosition(1)
             ->setInHeader(true)
             ->setCategory($category)
-            ->setParent($parent);
+            ->setParent($parent)
+            ->setPublished($published);
     }
 
     /**

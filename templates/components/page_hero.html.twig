@@ -1,14 +1,52 @@
     <section class="nine-page-hero bg-surface-hero text-on-surface-hero">
-        <div class="grid grid-cols-1 md:grid-cols-3 md:gap-16 items-center pr-0 mr-0">
-            <div class="col-span-2 md:ml-40 nine-hero-content animate__animated" data-animate="animate__fadeInLeft">
-                <span class="nine-page-hero__label">{{ current_page.tagline }}</span>
-                <h1 class="nine-page-hero__title text-3xl font-bold mb-6">{{ current_page.subtitle }}</h1>
+        <div class="grid grid-cols-1 md:grid-cols-3 md:gap-16 items-stretch pr-0 mr-0">
+            <div class="col-span-2 md:ml-40 nine-hero-content animate__animated flex flex-col min-h-full" data-animate="animate__fadeInLeft">
+
+                <div class="flex-1 flex items-center">
+                    <div>
+                        <span class="nine-page-hero__label">{{ current_page.tagline }}</span>
+                        <h1 class="nine-page-hero__title text-3xl font-bold mb-6">{{ current_page.subtitle }}</h1>
+                    </div>
+                </div>
+
+                {% if breadcrumb.level1 is defined %}
+                <nav class="mt-auto pb-4 w-full" aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-2 w-full">
+                        <li class="hidden md:inline-flex items-center">
+                            <a href="{{ path('app_home') }}" class="text-xs text-on-surface-hero/70 hover:text-on-surface-hero inline-flex items-center transition-colors duration-200">
+                                {{ ux_icon('hugeicons:home-09', { class: 'mr-1' }) }}&nbsp;Accueil
+                            </a>
+                        </li>
+
+                        <li class="inline-flex items-center">
+                            <div class="flex items-center">
+                                {{ ux_icon('flowbite:chevron-right-outline', { class: 'text-on-surface-muted/50 text-base hidden md:inline-block mr-1 md:mr-2 text-xl' }) }}
+                                {{ ux_icon('hugeicons:arrow-left-04', { class: 'text-on-surface-muted text-base md:hidden mr-1' }) }}
+                                <a href="{{ breadcrumb.level1.url }}" class="text-xs font-medium text-on-surface-hero/70 hover:text-on-surface-hero inline-flex items-center transition-colors duration-200">
+                                    {{ ux_icon('hugeicons:briefcase-04', { class: 'mr-1 hidden md:inline-block' }) }}&nbsp;{{ breadcrumb.level1.label }}
+                                </a>
+                            </div>
+                        </li>
+
+                        {% if breadcrumb.level2 is defined %}
+                        <li aria-current="page" class="hidden md:inline-flex items-center">
+                            <div class="flex items-center">
+                                {{ ux_icon('flowbite:chevron-right-outline', { class: 'text-on-surface-muted/50 text-base mr-1 md:mr-2 text-xl' }) }}
+                                <a href="{{ breadcrumb.level2.url }}" class="text-xs font-medium text-on-surface-hero inline-flex items-center truncate max-w-[260px]">
+                                    {{ breadcrumb.level2.icon ? ux_icon(breadcrumb.level2.icon, { class: 'mr-1 shrink-0' }) : '' }}&nbsp;{{ breadcrumb.level2.label }}
+                                </a>
+                            </div>
+                        </li>
+                        {% endif %}
+                    </ol>
+                </nav>
+                {% endif %}
             </div>
 
             <div class="nine-page-hero__visual animate__animated" data-animate="animate__fadeInRight">
                 <div class="nine-hero-image-wrapper">
                     <img
-                        src="images/pages/hero-{{ current_page.technicalName }}.webp"
+                        src="{{ asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp') }}"
                         alt="{{ current_page.title }}"
                     />
                 </div>
