@@ -618,12 +618,12 @@ cs-front: ## Run linters for CSS and JS (FRONT_FIX=1 to actually fix)
 	$(call assert_not_prod)
 	if [ "$(FRONT_FIX)" = "1" ]; then
 		display_subtitle "🪛 Running ESLint in fix mode..."
-		$(ESLINT) assets/scripts/ --fix
+		$(ESLINT) assets/scripts/ templates/ --fix
 		display_subtitle "🪛 Running Biome in fix mode..."
 		$(BIOME) --write assets/
 	else
 		display_subtitle "🔍 Running ESLint..."
-		$(ESLINT) assets/scripts/
+		$(ESLINT) assets/scripts/ templates/
 		display_subtitle "🔭 Running Biome..."
 		$(BIOME) assets/
 	fi

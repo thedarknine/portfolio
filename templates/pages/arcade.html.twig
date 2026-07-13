@@ -7,8 +7,8 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
 {% endblock %}
 
 {% block importmap %}
-    {{ parent() }}
-    {{ importmap('gallery') }}
+{{ parent() }}
+{{ importmap('gallery') }}
 {% endblock %}
 
 {% block body %}
@@ -31,7 +31,13 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
             <div class="w-full h-full rounded overflow-hidden shadow-lg animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                <a href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" aria-label="This is it! | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
+                <a 
+                    href="{{ absolute_url('images/arcade/final/' ~ arcade) }}" 
+                    aria-label="This is it! | Voir la photo {{ arcade }}" 
+                    class="pswp9-link" 
+                    data-pswp-width="1000" 
+                    data-pswp-height="1000" 
+                    target="_blank">
                     <img src="{{ absolute_url('images/arcade/final/' ~ arcade) }}" alt="This is it! | Voir la photo {{ arcade }}" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
                 </a>
             </div>
@@ -51,13 +57,19 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         {% set listItemsArcade = arcade_data.items['at-the-beginning'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <div>
-                        <a href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" aria-label="Step#1: les plans | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" alt="Step#1: les plans | Voir la photo {{ arcade }}" class="rounded-lg">
-                        </a>
-                    </div>
+            <div class="shadow-lg mb-4">
+                <div>
+                    <a 
+                        href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" 
+                        aria-label="Step#1: les plans | Voir la photo {{ arcade }}" 
+                        class="pswp9-link" 
+                        data-pswp-width="1000" 
+                        data-pswp-height="1000" 
+                        target="_blank">
+                        <img src="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" alt="Step#1: les plans | Voir la photo {{ arcade }}" class="rounded-lg">
+                    </a>
                 </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -72,13 +84,19 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         {% set listItemsArcade = arcade_data.items['side-panels'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <div>
-                        <a href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" aria-label="Step#2 : la découpe | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" alt="Step#2 : la découpe | Voir la photo {{ arcade }}" class="rounded-lg">
-                        </a>
-                    </div>
+            <div class="shadow-lg mb-4">
+                <div>
+                    <a 
+                        href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" 
+                        aria-label="Step#2 : la découpe | Voir la photo {{ arcade }}" 
+                        class="pswp9-link" 
+                        data-pswp-width="1000" 
+                        data-pswp-height="1000" 
+                        target="_blank">
+                        <img src="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" alt="Step#2 : la découpe | Voir la photo {{ arcade }}" class="rounded-lg">
+                    </a>
                 </div>
+            </div>
             {% endfor %}
         </div>
 
@@ -86,13 +104,19 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         {% set listItemsArcade = arcade_data.items['control-panel'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <div>
-                        <a href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" aria-label="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" alt="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" class="rounded-lg">
-                        </a>
-                    </div>
+            <div class="shadow-lg mb-4">
+                <div>
+                    <a 
+                        href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" 
+                        aria-label="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" 
+                        class="pswp9-link" 
+                        data-pswp-width="1000" 
+                        data-pswp-height="1000" 
+                        target="_blank">
+                        <img src="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" alt="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" class="rounded-lg">
+                    </a>
                 </div>
+            </div>
             {% endfor %}
         </div>
 
@@ -100,13 +124,19 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         {% set listItemsArcade = arcade_data.items['upper-part'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <div>
-                        <a href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" aria-label="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" alt="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" class="rounded-lg">
-                        </a>
-                    </div>
+            <div class="shadow-lg mb-4">
+                <div>
+                    <a 
+                        href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" 
+                        aria-label="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" 
+                        class="pswp9-link" 
+                        data-pswp-width="1000" 
+                        data-pswp-height="1000" 
+                        target="_blank">
+                        <img src="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" alt="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" class="rounded-lg">
+                    </a>
                 </div>
+            </div>
             {% endfor %}
         </div>
 
@@ -114,13 +144,19 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         {% set listItemsArcade = arcade_data.items['back-side'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <div>
-                        <a href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" aria-label="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" alt="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" class="rounded-lg">
-                        </a>
-                    </div>
+            <div class="shadow-lg mb-4">
+                <div>
+                    <a 
+                        href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" 
+                        aria-label="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" 
+                        class="pswp9-link" 
+                        data-pswp-width="1000" 
+                        data-pswp-height="1000" 
+                        target="_blank">
+                        <img src="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" alt="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" class="rounded-lg">
+                    </a>
                 </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -134,13 +170,19 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         {% set listItemsArcade = arcade_data.items['assembling'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <div>
-                        <a href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" aria-label="Step#3 : l'assemblage | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                            <img src="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" alt="Step#3 : l'assemblage | Voir la photo {{ arcade }}" class="rounded-lg">
-                        </a>
-                    </div>
+            <div class="shadow-lg mb-4">
+                <div>
+                    <a 
+                        href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" 
+                        aria-label="Step#3 : l'assemblage | Voir la photo {{ arcade }}" 
+                        class="pswp9-link" 
+                        data-pswp-width="1000" 
+                        data-pswp-height="1000" 
+                        target="_blank">
+                        <img src="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" alt="Step#3 : l'assemblage | Voir la photo {{ arcade }}" class="rounded-lg">
+                    </a>
                 </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -155,11 +197,17 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         {% set listItemsArcade = arcade_data.items['design'] %}
         <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
             {% for arcade in listItemsArcade %}
-                <div class="shadow-lg mb-4">
-                    <a href="{{ absolute_url('images/arcade/design/' ~ arcade) }}" aria-label="Step#4 : le design | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                        <img src="{{ absolute_url('images/arcade/design/' ~ arcade) }}" alt="Step#4 : le design" class="rounded-lg" />
-                    </a>
-                </div>
+            <div class="shadow-lg mb-4">
+                <a 
+                    href="{{ absolute_url('images/arcade/design/' ~ arcade) }}" 
+                    aria-label="Step#4 : le design | Voir la photo {{ arcade }}" 
+                    class="pswp9-link" 
+                    data-pswp-width="1000" 
+                    data-pswp-height="1000" 
+                    target="_blank">
+                    <img src="{{ absolute_url('images/arcade/design/' ~ arcade) }}" alt="Step#4 : le design" class="rounded-lg">
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -170,19 +218,26 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
         <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#5 : l’émulateur.</h2>
         <p class="mb-10">Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
             <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
-            s’installer dans ma borne.</p>
-            {% set listItemsArcade = arcade_data.items['recalbox'] %}
-            <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-                {% for arcade in listItemsArcade %}
-                    <div class="shadow-lg mb-4">
-                        <div>
-                            <a href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" aria-label="Step#5 : l'émulateur | Voir la photo {{ arcade }}" class="pswp9-link" data-pswp-width="1000" data-pswp-height="1000" target="_blank">
-                                <img src="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" alt="Step#5 : l'émulateur | Voir la photo {{ arcade }}" class="rounded-lg">
-                            </a>
-                        </div>
-                    </div>
-                {% endfor %}
+            s’installer dans ma borne.
+        </p>
+        {% set listItemsArcade = arcade_data.items['recalbox'] %}
+        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
+            {% for arcade in listItemsArcade %}
+            <div class="shadow-lg mb-4">
+                <div>
+                    <a 
+                        href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" 
+                        aria-label="Step#5 : l'émulateur | Voir la photo {{ arcade }}" 
+                        class="pswp9-link" 
+                        data-pswp-width="1000" 
+                        data-pswp-height="1000" 
+                        target="_blank">
+                        <img src="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" alt="Step#5 : l'émulateur | Voir la photo {{ arcade }}" class="rounded-lg">
+                    </a>
+                </div>
             </div>
+            {% endfor %}
         </div>
-    </section>
+    </div>
+</section>
 {% endblock %}
