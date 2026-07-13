@@ -1,0 +1,173 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+<div class="max-w-5xl mx-auto px-4 py-16 text-[14px] font-normal">
+
+    <section class="mb-12">
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-card shadow-sm mb-6">
+            {{ ux_icon('fa7-solid:helmet-safety', { class: 'text-nine-amber-600 text-xl shrink-0 mt-0.5' }) }}
+            <p class="text-on-surface-card">
+                <strong class="text-on-surface font-bold">Le défi</strong> : Monétiser des actifs numériques sous-exploités pour les clients de Perfect Memory.
+            </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-on-surface mb-4">Des assets numériques en attente de valorisation</h2>
+        <p class="text-on-surface-muted mb-3 leading-relaxed">
+            Chez <strong class="text-on-surface font-bold">Perfect Memory</strong>, spécialiste de l’<strong class="text-on-surface font-bold">IA sémantique</strong>,
+            nos clients disposaient de <strong class="text-on-surface font-bold">nombreux actifs numériques</strong> (vidéos, images, documents, etc.)
+            stockés dans leur <strong class="text-on-surface font-bold">Cognitive Assets Management (CAM)</strong>.
+        </p>
+        <p class="text-on-surface-muted mb-3 leading-relaxed">
+            <strong class="text-on-surface font-bold">Problème</strong> : Ces actifs étaient <strong class="text-on-surface font-bold">peu ou mal monétisés</strong>.
+            Les clients ne savaient pas comment les <strong class="text-on-surface font-bold">valoriser</strong>, et Perfect Memory n’avait pas de solution dédiée pour les aider.
+        </p>
+        <p class="text-on-surface-muted leading-relaxed">
+            Enjeu ? Transformer des <strong class="text-on-surface font-bold">données brutes en informations riches de sens</strong>,
+            centrées sur l’utilisateur, et <strong class="text-on-surface font-bold">monétisables</strong>.
+        </p>
+    </section>
+
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('fa7-solid:screwdriver-wrench', { class: 'text-nine-amber-600 text-xl' }) }}
+            Ma mission : Créer Exposé™, un portail de monétisation des actifs numériques
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Mon objectif était clair : <strong class="text-on-surface font-bold">concevoir une nouvelle brique logicielle</strong> pour permettre à nos clients de
+            <strong class="text-on-surface font-bold">monétiser leurs médias</strong> tout en <strong class="text-on-surface font-bold">réutilisant un maximum de composants existants</strong>.
+        </p>
+
+        <div class="space-y-6">
+            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('fa7-solid:book-open', { class: 'text-base' }) }}
+                    Étape 1 : Comprendre les besoins clients
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    J’ai commencé par une <strong class="text-on-surface font-bold">analyse approfondie de la demande client</strong>, en collaboration avec les équipes commerciales et le pôle Professional Service.
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Résultat</strong> :  Une <strong class="text-on-surface font-bold">synthèse claire des besoins utilisateurs</strong>, avec des cas d’usage concrets pour guider le développement.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('fa7-solid:lightbulb', { class: 'text-base' }) }}
+                    Étape 2 : Cadrage et User Stories
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    J’ai <strong class="text-on-surface font-bold">rédigé des User Stories détaillées</strong> pour définir les fonctionnalités clés d’Exposé™ :
+                </p>
+                <ul class="space-y-2 mb-3">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Portail de ventes</strong> : Une interface intuitive pour exposer et vendre les actifs numériques.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Monétisation des médias</strong> : Intégration de systèmes de paiement et de tarification flexible.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Réutilisation des composants</strong> : Intégration avec le CAM existant pour éviter de réinventer la roue.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('flowbite:users-group-solid', { class: 'text-base' }) }}
+                    Étape 3 : Collaboration et suivi
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    J’ai assuré le <strong class="text-on-surface font-bold">suivi de réalisation</strong> en synchronisant régulièrement les équipes :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Synchronisation Pôle Professional Service & R&D</strong> : Pour aligner les besoins métiers et techniques.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Ajout de fonctionnalités</strong> : Affinage continu grâce aux retours clients et aux entretiens utilisateurs.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Recettage et tests de non-régression</strong> : Pour garantir la qualité du produit livré.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <p class="text-sm font-semibold text-on-surface-muted mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:toolbox', { class: 'text-base' }) }}
+                Outils utilisés
+            </p>
+            <div class="flex flex-nowrap items-center gap-4">
+                <span title="Jira">{{ ux_icon('logos:jira', { class: 'w-6 h-6' }) }}</span>
+                <span title="Figma">{{ ux_icon('logos:figma', { class: 'w-6 h-6' }) }}</span>
+                <span title="Confluence">{{ ux_icon('logos:confluence', { class: 'w-6 h-6' }) }}</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('hugeicons:party', { class: 'text-nine-amber-600 text-xl' }) }}
+            Le résultat : Exposé™, une solution opérationnelle et adoptée
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Grâce à cette approche méthodique, nous avons <strong class="text-on-surface font-bold">lancé le MVP d’Exposé™</strong> en un temps record,
+            avec des résultats concrets pour notre client pilote.
+        </p>
+
+        <div class="p-4 rounded-lg bg-surface-card shadow-sm mb-8">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:chart-line', { class: 'text-base' }) }}
+                Impact mesurable
+            </h3>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">MVP sorti pour un gros client</strong> : Un acteur majeur de l’<strong>audiovisuel</strong> a adopté la solution.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Monétisation des actifs</strong> : Le client peut désormais <strong>valoriser ses médias</strong> de manière autonome.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Réutilisation des composants</strong> : Gain de temps et de coûts grâce à l’intégration avec le CAM existant.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Satisfaction client</strong> : Le client a pu <strong class="text-on-surface font-bold">accélérer sa stratégie de monétisation</strong>.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="story-visual">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">{{ ux_icon('hugeicons:image-03', { class: 'text-base' }) }} En images : Le portail Exposé™</h3>
+            <div class="visual-grid">
+                <div class="visual-item">
+                    <img
+                        src="/images/experience/expose-portail.webp"
+                        alt="Capture d'écran du portail Exposé™"
+                        loading="lazy"
+                        width="800"
+                        height="450"
+                        class="mx-auto"
+                    >
+                    <p class="text-center mt-1 text-on-surface-muted"><strong>Portail de ventes</strong> : Une interface intuitive pour exposer et monétiser les actifs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends 'layout.html.twig' %}
+
+{% block body %}
+<div class="max-w-5xl mx-auto px-4 py-16 text-[14px] font-normal">
+
+    <section class="mb-12">
+            <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-card shadow-sm mb-6">
+            {{ ux_icon('fa7-solid:helmet-safety', { class: 'text-nine-cyan-500 text-xl shrink-0 mt-0.5' }) }}
+            <p class="text-on-surface-card">
+                <strong class="text-on-surface font-bold">Le défi</strong> : Un pôle produit récemment créé, mais sans structuration claire.
+            </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-on-surface mb-4">Un pôle produit en construction, mais sans fondations</h2>
+        <p class="text-on-surface-muted mb-3 leading-relaxed">
+            Quand j'ai rejoint <strong class="text-on-surface font-bold">Perfect Memory</strong>, le pôle produit venait tout juste d'être créé.
+        </p>
+        <p class="text-on-surface-muted mb-3 leading-relaxed">
+            <strong class="text-on-surface font-bold">Problème</strong> : les équipes travaillaient en silos, les fonctionnalités étaient dispersées,
+            et il n'y avait <strong class="text-on-surface font-bold">aucune visibilité</strong> sur ce qui existait déjà ou ce qui était en cours de développement.
+        </p>
+        <p class="text-on-surface-muted leading-relaxed">
+            Résultat ? <strong class="text-on-surface font-bold">Des doublons, des incompréhensions, et une perte de temps considérable</strong> pour les squads qui ne savaient pas où trouver l'information.
+        </p>
+    </section>
+
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('fa7-solid:screwdriver-wrench', { class: 'text-nine-cyan-500 text-xl' }) }}
+            Ma mission : transformer le chaos en clarté
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Mon objectif était simple : <strong class="text-on-surface font-bold">offrir aux squads un découpage clair</strong> et <strong class="text-on-surface font-bold">centraliser l'information</strong>
+            pour que chacun sache <em>quoi faire, comment le faire, et où trouver les ressources</em>.
+        </p>
+
+        <div class="space-y-6">
+            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('fa7-solid:book-open', { class: 'text-base' }) }}
+                    Étape 1 : Créer un référentiel de fonctionnalités
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    J'ai commencé par <strong class="text-on-surface font-bold">cartographier toutes les fonctionnalités existantes</strong> dans un outil collaboratif.
+                    L'objectif ? <strong class="text-on-surface font-bold">Des données fiables, cohérentes et accessibles à tous</strong>.
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Structure de documentation définie</strong> : chaque fonctionnalité est décrite avec ses spécifications, son statut, et ses dépendances.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Espace dédié</strong> : un lieu unique où tout le monde peut trouver l'information.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('fa7-solid:lightbulb', { class: 'text-base' }) }}
+                    Étape 2 : Mettre en place une boîte à idées collaborative
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Pour <strong class="text-on-surface font-bold">capitaliser sur les idées</strong> de tous (clients, équipes internes, prospects), j'ai mis en place un système de :
+                </p>
+                <ul class="space-y-2 mb-3">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Centralisation des idées</strong> : toutes les suggestions sont collectées au même endroit.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Scoring intelligent</strong> : chaque idée est notée selon son impact, sa faisabilité, et son alignement avec les objectifs produit.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Construction de la roadmap</strong> : les idées priorisées sont intégrées dans une feuille de route claire et partagée.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Suivi des métriques</strong> : mesure de l'impact des fonctionnalités livrées.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Traçabilité des livraisons</strong> : chaque évolution est documentée et visible par tous.</span>
+                    </li>
+                </ul>
+                <p class="text-on-surface-muted leading-relaxed">
+                    Résultat : <strong class="text-on-surface font-bold">une visibilité totale pour tous les collaborateurs</strong>, et une équipe produit alignée sur les mêmes objectifs.
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <p class="text-sm font-semibold text-on-surface-muted mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:toolbox', { class: 'text-base' }) }}
+                Outils utilisés
+            </p>
+            <div class="flex flex-nowrap items-center gap-4">
+                <span title="Jira">{{ ux_icon('logos:jira', { class: 'w-6 h-6' }) }}</span>
+                <span title="Confluence">{{ ux_icon('logos:confluence', { class: 'w-6 h-6' }) }}</span>
+                <span title="Product Discovery">{{ ux_icon('logos:atlassian', { class: 'w-6 h-6' }) }}</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('hugeicons:party', { class: 'text-nine-cyan-500 text-xl' }) }}
+            Le résultat : un pôle produit structuré et efficace
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Grâce à cette structuration, les équipes ont gagné en <strong class="text-on-surface font-bold">efficacité, clarté et collaboration</strong>.
+        </p>
+
+        <div class="p-4 rounded-lg bg-surface-card shadow-sm">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:chart-line', { class: 'text-base' }) }}
+                Impact mesurable
+            </h3>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Réduction des doublons</strong> : plus de fonctionnalités développées en double.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Gain de temps</strong> : les squads trouvent l'information en quelques clics.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Meilleure collaboration</strong> : tout le monde parle le même langage.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Roadmap claire</strong> : une vision partagée des priorités.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
