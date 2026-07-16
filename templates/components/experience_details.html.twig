@@ -27,7 +27,7 @@
             {% for link in experience.links %}
             {% if link.type.value == 'pdf' %}
             <li>
-                <a 
+                <a
                     href="http://docs.carolinenoyer.fr/{{ link.url }}"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -43,7 +43,7 @@
             </li>
             {% elseif link.type.value == 'external' %}
             <li>
-                <a 
+                <a
                     href="{{ link.url }}"
                     target="_blank"
                     rel="noopener noreferrer"
@@ -95,7 +95,7 @@
             {% for link in experience.links %}
             {% if link.type.value == 'detail' %}
             <li>
-                <a 
+                <a
                     href="/experience/{{ experience.slug }}/{{ link.page.slug }}"
                     rel="noopener noreferrer"
                     title="{{ link.title|default('Voir le détail') }}"

@@ -33,11 +33,11 @@
             <div class="max-w-2xl mx-auto">
                 {% for resource in page_manager.getPublishedResourceLinksInHero() %}
                 <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray-400 border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}ms">
-                    <a 
-                        href="{{ resource.url }}" 
-                        title="{{ resource.title }}" 
-                        class="text-2xl" 
-                        target="_blank" 
+                    <a
+                        href="{{ resource.url }}"
+                        title="{{ resource.title }}"
+                        class="text-2xl"
+                        target="_blank"
                         aria-label="{{ resource.title }}">
                         {{ ux_icon(resource.icon, { class: 'text-nine-sand-200' }) }}
                     </a>

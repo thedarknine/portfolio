@@ -18,11 +18,11 @@
         </div>
         <div class="mt-auto">
             {% for resource in page_manager.getPublishedResourceLinks() %}
-            <a 
-                class="inline-block px-1" 
-                href="{{ resource.url }}" 
-                target="_blank" 
-                title="{{ resource.title }}" 
+            <a
+                class="inline-block px-1"
+                href="{{ resource.url }}"
+                target="_blank"
+                title="{{ resource.title }}"
                 aria-label="{{ resource.title }}">
                 {{ ux_icon(resource.icon, { class: 'text-2xl text-nine-cyan-500' }) }}
             </a>

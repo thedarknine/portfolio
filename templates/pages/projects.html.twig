@@ -44,7 +44,7 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
                         {% set screenshots = project.screenshots %}
                         {% for screenshot in screenshots %}
                         {% set screenshot_url = absolute_url('images/projects/' ~ screenshot.filename) %}
-                        <a 
+                        <a
                             href="{{ screenshot_url }}"
                             target="_blank"
                             aria-label="Voir la capture d'écran {{ screenshot.filename }} du projet {{ project.name }}"
