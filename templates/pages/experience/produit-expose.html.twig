@@ -1,5 +1,10 @@
 {% extends 'layout.html.twig' %}
 
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="max-w-5xl mx-auto px-4 py-16 text-[14px] font-normal">
 
@@ -38,7 +43,7 @@
         </p>
 
         <div class="space-y-6">
-            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
                 <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
                     {{ ux_icon('fa7-solid:book-open', { class: 'text-base' }) }}
                     Étape 1 : Comprendre les besoins clients
@@ -54,7 +59,7 @@
                 </ul>
             </div>
 
-            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
                 <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
                     {{ ux_icon('fa7-solid:lightbulb', { class: 'text-base' }) }}
                     Étape 2 : Cadrage et User Stories
@@ -78,7 +83,7 @@
                 </ul>
             </div>
 
-            <div class="pl-4 border-l-2 border-nine-cyan-500/40">
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
                 <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
                     {{ ux_icon('flowbite:users-group-solid', { class: 'text-base' }) }}
                     Étape 3 : Collaboration et suivi
@@ -152,7 +157,9 @@
         </div>
 
         <div class="story-visual">
-            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">{{ ux_icon('hugeicons:image-03', { class: 'text-base' }) }} En images : Le portail Exposé™</h3>
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('hugeicons:image-03', { class: 'text-nine-amber-600 text-xl' }) }} En images : Le portail Exposé™
+            </h3>
             <div class="visual-grid">
                 <div class="visual-item">
                     <img
@@ -162,7 +169,7 @@
                         width="800"
                         height="450"
                         class="mx-auto">
-                    <p class="text-center mt-1 text-on-surface-muted"><strong>Portail de ventes</strong> : Une interface intuitive pour exposer et monétiser les actifs.</p>
+                    <p class="text-center mt-1 text-on-surface-muted italic"><strong>Portail de ventes</strong> : Une interface intuitive pour exposer et monétiser les actifs.</p>
                 </div>
             </div>
         </div>
