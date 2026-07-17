@@ -72,7 +72,7 @@ RUN mkdir -p /opt/siteone-crawler \
 RUN curl -1sLf 'https://dl.cloudsmith.io/public/symfony/stable/setup.alpine.sh' | bash \
     && apk add --no-cache symfony-cli
 
-ARG PNPM_VERSION=11.10.0
+ARG PNPM_VERSION=11.13.1
 RUN npm install -g pnpm@${PNPM_VERSION}
 
 # Get Composer (official image frozen on a major version for stability)
