@@ -90,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         } else {
             // Fallback for older browsers that don't support Cookie Store API
+            // biome-ignore lint/suspicious/noDocumentCookie: just a fallback to support old browsers
             document.cookie = `theme=${next}; Path=/; Max-Age=${maxAge}; SameSite=Lax${secure}`;
         }
     });

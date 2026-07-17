@@ -25,6 +25,18 @@ class PageInfoRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return PageInfo[]
+     */
+    public function findByParentId(int $parentId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.parent = :parentId')
+            ->setParameter('parentId', $parentId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
      * @param array<string, mixed> $filters
      *
      * @return array<int, array<string, mixed>>
@@ -41,6 +53,65 @@ class PageInfoRepository extends ServiceEntityRepository
 
         return $query->getQuery()
             ->getArrayResult(); // Associative array
+    }
+
+    /**
+     * @return PageInfo[]
+     */
+    public function findRootPages(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.parent IS NULL')
+            ->andWhere('p.published = :published')
+            ->setParameter('published', true)
+            ->orderBy('p.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Published root pages displayed in the header, with their children.
+     *
+     * @return PageInfo[]
+     */
+    public function findPublishedRootPagesInHeader(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.children', 'c')
+            ->addSelect('c')
+            ->andWhere('p.parent IS NULL')
+            ->andWhere('p.published = :published')
+            ->andWhere('p.inHeader = :inHeader')
+            ->setParameter('published', true)
+            ->setParameter('inHeader', true)
+            ->orderBy('p.position', 'ASC')
+            ->addOrderBy('c.position', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * @return PageInfo[]
+     */
+    public function findChildrenPages(bool $published = true, ?int $parentId = null): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->orderBy('p.position', 'ASC');
+
+        if (null !== $parentId) {
+            $query->andWhere('p.parent = :parentId')
+                ->setParameter('parentId', $parentId);
+        } else {
+            $query->andWhere('p.parent IS NOT NULL');
+        }
+
+        if ($published) {
+            $query->andWhere('p.published = :published')
+                ->setParameter('published', true);
+        }
+
+        return $query->getQuery()
+            ->getResult();
     }
 
     //    /**

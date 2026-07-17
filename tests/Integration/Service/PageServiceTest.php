@@ -49,6 +49,44 @@ class PageServiceTest extends KernelTestCase
         $this->pageService->getActivePageBySlug('slug-qui-n-existe-pas');
     }
 
+    public function testGetPublishedPagesWithoutHeaderFilter(): void
+    {
+        $pages = $this->pageService->getPublishedPages();
+
+        $this->assertIsArray($pages);
+        $this->assertNotEmpty($pages);
+
+        foreach ($pages as $page) {
+            $this->assertTrue($page['published']);
+        }
+    }
+
+    public function testGetPublishedPagesInHeaderReturnsOnlyHeaderPages(): void
+    {
+        $pages = $this->pageService->getPublishedPagesInHeader();
+
+        $this->assertIsArray($pages);
+        $this->assertNotEmpty($pages);
+
+        foreach ($pages as $page) {
+            $this->assertTrue($page['published']);
+            $this->assertTrue($page['inHeader']);
+        }
+    }
+
+    public function testGetPublishedPagesInHeaderFiltersResults(): void
+    {
+        $allPages    = $this->pageService->getPublishedPages();
+        $headerPages = $this->pageService->getPublishedPagesInHeader();
+
+        $this->assertLessThanOrEqual(count($allPages), count($headerPages));
+
+        foreach ($headerPages as $page) {
+            $this->assertTrue($page['published']);
+            $this->assertTrue($page['inHeader']);
+        }
+    }
+
     public function testGetNbYearsExperience(): void
     {
         // 1. Freeze time to a specific date (e.g., May 28, 2026)

@@ -11,7 +11,9 @@
 namespace App\Tests\Integration\Controller;
 
 use App\Entity\ArcadeType;
+use App\Entity\Company;
 use App\Entity\CreationType;
+use App\Entity\Experience;
 use App\Entity\PageInfo;
 use App\Entity\PhotoType;
 use App\Enum\PageCategory;
@@ -95,6 +97,145 @@ class PortfolioControllerTest extends WebTestCase
 
         // Check anonymous user is redirected (usually to /login)
         $this->assertResponseRedirects();
+    }
+
+    /**
+     * Test experience slug page loads successfully with valid job and page slug.
+     */
+    public function testExperienceSlugPageIsSuccessful(): void
+    {
+        // Create a company and experience for testing
+        $company = (new Company())
+            ->setName('Tech Corp')
+            ->setSlug('tech-corp')
+            ->setLogo('tech-corp.png')
+            ->setCity('Tech City')
+            ->setDepartment(63);
+
+        $experience = (new Experience())
+            ->setTitle('Senior Developer')
+            ->setSlug('senior-developer')
+            ->setDescription('A great experience')
+            ->setStartDate(new \DateTime('2020-01-01'))
+            ->setCompany($company);
+
+        $this->entityManager->persist($company);
+        $this->entityManager->persist($experience);
+        $this->entityManager->flush();
+
+        // Request the experience slug page
+        $this->client->request('GET', '/experience/senior-developer/structuration-pole-produit');
+
+        // Verify successful response
+        $this->assertResponseIsSuccessful();
+        $this->assertResponseStatusCodeSame(200);
+    }
+
+    /**
+     * Test experience slug page with non-existent job slug returns 404.
+     */
+    public function testExperienceSlugPageWithNonExistentJobReturns404(): void
+    {
+        $this->client->request('GET', '/experience/non-existent-job/experience');
+
+        $this->assertResponseStatusCodeSame(404);
+    }
+
+    /**
+     * Test experience slug page with non-existent page slug returns 404.
+     */
+    public function testExperienceSlugPageWithNonExistentPageSlugReturns404(): void
+    {
+        // Create a company and experience for testing
+        $company = (new Company())
+            ->setName('Tech Corp')
+            ->setSlug('tech-corp')
+            ->setLogo('tech-corp.png')
+            ->setCity('Tech City')
+            ->setDepartment(63);
+
+        $experience = (new Experience())
+            ->setTitle('Senior Developer')
+            ->setSlug('senior-developer')
+            ->setDescription('A great experience')
+            ->setStartDate(new \DateTime('2020-01-01'))
+            ->setCompany($company);
+
+        $this->entityManager->persist($company);
+        $this->entityManager->persist($experience);
+        $this->entityManager->flush();
+
+        // Request with non-existent page slug
+        $this->client->request('GET', '/experience/senior-developer/non-existent-page');
+
+        $this->assertResponseStatusCodeSame(404);
+    }
+
+    /**
+     * Test experience slug page renders correct template with data.
+     */
+    public function testExperienceSlugPageRendersCorrectTemplate(): void
+    {
+        // Create a company and experience for testing
+        $company = (new Company())
+            ->setName('Tech Corp')
+            ->setSlug('tech-corp')
+            ->setLogo('tech-corp.png')
+            ->setCity('Tech City')
+            ->setDepartment(63);
+
+        $experience = (new Experience())
+            ->setTitle('Senior Developer')
+            ->setSlug('senior-developer')
+            ->setDescription('A great experience')
+            ->setStartDate(new \DateTime('2020-01-01'))
+            ->setCompany($company);
+
+        $this->entityManager->persist($company);
+        $this->entityManager->persist($experience);
+        $this->entityManager->flush();
+
+        // Request the experience slug page
+        $this->client->request('GET', '/experience/senior-developer/structuration-pole-produit');
+
+        // Verify successful response and correct template
+        $this->assertResponseIsSuccessful();
+        $crawler = $this->client->getResponse()->getContent();
+        $this->assertNotEmpty($crawler);
+    }
+
+    /**
+     * Test experience slug page breadcrumb contains correct data.
+     */
+    public function testExperienceSlugPageBreadcrumbData(): void
+    {
+        // Create a company and experience for testing
+        $company = (new Company())
+            ->setName('Acme Corporation')
+            ->setSlug('acme-corporation')
+            ->setLogo('acme-corporation.png')
+            ->setCity('Acme City')
+            ->setDepartment(63);
+
+        $experience = (new Experience())
+            ->setTitle('Frontend Developer')
+            ->setSlug('frontend-developer')
+            ->setDescription('Building amazing UIs')
+            ->setStartDate(new \DateTime('2021-06-01'))
+            ->setCompany($company);
+
+        $this->entityManager->persist($company);
+        $this->entityManager->persist($experience);
+        $this->entityManager->flush();
+
+        // Request the experience slug page
+        $this->client->request('GET', '/experience/frontend-developer/structuration-pole-produit');
+
+        // Verify response is successful and contains company name
+        $this->assertResponseIsSuccessful();
+        $content = $this->client->getResponse()->getContent();
+        // The breadcrumb should contain the company name
+        $this->assertStringContainsString('Acme Corporation', $content);
     }
 
     /**

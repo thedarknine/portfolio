@@ -98,6 +98,7 @@ class ProjectRepositoryTest extends KernelTestCase
         // you'll need to clear it JUST BEFORE the project table to avoid FK conflicts.
         // $connection->executeStatement('DELETE FROM project_technology');
 
+        $connection->executeStatement('DELETE FROM screenshot');
         $connection->executeStatement('DELETE FROM project');
         $this->entityManager->clear();
     }

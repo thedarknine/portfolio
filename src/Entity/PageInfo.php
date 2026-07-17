@@ -18,9 +18,12 @@ use App\Entity\Traits\TimeStampableTrait;
 use App\Entity\Traits\TitleableTrait;
 use App\Enum\PageCategory;
 use App\Repository\PageInfoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Table(name: 'page')]
 #[ORM\Entity(repositoryClass: PageInfoRepository::class)]
@@ -63,6 +66,20 @@ class PageInfo implements SortableEntityInterface
     #[Assert\NotNull(message: 'Page category is required.')]
     #[Assert\Valid]
     private ?PageCategory $category = null;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'children')]
+    #[ORM\JoinColumn(name: 'parent_id', referencedColumnName: 'id', nullable: true, onDelete: 'CASCADE')]
+    private ?self $parent = null;
+
+    /** @var Collection<int, PageInfo> */
+    #[ORM\OneToMany(targetEntity: self::class, mappedBy: 'parent')]
+    #[ORM\OrderBy(['position' => 'ASC'])] // adapte le nom de colonne selon ton SortableTrait
+    private Collection $children;
+
+    public function __construct()
+    {
+        $this->children = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -139,5 +156,94 @@ class PageInfo implements SortableEntityInterface
         $this->category = $category;
 
         return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): static
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PageInfo>
+     */
+    public function getChildren(): Collection
+    {
+        return $this->children;
+    }
+
+    /**
+     * @return PageInfo[]
+     */
+    public function getPublishedChildren(): array
+    {
+        return $this->children
+            ->filter(fn (self $child) => $child->isPublished())
+            ->toArray();
+    }
+
+    public function addChild(self $child): static
+    {
+        if (!$this->children->contains($child)) {
+            $this->children->add($child);
+            $child->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeChild(self $child): static
+    {
+        if ($this->children->removeElement($child)) {
+            if ($child->getParent() === $this) {
+                $child->setParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isRoot(): bool
+    {
+        return null === $this->parent;
+    }
+
+    public function hasChildren(): bool
+    {
+        return !$this->children->isEmpty();
+    }
+
+    #[Assert\Callback]
+    public function validateDepth(ExecutionContextInterface $context): void
+    {
+        if ($this === $this->parent) {
+            $context->buildViolation('Une page ne peut pas être son propre parent.')
+                ->atPath('parent')
+                ->addViolation();
+
+            return;
+        }
+
+        if (null === $this->parent) {
+            return;
+        }
+
+        if (null !== $this->parent->getParent()) {
+            $context->buildViolation(
+                'Impossible de choisir une sous-page comme parent (profondeur maximale : 1).',
+            )->atPath('parent')->addViolation();
+        }
+
+        if (!$this->children->isEmpty()) {
+            $context->buildViolation(
+                'Une sous-page ne peut pas avoir elle-même des sous-pages (profondeur maximale : 1).',
+            )->atPath('parent')->addViolation();
+        }
     }
 }

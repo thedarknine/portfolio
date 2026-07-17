@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Education;
 use App\Entity\School;
+use App\DataFixtures\SchoolAutoFixture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;

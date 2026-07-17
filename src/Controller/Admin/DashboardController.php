@@ -64,6 +64,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkTo(SkillCrudController::class, 'Compétences', 'fa fa-code')->setAction(Action::INDEX);
 
         yield MenuItem::section('Réalisations');
+        yield MenuItem::linkTo(ProjectTagCrudController::class, 'Tags', 'fa fa-tags')->setAction(Action::INDEX);
         yield MenuItem::linkTo(ProjectCrudController::class, 'Projets', 'fa fa-diagram-project')->setAction(Action::INDEX);
 
         yield MenuItem::section('Cursus & Formations');

@@ -1,38 +1,39 @@
 {% block experience_details %}
-    <div class="text-sm font-normal uppercase pt-3 pl-3 text-nine-gray-600"><span class="font-black">{{ experience.title }}</span></div>
-    <div class="p-3 text-3xl text-nine-500 dark:text-nine-sand-200 font-bold">{{ experience.subtitle }}</div>
-    <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 px-3 mb-4">
-        <div class="space-y-1">
-            <p class="text-nine-gray-400">{{ ux_icon('flowbite:calendar-month-outline', { class: 'mr-1 inline-block' }) }}&nbsp;
+<div class="text-sm font-normal uppercase pt-3 pl-3 text-nine-gray-600"><span class="font-black">{{ experience.title }}</span></div>
+<div class="p-3 text-3xl text-nine-500 dark:text-nine-sand-200 font-bold">{{ experience.subtitle }}</div>
+<div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4 px-3 mb-4">
+    <div class="space-y-1">
+        <p class="text-nine-gray-400">{{ ux_icon('flowbite:calendar-month-outline', { class: 'mr-1 inline-block' }) }}&nbsp;
             {% if experience.endDate is empty %}
-                Depuis {{ experience.startDate|date('m/Y') }}
+            Depuis {{ experience.startDate|date('m/Y') }}
             {% else %}
-                De {{ experience.startDate|date('m/Y') }} à {{ experience.endDate|date('m/Y') }}
+            De {{ experience.startDate|date('m/Y') }} à {{ experience.endDate|date('m/Y') }}
             {% endif %}
             <i class="text-sm font-normal">
                 ({% if experience.duration.nbYears > 0 %}{{ experience.duration.nbYears }} an{% if experience.duration.nbYears > 1 %}s{% endif %}{% endif %}
                 {% if experience.duration.nbMonths != 0 %}{% if experience.duration.nbYears > 0 %}et {% endif %}{{ experience.duration.nbMonths }} mois{% endif %})
             </i>
-            </p>
+        </p>
 
-            <p class="text-nine-gray-400">
-                {{ ux_icon('flowbite:map-pin-alt-outline', { class: 'mr-1 inline-block' }) }}&nbsp; {{ experience.company.name }}
-                - <span class="text-sm">{{ experience.company.city }} ({{ experience.company.department|format_number({ min_integer_digit: 2 }) }})</span>
-            </p>
-        </div>
+        <p class="text-nine-gray-400">
+            {{ ux_icon('flowbite:map-pin-alt-outline', { class: 'mr-1 inline-block' }) }}&nbsp; {{ experience.company.name }}
+            - <span class="text-sm">{{ experience.company.city }} ({{ experience.company.department|format_number({ min_integer_digit: 2 }) }})</span>
+        </p>
+    </div>
 
-        {% if experience.links is not empty %}
-        <div class="shrink-0">
-            <ul class="flex flex-wrap md:justify-end gap-2">
+    {% if experience.links is not empty %}
+    <div class="shrink-0">
+        <ul class="flex flex-wrap md:justify-end gap-2">
             {% for link in experience.links %}
-                {% if link.type.value == 'pdf' %}
+            {% if link.type.value == 'pdf' %}
             <li>
-                <a href="http://docs.carolinenoyer.fr/{{ link.url }}"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="{{ link.title }}"
-                   aria-label="{{ link.title }}"
-                   class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-gray-400 dark:text-nine-sand-200 shadow-sm hover:shadow hover:text-nine-blue-400 hover:border-nine-blue-400/30 hover:bg-nine-sand-200 transition-all duration-200 group">
+                <a
+                    href="http://docs.carolinenoyer.fr/{{ link.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="{{ link.title }}"
+                    aria-label="{{ link.title }}"
+                    class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-gray-400 dark:text-nine-sand-200 shadow-sm hover:shadow hover:text-nine-blue-400 hover:border-nine-blue-400/30 hover:bg-nine-sand-200 transition-all duration-200 group">
 
                     {{ ux_icon('flowbite:file-pdf-outline', { class: 'text-red-500 text-base transition-transform group-hover:scale-110' }) }}
                     <span>{{ link.title }}</span>
@@ -40,55 +41,108 @@
                     {{ ux_icon('fa7-solid:arrow-up-right-from-square', { class: 'text-[16px] opacity-40 group-hover:opacity-100 group-hover:text-nine-blue-400 transition-all' }) }}
                 </a>
             </li>
-                {% elseif link.type.value == 'external' %}
+            {% elseif link.type.value == 'external' %}
             <li>
-                <a href="{{ link.url }}"
-                   target="_blank"
-                   rel="noopener noreferrer"
-                   title="{{ link.title }}"
-                   aria-label="{{ link.title }}"
-                   class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-gray-400 dark:text-nine-sand-200 shadow-sm hover:shadow hover:text-nine-blue-400 hover:border-nine-blue-400/30 hover:bg-nine-sand-200 transition-all duration-200 group">
-                   {{ ux_icon('fa7-solid:globe-europe', { class: 'text-base transition-transform group-hover:scale-110' }) }}
+                <a
+                    href="{{ link.url }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title="{{ link.title }}"
+                    aria-label="{{ link.title }}"
+                    class="inline-flex items-center gap-2.5 px-3 py-1.5 rounded-lg bg-white/50 backdrop-blur-sm text-sm font-medium text-nine-gray-400 dark:text-nine-sand-200 shadow-sm hover:shadow hover:text-nine-blue-400 hover:border-nine-blue-400/30 hover:bg-nine-sand-200 transition-all duration-200 group">
+                    {{ ux_icon('fa7-solid:globe-europe', { class: 'text-base transition-transform group-hover:scale-110' }) }}
                     <span>{{ link.title }}</span>
 
                     {{ ux_icon('fa7-solid:arrow-up-right-from-square', { class: 'text-[16px] opacity-40 group-hover:opacity-100 group-hover:text-nine-blue-400 transition-all' }) }}
                 </a>
             </li>
-                {% endif %}
-            {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
-    </div>
-
-    <div class="px-3 pb-6">
-    {% if experience.items is not empty %}
-        <ul class="list-none">
-            {% for item in experience.items %}
-            <li class="flex">
-                <p class="h-lh w-5.5 shrink-0 pt-1">{{ item.picto }}</p>
-                <div class="pl-4 rounded-lg backdrop-blur">
-                    <h2 class="text-lg mb-0 font-semibold text-nine-blue-400 dark:text-nine-cyan-500">{{ item.title }}</h2>
-                    <p class="mb-2">
-                    {{ item.details }}
-                    </p>
-                </div>
-            </li>
+            {% endif %}
             {% endfor %}
         </ul>
-    {% else %}
-        <p>{{ experience.description|raw }}</p>
-    {% endif %}
     </div>
+    {% endif %}
+</div>
+
+<div class="px-3 pb-6">
+    {% if experience.items is not empty %}
+    <ul class="list-none">
+        {% for item in experience.items %}
+        <li class="flex">
+            <p class="h-lh w-5.5 shrink-0 pt-1">{{ item.picto }}</p>
+            <div class="pl-4 rounded-lg backdrop-blur">
+                <h2 class="text-lg mb-0 font-semibold text-nine-blue-400 dark:text-nine-cyan-500">{{ item.title }}</h2>
+                <p class="mb-2">
+                    {{ item.details }}
+                </p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>{{ experience.description|raw }}</p>
+    {% endif %}
+</div>
+
+{% set nbDisplayedSkills = 6 %}
+{% set detailLink = experience.links|filter(link => link.type.value == 'detail')|first %}
+{% if experience.skills is not empty or detailLink %}
+<div class="w-full flex flex-col md:flex-row md:items-start md:justify-between gap-3 px-3">
+
+    {% if detailLink %}
+    <div class="">
+        <p class="pt-4 pb-2 px-3"><strong class="text-nine-gray-400 font-semibold">Plus d'infos</strong></p>
+        <ul class="list-none">
+            {% for link in experience.links %}
+            {% if link.type.value == 'detail' %}
+            <li>
+                <a
+                    href="/experience/{{ experience.slug }}/{{ link.page.slug }}"
+                    rel="noopener noreferrer"
+                    title="{{ link.title|default('Voir le détail') }}"
+                    aria-label="{{ link.title|default('Voir le détail') }}"
+                    class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-nine-gray-100 dark:bg-nine-sand-800 text-sm font-medium text-nine-gray-600 dark:text-nine-sand-100 hover:bg-nine-sand-200 transition-all duration-200 group">
+                    {{ ux_icon('hugeicons:binoculars', { class: 'text-[15px] transition-transform group-hover:scale-110' }) }}
+                    <span>{{ link.title|default('Voir le détail') }}</span>
+                </a>
+            </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
 
     {% if experience.skills is not empty %}
-    <p class="py-4 px-3"><strong class="text-nine-gray-400 font-semibold">Stack utilisée</strong></p>
-    <div class="w-full inline-flex">
-        <ul class="flex flex-wrap items-center justify-center md:justify-start [&_li]:mx-4 [&_img]:max-w-none">
+    <div class="">
+        <p class="py-4 px-3"><strong class="text-nine-gray-400 font-semibold">Stack utilisée</strong></p>
+
+        <input type="checkbox" id="skills-toggle-{{ experience.id }}" class="hidden peer">
+
+        <ul class="flex flex-wrap items-center justify-start gap-2 [&_li]:mx-4 [&_img]:max-w-none
+                peer-checked:[&_.extra-skill]:inline-flex
+                peer-checked:[&_.voir-plus]:hidden
+                peer-checked:[&_.voir-moins]:inline-flex">
             {% for skill in experience.skills %}
-            <li><img src="{{ absolute_url('images/skills/' ~ skill.logo) }}" alt="{{ skill.name }}" width="40px" class="mb-4 rounded-sm" /></li>
+            <li class="{{ loop.index > nbDisplayedSkills ? 'extra-skill hidden' : '' }} flex items-center">
+                <img src="{{ absolute_url('images/skills/' ~ skill.logo) }}" alt="{{ skill.name }}" width="40px" class="mb-4 rounded-sm">
+            </li>
             {% endfor %}
+
+            {% if experience.skills|length > nbDisplayedSkills %}
+            <li>
+                <span class="voir-plus inline-flex items-center rounded-md bg-blue-400/10 px-2 py-1 text-xs font-medium text-blue-400 inset-ring inset-ring-blue-400/30">+{{ experience.skills|length - nbDisplayedSkills }}</span>&nbsp;
+                <label for="skills-toggle-{{ experience.id }}"
+                    class="voir-plus cursor-pointer shrink-0 text-xs font-medium text-nine-gray-400 dark:text-nine-gray-500 hover:text-nine-blue-400 underline underline-offset-2 transition-colors duration-200">
+                    Afficher plus &raquo;
+                </label>
+                <label for="skills-toggle-{{ experience.id }}"
+                    class="voir-moins hidden cursor-pointer shrink-0 text-xs font-medium text-nine-gray-400 dark:text-nine-gray-500 hover:text-nine-blue-400 underline underline-offset-2 transition-colors duration-200">
+                    Afficher moins &laquo;
+                </label>
+            </li>
+            {% endif %}
         </ul>
     </div>
     {% endif %}
+</div>
+{% endif %}
 {% endblock %}

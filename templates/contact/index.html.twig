@@ -6,136 +6,136 @@ Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline
 
 {% form_theme form _self %}
 {% block form_errors %}
-  {% if errors|length > 0 %}
-    <ul class="mt-1 list-none p-0">
-      {% for error in errors %}
-        <li class="text-nine-red-600 dark:text-nine-amber-600">{{ error.message }}</li>
-      {% endfor %}
-    </ul>
-  {% endif %}
+{% if errors|length > 0 %}
+<ul class="mt-1 list-none p-0">
+    {% for error in errors %}
+    <li class="text-nine-red-600 dark:text-nine-amber-600">{{ error.message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}
 
 {% block body %}
 <section class="bg-surface text-on-surface py-20">
-  <div class="container max-w-2xl">
-    <div class="mb-4">
-      Merci de votre visite sur mon portfolio.
+    <div class="container max-w-2xl">
+        <div class="mb-4">
+            Merci de votre visite sur mon portfolio.
+        </div>
+        <div class="mb-4">
+            Cette page est à votre disposition si vous souhaitez me contacter à propos de mon parcours,
+            d'un projet présenté sur le site ou d'une opportunité professionnelle. J'apprécie également
+            les échanges entre développeurs et les retours sur les réalisations que je partage.
+        </div>
+        <div>
+            Je m'efforce de répondre à chaque demande dans les meilleurs délais.
+        </div>
     </div>
-    <div class="mb-4">
-      Cette page est à votre disposition si vous souhaitez me contacter à propos de mon parcours,
-      d'un projet présenté sur le site ou d'une opportunité professionnelle. J'apprécie également
-      les échanges entre développeurs et les retours sur les réalisations que je partage.
-    </div>
-    <div>
-      Je m'efforce de répondre à chaque demande dans les meilleurs délais.
-    </div>
-  </div>
 </section>
 <section class="py-20 bg-surface-alt">
-  <div class="container max-w-2xl">
+    <div class="container max-w-2xl">
 
-    {# Flash messages #}
-    {% for msg in app.flashes('success') %}
-      <div class="mb-6 rounded-md border border-nine-cyan-500/30 bg-nine-cyan-500/10 px-5 py-4 text-sm text-nine-cyan-500 alert-success">
-        {{ msg }}
-      </div>
-    {% endfor %}
-    {% for msg in app.flashes('error') %}
-      <div class="mb-6 rounded-md border border-nine-red-600/30 bg-nine-red-600/10 px-5 py-4 text-sm text-nine-red-600">
-        {{ msg }}
-      </div>
-    {% endfor %}
-
-    {{ form_start(form, {
-      attr: { class: 'flex flex-col gap-5', novalidate: 'novalidate' },
-    }) }}
-
-      <div>
-        <label for="{{ form.name.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
-          Nom <span class="text-on-surface-muted">*</span>
-        </label>
-        {{ form_widget(form.name, {
-          attr: {
-            class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
-                    bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
-                    focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
-                    transition-colors duration-200',
-          },
-        }) }}
-        <div class="text-sm text-red-500 mt-1 font-medium">
-          {{ form_errors(form.name) }}
+        {# Flash messages #}
+        {% for msg in app.flashes('success') %}
+        <div class="mb-6 rounded-md border border-nine-cyan-500/30 bg-nine-cyan-500/10 px-5 py-4 text-sm text-nine-cyan-500 alert-success">
+            {{ msg }}
         </div>
-      </div>
-
-      <div>
-        <label for="{{ form.email.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
-          Email <span class="text-on-surface-muted">*</span>
-        </label>
-        {{ form_widget(form.email, {
-          attr: {
-            class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
-                    bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
-                    focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
-                    transition-colors duration-200',
-          },
-        }) }}
-        <div class="text-sm text-red-500 mt-1 font-medium">
-          {{ form_errors(form.email) }}
+        {% endfor %}
+        {% for msg in app.flashes('error') %}
+        <div class="mb-6 rounded-md border border-nine-red-600/30 bg-nine-red-600/10 px-5 py-4 text-sm text-nine-red-600">
+            {{ msg }}
         </div>
-      </div>
+        {% endfor %}
 
-      <div>
-        <label for="{{ form.subject.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
-          Sujet <span class="text-on-surface-muted">*</span>
-        </label>
-        {{ form_widget(form.subject, {
-          attr: {
-            class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
-                    bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
-                    focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
-                    transition-colors duration-200',
-          },
+        {{ form_start(form, {
+        attr: { class: 'flex flex-col gap-5', novalidate: 'novalidate' },
         }) }}
-        <div class="text-sm text-red-500 mt-1 font-medium">
-          {{ form_errors(form.subject) }}
+
+        <div>
+            <label for="{{ form.name.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
+                Nom <span class="text-on-surface-muted">*</span>
+            </label>
+            {{ form_widget(form.name, {
+                attr: {
+                    class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
+                            bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
+                            focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
+                            transition-colors duration-200',
+                },
+            }) }}
+            <div class="text-sm text-red-500 mt-1 font-medium">
+                {{ form_errors(form.name) }}
+            </div>
         </div>
-      </div>
 
-      <div>
-        <label for="{{ form.message.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
-          Message <span class="text-on-surface-muted">*</span>
-        </label>
-        {{ form_widget(form.message, {
-          attr: {
-            class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
-                    bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
-                    focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
-                    transition-colors duration-200 resize-none',
-            rows: 6,
-          },
-        }) }}
-        <div class="text-sm text-red-500 mt-1 font-medium">
-          {{ form_errors(form.message) }}
+        <div>
+            <label for="{{ form.email.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
+                Email <span class="text-on-surface-muted">*</span>
+            </label>
+            {{ form_widget(form.email, {
+                attr: {
+                    class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
+                            bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
+                            focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
+                            transition-colors duration-200',
+                },
+            }) }}
+            <div class="text-sm text-red-500 mt-1 font-medium">
+                {{ form_errors(form.email) }}
+            </div>
         </div>
-      </div>
 
-      {# Widget Altcha #}
-      {{ form_row(form.security) }}
+        <div>
+            <label for="{{ form.subject.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
+                Sujet <span class="text-on-surface-muted">*</span>
+            </label>
+            {{ form_widget(form.subject, {
+                attr: {
+                    class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
+                            bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
+                            focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
+                            transition-colors duration-200',
+                },
+            }) }}
+            <div class="text-sm text-red-500 mt-1 font-medium">
+                {{ form_errors(form.subject) }}
+            </div>
+        </div>
 
-<button type="submit"
-        class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg
-               bg-white/60 backdrop-blur-sm text-sm font-semibold text-nine-blue-600
-               shadow-sm transition-all duration-300 hover:text-white
-               hover:shadow-md hover:-translate-y-0.5 group overflow-hidden cursor-pointer
-               focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50">
-    <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue-500)] to-[var(--color-nine-cyan-500)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
-    <span class="relative z-10 flex items-center gap-2">
-        <span>Envoyer</span>
-        {{ ux_icon('fa7-solid:paper-plane', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
-    </span>
-</button>
+        <div>
+            <label for="{{ form.message.vars.id }}" class="text-sm font-medium text-on-surface util-smallcaps tracking-widest">
+                Message <span class="text-on-surface-muted">*</span>
+            </label>
+            {{ form_widget(form.message, {
+                attr: {
+                    class: 'w-full rounded-md border border-nine-sand-300 dark:border-nine-blue-700
+                            bg-surface px-4 py-3 text-sm text-on-surface placeholder:text-on-surface-muted
+                            focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50
+                            transition-colors duration-200 resize-none',
+                    rows: 6,
+                },
+            }) }}
+            <div class="text-sm text-red-500 mt-1 font-medium">
+                {{ form_errors(form.message) }}
+            </div>
+        </div>
 
-    {{ form_end(form) }}
-  </div>
+        {# Widget Altcha #}
+        {{ form_row(form.security) }}
+
+        <button type="submit"
+            class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg
+                bg-white/60 backdrop-blur-sm text-sm font-semibold text-nine-blue-600
+                shadow-sm transition-all duration-300 hover:text-white
+                hover:shadow-md hover:-translate-y-0.5 group overflow-hidden cursor-pointer
+                focus:outline-none focus:ring-2 focus:ring-nine-cyan-500/50">
+            <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue-500)] to-[var(--color-nine-cyan-500)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
+            <span class="relative z-10 flex items-center gap-2">
+                <span>Envoyer</span>
+                {{ ux_icon('fa7-solid:paper-plane', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
+            </span>
+        </button>
+
+        {{ form_end(form) }}
+    </div>
 </section>
 {% endblock %}

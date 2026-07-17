@@ -120,4 +120,103 @@ class PageInfoValidationTest extends KernelTestCase
 
         $this->assertSame(88, $page->getId());
     }
+
+    public function testPageCannotBeItsOwnParent(): void
+    {
+        $page = $this->createValidPage();
+
+        $page->setParent($page);
+
+        $errors = $this->validator->validate($page);
+
+        $this->assertCount(1, $errors);
+
+        $error = $errors[0];
+
+        $this->assertSame('parent', $error->getPropertyPath());
+        $this->assertSame(
+            'Une page ne peut pas être son propre parent.',
+            $error->getMessage(),
+        );
+    }
+
+    public function testSubPageCannotHaveChildren(): void
+    {
+        $root       = $this->createValidPage();
+        $child      = $this->createValidPage();
+        $grandChild = $this->createValidPage();
+
+        $root->addChild($child);
+        $child->addChild($grandChild);
+
+        $errors = $this->validator->validate($child);
+
+        $this->assertCount(1, $errors);
+
+        $error = $errors[0];
+
+        $this->assertSame(
+            'Une sous-page ne peut pas avoir elle-même des sous-pages (profondeur maximale : 1).',
+            $error->getMessage(),
+        );
+    }
+
+    public function testSubPageCannotBeSelectedAsParent(): void
+    {
+        $root  = $this->createValidPage();
+        $child = $this->createValidPage();
+        $page  = $this->createValidPage();
+
+        $root->addChild($child);
+
+        $page->setParent($child);
+
+        $errors = $this->validator->validate($page);
+
+        $this->assertCount(1, $errors);
+
+        $error = $errors[0];
+
+        $this->assertSame(
+            'Impossible de choisir une sous-page comme parent (profondeur maximale : 1).',
+            $error->getMessage(),
+        );
+    }
+
+    public function testRootPageMayHaveChildren(): void
+    {
+        $root  = $this->createValidPage();
+        $child = $this->createValidPage();
+
+        $root->addChild($child);
+
+        $errors = $this->validator->validate($root);
+
+        $this->assertCount(0, $errors);
+    }
+
+    public function testSubPageWithoutChildrenIsValid(): void
+    {
+        $root  = $this->createValidPage();
+        $child = $this->createValidPage();
+
+        $child->setParent($root);
+
+        $errors = $this->validator->validate($child);
+
+        $this->assertCount(0, $errors);
+    }
+
+    private function createValidPage(): PageInfo
+    {
+        return (new PageInfo())
+            ->setTitle('Accueil')
+            ->setSlug(uniqid('page-', true))
+            ->setTechnicalName(uniqid('page-', true))
+            ->setTagline('Tagline')
+            ->setSubtitle('Subtitle')
+            ->setQuote('Quote')
+            ->setCategory(PageCategory::cases()[0])
+            ->setPosition(1);
+    }
 }

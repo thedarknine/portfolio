@@ -3,7 +3,10 @@
 namespace App\DataFixtures;
 
 use App\Entity\ExperienceLink;
+use App\Entity\PageInfo;
 use App\Entity\Experience;
+use App\DataFixtures\PageInfoAutoFixture;
+use App\DataFixtures\ExperienceAutoFixture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -103,6 +106,86 @@ class ExperienceLinkAutoFixture extends Fixture implements DependentFixtureInter
         $manager->persist($experienceLink5);
         $this->addReference('experienceLink_6', $experienceLink5);
 
+        $experienceLink6 = new ExperienceLink();
+        $experienceLink6->setUrl(null);
+        $experienceLink6->setType(\App\Enum\LinkType::DETAIL);
+        $experienceLink6->setCreatedAt(new \DateTime('2026-07-10 06:52:22'));
+        $experienceLink6->setUpdatedAt(new \DateTime('2026-07-11 13:30:00'));
+        $experienceLink6->setTitle('Structuration du Pôle Produit');
+        $experienceLink6->setSlug('structuration');
+        try {
+            $experienceLink6->setPage($this->getReference('pageInfo_179', PageInfo::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        try {
+            $experienceLink6->setExperience($this->getReference('experience_19', Experience::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        $manager->persist($experienceLink6);
+        $this->addReference('experienceLink_7', $experienceLink6);
+
+        $experienceLink7 = new ExperienceLink();
+        $experienceLink7->setUrl(null);
+        $experienceLink7->setType(\App\Enum\LinkType::DETAIL);
+        $experienceLink7->setCreatedAt(new \DateTime('2026-07-11 22:44:42'));
+        $experienceLink7->setUpdatedAt(new \DateTime('2026-07-11 22:50:26'));
+        $experienceLink7->setTitle('Brique B2B2C - Exposé™');
+        $experienceLink7->setSlug('produit-expose');
+        try {
+            $experienceLink7->setPage($this->getReference('pageInfo_180', PageInfo::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        try {
+            $experienceLink7->setExperience($this->getReference('experience_19', Experience::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        $manager->persist($experienceLink7);
+        $this->addReference('experienceLink_11', $experienceLink7);
+
+        $experienceLink8 = new ExperienceLink();
+        $experienceLink8->setUrl(null);
+        $experienceLink8->setType(\App\Enum\LinkType::DETAIL);
+        $experienceLink8->setCreatedAt(new \DateTime('2026-07-13 21:34:39'));
+        $experienceLink8->setUpdatedAt(new \DateTime('2026-07-13 21:34:39'));
+        $experienceLink8->setTitle('Refonte app mobile');
+        $experienceLink8->setSlug('refonte-app-mobile');
+        try {
+            $experienceLink8->setPage($this->getReference('pageInfo_182', PageInfo::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        try {
+            $experienceLink8->setExperience($this->getReference('experience_18', Experience::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        $manager->persist($experienceLink8);
+        $this->addReference('experienceLink_12', $experienceLink8);
+
+        $experienceLink9 = new ExperienceLink();
+        $experienceLink9->setUrl(null);
+        $experienceLink9->setType(\App\Enum\LinkType::DETAIL);
+        $experienceLink9->setCreatedAt(new \DateTime('2026-07-16 13:03:16'));
+        $experienceLink9->setUpdatedAt(new \DateTime('2026-07-16 13:03:16'));
+        $experienceLink9->setTitle('Brique B2B - Timesheet');
+        $experienceLink9->setSlug('produit-timesheet');
+        try {
+            $experienceLink9->setPage($this->getReference('pageInfo_181', PageInfo::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        try {
+            $experienceLink9->setExperience($this->getReference('experience_17', Experience::class));
+        } catch (\OutOfBoundsException $e) {
+            // Reference does not exist yet or target entity was skipped
+        }
+        $manager->persist($experienceLink9);
+        $this->addReference('experienceLink_13', $experienceLink9);
+
         $manager->flush();
     }
 
@@ -112,6 +195,7 @@ class ExperienceLinkAutoFixture extends Fixture implements DependentFixtureInter
     public function getDependencies(): array
     {
         return [
+            PageInfoAutoFixture::class,
             ExperienceAutoFixture::class,
         ];
     }

@@ -5,11 +5,12 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(pwd)"
 
+# shellcheck source=.tools/scripts/utils.sh
 source "$SCRIPT_DIR/utils.sh"
 
 # Charger .env depuis la racine du projet
 if [ -f "$PROJECT_ROOT/.env" ]; then
-    set +u  # Désactiver la vérification des variables non-définies temporairement
+    set +u # Désactiver la vérification des variables non-définies temporairement
     source "$PROJECT_ROOT/.env"
     set -u
 else
@@ -27,8 +28,8 @@ start_time=$(date +%s)
 display_subtitle "🔍 Checking remote configuration..."
 
 # Vérifier les variables requises
-if [ -z "${REMOTE_USER:-}" ] || [ -z "${REMOTE_HOST:-}" ] || \
-   [ -z "${REMOTE_SSH_KEY:-}" ] || [ -z "${REMOTE_PORT:-}" ]; then
+if [ -z "${REMOTE_USER:-}" ] || [ -z "${REMOTE_HOST:-}" ] ||
+    [ -z "${REMOTE_SSH_KEY:-}" ] || [ -z "${REMOTE_PORT:-}" ]; then
     display_error "Missing remote configuration"
     display_info "Required variables: REMOTE_USER, REMOTE_HOST, REMOTE_SSH_KEY, REMOTE_PORT"
     exit 1
@@ -58,34 +59,34 @@ display_success "Remote configuration verified"
 display_subtitle "🚀 Connecting to remote server ($REMOTE_USER@$REMOTE_HOST:$REMOTE_PORT)..."
 
 # Commande de déploiement sur le serveur distant
-REMOTE_DEPLOY_CMD="~/deploy.sh"
+REMOTE_DEPLOY_CMD="${HOME}/deploy.sh"
 
 if ! ssh -i "$REMOTE_SSH_KEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "$REMOTE_DEPLOY_CMD"; then
     display_error "Remote deployment failed"
     display_info "Attempting automatic rollback..."
-    
+
     # =====================================================================
     # ROLLBACK EN CAS D'ÉCHEC
     # =====================================================================
-    
+
     display_subtitle "🔄 Rolling back changes..."
-    
+
     if ! git checkout main 2>&1; then
         display_error "Failed to checkout main during rollback"
         exit 1
     fi
-    
+
     if ! git reset --hard HEAD~1 2>&1; then
         display_error "Failed to reset HEAD during rollback"
         exit 1
     fi
-    
+
     if ! git push origin production --force 2>&1; then
         display_error "Failed to force push during rollback"
         display_warning "Manual intervention may be required"
         exit 1
     fi
-    
+
     display_error "Rollback completed. Remote deployment failed. Check the server logs."
     exit 1
 fi

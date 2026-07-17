@@ -7,8 +7,8 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/pages/legal.css') }}">
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/pages/legal.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -20,7 +20,7 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
     <section class="my-10 leading-relaxed">
         <h2 class="text-xl mb-2 text-on-surface-subheader">1. Éditeur du site</h2>
         <p>Conformément à l’<em>article 6 de la loi n° 2004-575 du 21 juin 2004</em> (LCEN),
-        le site <strong>carolinenoyer.fr</strong> est édité par :</p>
+            le site <strong>carolinenoyer.fr</strong> est édité par :</p>
         <p class="mt-2 pl-5">
             <span class="text-nine-gray-600">Editeur :</span> Caroline Noyer<br>
             <span class="text-nine-gray-600">Contact :</span>  Via le formulaire de <a href="{{ path('app_contact') }}" class="text-nine-cyan-500">contact</a> du site<br>
@@ -43,7 +43,7 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
     <section class="my-10 leading-relaxed">
         <h2 class="text-xl mb-2 text-on-surface-subheader">3. Propriété intellectuelle</h2>
         <p>Tous les contenus du site (textes, graphismes, logos, code, icônes) sont la propriété exclusive de <strong>Caroline Noyer</strong>, sauf mention contraire.
-        Toute reproduction, modification ou diffusion partielle ou totale est <strong>interdite sans autorisation écrite préalable</strong>.</p>
+            Toute reproduction, modification ou diffusion partielle ou totale est <strong>interdite sans autorisation écrite préalable</strong>.</p>
     </section>
 
     <section class="my-10 leading-relaxed">
@@ -54,7 +54,8 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
         </p>
         <p class="mt-2 pl-5">• <strong>Icônes</strong> : <a href="https://www.flaticon.com" target="_blank" class="underline text-nine-cyan-500">Huge Icons</a> Free, utilisées conformément à leur licence d'utilisation.</p>
         <p class="mt-2 pl-5">• <strong>Illustrations</strong> : Certaines illustrations proviennent de <a href="https://unsplash.com" target="_blank" class="underline text-nine-cyan-500">Unsplash</a> et sont utilisées conformément à leur licence d'utilisation.</p>
-        <div class="mt-2 pl-5">• <strong>Librairies</strong> :
+        <div class="mt-2 pl-5">
+            • <strong>Librairies</strong> :
             <ul class="pl-10">
                 <li><a href="https://symfony.com" target="_blank" class="underline text-nine-cyan-500">Symfony</a> - Framework PHP</li>
                 <li><a href="https://twig.symfony.com" target="_blank" class="underline text-nine-cyan-500">Twig</a> - Moteur de template</li>
@@ -84,7 +85,7 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
         <h2 class="text-xl mb-2 text-on-surface-subheader">7. Cookies et traceurs</h2>
         <p>Ce site utilise uniquement des cookies techniques nécessaires à son bon fonctionnement (par exemple, pour mémoriser votre préférence de thème sombre/clair). Aucun cookie tiers à des fins publicitaires ou de traçage analytique n'est déposé sans votre consentement.</p>
         <p class="mt-2">Ce site utilise <strong>Matomo</strong> (auto-hébergé) pour des statistiques anonymes. Aucune donnée personnelle n’est partagée avec des tiers.
-        Matomo est un outil d'analyse anonymisé sans suivi publicitaire. Les statistiques sont collectées via Matomo auto-hébergé avec anonymisation des adresses IP, conformément aux recommandations de la CNIL.</p>
+            Matomo est un outil d'analyse anonymisé sans suivi publicitaire. Les statistiques sont collectées via Matomo auto-hébergé avec anonymisation des adresses IP, conformément aux recommandations de la CNIL.</p>
         <p class="mt-2">Vous pouvez désactiver le suivi ci-dessous :</p>
         <div id="matomo-opt-out"></div>
         <script src="https://analytics.carolinenoyer.fr/index.php?module=CoreAdminHome&action=optOutJS&divId=matomo-opt-out&language=fr&backgroundColor=F5F5F5&fontColor=333333&fontSize=14px&fontFamily=Helvetica&showIntro=1"></script>

@@ -11,21 +11,31 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Project;
+use App\Entity\Screenshot;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 
 /**
  * @extends AbstractCrudController<Project>
  */
 class ProjectCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private AdminUrlGenerator $adminUrlGenerator,
+    ) {
+    }
+
     public static function getEntityFqcn(): string
     {
         return Project::class;
@@ -60,6 +70,11 @@ class ProjectCrudController extends AbstractCrudController
         yield TextField::new('category', 'Catégorie')
             ->setHelp('Exemple : Développement Web, UX/UI Design, Arcade...');
 
+        yield SlugField::new('slug', 'Slug (URL)')
+            ->setTargetFieldName('name')
+            ->setFormTypeOption('disabled', false)
+            ->hideOnIndex();
+
         yield TextField::new('logo', 'Fichier Logo')
             ->setHelp('Exemple : logo-project.png (dans public/images/projects/)')
             ->formatValue(function ($value, $entity) {
@@ -87,24 +102,22 @@ class ProjectCrudController extends AbstractCrudController
         yield TextEditorField::new('description', 'Description du projet')
             ->hideOnIndex();
 
-        yield TextField::new('tags', 'Tags (Séparés par ::)')
-            ->setHelp('Exemple : Symfony::Tailwind::Docker')
-            ->formatValue(function ($value) {
-                if (!$value) {
-                    return null;
-                }
-                $tags = explode('::', $value);
-                $html = '';
-                foreach ($tags as $tag) {
-                    $html .= sprintf('<span class="badge bg-secondary me-1">%s</span>', htmlspecialchars(trim($tag)));
-                }
+        yield AssociationField::new('tags')
+            ->autocomplete()
+            ->setHelp(sprintf(
+                'Vous ne trouvez pas le tag ? <a href="%s" target="_blank">Créer un nouveau tag</a>',
+                $this->adminUrlGenerator
+                    ->setController(ProjectTagCrudController::class)
+                    ->setAction(Action::NEW)
+                    ->generateUrl(),
+            ));
 
-                return $html;
-            })
-            ->hideOnIndex();
-
-        yield TextField::new('screenshots', 'Fichiers Screenshots (Séparés par ::)')
-            ->setHelp('Exemple : screen1.png::screen2.png')
+        yield CollectionField::new('screenshots', 'Fichiers Screenshots')
+            ->useEntryCrudForm(ScreenshotCrudController::class)
+            ->setHelp('Ajoutez les fichiers screenshots du projet')
+            ->setEntryToStringMethod(
+                fn (Screenshot $screenshot): string => $screenshot->getFilename() ?? 'Nouveau screenshot',
+            )
             ->hideOnIndex();
     }
 }

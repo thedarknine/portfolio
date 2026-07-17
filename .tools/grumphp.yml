@@ -36,7 +36,7 @@ grumphp:
         phpunit:
             config_file: .tools/phpunit.xml
             always_execute: false
-        
+
         shell:
             scripts:
                 - '.tools/scripts/run-pre-commit.sh'

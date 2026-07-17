@@ -16,5 +16,6 @@
     "mutators": {
         "@default": true
     },
-    "testFramework": "phpunit"
+    "testFramework": "phpunit",
+    "tmpDir": ".infection"
 }
