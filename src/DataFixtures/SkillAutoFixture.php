@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Skill;
 use App\Entity\SkillType;
+use App\DataFixtures\SkillTypeAutoFixture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -323,7 +324,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface, Fix
         $skill16->setLevel(5);
         $skill16->setDisplay(true);
         $skill16->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skill16->setUpdatedAt(new \DateTime('2026-05-25 07:36:07'));
+        $skill16->setUpdatedAt(new \DateTime('2026-07-04 18:07:28'));
         $skill16->setName('RabbitMQ');
         $skill16->setSlug('rabbitmq');
         $skill16->setLogo('rabbitmq.png');
@@ -456,11 +457,11 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface, Fix
         $skill23->setLevel(9);
         $skill23->setDisplay(true);
         $skill23->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skill23->setUpdatedAt(new \DateTime('2026-05-25 08:09:01'));
+        $skill23->setUpdatedAt(new \DateTime('2026-07-04 18:07:23'));
         $skill23->setName('CSS');
         $skill23->setSlug('css');
         $skill23->setLogo('css.png');
-        $skill23->setPosition(5);
+        $skill23->setPosition(4);
         try {
             $skill23->setSkillType($this->getReference('skillType_15', SkillType::class));
         } catch (\OutOfBoundsException $e) {
@@ -551,7 +552,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface, Fix
         $skill28->setLevel(5);
         $skill28->setDisplay(false);
         $skill28->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skill28->setUpdatedAt(new \DateTime('2026-05-25 07:36:07'));
+        $skill28->setUpdatedAt(new \DateTime('2026-07-04 18:07:28'));
         $skill28->setName('Ajax');
         $skill28->setSlug('ajax');
         $skill28->setLogo('ajax.png');
@@ -741,11 +742,11 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface, Fix
         $skill38->setLevel(8);
         $skill38->setDisplay(true);
         $skill38->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skill38->setUpdatedAt(new \DateTime('2026-06-06 08:13:02'));
+        $skill38->setUpdatedAt(new \DateTime('2026-07-04 18:07:28'));
         $skill38->setName('MacOS X');
         $skill38->setSlug('macos');
         $skill38->setLogo('macos.png');
-        $skill38->setPosition(4);
+        $skill38->setPosition(5);
         try {
             $skill38->setSkillType($this->getReference('skillType_14', SkillType::class));
         } catch (\OutOfBoundsException $e) {
@@ -760,7 +761,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface, Fix
         $skill39->setLevel(7);
         $skill39->setDisplay(true);
         $skill39->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skill39->setUpdatedAt(new \DateTime('2026-05-25 07:36:07'));
+        $skill39->setUpdatedAt(new \DateTime('2026-07-04 18:07:28'));
         $skill39->setName('Linux');
         $skill39->setSlug('linux');
         $skill39->setLogo('linux.png');
@@ -893,7 +894,7 @@ class SkillAutoFixture extends Fixture implements DependentFixtureInterface, Fix
         $skill46->setLevel(7);
         $skill46->setDisplay(false);
         $skill46->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skill46->setUpdatedAt(new \DateTime('2026-05-25 07:36:07'));
+        $skill46->setUpdatedAt(new \DateTime('2026-07-04 18:07:28'));
         $skill46->setName('Slack');
         $skill46->setSlug('slack');
         $skill46->setLogo('slack.png');
