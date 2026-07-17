@@ -1,11 +1,11 @@
 {
   "devDependencies": {
-    "@biomejs/biome": "^2.5.2",
+    "@biomejs/biome": "^2.5.4",
     "@eslint/js": "^10.0.1",
     "@html-eslint/eslint-plugin": "^0.64.0",
     "@html-eslint/parser": "^0.64.0",
     "@unlighthouse/cli": "^0.17.10",
-    "eslint": "^10.6.0",
+    "eslint": "^10.7.0",
     "globals": "^17.7.0",
     "lighthouse": "^13.4.0",
     "markdownlint-cli2": "^0.23.0",
