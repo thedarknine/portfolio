@@ -1,9 +1,91 @@
 #!/bin/bash
 # Force stop on error
-set -e
+set -euo pipefail
 
 TARGET="/home/u274369575/domains/carolinenoyer.fr/public_html"
+BACKUP_DIR="${HOME}/backups"
+BACKUP_RETENTION=5
+
 cd $TARGET
+
+# =====================================================================
+# BACKUP (zip du répertoire web + dump MySQL)
+# =====================================================================
+
+TIMESTAMP="$(date +%Y%m%d_%H%M%S)"
+CURRENT_BACKUP_DIR="${BACKUP_DIR}/${TIMESTAMP}"
+mkdir -p "$CURRENT_BACKUP_DIR"
+
+echo " "
+echo "🗄️  Backing up web directory..."
+ZIP_PATH="${CURRENT_BACKUP_DIR}/web_${TIMESTAMP}.zip"
+zip -rq "$ZIP_PATH" . \
+    -x "var/*" \
+    -x "bin/*" \
+    -x "vendor/*" \
+    -x ".pnpm-store/*" \
+    -x "node_modules/*" \
+    -x "tests/*" \
+    -x "coverage/*" \
+    -x "tmp/*" \
+    -x "analytics/*" \
+    -x "medias/movies/*" \
+    -x "medias/posters/*"
+echo "   -> $ZIP_PATH"
+
+echo " "
+echo "🗄️  Backing up MySQL database..."
+
+# Lecture de DATABASE_URL depuis .env.local en priorité, sinon .env
+ENV_FILE=""
+if [ -f "$TARGET/.env.local" ] && grep -q '^DATABASE_URL=' "$TARGET/.env.local"; then
+    ENV_FILE="$TARGET/.env.local"
+elif [ -f "$TARGET/.env" ] && grep -q '^DATABASE_URL=' "$TARGET/.env"; then
+    ENV_FILE="$TARGET/.env"
+fi
+
+if [ -z "$ENV_FILE" ]; then
+    echo "⚠️  DATABASE_URL introuvable, dump MySQL ignoré."
+else
+    DB_NAME="$(grep -m1 '^DB_NAME=' "$ENV_FILE" | cut -d'=' -f2- | tr -d '"'"'"'"')"
+    DB_USER="$(grep -m1 '^DB_USER=' "$ENV_FILE" | cut -d'=' -f2- | tr -d '"'"'"'"')"
+    DB_PASS="$(grep -m1 '^DB_PASSWORD=' "$ENV_FILE" | cut -d'=' -f2- | tr -d '"'"'"'"')"
+
+    # L'hôte et le port ne sont pas exposés en variables séparées : on les
+    # récupère depuis DATABASE_URL (cette partie-là n'est pas interpolée)
+    RAW_URL="$(grep -m1 '^DATABASE_URL=' "$ENV_FILE" | cut -d'=' -f2- | tr -d '"'"'"'"')"
+    DB_HOST="127.0.0.1"
+    DB_PORT="3306"
+    if [[ "$RAW_URL" =~ @([^:/]+):([0-9]+)/ ]]; then
+        DB_HOST="${BASH_REMATCH[1]}"
+        DB_PORT="${BASH_REMATCH[2]}"
+    fi
+
+    if [ -z "$DB_NAME" ] || [ -z "$DB_USER" ]; then
+        echo "⚠️  DB_NAME/DB_USER vides, dump MySQL ignoré."
+    else
+        SQL_PATH="${CURRENT_BACKUP_DIR}/db_${TIMESTAMP}.sql.gz"
+
+        MYSQL_PWD="$DB_PASS" mysqldump \
+            -u "$DB_USER" \
+            -h "$DB_HOST" \
+            -P "$DB_PORT" \
+            --single-transaction \
+            --quick \
+            --routines \
+            --triggers \
+            "$DB_NAME" | gzip > "$SQL_PATH"
+
+        echo "   -> $SQL_PATH"
+    fi
+fi
+
+# Nettoyage des anciens backups (on garde les N plus récents)
+#echo " "
+#echo "🧹 Cleaning up old backups (keeping last $BACKUP_RETENTION)..."
+#ls -1dt "${BACKUP_DIR}"/*/ 2>/dev/null | tail -n +$((BACKUP_RETENTION + 1)) | xargs -r rm -rf
+
+
 
 echo " "
 echo "📥 Retrieving the latest code from the remote repository..."
