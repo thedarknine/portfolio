@@ -71,6 +71,25 @@ class GenerateFixturesCommand extends Command
             }
         }
 
+        // Remove entities
+        if ('portfolio' === $group) {
+            $cleanupSubFolder = '/src/DataFixtures';
+        } else {
+            $subParts         = explode('_', $group);
+            $formattedParts   = array_map('ucfirst', $subParts);
+            $cleanupSubFolder = 'test' === $group
+                ? '/src/DataFixtures/Testing'
+                : '/src/DataFixtures/Testing/' . implode('/', array_slice($formattedParts, 1));
+        }
+
+        $cleanupPath = $this->kernel->getProjectDir() . $cleanupSubFolder;
+        if (is_dir($cleanupPath)) {
+            $files = glob($cleanupPath . '/*AutoFixture.php');
+            foreach ($files as $file) {
+                unlink($file);
+            }
+        }
+
         // Map existing target classes and their matching fixture shortnames
         $availableFixtureClasses = [];
         $shortNamesMapping       = [];
@@ -96,6 +115,7 @@ class GenerateFixturesCommand extends Command
             $associationNames = $metadata->getAssociationNames();
 
             $detectedDependencies = [];
+            $dependencyShortNames = [];
             $entitiesToImport     = [$fqcn]; // Start by importing the current entity class
 
             $fixtureClassName = $shortName . 'AutoFixture';
@@ -113,6 +133,7 @@ class GenerateFixturesCommand extends Command
                         $entitiesToImport[] = $targetClass;
                         if ($targetClass !== $fqcn) {
                             $detectedDependencies[] = '            ' . $availableFixtureClasses[$targetClass] . '::class,';
+                            $dependencyShortNames[] = $shortNamesMapping[$targetClass];
                         }
                     }
                 }
@@ -121,6 +142,7 @@ class GenerateFixturesCommand extends Command
             // Deduplicate imports and structural dependencies
             $entitiesToImport     = array_unique($entitiesToImport);
             $detectedDependencies = array_unique($detectedDependencies);
+            $dependencyShortNames = array_unique($dependencyShortNames);
 
             if ('portfolio' === $group) {
                 // @codeCoverageIgnoreStart
@@ -148,6 +170,10 @@ class GenerateFixturesCommand extends Command
 
             foreach ($entitiesToImport as $importFqcn) {
                 $code .= "use $importFqcn;\n";
+            }
+
+            foreach ($dependencyShortNames as $depShortName) {
+                $code .= "use $namespace\\{$depShortName}AutoFixture;\n";
             }
 
             $code .= "use Doctrine\Bundle\FixturesBundle\Fixture;\n";

@@ -1,29 +1,29 @@
 {# templates/layout_login.html.twig #}
 <!DOCTYPE html>
 <html lang="fr" class="h-full bg-linear-to-br from-slate-900 to-slate-950">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Connexion - Backstage{% endblock %}</title>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Connexion - Backstage{% endblock %}</title>
 
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🔒</text></svg>">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>🔒</text></svg>">
 
-    {% block stylesheets %}
-    {{ importmap('app') }}
-    {% endblock %}
+        {% block stylesheets %}
+        {{ importmap('app') }}
+        {% endblock %}
 
-</head>
-<body class="h-full font-sans antialiased text-slate-200 bg-slate-700">
+    </head>
+    <body class="h-full font-sans antialiased text-slate-200 bg-slate-700">
 
-    <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
+        <div class="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
 
-        <div class="sm:mx-auto w-full max-w-md">
-            {% block body %}{% endblock %}
+            <div class="sm:mx-auto w-full max-w-md">
+                {% block body %}{% endblock %}
+            </div>
+
         </div>
 
-    </div>
-
-    {% block javascripts %}
-    {% endblock %}
-</body>
+        {% block javascripts %}
+        {% endblock %}
+    </body>
 </html>

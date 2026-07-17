@@ -11,6 +11,7 @@
 namespace App\Repository;
 
 use App\Entity\ExperienceLink;
+use App\Entity\PageInfo;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -22,6 +23,16 @@ class ExperienceLinkRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ExperienceLink::class);
+    }
+
+    public function findOneByPage(PageInfo $page): ?ExperienceLink
+    {
+        return $this->createQueryBuilder('el')
+            ->andWhere('el.page = :page')
+            ->setParameter('page', $page)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
     //    /**

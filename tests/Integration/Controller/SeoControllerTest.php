@@ -35,4 +35,17 @@ class SeoControllerTest extends WebTestCase
         self::assertStringContainsString('User-agent: *', $content);
         self::assertStringContainsString('Disallow: /', $content);
     }
+
+    public function testRobotsTxtBlocksEverythingOutsideProduction(): void
+    {
+        // 'test' !== 'prod' → on doit obtenir le contenu "Disallow: /"
+        $client = static::createClient(['environment' => 'test']);
+        $client->request('GET', '/robots.txt');
+
+        $response = $client->getResponse();
+
+        $this->assertResponseIsSuccessful();
+        $this->assertSame("User-agent: *\nDisallow: /", $response->getContent());
+        $this->assertSame('text/plain; charset=UTF-8', $response->headers->get('Content-Type'));
+    }
 }

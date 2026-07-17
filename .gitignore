@@ -10,6 +10,8 @@ Thumbs.db
 .env
 .tools/export/
 .tools/reports/
+.tools/.infection/
+.tools/.deptrac.cache
 
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
@@ -29,6 +31,7 @@ Thumbs.db
 # ==============================================================================
 /src/DataFixtures/Testing/*
 /tests/bash/bin
+/public/sitemap.*
 
 # ==============================================================================
 # PRODUCTION

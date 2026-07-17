@@ -1,0 +1,297 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="max-w-5xl mx-auto px-4 py-16 text-[14px] font-normal">
+
+    <section class="mb-12">
+        <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-card shadow-sm mb-6">
+            {{ ux_icon('fa7-solid:helmet-safety', { class: 'text-nine-amber-600 text-xl shrink-0 mt-0.5' }) }}
+            <p class="text-on-surface-card">
+                <strong class="text-on-surface font-bold">Le défi</strong> : Des heures perdues, des factures retardées, des agences frustrées.
+            </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-on-surface mb-4">Un système de relevé d’heures à l’âge de pierre</h2>
+        <p class="text-on-surface-muted mb-3 leading-relaxed">
+            Chez <strong class="text-on-surface font-bold">Coffreo</strong>, leader de la gestion du personnel temporaire,
+            le relevé d’heures des intérimaires était encore souvent réalisé <strong class="text-on-surface font-bold">sur papier</strong>,
+            ou via des outils <strong class="text-on-surface font-bold">hétérogènes et peu fiables</strong>.
+        </p>
+        <p class="text-on-surface-muted mb-1 leading-relaxed">
+            <strong class="text-on-surface font-bold">Conséquences</strong> :
+        </p>
+        <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-on-surface-muted">
+                {{ ux_icon('hugeicons:cancel-square', { class: 'text-nine-red-600 text-lg shrink-0 mt-0.5' }) }}
+                <span><strong class="text-on-surface font-bold">Perte de temps énorme</strong> : Les agences passaient des heures à relancer les clients pour des heures non saisies.</span>
+            </li>
+            <li class="flex items-start gap-2 text-on-surface-muted">
+                {{ ux_icon('hugeicons:cancel-square', { class: 'text-nine-red-600 text-lg shrink-0 mt-0.5' }) }}
+                <span><strong class="text-on-surface font-bold">Retards de facturation et de paie</strong> : Impact direct sur la trésorerie et la satisfaction client.</span>
+            </li>
+            <li class="flex items-start gap-2 text-on-surface-muted">
+                {{ ux_icon('hugeicons:cancel-square', { class: 'text-nine-red-600 text-lg shrink-0 mt-0.5' }) }}
+                <span><strong class="text-on-surface font-bold">Frustration des équipes</strong> : Processus manuel, source d’erreurs et de tensions.</span>
+            </li>
+        </ul>
+        <p class="text-on-surface-muted my-3 leading-relaxed">
+            <strong class="text-on-surface font-bold">Enjeu</strong> : <strong class="text-on-surface font-bold">Digitaliser et automatiser</strong> ce processus pour
+            <strong class="text-on-surface font-bold">faire gagner du temps aux agences</strong> et <strong>accélérer la facturation</strong>.
+        </p>
+    </section>
+
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('mingcute:rocket-line', { class: 'text-nine-amber-600 text-xl' }) }}
+            Ma mission : Concevoir et lancer Timesheet, un outil de relevé d’heures digitalisé
+        </h2>
+        <p class="text-on-surface-muted mb-2 leading-relaxed">
+            En tant que <strong class="text-on-surface font-bold">Squad Leader</strong>, j’ai eu la responsabilité complète de ce projet,
+            de <strong class="text-on-surface font-bold">l’analyse technique</strong> au <strong class="text-on-surface font-bold">déploiement</strong>,
+            en passant par la <strong class="text-on-surface font-bold">collaboration avec les équipes métiers</strong>.
+        </p>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Avec une équipe de <strong class="text-on-surface font-bold">4 développeurs</strong>, nous avons relevé un <strong class="text-on-surface font-bold">double défi</strong> :
+            <strong class="text-on-surface font-bold">technique</strong> (intégration dans une infrastructure existante) et <strong class="text-on-surface font-bold">métier</strong> (répondre aux besoins des agences).
+        </p>
+        <div class="space-y-6">
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:search-02', { class: 'text-base' }) }}
+                    Étape 1 : Analyse technique et choix d’architecture
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Avant de coder, j’ai mené une <strong class="text-on-surface font-bold">analyse approfondie</strong> pour :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Comprendre les contraintes</strong> : Infrastructure existante, besoins métiers, contrainte légales.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Choisir une architecture scalable</strong> : Pour supporter 600 agences et des milliers d’utilisateurs.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Définir les APIs</strong> : Format JSON des requêtes/réponses pour une intégration fluide.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:crane', { class: 'text-base' }) }}
+                    Étape 2 : Intégration dans l’infrastructure existante
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Le produit devait s’intégrer <strong class="text-on-surface font-bold">parfaitement</strong> dans l’écosystème Coffreo :
+                </p>
+                <ul class="space-y-2 mb-3">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Modélisation de la base de données</strong> : Pour stocker les heures, les utilisateurs, les missions.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Intégration avec les autres modules</strong> (ex : gestion des contrats, paie).</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Sécurité et RGPD</strong> : Protection des données sensibles.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:laptop-programming', { class: 'text-base' }) }}
+                    Étape 3 : Développement et suivi
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Pendant la phase de développement, j’ai :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Suivi les développements</strong> au quotidien (stand-ups, revues de code).</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Plannifié les versions</strong> et les mises en production (méthode Agile/Scrum).</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Collaboré avec le Delivery et le Support</strong> pour garantir une transition fluide.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:user-multiple', { class: 'text-base' }) }}
+                    Étape 4 : Phase pilote et onboarding
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Avant le lancement officiel, nous avons :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Testé le produit avec 4 clients pilotes</strong> pour affiner l’outil.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Accompagné les utilisateurs</strong> via des ateliers et de la documentation.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Utilisé Userpilot</strong> pour un onboarding progressif et intuitif.</span>
+                    </li>
+                </ul>
+                <p class="text-on-surface-muted my-3 leading-relaxed">
+                    <strong class="text-on-surface font-bold">Objectif</strong> : <strong class="text-on-surface font-bold">Créer un maximum de valeur</strong> pour les utilisateurs avant le lancement.
+                </p>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:wrench-01', { class: 'text-base' }) }}
+                    Étape 5 : Maintenance et évolutions
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Après le lancement, j’ai assuré :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Le suivi des logs</strong> pour détecter et corriger les bugs.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">La correction des bugs</strong> et l’amélioration continue.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">La maintenance de la documentation</strong> pour les équipes et les clients.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">La création d’une API publique sécurisée</strong> pour les SI clients.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <p class="text-sm font-semibold text-on-surface-muted mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:toolbox', { class: 'text-base' }) }}
+                Outils utilisés
+            </p>
+            <div class="flex flex-nowrap items-center gap-4">
+                <span title="Symfony">{{ ux_icon('logos:symfony', { class: 'w-6 h-6' }) }}</span>
+                <span title="MySQL">{{ ux_icon('logos:mysql', { class: 'w-6 h-6' }) }}</span>
+                <span title="API">{{ ux_icon('gcp:api', { class: 'w-6 h-6' }) }}</span>
+                <span title="Jira">{{ ux_icon('logos:jira', { class: 'w-6 h-6' }) }}</span>
+                <span title="GitLab">{{ ux_icon('logos:gitlab-icon', { class: 'w-6 h-6' }) }}</span>
+                <span title="PHPStorm">{{ ux_icon('logos:phpstorm', { class: 'w-6 h-6' }) }}</span>
+                <span title="Grafana">{{ ux_icon('logos:grafana', { class: 'w-6 h-6' }) }}</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('hugeicons:party', { class: 'text-nine-amber-600 text-xl' }) }}
+            Le résultat : Un produit adopté par 600 agences d’intérim
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Grâce à cette approche rigoureuse, nous avons <strong>lancé Timesheet</strong> avec 
+            un <strong class="text-on-surface font-bold">impact immédiat</strong> sur l’efficacité des agences et la satisfaction des clients.
+        </p>
+
+        <div class="p-4 rounded-lg bg-surface-card shadow-sm mb-8">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('hugeicons:chart-03', { class: 'text-base' }) }}
+                Impact business
+            </h3>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">4 clients en version pilote</strong> pour affiner l’outil.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">20 clients souscripteurs dès la V1</strong> soit <strong>600 agences d’intérim</strong>.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Gain de temps considérable</strong> : Plus besoin de relancer les clients pour les heures non saisies.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Facturation et paie accélérées</strong> : Réduction des délais de traitement.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="p-4 rounded-lg bg-surface-card shadow-sm mb-8">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('hugeicons:teaching', { class: 'text-base' }) }}
+                Leçons apprises
+            </h3>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('hugeicons:bulb', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">L’importance de la phase pilote</strong> : Affiner le produit avec des utilisateurs réels avant le lancement.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('hugeicons:bulb', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">La collaboration métier/tech</strong> : Travailler main dans la main avec les équipes terrain.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('hugeicons:bulb', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">L’onboarding est clé</strong> : Userpilot a été un atout majeur pour l’adoption.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('hugeicons:bulb', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">La maintenance proactive</strong> : Suivre les logs et corriger les bugs rapidement.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="story-visual">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('hugeicons:image-03', { class: 'text-nine-amber-600 text-xl' }) }} En images : L'interface Timesheet
+            </h3>
+            <div class="visual-grid">
+                <div class="visual-item">
+                    <img
+                        src="/images/experience/timesheet-dashboard.webp"
+                        alt="Capture d'écran du tableau de bord Timesheet"
+                        loading="lazy"
+                        width="800"
+                        height="450"
+                        class="mx-auto">
+                    <p class="text-center mt-1 text-on-surface-muted italic"><strong>Tableau de bord</strong> : Vue claire des heures saisies et des missions.</p>
+                </div>
+                <div class="visual-item">
+                    <img
+                        src="/images/experience/timesheet-saisie.webp"
+                        alt="Capture d'écran de la saisie d'un relevé d'heures"
+                        loading="lazy"
+                        width="800"
+                        class="mx-auto">
+                    <p class="text-center mt-1 text-on-surface-muted italic"><strong>Saisie des heures</strong> : Formulaire détaillé permettant de saisir différents éléments en lien avec la paie.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}
