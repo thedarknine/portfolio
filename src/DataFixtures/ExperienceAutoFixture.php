@@ -5,6 +5,8 @@ namespace App\DataFixtures;
 use App\Entity\Experience;
 use App\Entity\Company;
 use App\Entity\Skill;
+use App\DataFixtures\CompanyAutoFixture;
+use App\DataFixtures\SkillAutoFixture;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -17,20 +19,21 @@ class ExperienceAutoFixture extends Fixture implements DependentFixtureInterface
         $experience0 = new Experience();
         $experience0->setSubtitle('Étude algorithmique autour des symétries dans les familles d’ensembles');
         $experience0->setSummary(null);
-        $experience0->setDescription('<p>Sujet : <em>Symétrie dans les familles d\'ensembles : une étude algorithmique</em></p>
-<p class="text-center pt1"><a class="btn waves-effect btn-nine hvr-grow-shadow grey darken-1" href="http://docs.carolinenoyer.fr/pdf/cnoyer-rapportdestage-dea-2005.pdf" target="_blank" title="Téléchargez le rapport de stage">Rapport de stage</a></p>
+        $experience0->setDescription('
+<p>Sujet : <em>Symétrie dans les familles d\'ensembles : une étude algorithmique</em></p>
+<p class="text-center pt1"><a class="btn waves-effect btn-nine hvr-grow-shadow grey darken-1" href="http://docs.carolinenoyer.fr/pdf/cnoyer-rapportdestage-dea-2005.pdf" target="_blank" title="Téléchargez le rapport de stage"><i class="fas fa-paperclip" aria-hidden="true"></i> Rapport de stage</a></p>
 <p class="text-justify pt5 text-09"><i>Résumé : </i>On souhaite définir la notion de symétrie entre attributs dans une famille d\'ensembles. Une première réponse a été proposée par R. Medina et L. Nourine à travers la notion de clones. Deux attributs sont clones s\'ils sont interchangeables dans les ensembles de la famille. Ici, on s\'intéresse au degré de symétrie entre deux attributs : la similitude. Cette mesure est représentée dans une matrice indiquant pour tout couple d\'attributs, la "distance" qui les sépare. Différents algorithmes de calcul de cette similitude sont proposés, et, sous certaines conditions, l\'un d\'entre eux est optimal. Enfin, nous montrons le lien qui existe entre attributs clones et sommets jumeaux d\'un graphe.</p>
 <div class="pt5 mb1">
     <p><strong class="">Publication</strong></p>
     <div class="bordered-grey ml2 pl1">
          <p class="text-justify">Deux articles de recherche ont été rédigés à l\'issue de ce stage dont un, <strong>"Efficient algorithms for clone items detection"</strong>, publié pour la conférence <em>CLA\'05 (Concept Lattices and Their Applications) - République Tchèque</em></p>
-         <p class="mt0 mr2"><a class="btn waves-effect btn-nine hvr-grow-shadow grey darken-1" href="http://docs.carolinenoyer.fr/pdf/article-clones-cla05.pdf" target="_blank" title="Efficient algorithms for clone items detection">Article publié</a></p>
+         <p class="mt0 mr2"><a class="btn waves-effect btn-nine hvr-grow-shadow grey darken-1" href="http://docs.carolinenoyer.fr/pdf/article-clones-cla05.pdf" target="_blank" title="Efficient algorithms for clone items detection"><i class="fas fa-paperclip" aria-hidden="true"></i> Article publié</a></p>
     </div>
 </div>');
         $experience0->setStartDate(new \DateTime('2005-02-01 00:00:00'));
         $experience0->setEndDate(new \DateTime('2005-07-31 00:00:00'));
         $experience0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience0->setUpdatedAt(new \DateTime('2026-06-03 22:10:18'));
+        $experience0->setUpdatedAt(new \DateTime('2026-05-23 20:25:20'));
         $experience0->setTitle('Stagiaire en milieu de recherche');
         $experience0->setSlug('stage-limos');
         try {
@@ -83,18 +86,19 @@ ce n\'est qu\'ensuite que le directeur artistique pourra réaliser la maquette d
         $experience2 = new Experience();
         $experience2->setSubtitle('Conception d’un assistant de rédaction documentaire');
         $experience2->setSummary(null);
-        $experience2->setDescription('<ul class="missions">
+        $experience2->setDescription('
+<ul class="missions">
     <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>Conception et réalisation d\'un assistant pour la rédaction des cahiers des charges</span></li>
     <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>Génération de fichiers PDF via l\'interface à partir de sources <em>LaTeX</em></span></li>
 </ul>
-<p class="text-center pt1"><a class="btn waves-effect btn-nine hvr-grow-shadow grey darken-1" href="http://docs.carolinenoyer.fr/pdf/cnoyer-rapportdestage-m2pro-2006.pdf" target="_blank" title="Téléchargez le rapport de stage">Rapport de stage</a></p>
+<p class="text-center pt1"><a class="btn waves-effect btn-nine hvr-grow-shadow grey darken-1" href="http://docs.carolinenoyer.fr/pdf/cnoyer-rapportdestage-m2pro-2006.pdf" target="_blank" title="Téléchargez le rapport de stage"><i class="fas fa-paperclip" aria-hidden="true"></i> Rapport de stage</a></p>
 <p class="text-justify pt5 text-09"><i>Résumé : </i>La société Actifdesign souhaite donc développer des solutions de catalogues en ligne ou des solutions de e-commerce. L\'inconvénient de la mise en place de tels projets réside dans la rédaction du cahier des charges, devant être remis rapidement au client. Afin de réduire les temps de rédaction, sans en perdre le sérieux ni la pertinence, elle souhaite factoriser au maximum les parties communes entre les différents cahiers des charges. En effet, ce type de travail passe très souvent par une phase de copier/coller intempestifs !<br>
 Ce projet nécessite donc plusieurs documents : le cahier des charges, le devis pour le client, les fiches navettes destinées aux développeurs (contenant les modules à installer et les délais à respecter), ainsi que celle pour le graphiste.<br>
 Cet outil doit donc proposer une rédaction semi-automatique de ces documents à partir de questionnaires précis. Ainsi, mon projet permet de répondre à la mise en place d\'une organisation du travail tout en respectant la contrainte de coût.</p>');
         $experience2->setStartDate(new \DateTime('2006-07-01 00:00:00'));
         $experience2->setEndDate(new \DateTime('2006-09-30 00:00:00'));
         $experience2->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience2->setUpdatedAt(new \DateTime('2026-06-03 22:09:40'));
+        $experience2->setUpdatedAt(new \DateTime('2026-05-23 20:17:18'));
         $experience2->setTitle('Stagiaire analyse et développement');
         $experience2->setSlug('stage-actifdesign');
         try {
@@ -554,11 +558,18 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
         $experience8 = new Experience();
         $experience8->setSubtitle('Encadrement R&D et qualité produit');
         $experience8->setSummary('Perfect Memory est un fournisseur d\'IA sémantique, ces technologies qui permettent de donner du sens et de la valeur à toutes les données générées par une organisation.');
-        $experience8->setDescription('<div>Charnière entre les équipes de développement, l\'équipe design et l\'équipe qualité.</div><ul><li>&nbsp;Encadrement des équipes de développement</li><li>&nbsp;Qualité Produit</li><li>&nbsp; Rédaction des expressions de besoin et spécifications fonctionnelles</li></ul>');
+        $experience8->setDescription('
+<p class="text-justify pt5">Charnière entre les équipes de développement, l\'équipe design et l\'équipe qualité.</p>
+<ul class="missions">
+    <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>Encadrement des équipes de développement</span></li>
+    <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>Qualité Produit</span></li>
+    <li><i class="fas fa-tasks" aria-hidden="true"></i> <span>	
+Rédaction des expressions de besoin et spécifications fonctionnelles</span></li>
+</ul>');
         $experience8->setStartDate(new \DateTime('2022-07-18 00:00:00'));
         $experience8->setEndDate(new \DateTime('2024-04-22 00:00:00'));
         $experience8->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience8->setUpdatedAt(new \DateTime('2026-06-06 07:43:22'));
+        $experience8->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience8->setTitle('Product Owner');
         $experience8->setSlug('po-perfect');
         try {
@@ -596,12 +607,18 @@ Cet outil doit donc proposer une rédaction semi-automatique de ces documents à
 
         $experience9 = new Experience();
         $experience9->setSubtitle('Encadrement équipe Drive');
-        $experience9->setSummary('Leviia est une entreprise française dont l\'ensemble de l\'infrastructure est hébergé exclusivement en France. Le code source est 100 % open source, sans aucune dépendance technologique américaine ou chinoise.');
-        $experience9->setDescription('<div>Coordination de l\'équipe technique.</div><ul><li>&nbsp;Développements basés sur la solution Nextcloud. Equipe de 4 développeurs et 5 administrateurs système. Suivi de déploiements clients.&nbsp;</li><li>&nbsp;Documentation technique et utilisateur à destination externe.</li><li>&nbsp;Mise en place d’un outil de data visualisation : Superset.</li><li>&nbsp;Respect des exigences relatives à la norme ISO-27001 et HDS.</li></ul>');
+        $experience9->setSummary('Leviia est une entreprise française dont l\'ensemble de l\'infrastructure est hébergé exclusivement en France. Le code source est 100 % open source, sans aucune dépendance technologique américaine ou chinoise');
+        $experience9->setDescription('<p class="pb-4">Coordination de l\'équipe technique.</p>
+<ul class="missions">
+<li><i class="fas fa-tasks"></i> <span>Développements basés sur la solution Nextcloud. Equipe de 4 développeurs et 5 administrateurs système. Suivi de déploiements clients. </span></li>
+    <li><i class="fas fa-tasks"></i> <span>Documentation technique et utilisateur à destination externe.</span></li>
+    <li><i class="fas fa-tasks"></i> <span>Mise en place d’un outil de data visualisation : Superset.</span></li>
+    <li><i class="fas fa-tasks"></i> <span>Respect des exigences relatives à la norme ISO-27001 et HDS.</span></li>
+</ul>');
         $experience9->setStartDate(new \DateTime('2024-08-21 00:00:00'));
         $experience9->setEndDate(null);
         $experience9->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $experience9->setUpdatedAt(new \DateTime('2026-06-06 07:43:05'));
+        $experience9->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
         $experience9->setTitle('Technical Product Owner');
         $experience9->setSlug('po-leviia');
         try {

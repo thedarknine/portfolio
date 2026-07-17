@@ -15,11 +15,11 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType0->setDescription(null);
         $skillType0->setDeleted(true);
         $skillType0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType0->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
+        $skillType0->setUpdatedAt(new \DateTime('2026-07-04 19:18:21'));
         $skillType0->setName('Méthodologie et Agilité');
         $skillType0->setSlug('methodo');
         $skillType0->setLogo('skills-methodologie.png');
-        $skillType0->setPosition(1);
+        $skillType0->setPosition(2);
         $manager->persist($skillType0);
         $this->addReference('skillType_10', $skillType0);
 
@@ -75,11 +75,11 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType5->setDescription('<div>Mon cœur de métier historique. J\'aime concevoir des architectures back-end propres, scalables et performantes.</div>');
         $skillType5->setDeleted(false);
         $skillType5->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType5->setUpdatedAt(new \DateTime('2026-06-09 14:37:31'));
+        $skillType5->setUpdatedAt(new \DateTime('2026-07-04 19:18:21'));
         $skillType5->setName('Architecture & Développement');
         $skillType5->setSlug('development');
         $skillType5->setLogo('skills-development.webp');
-        $skillType5->setPosition(1);
+        $skillType5->setPosition(2);
         $manager->persist($skillType5);
         $this->addReference('skillType_15', $skillType5);
 
@@ -111,11 +111,11 @@ class SkillTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $skillType8->setDescription('<div>Les indispensables qui fluidifient mon workflow et mes collaborations en équipe.</div>');
         $skillType8->setDeleted(false);
         $skillType8->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $skillType8->setUpdatedAt(new \DateTime('2026-06-09 14:38:05'));
+        $skillType8->setUpdatedAt(new \DateTime('2026-07-04 19:18:21'));
         $skillType8->setName('Méthodologies & Outils du quotidien');
         $skillType8->setSlug('methodologies');
         $skillType8->setLogo('skills-methodologies.webp');
-        $skillType8->setPosition(2);
+        $skillType8->setPosition(0);
         $manager->persist($skillType8);
         $this->addReference('skillType_18', $skillType8);
 
