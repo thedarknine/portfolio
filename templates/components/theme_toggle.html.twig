@@ -1,15 +1,14 @@
 <button
-  class="theme-toggle"
-  id="themeToggle"
-  aria-label="Basculer le thème"
-  data-theme="{{ app.request.cookies.get('theme', 'light') }}"
->
-  <span class="toggle-thumb">
-    <span class="icon-sun" aria-hidden="true">{{ ux_icon('hugeicons:sun-02') }}</span>
-    <span class="icon-moon" aria-hidden="true">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
-  </span>
-  <span class="toggle-track">
-    <span class="track-icon track-sun" aria-hidden="true">{{ ux_icon('hugeicons:sun-02') }}</span>
-    <span class="track-icon track-moon" aria-hidden="true">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
-  </span>
+    class="theme-toggle"
+    id="themeToggle"
+    aria-label="Basculer le thème"
+    data-theme="{{ app.request.cookies.get('theme', 'light') }}">
+    <span class="toggle-thumb">
+        <span class="icon-sun" aria-hidden="true">{{ ux_icon('hugeicons:sun-02') }}</span>
+        <span class="icon-moon" aria-hidden="true">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
+    </span>
+    <span class="toggle-track">
+        <span class="track-icon track-sun" aria-hidden="true">{{ ux_icon('hugeicons:sun-02') }}</span>
+        <span class="track-icon track-moon" aria-hidden="true">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
+    </span>
 </button>

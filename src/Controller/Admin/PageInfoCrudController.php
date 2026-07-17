@@ -13,10 +13,12 @@ namespace App\Controller\Admin;
 use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Entity\PageInfo;
 use App\Enum\PageCategory;
+use App\Repository\PageInfoRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -69,6 +71,15 @@ class PageInfoCrudController extends AbstractCrudController
 
         yield TextField::new('title', 'Page')
             ->setHelp('Exemple : Accueil, À propos, Créations...');
+
+        yield AssociationField::new('parent', 'Parent')
+            ->setFormTypeOption('choice_label', 'title')
+            ->setFormTypeOption('query_builder', function (PageInfoRepository $repository) {
+                return $repository->createQueryBuilder('p')
+                    ->andWhere('p.parent IS NULL')
+                    ->orderBy('p.position', 'ASC');
+            })
+            ->setHelp('Sélectionnez la page parente si cette page est une sous-page.');
 
         yield ChoiceField::new('category', 'Catégorie')
             ->setChoices([

@@ -1,8 +1,8 @@
 altcha:
     enable: true
-    hmacSignature: '%env(APP_SECRET)%' # Replaces deprecated hmacKey
+    hmacSignature: '%env(APP_SECRET)%'  # Replaces deprecated hmacKey
     hmacAlgorithm: 'SHA-256'
-    hmacKeySignature: ~ # Optional signature key
+    hmacKeySignature: ~  # Optional signature key
     cost: 5000
     counter_min: 5000
     counter_max: 10000

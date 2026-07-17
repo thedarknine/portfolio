@@ -6,3 +6,9 @@ allowBuilds:
   esbuild: true
   puppeteer: true
   vue-demi: false
+minimumReleaseAgeExclude:
+  - redis@3.1.1
+  - cookie@0.7.0
+  - esbuild@0.28.1
+  - '@opentelemetry/core@2.8.0'
+  - js-yaml@3.15.0

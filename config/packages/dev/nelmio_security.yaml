@@ -1,0 +1,7 @@
+nelmio_security:
+  csp:
+    report:
+      default-src: ["'self'"]
+      script-src: ["'self'", "data:", "'unsafe-inline'", "'unsafe-hashes'", "https://cdn.jsdelivr.net"]
+      connect-src: ["'self'", "https://cdn.jsdelivr.net"]
+      img-src: ["'self'", "data:", "https://medias.carolinenoyer.fr"]

@@ -1,0 +1,245 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="max-w-5xl mx-auto px-4 py-16 text-[14px] font-normal">
+
+    <section class="mb-12">
+        <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-card shadow-sm mb-6">
+            {{ ux_icon('fa7-solid:helmet-safety', { class: 'text-nine-amber-600 text-xl shrink-0 mt-0.5' }) }}
+            <p class="text-on-surface-card">
+                <strong class="text-on-surface font-bold">Le défi</strong> : Une application mobile désuète, des utilisateurs en fuite.
+            </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-on-surface mb-4">Une app mobile qui perdait ses utilisateurs</h2>
+        <p class="text-on-surface-muted mb-3 leading-relaxed">
+            Chez <strong class="text-on-surface font-bold">Coffreo</strong>, leader de la gestion du personnel temporaire,
+            l’application mobile était <strong class="text-on-surface font-bold">désuète, lente et souvent non fonctionnelle</strong>.
+            Pourquoi ? Parce qu’elle reposait sur des <strong class="text-on-surface font-bold">webviews encapsulées</strong>,
+            une technologie peu adaptée aux besoins des utilisateurs B2C.
+        </p>
+        <p class="text-on-surface-muted mb-1 leading-relaxed">
+            <strong class="text-on-surface font-bold">Conséquences</strong> :
+        </p>
+        <ul class="space-y-2">
+            <li class="flex items-start gap-2 text-on-surface-muted">
+                {{ ux_icon('hugeicons:cancel-square', { class: 'text-nine-red-600 text-lg shrink-0 mt-0.5' }) }}
+                <strong class="text-on-surface font-bold">Notes catastrophiques</strong> sur l’App Store et Google Play.
+            </li>
+            <li class="flex items-start gap-2 text-on-surface-muted">
+                {{ ux_icon('hugeicons:cancel-square', { class: 'text-nine-red-600 text-lg shrink-0 mt-0.5' }) }}
+                <strong class="text-on-surface font-bold">Fuite massive des utilisateurs</strong> vers la version desktop.
+            </li>
+            <li class="flex items-start gap-2 text-on-surface-muted">
+                {{ ux_icon('hugeicons:cancel-square', { class: 'text-nine-red-600 text-lg shrink-0 mt-0.5' }) }}
+                <strong class="text-on-surface font-bold">Support saturé</strong> par les tickets liés aux bugs et à la mauvaise UX.
+            </li>
+        </ul>
+        <p class="text-on-surface-muted my-3 leading-relaxed">
+            <strong class="text-on-surface font-bold">Enjeu</strong> : <strong class="text-on-surface font-bold">Réengager les 500k utilisateurs mensuels</strong> et leur offrir une expérience à la hauteur de leurs attentes.
+        </p>
+    </section>
+
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('fa7-solid:screwdriver-wrench', { class: 'text-nine-amber-600 text-xl' }) }}
+            Ma mission : Reconstruire l’app mobile de A à Z avec Flutter
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Pour redonner confiance aux utilisateurs, nous avons décidé de <strong class="text-on-surface font-bold">tout repenser</strong> :
+            <strong class="text-on-surface font-bold">abandon des webviews</strong> et adoption de <strong class="text-on-surface font-bold">Flutter</strong>, une technologie moderne et performante.
+        </p>
+
+        <div class="space-y-6">
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:search-02', { class: 'text-base' }) }}
+                    Étape 1 : Audit et analyse des fonctionnalités existantes
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    J’ai commencé par un <strong class="text-on-surface font-bold">audit complet</strong> de l’ancienne application pour identifier :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        Les <strong class="text-on-surface font-bold">fonctionnalités essentielles</strong> à conserver.
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        Les <strong class="text-on-surface font-bold">points de friction</strong> pour les utilisateurs.
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        Les <strong class="text-on-surface font-bold">opportunités d’amélioration</strong> (ex : onboarding, empty states).
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:paint-board', { class: 'text-base' }) }}
+                    Étape 2 : Prototypage et design des composants
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Nous avons :
+                </p>
+                <ul class="space-y-2 mb-3">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span>Créé des <strong class="text-on-surface font-bold">prototypes interactifs</strong> (composants et variants).</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span>Testé les <strong class="text-on-surface font-bold">wireframes</strong> avec des utilisateurs réels.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span>Définis une <strong class="text-on-surface font-bold">charte UX cohérente</strong> (couleurs, typographie, interactions).</span>
+                    </li>
+                </ul>
+                <p>
+                    <strong class="text-on-surface font-bold">Objectif</strong> : Une app <strong class="text-on-surface font-bold">intuitive, rapide et agréable</strong> à utiliser.
+                </p>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:quill-write-02', { class: 'text-base' }) }}
+                    Étape 3 : Rédaction des User Stories et suivi
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    J’ai <strong class="text-on-surface font-bold">cadré le projet</strong> en rédigeant des User Stories précises et en assurant :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        Un <strong class="text-on-surface font-bold">suivi rigoureux</strong> de l’avancement.
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        Des <strong class="text-on-surface font-bold">entretiens</strong> pour affiner les besoins.
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        Une <strong class="text-on-surface font-bold">synthèse des feedbacks</strong> pour prioriser les fonctionnalités.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:user-multiple', { class: 'text-base' }) }}
+                    Étape 4 : Collaboration avec les équipes techniques
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    En tant que Product Owner, j’ai :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <strong class="text-on-surface font-bold">Synchronisé les équipes</strong>.
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <strong class="text-on-surface font-bold">Priorisé les fonctionnalités</strong> en fonction de l’impact utilisateur.
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <strong class="text-on-surface font-bold">Garanti la qualité</strong> avec des tests de non-régression.
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <p class="text-sm font-semibold text-on-surface-muted mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:toolbox', { class: 'text-base' }) }}
+                Outils utilisés
+            </p>
+            <div class="flex flex-nowrap items-center gap-4">
+                <span title="Figma">{{ ux_icon('logos:figma', { class: 'w-6 h-6' }) }}</span>
+                <span title="Jira">{{ ux_icon('logos:jira', { class: 'w-6 h-6' }) }}</span>
+                <span title="Flutter">{{ ux_icon('logos:flutter', { class: 'w-6 h-6' }) }}</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('hugeicons:party', { class: 'text-nine-amber-600 text-xl' }) }}
+            Le résultat : Une app mobile relancée, des utilisateurs satisfaits
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Grâce à cette refonte complète, nous avons <strong class="text-on-surface font-bold">transformé l’expérience utilisateur</strong>
+            et <strong class="text-on-surface font-bold">redonné confiance</strong> à nos 500k utilisateurs mensuels.
+        </p>
+
+        <div class="p-4 rounded-lg bg-surface-card shadow-sm mb-8">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:chart-line', { class: 'text-base' }) }}
+                Impact mesurable
+            </h3>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Amélioration des notes</strong> sur l’App Store et Google Play.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Réduction drastique des tickets support</strong> (moins de bugs, meilleure UX).</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">500k visites/mois</strong> maintenues, avec une <strong>meilleure rétention</strong>.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Adoption massive</strong> : Les utilisateurs sont revenus vers l’app mobile.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="story-visual">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('hugeicons:image-03', { class: 'text-nine-amber-600 text-xl' }) }} En images : La transformation de l’app
+            </h3>
+            <div class="visual-grid">
+                <div class="visual-item">
+                    <img
+                        src="/images/experience/app-mobile-screens.webp"
+                        alt="Capture d'écran de l'app mobile après refonte"
+                        loading="lazy"
+                        width="800"
+                        height="450"
+                        class="mx-auto">
+                    <p class="text-center mt-1 text-on-surface-muted italic"><strong>Une interface repensée.</strong></p>
+                </div>
+                <div class="visual-item">
+                    <img
+                        src="/images/experience/app-mobile-onboarding-slides.webp"
+                        alt="Slides d'onboarding de l'app mobile"
+                        loading="lazy"
+                        width="800"
+                        class="mx-auto">
+                    <p class="text-center mt-1 text-on-surface-muted italic"><strong>Onboarding simplifié</strong> : Pour guider les nouveaux utilisateurs.</p>
+                </div>
+                <div class="visual-item">
+                    <img
+                        src="/images/experience/app-mobile-empty-states.webp"
+                        alt="Empty state de l'app mobile"
+                        loading="lazy"
+                        width="800"
+                        class="mx-auto">
+                    <p class="text-center mt-1 text-on-surface-muted italic"><strong>Empty states clairs</strong> : Pour éviter la frustration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

@@ -4,9 +4,9 @@
         <meta charset="UTF-8">
         <title>{% if app.environment == 'dev' %}[DEV] {% endif %}
             {% if current_page.slug == 'home' %}
-                {{ owner_name }} — {% block meta_title %}{{ owner_role }}{% endblock %}
+            {{ owner_name }} — {% block meta_title %}{{ owner_role }}{% endblock %}
             {% else %}
-                {{ current_page.title }} | {{ owner_name }}
+            {{ current_page.title }} | {{ owner_name }}
             {% endif %}
         </title>
 
@@ -56,31 +56,31 @@
         }
         </script>
         {% if current_page.slug != 'home' and current_page.slug != 'contact' %}
-            <script type="application/ld+json">
-            {
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "@id": "{{ absolute_url(app.request.uri) }}#webpage",
-            "url": "{{ absolute_url(app.request.uri) }}",
-            "name": "{{ owner_name }} — {{ current_page.tagline }}",
-            "description": "{{ current_page.subtitle }}",
-            "primaryImageOfPage": {
-                "@type": "ImageObject",
-                "url": "{{ absolute_url(asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp')) }}"
-            },
-            "about": {
-                "@id": "{{ absolute_url(app.request.uri) }}#person"
-            },
-            "author": {
-                "@type": "Person",
-                "name": "{{ owner_name }}"
-            },
-            "creator": {
-                "@type": "Person",
-                "name": "{{ owner_name }}"
-            }
-            }
-            </script>
+        <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        "@id": "{{ absolute_url(app.request.uri) }}#webpage",
+        "url": "{{ absolute_url(app.request.uri) }}",
+        "name": "{{ owner_name }} — {{ current_page.tagline }}",
+        "description": "{{ current_page.subtitle }}",
+        "primaryImageOfPage": {
+            "@type": "ImageObject",
+            "url": "{{ absolute_url(asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp')) }}"
+        },
+        "about": {
+            "@id": "{{ absolute_url(app.request.uri) }}#person"
+        },
+        "author": {
+            "@type": "Person",
+            "name": "{{ owner_name }}"
+        },
+        "creator": {
+            "@type": "Person",
+            "name": "{{ owner_name }}"
+        }
+        }
+        </script>
         {% endif %}
         {% endblock %}
 
@@ -91,7 +91,7 @@
         {% endblock %}
 
         {% block importmap %}
-            {{ importmap('app', { nonce: csp_nonce('script') }) }}
+        {{ importmap('app', { nonce: csp_nonce('script') }) }}
         {% endblock %}
 
         {# Start Matomo #}
@@ -121,13 +121,13 @@
 
             <main>
                 {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
-                    {{ include('components/page_hero.html.twig') }}
+                {{ include('components/page_hero.html.twig') }}
                 {% endif %}
 
                 {% block body %}{% endblock %}
 
                 {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
-                    {{ include('components/page_quote.html.twig') }}
+                {{ include('components/page_quote.html.twig') }}
                 {% endif %}
             </main>
         </div>

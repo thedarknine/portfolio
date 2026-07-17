@@ -77,6 +77,7 @@ orchestrer les conteneurs Docker, le serveur de développement et les outils de 
     shell                     Run a shell in the PHP container               
     logs                      Show Docker logs                               LOGS_SERVICE=app|db|nginx
     update-project            Update docker, composer and pnpm dependencies in a safe way  
+    check-project             Check project security audit                   
 
   CHECKERS
     doctor                    Check system requirements and project health   

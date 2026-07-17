@@ -23,6 +23,8 @@ class LinkTypeTest extends TestCase
         $this->assertSame('Document', LinkType::DOCUMENT->getLabel());
         $this->assertSame('Fichier PDF', LinkType::PDF->getLabel());
         $this->assertSame('Lien externe', LinkType::EXTERNAL->getLabel());
+        $this->assertSame('Lien interne', LinkType::INTERNAL->getLabel());
+        $this->assertSame('Détail', LinkType::DETAIL->getLabel());
     }
 
     /**
@@ -36,6 +38,8 @@ class LinkTypeTest extends TestCase
         $this->assertSame('flowbite:file-pdf-outline text-danger', LinkType::PDF->getIcon());
 
         $this->assertSame('fa7-solid:globe-europe', LinkType::EXTERNAL->getIcon());
+        $this->assertSame('fa7-solid:link', LinkType::INTERNAL->getIcon());
+        $this->assertSame('fa7-solid:eye', LinkType::DETAIL->getIcon());
     }
 
     /**
@@ -46,5 +50,7 @@ class LinkTypeTest extends TestCase
         $this->assertSame('document', LinkType::DOCUMENT->value);
         $this->assertSame('pdf', LinkType::PDF->value);
         $this->assertSame('external', LinkType::EXTERNAL->value);
+        $this->assertSame('internal', LinkType::INTERNAL->value);
+        $this->assertSame('detail', LinkType::DETAIL->value);
     }
 }

@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 trait NameableTrait
 {
     #[ORM\Column(length: 120)]
+    #[Assert\Length(max: 120, maxMessage: 'Name cannot exceed {{ limit }} characters.')]
     #[Assert\NotBlank(message: 'Name cannot be empty.')]
     private ?string $name = null;
 

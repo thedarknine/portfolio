@@ -7,44 +7,44 @@ Découvrez mon parcours professionnel : 15 ans en développement web, évolution
 {% endblock %}
 
 {% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
 {% endblock %}
 
 {% block body %}
-    <section class="nine-experience-timeline bg-surface">
-        <div class="max-w-5xl mx-auto py-10">
+<section class="nine-experience-timeline bg-surface">
+    <div class="max-w-5xl mx-auto py-10">
         {% for experience in experiences_list %}
-            {{ include('components/experience_item.html.twig', { experience: experience }) }}
+        {{ include('components/experience_item.html.twig', { experience: experience }) }}
         {% endfor %}
-        </div>
-    </section>
+    </div>
+</section>
 
-    {# WORK APPROACH #}
-    <section class="nine-work-approach bg-surface-alt">
-        <div class="container">
-            <p class="nine-section-subheader">Ma façon de travailler</p>
-            <div class="bg-nine-blue-500">
-                <div class="nine-approach-grid">
-                    <article>
-                        {{ ux_icon('hugeicons:user-group-03', { class: 'w-14 h-14 text-nine-gray-600' }) }}
-                        <h2>Construire collectivement</h2>
-                        <p>J’apprécie les environnements collaboratifs où chacun contribue à faire avancer le produit.</p>
-                    </article>
+{# WORK APPROACH #}
+<section class="nine-work-approach bg-surface-alt">
+    <div class="container">
+        <p class="nine-section-subheader">Ma façon de travailler</p>
+        <div class="bg-nine-blue-500">
+            <div class="nine-approach-grid">
+                <article>
+                    {{ ux_icon('hugeicons:user-group-03', { class: 'w-14 h-14 text-nine-gray-600' }) }}
+                    <h2>Construire collectivement</h2>
+                    <p>J’apprécie les environnements collaboratifs où chacun contribue à faire avancer le produit.</p>
+                </article>
 
-                    <article>
-                        {{ ux_icon('hugeicons:link-01', { class: 'w-14 h-14 text-nine-gray-600' }) }}
-                        <h2>Faire le lien</h2>
-                        <p>Créer des passerelles entre technique, produit et utilisateurs fait partie de ce qui me motive.</p>
-                    </article>
+                <article>
+                    {{ ux_icon('hugeicons:link-01', { class: 'w-14 h-14 text-nine-gray-600' }) }}
+                    <h2>Faire le lien</h2>
+                    <p>Créer des passerelles entre technique, produit et utilisateurs fait partie de ce qui me motive.</p>
+                </article>
 
-                    <article>
-                        {{ ux_icon('hugeicons:healtcare', { class: 'w-14 h-14 text-nine-gray-600' }) }}
-                        <h2>Concevoir avec sens</h2>
-                        <p>Je porte une attention particulière à la clarté des interfaces et des parcours.</p>
-                    </article>
-                </div>
+                <article>
+                    {{ ux_icon('hugeicons:healtcare', { class: 'w-14 h-14 text-nine-gray-600' }) }}
+                    <h2>Concevoir avec sens</h2>
+                    <p>Je porte une attention particulière à la clarté des interfaces et des parcours.</p>
+                </article>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 {% endblock %}

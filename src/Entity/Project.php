@@ -16,6 +16,8 @@ use App\Entity\Traits\PublishableTrait;
 use App\Entity\Traits\SlugableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ProjectRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -50,18 +52,27 @@ class Project
     #[Assert\NotBlank(message: 'Description is required.')]
     private ?string $description = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(max: 255, maxMessage: 'Screenshots path cannot exceed {{ limit }} characters.')]
-    private ?string $screenshots = null;
-
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Category is required.')]
     #[Assert\Length(max: 255, maxMessage: 'Category cannot exceed {{ limit }} characters.')]
     private ?string $category = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(max: 255, maxMessage: 'Tags cannot exceed {{ limit }} characters.')]
-    private ?string $tags = null;
+    /** @var Collection<int, ProjectTag> */
+    #[ORM\ManyToMany(targetEntity: ProjectTag::class, inversedBy: 'projects')]
+    #[ORM\JoinTable(name: 'project_project_tag')]
+    #[ORM\OrderBy(['position' => 'ASC'])]
+    private Collection $tags;
+
+    /** @var Collection<int, Screenshot> */
+    #[ORM\OneToMany(targetEntity: Screenshot::class, mappedBy: 'project', cascade: ['persist'], orphanRemoval: true)]
+    #[Assert\Valid]
+    private Collection $screenshots;
+
+    public function __construct()
+    {
+        $this->tags        = new ArrayCollection();
+        $this->screenshots = new ArrayCollection();
+    }
 
     public function getId(): int
     {
@@ -104,18 +115,6 @@ class Project
         return $this;
     }
 
-    public function getScreenshots(): ?string
-    {
-        return $this->screenshots;
-    }
-
-    public function setScreenshots(?string $screenshots): static
-    {
-        $this->screenshots = $screenshots;
-
-        return $this;
-    }
-
     public function getCategory(): ?string
     {
         return $this->category;
@@ -128,14 +127,59 @@ class Project
         return $this;
     }
 
-    public function getTags(): ?string
+    /**
+     * @return Collection<int, ProjectTag>
+     */
+    public function getTags(): Collection
     {
         return $this->tags;
     }
 
-    public function setTags(?string $tags): static
+    public function addTag(ProjectTag $tag): static
     {
-        $this->tags = $tags;
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
+            $tag->addProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTag(ProjectTag $tag): static
+    {
+        if ($this->tags->removeElement($tag)) {
+            $tag->removeProject($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Screenshot>
+     */
+    public function getScreenshots(): Collection
+    {
+        return $this->screenshots;
+    }
+
+    public function addScreenshot(Screenshot $screenshot): static
+    {
+        if (!$this->screenshots->contains($screenshot)) {
+            $this->screenshots->add($screenshot);
+            $screenshot->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeScreenshot(Screenshot $screenshot): static
+    {
+        if ($this->screenshots->removeElement($screenshot)) {
+            // set the owning side to null (unless already changed)
+            if ($screenshot->getProject() === $this) {
+                $screenshot->setProject(null);
+            }
+        }
 
         return $this;
     }

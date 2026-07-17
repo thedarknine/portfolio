@@ -65,6 +65,7 @@ class Experience
 
     /** @var Collection<int, ExperienceItem> */
     #[ORM\OneToMany(targetEntity: ExperienceItem::class, mappedBy: 'experience')]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     #[Assert\Valid]
     private Collection $items;
 
@@ -261,5 +262,26 @@ class Experience
                 ->atPath('endDate')
                 ->addViolation();
         }
+    }
+
+    /**
+     * Get a display-friendly name for the experience.
+     * Format: "Title - Company (Year)"
+     * Example: "Product Owner - Tech Corp (2026)".
+     *
+     * @throws \RuntimeException if company is null
+     */
+    public function getDisplayName(): string
+    {
+        if (!$this->company) {
+            throw new \RuntimeException('Experience must have a company to generate display name');
+        }
+
+        return sprintf(
+            '%s - %s (%s)',
+            $this->title,
+            $this->company->getName(),
+            $this->startDate->format('Y'),
+        );
     }
 }
