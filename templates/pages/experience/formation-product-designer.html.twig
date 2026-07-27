@@ -1,0 +1,391 @@
+{% extends 'layout.html.twig' %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
+{% endblock %}
+
+{% block body %}
+<div class="max-w-5xl mx-auto px-4 py-16 text-[14px] font-normal">
+
+    <section class="mb-12">
+        <div class="flex items-start gap-3 p-4 rounded-lg bg-surface-card shadow-sm mb-6">
+            {{ ux_icon('fa7-solid:helmet-safety', { class: 'text-nine-amber-600 text-xl shrink-0 mt-0.5' }) }}
+            <p class="text-on-surface-card">
+                <strong class="text-on-surface font-bold">Le défi</strong> : Comment recréer l’émotion d’un cadeau physique dans un monde virtuel ?
+            </p>
+        </div>
+
+        <h2 class="text-2xl font-bold text-on-surface mb-4">Un cadeau virtuel, mais sans émotion</h2>
+        <p class="text-on-surface-muted mb-3 leading-relaxed">
+            Dans le cadre de ma formation en <strong class="text-on-surface font-bold">Product Design</strong>,
+            j’ai travaillé sur un cas pratique en binôme pour <strong class="text-on-surface font-bold">Lydia</strong> :
+        </p>
+        <blockquote class="problem-quote">
+            <p class="text-lg">« Comment Lydia pourrait offrir un <strong>moment de partage et d’émotion</strong>
+                autour de l’ouverture d’un cadeau virtuel ? »</p>
+        </blockquote>
+        <p class="text-on-surface-muted leading-relaxed">
+            <strong class="text-on-surface font-bold">• Problème identifié</strong> : Les cadeaux virtuels (ex : virements Lydia) étaient
+            perçus comme <strong class="text-on-surface font-bold">impersonnels et froids</strong>. Les utilisateurs manquaient de
+            cette <strong class="text-on-surface font-bold">dimension émotionnelle</strong> et de
+            <strong class="text-on-surface font-bold">partage</strong> qui fait tout le sel d’un cadeau traditionnel.
+        </p>
+        <p class="text-on-surface-muted leading-relaxed">
+            <strong class="text-on-surface font-bold">• Enjeu</strong> : <strong class="text-on-surface font-bold">Transformer un simple
+                virement en expérience mémorable</strong>, tout en respectant les contraintes techniques et métiers de Lydia.
+        </p>
+    </section>
+
+    <section class="mb-12">
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('fa7-solid:screwdriver-wrench', { class: 'text-nine-amber-600 text-xl' }) }}
+            Notre démarche : De l’empathie au prototypage
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Pour répondre à cette problématique, nous avons suivi une <strong class="text-on-surface font-bold">méthodologie UX complète</strong>,
+            en 8 étapes clés, pour concevoir une solution <strong class="text-on-surface font-bold">centrée utilisateur</strong> et <strong class="text-on-surface font-bold">émotionnelle</strong>.
+        </p>
+
+        <div class="space-y-6">
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('fa7-solid:book-open', { class: 'text-base' }) }}
+                    Étape 1 : Empathie & Définition
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Nous avons commencé par une <strong class="text-on-surface font-bold">phase de recherche utilisateur</strong> pour comprendre les attentes et les frustrations :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Panel d’utilisateurs définis</strong> : Sélection de profils variés (donneurs, receveurs).</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Interviews</strong> : Comprendre les <strong>motivations</strong> et les <strong>freins</strong>.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Synthèse</strong> : Identification des <strong>insights clés</strong>.</span>
+                    </li>
+                </ul>
+                <div class="step-visual">
+                    <img
+                        src="/images/experience/lydia-user-research.webp"
+                        alt="Capture d'écran de la synthèse du User Research"
+                        loading="lazy"
+                        width="600"
+                    >
+                    <p class="text-center text-on-surface-muted italic">Exemple de synthèse des interviews utilisateurs.</p>
+                </div>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('fa7-solid:lightbulb', { class: 'text-base' }) }}
+                    Étape 2 : Ideation
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Une fois les besoins identifiés, nous avons lancé une <strong class="text-on-surface font-bold">phase d’idéation</strong> pour explorer des solutions créatives :
+                </p>
+                <ul class="space-y-2 mb-3">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Benchmark</strong> : Analyse des solutions existantes (ex : cadeaux virtuels chez d’autres fintechs).</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Crazy 8 & Storyboard</strong> : Génération d’idées rapides et visuelles.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Définition des critères de succès</strong> :</span>
+                        <ul>
+                            <li>Nombre d’options activées.</li>
+                            <li>Nombre de visios déclenchées.</li>
+                            <li>Augmentation du nombre d’inscriptions.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="step-visual">
+                    <img
+                        src="/images/experience/lydia-crazy-eight.webp"
+                        alt="Capture d'écran des ateliers Crazy 8"
+                        loading="lazy"
+                        width="600"
+                    >
+                    <p class="text-center text-on-surface-muted italic">Exemple de session Crazy 8 pour générer des idées.</p>
+                </div>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:target-02', { class: 'text-base' }) }}
+                    Étape 3 : Approfondir la vision produit
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Nous avons affiné la vision produit en nous concentrant sur :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">L’émotion</strong> : Comment recréer le <strong>moment de surprise</strong> et de <strong>partage</strong> ?</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">La simplicité</strong> : Un flow utilisateur <strong>intuitif et sans friction</strong>.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">La personnalisation</strong> : Permettre aux utilisateurs de <strong>personnaliser leur cadeau</strong>.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:quill-write-01', { class: 'text-base' }) }}
+                    Étape 4 : UX Writing
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Le <strong class="text-on-surface">choix des mots</strong> est crucial pour guider l’utilisateur et créer de l’émotion.
+                    Nous avons travaillé sur :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">messages d’onboarding</strong>.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">instructions</strong> pour la capture vidéo.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">feedback</strong> pour rassurer l’utilisateur.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:paint-board', { class: 'text-base' }) }}
+                    Étape 5 : Prototyping
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Nous avons conçu un <strong>prototype interactif</strong> sur Figma pour tester les hypothèses :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Flow de capture vidéo</strong> : Simple et intuitif.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Options de personnalisation</strong> : Ajout de messages, de GIFs, etc.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Partage en temps réel</strong> : Pour recréer le moment de partage.</span>
+                    </li>
+                </ul>
+                <div class="step-visual">
+                    <img
+                        src="/images/experience/lydia-prototype.webp"
+                        alt="Capture d'écran du prototype Figma"
+                        loading="lazy"
+                        width="600"
+                    >
+                    <p class="text-center text-on-surface-muted italic">Prototype Figma</p>
+                </div>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:quill-write-01', { class: 'text-base' }) }}
+                    Étape 6 : Test & Learn
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Nous avons testé le prototype avec des utilisateurs pour <strong>valider les hypothèses</strong> et identifier les points d’amélioration :
+                </p>
+                <h4 class="text-base font-semibold text-on-surface mb-2">Recommandations issues des tests</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Avoir la possibilité de ne pas envoyer la vidéo</strong> : Respecter le choix de l’utilisateur.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Simplifier le flow de capture vidéo</strong> : Réduire les étapes.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Savoir quand on est filmé</strong> : Ajouter des indicateurs visuels clairs.</span>
+                    </li>
+                </ul>
+                <h4 class="text-base font-semibold text-on-surface mb-2">Conclusions</h4>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span>L’utilisateur doit être <strong>libre de ne pas envoyer la vidéo</strong> ou de ne pas être filmé.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span>Un <strong>flow clair</strong> : Où suis-je ? Que se passe-t-il ?</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span>Le <strong>droit à l’erreur</strong> comme grand principe.</span>
+                    </li>
+                </ul>
+                <div class="step-visual">
+                    <img
+                        src="/images/experience/lydia-users-tests.webp"
+                        alt="Capture d'écran des tests utilisateurs"
+                        loading="lazy"
+                        width="600"
+                    >
+                    <p class="text-center text-on-surface-muted italic">Exemple de feedbacks utilisateurs.</p>
+                </div>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:paint-board', { class: 'text-base' }) }}
+                    Étape 7 : Brand, UI & Design System
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Nous avons veillé à ce que la solution soit <strong>cohérente avec l’identité de Lydia</strong> :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Respect de la charte graphique</strong> (couleurs, typographie).</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Design System</strong> : Réutilisation des composants existants.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Accessibilité</strong> : Contraste, tailles de texte, etc.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="pl-4 border-l-2 border-nine-amber-600/40">
+                <h3 class="text-lg font-semibold text-nine-cyan-500 mb-2 flex items-center gap-2">
+                    {{ ux_icon('hugeicons:paint-board', { class: 'text-base' }) }}
+                    Étape 8 : Présenter de façon convaincante
+                </h3>
+                <p class="text-on-surface-muted mb-3 leading-relaxed">
+                    Enfin, nous avons préparé une <strong>présentation percutante</strong> pour convaincre les parties prenantes :
+                </p>
+                <ul class="space-y-2">
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Pitch clair</strong> : Résumer la problématique et la solution en 2 min.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Démonstration du prototype</strong> : Montrer concrètement le flow.</span>
+                    </li>
+                    <li class="flex items-start gap-2 text-on-surface-muted">
+                        {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                        <span><strong class="text-on-surface font-bold">Retour sur investissement</strong> : Mettre en avant les bénéfices (engagement, rétention).</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mt-8">
+            <p class="text-sm font-semibold text-on-surface-muted mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:toolbox', { class: 'text-base' }) }}
+                Outils utilisés
+            </p>
+            <div class="flex flex-nowrap items-center gap-4">
+                <span title="Figma">{{ ux_icon('logos:figma', { class: 'w-6 h-6' }) }}</span>
+                <span title="Miro">{{ ux_icon('logos:miro-icon', { class: 'w-6 h-6' }) }}</span>
+                <span title="Notion">{{ ux_icon('logos:notion-icon', { class: 'w-6 h-6' }) }}</span>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="text-2xl font-bold text-on-surface mb-4 flex items-center gap-2">
+            {{ ux_icon('hugeicons:party', { class: 'text-nine-amber-600 text-xl' }) }}
+            Le résultat : Une expérience cadeau virtuel repensée
+        </h2>
+        <p class="text-on-surface-muted mb-6 leading-relaxed">
+            Grâce à cette approche méthodique, nous avons conçu une solution qui <strong class="text-on-surface font-bold">redonne de l’émotion aux cadeaux virtuels</strong>,
+            tout en respectant les contraintes techniques et métiers de Lydia.
+        </p>
+
+        <div class="p-4 rounded-lg bg-surface-card shadow-sm mb-8">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('fa7-solid:chart-line', { class: 'text-base' }) }}
+                Impact potentiel
+            </h3>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Augmentation de l’engagement</strong> : Les utilisateurs passent plus de temps sur l’app.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Meilleure rétention</strong> : Les utilisateurs reviennent pour utiliser la fonctionnalité.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Différenciation</strong> : Lydia se distingue des autres solutions de virement.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Satisfaction utilisateur</strong> : Les cadeaux virtuels deviennent <strong>mémorables</strong>.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="p-4 rounded-lg bg-surface-card shadow-sm mb-8">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('hugeicons:bulb', { class: 'text-base' }) }}
+                Leçons apprises
+            </h3>
+            <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">L’émotion est clé</strong> : Même dans un produit technique, l’aspect humain compte.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">Le droit à l’erreur</strong> : Les utilisateurs doivent se sentir en confiance.</span>
+                </li>
+                <li class="flex items-start gap-2 text-on-surface-card">
+                    {{ ux_icon('flowbite:check-circle-outline', { class: 'text-nine-cyan-500 text-base shrink-0 mt-0.5' }) }}
+                    <span><strong class="text-on-surface font-bold">La simplicité prime</strong> : Un flow clair et intuitif est essentiel.</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="story-visual">
+            <h3 class="text-lg font-semibold text-nine-cyan-500 mb-3 flex items-center gap-2">
+                {{ ux_icon('hugeicons:image-03', { class: 'text-nine-amber-600 text-xl' }) }} En images : Un extrait du prototype final
+            </h3>
+            <div class="visual-grid">
+                <div class="visual-item">
+                    <img
+                        src="/images/experience/lydia-prototype-final.webp"
+                        alt="Capture d'écran du prototype final"
+                        loading="lazy"
+                        width="800"
+                        height="450"
+                        class="mx-auto">
+                    <p class="text-center mt-1 text-on-surface-muted italic"><strong>Formation Product Design</strong> : <a href="https://www.figma.com/proto/lQI1BrspWw6s6yRQWz3VPN/Batch-12---Caro---Tom?node-id=0-2517&t=3TkIKI3TGqQY3pyf-1" target="_blank" class="text-nine-cyan-500 hover:underline">Voir le prototype complet sur Figma</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+{% endblock %}

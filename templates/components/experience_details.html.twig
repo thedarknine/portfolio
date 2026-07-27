@@ -90,7 +90,7 @@
 
     {% if detailLink %}
     <div class="">
-        <p class="pt-4 pb-2 px-3"><strong class="text-nine-gray-400 font-semibold">Plus d'infos</strong></p>
+        <p class="pt-4 pb-2 px-3"><strong class="text-nine-gray-400 font-semibold">Réalisations</strong></p>
         <ul class="list-none">
             {% for link in experience.links %}
             {% if link.type.value == 'detail' %}
@@ -122,8 +122,27 @@
                 peer-checked:[&_.voir-plus]:hidden
                 peer-checked:[&_.voir-moins]:inline-flex">
             {% for skill in experience.skills %}
-            <li class="{{ loop.index > nbDisplayedSkills ? 'extra-skill hidden' : '' }} flex items-center">
-                <img src="{{ absolute_url('images/skills/' ~ skill.logo) }}" alt="{{ skill.name }}" width="40px" class="mb-4 rounded-sm">
+            <li class="{{ loop.index > nbDisplayedSkills ? 'extra-skill hidden' : '' }} group relative flex items-center">
+                <img
+                    src="{{ absolute_url('images/skills/' ~ skill.logo) }}"
+                    alt="{{ skill.name }}"
+                    class="h-10 w-10 rounded-sm"
+                >
+
+                <div class="pointer-events-none absolute bottom-full left-1/2 z-10 mb-2
+                        -translate-x-1/2 translate-y-1 opacity-0
+                        transition-all duration-200
+                        group-hover:translate-y-0
+                        group-hover:opacity-100">
+
+                    <div class="relative rounded-md bg-gray-900 px-2 py-1 text-xs text-white shadow-lg">
+                        {{ skill.name }}
+
+                        <div class="absolute -bottom-1 left-1/2 h-2 w-2
+                                    -translate-x-1/2 rotate-45 bg-gray-900">
+                        </div>
+                    </div>
+                </div>
             </li>
             {% endfor %}
 
