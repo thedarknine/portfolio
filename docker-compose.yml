@@ -46,22 +46,37 @@ services:
         networks:
             - thedarknine-ntwk
 
-    pma:
-        image: arm64v8/phpmyadmin:latest
-        container_name: ${PROJECT_SLUG}-pma
+    # pma:
+    #     image: arm64v8/phpmyadmin:latest
+    #     container_name: ${PROJECT_SLUG}-pma
+    #     ports:
+    #         - 8088:80
+    #     depends_on:
+    #         - db
+    #     restart: unless-stopped
+    #     environment:
+    #         PMA_HOST: db
+    #         PMA_USER: ${DB_USER}
+    #         PMA_PASSWORD: ${DB_PASSWORD}
+    #         PMA_PORT: 3306
+    #         PMA_ARBITRARY: 1
+    #     networks:
+    #         - thedarknine-ntwk
+
+    adm:
+        image: adminneoorg/adminneo:latest
+        container_name: ${PROJECT_SLUG}-adm
         ports:
-            - 8088:80
+          - "8089:8080"
         depends_on:
-            - db
+          - db
         restart: unless-stopped
         environment:
-            PMA_HOST: db
-            PMA_USER: ${DB_USER}
-            PMA_PASSWORD: ${DB_PASSWORD}
-            PMA_PORT: 3306
-            PMA_ARBITRARY: 1
+          - NEO_COLOR_VARIANT=blue
+          - NEO_DEFAULT_SERVER=db
+          - NEO_DEFAULT_DATABASE=${DB_NAME}
         networks:
-            - thedarknine-ntwk
+          - thedarknine-ntwk
 
     mailpit:
         image: axllent/mailpit:latest
