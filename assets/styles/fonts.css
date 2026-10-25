@@ -1,9 +1,56 @@
 /* ============================================================
  * FONTS
- * Oxygen : 2 weights (400, 700)
- * League Spartan : 4 weights (400, 500, 600, 700)
- * Inter : 2 weights (400, 700) — fallback only, no unnecessary weights
+ * Redesign (see docs/style-guide.md):
+ *   Space Grotesk : 3 weights (400, 500, 700) — headings, body, UI
+ *   IBM Plex Mono : 2 weights (400, 500) — labels, chips, tags, metadata
+ * Legacy, removed once every template is migrated:
+ *   Oxygen : 2 weights (400, 700)
+ *   League Spartan : 4 weights (400, 500, 600, 700)
+ *   Inter : 2 weights (400, 700) — fallback only
  * ============================================================ */
+
+/* Space Grotesk */
+@font-face {
+    font-display: swap;
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/space-grotesk/space-grotesk-latin-400.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/space-grotesk/space-grotesk-latin-500.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "Space Grotesk";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/space-grotesk/space-grotesk-latin-700.woff2") format("woff2");
+}
+
+/* IBM Plex Mono */
+@font-face {
+    font-display: swap;
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/ibm-plex-mono/ibm-plex-mono-latin-400.woff2") format("woff2");
+}
+@font-face {
+    font-display: swap;
+    font-family: "IBM Plex Mono";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/ibm-plex-mono/ibm-plex-mono-latin-500.woff2") format("woff2");
+}
+
+/* ------------------------------------------------------------
+ * Legacy fonts
+ * ------------------------------------------------------------ */
 
 /* Oxygen */
 @font-face {
