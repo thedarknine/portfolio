@@ -30,6 +30,7 @@
         "symfony/monolog-bundle": "^4.0.2",
         "symfony/rate-limiter": "8.1.*",
         "symfony/runtime": "8.1.*",
+        "symfony/stimulus-bundle": "^3.6",
         "symfony/twig-bundle": "8.1.*",
         "symfony/ux-icons": "^3.3",
         "symfony/validator": "8.1.*",
