@@ -9,7 +9,8 @@
     role="switch"
     aria-checked="{{ is_dark ? 'true' : 'false' }}"
     class="theme-switch inline-flex min-h-11 items-center {{ with_label ? 'w-full justify-between gap-3 rounded-[10px] border border-border px-3.5 text-[15px] text-on-surface' : 'justify-center px-1' }}"
-    {% if not with_label %}aria-label="Mode sombre"{% endif %}
+    {% if not with_label %}aria-label="Mode sombre"
+    {% endif %}
     {{ stimulus_controller('theme') }}
     {{ stimulus_action('theme', 'toggle') }}>
     {% if with_label %}<span>Mode sombre</span>{% endif %}

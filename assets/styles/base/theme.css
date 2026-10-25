@@ -60,7 +60,7 @@
     --color-surface-hero: var(--color-nine-blue-700);
     --color-surface-quote: var(--color-nine-gray-400);
     --color-surface-card: var(--color-nine-sand-50);
-    --color-surface-footer: var(--color-nine-blue-900);
+    --color-surface-footer: #172c49;
 
     /* Textes */
     --color-on-surface: #172c49;
@@ -69,7 +69,7 @@
     --color-on-surface-hero: var(--color-nine-sand-200);
     --color-on-surface-quote: var(--color-nine-blue-600);
     --color-on-surface-card: var(--color-nine-gray-500);
-    --color-on-surface-footer: var(--color-nine-gray-400);
+    --color-on-surface-footer: #b6c2d1;
 
     /* ------------------------------------------------------------------
      * SEMANTIC TOKENS — redesign, light mode (default values)
@@ -119,7 +119,7 @@
     --color-surface-hero: var(--color-nine-gray-800);
     --color-surface-quote: var(--color-nine-gray-800);
     --color-surface-card: var(--color-nine-gray-700);
-    --color-surface-footer: var(--color-nine-blue-900);
+    --color-surface-footer: #0b1a2c;
 
     --color-on-surface: #e6ecf4;
     --color-on-surface-muted: #a6b5c8;
@@ -127,7 +127,7 @@
     --color-on-surface-hero: var(--color-nine-gray-400);
     --color-on-surface-quote: var(--color-nine-gray-400);
     --color-on-surface-card: var(--color-nine-sand-200);
-    --color-on-surface-footer: var(--color-nine-gray-400);
+    --color-on-surface-footer: #b4bfcc;
 
     /* Redesign tokens — dark mode */
     --color-surface-header: rgb(15 34 56 / 94%);
