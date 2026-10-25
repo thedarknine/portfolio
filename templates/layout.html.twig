@@ -117,8 +117,6 @@
         <div class="main" id="{{ current_page.slug ?? 'home' }}">
             {{ include('components/header.html.twig') }}
 
-            {{ include('components/menu_mobile.html.twig') }}
-
             <main>
                 {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
                 {{ include('components/page_hero.html.twig') }}

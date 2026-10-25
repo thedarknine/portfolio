@@ -1,14 +1,26 @@
+{#
+    Light / dark switch. The track and thumb are the original design (theme-toggle.css);
+    the button around them gives a 44 px touch target and the switch semantics.
+    with_label: full-width row with a visible label, used in the mobile menu.
+#}
+{% set with_label = with_label ?? false %}
 <button
-    class="theme-toggle"
-    id="themeToggle"
-    aria-label="Basculer le thème"
-    data-theme="{{ app.request.cookies.get('theme', 'light') }}">
-    <span class="toggle-thumb">
-        <span class="icon-sun" aria-hidden="true">{{ ux_icon('hugeicons:sun-02') }}</span>
-        <span class="icon-moon" aria-hidden="true">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
-    </span>
-    <span class="toggle-track">
-        <span class="track-icon track-sun" aria-hidden="true">{{ ux_icon('hugeicons:sun-02') }}</span>
-        <span class="track-icon track-moon" aria-hidden="true">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
+    type="button"
+    role="switch"
+    aria-checked="{{ is_dark ? 'true' : 'false' }}"
+    class="theme-switch inline-flex min-h-11 items-center {{ with_label ? 'w-full justify-between gap-3 rounded-[10px] border border-border px-3.5 text-[15px] text-on-surface' : 'justify-center px-1' }}"
+    {% if not with_label %}aria-label="Mode sombre"{% endif %}
+    {{ stimulus_controller('theme') }}
+    {{ stimulus_action('theme', 'toggle') }}>
+    {% if with_label %}<span>Mode sombre</span>{% endif %}
+    <span class="theme-toggle" aria-hidden="true">
+        <span class="toggle-thumb">
+            <span class="icon-sun">{{ ux_icon('hugeicons:sun-02') }}</span>
+            <span class="icon-moon">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
+        </span>
+        <span class="toggle-track">
+            <span class="track-icon track-sun">{{ ux_icon('hugeicons:sun-02') }}</span>
+            <span class="track-icon track-moon">{{ ux_icon('hugeicons:moon-slow-wind') }}</span>
+        </span>
     </span>
 </button>

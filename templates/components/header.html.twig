@@ -1,22 +1,39 @@
-<header class="bg-transparent nine-sticky-bar {% if current_page.slug != 'home' %}is-sticky{% endif %}">
-    <div class="container bg-transparent">
-        <nav class="bg-transparent flex justify-between items-center py-3">
-            <a class="text-3xl font-semibold leading-none" href="{{ path('app_home') }}" aria-label="{{ owner_name }} — {{ owner_role }}">
-                <img id="logo" class="h-10" src="https://medias.carolinenoyer.fr/images/logo-cnoyer-full-250-white.svg" alt="Caroline Noyer | Accueil">
-            </a>
-            <ul class="hidden lg:flex lg:items-center lg:w-auto lg:space-x-5">
-                {% for page in page_manager.getPublishedRootPagesInHeader() %}
-                <li class="p-4 nine-menu__item {% if current_page.slug == page.slug %}is-active{% endif %}">
-                    <a class="" href="/{{ page.slug }}" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a>
-                </li>
-                {% endfor %}
-            </ul>
-            {{ include('components/theme_toggle.html.twig') }}
-            <div class="lg:hidden">
-                <button class="nine-menu__burger flex items-center py-2 px-3 text-nine-cyan-500 hover:text-nine-blue-500" aria-label="Menu">
-                    {{ ux_icon('hugeicons:menu-02', { class: 'w-8 h-8' }) }}
-                </button>
-            </div>
-        </nav>
+{% set is_dark = app.request.cookies.get('theme', 'light') == 'dark' %}
+<header class="site-header sticky top-0 z-40 border-b border-border bg-surface-header font-sans text-on-surface backdrop-blur" {{ stimulus_controller('menu') }}>
+    <div class="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-3.5">
+        <a class="inline-flex min-h-11 items-center" href="{{ path('app_home') }}" aria-label="{{ owner_name }} — Accueil">
+            {{ include('components/logo.html.twig') }}
+        </a>
+
+        <div class="flex items-center gap-2">
+            <nav class="site-nav hidden lg:block" aria-label="Navigation principale">
+                <ul class="flex items-center gap-0.5 text-sm font-medium">
+                    {% for page in page_manager.getPublishedRootPagesInHeader() %}
+                    {% set is_current = current_page.slug == page.slug %}
+                    <li>
+                        {% if page.slug == 'contact' %}
+                        <a class="ml-1 inline-flex min-h-11 items-center rounded-lg bg-strong px-4 text-on-strong transition-colors hover:opacity-90" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
+                        {% else %}
+                        <a class="inline-flex min-h-11 items-center rounded-lg px-3 transition-colors hover:bg-panel {{ is_current ? 'text-accent-text' : 'text-on-surface' }}" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </nav>
+
+            {{ include('components/theme_toggle.html.twig', { is_dark: is_dark }) }}
+
+            <button
+                type="button"
+                class="site-header__menu-button inline-flex size-11 items-center justify-center rounded-[10px] bg-strong text-on-strong lg:hidden"
+                aria-label="Ouvrir le menu"
+                aria-haspopup="dialog"
+                {{ stimulus_target('menu', 'button') }}
+                {{ stimulus_action('menu', 'open') }}>
+                {{ ux_icon('hugeicons:menu-02', { class: 'size-5', 'aria-hidden': 'true' }) }}
+            </button>
+        </div>
     </div>
+
+    {{ include('components/menu_mobile.html.twig', { is_dark: is_dark }) }}
 </header>
