@@ -4,6 +4,7 @@
 
 {% block body %}
 {% set current_experience = last_experiences|first %}
+{% set nb_years = page_manager.getNbYearsExperience() %}
 <div class="font-sans text-base leading-relaxed text-on-surface">
 
     {# HERO — full-bleed photo, the header floats over it (header_controller.js) #}
@@ -23,7 +24,7 @@
                     Je fais le lien entre <span class="text-accent-text">le métier</span> et <span class="text-accent-text">la technique.</span>
                 </h1>
                 <p class="mb-9 max-w-[540px] text-lg text-on-surface-muted">
-                    J'ai codé pendant 15 ans avant de passer côté produit en 2019. Aujourd'hui, je cadre, je priorise et j'aide les équipes à livrer ce qui compte, avec rigueur et une touche d'humour.
+                    Dans le web depuis {{ nb_years }} ans, j'ai longtemps codé avant de passer côté produit en 2019. Aujourd'hui, je cadre, je priorise et j'aide les équipes à livrer ce qui compte, avec rigueur et une touche d'humour.
                 </p>
                 <div class="flex flex-wrap gap-3">
                     <a class="btn btn--primary" href="{{ path('app_experience') }}">
@@ -63,7 +64,7 @@
         <h2 id="home-positioning" class="mb-8 text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Penser le produit. Comprendre la technique. Faire le lien.</h2>
         <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
             {% for card in [
-                { index: '01', title: 'Mon parcours', text: '15 ans de développement web, aujourd’hui au service du produit. Je connais les deux côtés de la table.', link: path('app_experience'), cta: 'Découvrir mon parcours' },
+                { index: '01', title: 'Mon parcours', text: nb_years ~ ' ans dans le web, d’abord en développement, aujourd’hui au service du produit. Je connais les deux côtés de la table.', link: path('app_experience'), cta: 'Découvrir mon parcours' },
                 { index: '02', title: 'Mon expertise', text: 'J’aide les équipes à cadrer les besoins, à faire les bons choix techniques et à mieux travailler ensemble.', link: path('app_skills'), cta: 'Voir mes compétences' },
                 { index: '03', title: 'Mon approche', text: 'J’aime comprendre, structurer et donner forme aux idées. En produit, en code ou en création, je cherche la simplicité.', link: path('app_projects'), cta: 'Voir mes réalisations' },
             ] %}
