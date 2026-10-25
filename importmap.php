@@ -24,9 +24,7 @@
  */
 return [
     'app' => ['path' => './assets/app.js', 'entrypoint' => true],
-    'home' => ['path' => './assets/scripts/home.js', 'entrypoint' => true],
     'gallery' => ['path' => './assets/scripts/gallery.js', 'entrypoint' => true],
-    'typed.js' => ['version' => '3.0.0'],
     'photoswipe' => ['version' => '5.4.4'],
     'photoswipe/dist/photoswipe.min.css' => ['version' => '5.4.4', 'type' => 'css'],
     'photoswipe/lightbox' => ['version' => '5.4.4'],

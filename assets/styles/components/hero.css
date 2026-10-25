@@ -1,0 +1,12 @@
+/* ============================================================
+ * COMPOSANTS — Hero
+ * Topographic lines are a dark-theme decoration only.
+ * Reference: docs/style-guide.md § Imagery
+ * ============================================================ */
+.hero-topo {
+    display: none;
+}
+
+[data-theme="dark"] .hero-topo {
+    display: block;
+}
