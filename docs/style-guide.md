@@ -209,8 +209,13 @@ Every inner page except the legal notice (`components/page_hero.html.twig`):
 
 - The page image (`images/pages/hero-<technicalName>.webp`) full width, under a night-blue gradient: 100 % on the
   left edge, 93 % at mid-width, 50 % on the right from 768 px up; a flat 92 % veil below.
-- Breadcrumb in monospace 13 px (`#b9c6d6`, current page in white): Accueil, then the optional `breadcrumb.level1` and
-  `level2` set by the controller, then the current page title.
+- Breadcrumb styled as a shell path, `❯ ~/experience/coffreo/refonte-app-mobile ▌`, in a dark box
+  (`rgb(11 26 44 / 60%)`, 12 % white border, 10 px radius), monospace 13 px (14 px from 640 px): green prompt
+  `#3fcf8e`, segments `#b9c6d6`, separators `#8fa1b9`, current page in white, a static `#3aa3c8` cursor.
+  `~` links to the home page; the optional `breadcrumb.level1` shows its URL path, `level2` its label as a slug, then
+  the current page slug. Below 640 px the middle levels collapse to `/…` and a long slug is truncated.
+- Slugs are for the eye only: every link carries its real label in `aria-label` and `title`, and the current page
+  adds its title in `sr-only` text, so assistive technologies read "Expérience", "Coffreo", not slugs.
 - Tagline in monospace 13 px, uppercase, `#3aa3c8` (4.9:1 on the hero), then the subtitle as `h1`,
   `clamp(34px, 4.6vw, 52px)`.
 - The header stays opaque above it; only the home page has the floating header.
