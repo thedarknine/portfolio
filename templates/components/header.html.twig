@@ -1,6 +1,10 @@
 {% set is_dark = app.request.cookies.get('theme', 'light') == 'dark' %}
-<header class="site-header sticky top-0 z-40 border-b border-border bg-surface-header font-sans text-on-surface backdrop-blur" {{ stimulus_controller('menu') }}>
-    <div class="mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-3.5">
+{# On the home page the header floats over the photo hero and turns opaque once the page scrolls (header_controller.js). #}
+{% set is_overlay = current_page.slug == 'home' %}
+<header
+    class="site-header {{ is_overlay ? 'site-header--overlay fixed inset-x-0' : 'sticky' }} top-0 z-40 border-b border-border bg-surface-header font-sans text-on-surface backdrop-blur transition-colors duration-200"
+    {% if is_overlay %}{{ stimulus_controller('menu')|stimulus_controller('header') }}{% else %}{{ stimulus_controller('menu') }}{% endif %}>
+    <div class="site-header__bar mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-3.5">
         <a class="inline-flex min-h-11 items-center" href="{{ path('app_home') }}" aria-label="{{ owner_name }} — Accueil">
             {{ include('components/logo.html.twig') }}
         </a>

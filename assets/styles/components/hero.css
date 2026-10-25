@@ -1,12 +1,27 @@
 /* ============================================================
- * COMPOSANTS — Hero
- * Topographic lines are a dark-theme decoration only.
- * Reference: docs/style-guide.md § Imagery
+ * COMPOSANTS — Home hero
+ * Full-bleed photo with a night-blue gradient. The text column
+ * redefines the colour tokens locally so it always reads on the
+ * photo, in both themes. The profile card keeps the theme tokens.
+ * Reference: docs/style-guide.md § Home hero
  * ============================================================ */
-.hero-topo {
-    display: none;
+.home-hero__overlay {
+    background: rgb(23 44 73 / 82%);
+
+    @media (width >= 768px) {
+        background: linear-gradient(90deg, rgb(23 44 73 / 94%) 0%, rgb(23 44 73 / 78%) 42%, rgb(23 44 73 / 10%) 75%);
+    }
 }
 
-[data-theme="dark"] .hero-topo {
-    display: block;
+.home-hero__content {
+    --color-on-surface: #ffffff;
+    --color-on-surface-muted: #d3dbe6;
+    --color-accent-text: #6cc6e2;
+    --color-primary: #4cc3e6;
+    --color-on-primary: #172c49;
+    --color-panel: rgb(255 255 255 / 10%);
+    --color-border: rgb(255 255 255 / 30%);
+    --color-status-live: #3fcf8e;
+
+    color: var(--color-on-surface);
 }

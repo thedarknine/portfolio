@@ -86,3 +86,32 @@ html:has(.mobile-menu[open]) {
 [data-theme="dark"] .site-logo--on-dark {
     display: block;
 }
+
+/*
+ * Overlay header (home page): transparent over the photo hero until the page scrolls.
+ * The bar redefines the colour tokens locally so every utility class inside it switches to the
+ * on-photo palette; the mobile menu <dialog> sits outside the bar and keeps the theme tokens.
+ */
+.site-header--overlay:not(.is-scrolled) {
+    background-color: transparent;
+    border-color: rgb(255 255 255 / 14%);
+    backdrop-filter: none;
+
+    .site-header__bar {
+        --color-on-surface: #ffffff;
+        --color-accent-text: #6cc6e2;
+        --color-panel: rgb(255 255 255 / 10%);
+        --color-border: rgb(255 255 255 / 22%);
+        --color-placeholder: rgb(255 255 255 / 18%);
+        --color-strong: #ffb020;
+        --color-on-strong: #172c49;
+    }
+
+    .site-logo--on-light {
+        display: none;
+    }
+
+    .site-logo--on-dark {
+        display: block;
+    }
+}
