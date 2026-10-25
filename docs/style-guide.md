@@ -70,6 +70,7 @@ Token names below are the proposed Tailwind v4 `@theme` names (`--color-*`).
 | `on-highlight` | Text on `highlight` | `#172c49` | `#172c49` |
 | `status-live` | "Currently at…" dot | `#1f9d6b` | `#3fcf8e` |
 | `placeholder` | Image placeholders, skeletons | `#dfe5ec` | `#273548` |
+| `timeline-year` | Start years in the experience timeline (large text) | `#2687ab` | `#3aa3c8` |
 | `surface-footer` | Footer background | `#172c49` | `#0b1a2c` |
 | `on-surface-footer` | Footer body text | `#b6c2d1` | `#b4bfcc` |
 
@@ -201,6 +202,35 @@ One component replaces `.nine-btn-primary`, `.nine-btn-social` and the inline gr
   highlighted words, primary button `#4cc3e6` on `#172c49`, glassy secondary button.
 - The profile card sits top right on desktop and below the text on mobile. It keeps the theme tokens, so it is white
   in light mode and `panel` blue in dark mode, and never covers the silhouette in the photo.
+
+### Page hero
+
+Every inner page except the legal notice (`components/page_hero.html.twig`):
+
+- The page image (`images/pages/hero-<technicalName>.webp`) full width, under a night-blue gradient: 100 % on the
+  left edge, 93 % at mid-width, 50 % on the right from 768 px up; a flat 92 % veil below.
+- Breadcrumb in monospace 13 px (`#b9c6d6`, current page in white): Accueil, then the optional `breadcrumb.level1` and
+  `level2` set by the controller, then the current page title.
+- Tagline in monospace 13 px, uppercase, `#3aa3c8` (4.9:1 on the hero), then the subtitle as `h1`,
+  `clamp(34px, 4.6vw, 52px)`.
+- The header stays opaque above it; only the home page has the floating header.
+
+### Page quote
+
+Closing quote of inner pages (`components/page_quote.html.twig`), only when the page has one: `panel` band with
+`border` top and bottom, a 72 px opening quote mark in `accent-text` at 20 %, the quote centred in
+`clamp(24px, 3vw, 32px)`, weight 500.
+
+### Experience timeline
+
+- One card per experience on `panel`. From 768 px, a 112 px rail on the left holds the start year (30 px bold,
+  `timeline-year`) and the company logo (64 px, neutral grey backdrop), joined by a dashed vertical line.
+  Below 768 px the year and logo sit in a row above each card.
+- Card header: an `actuel` `highlight` chip for the current role, the role in `accent-text` monospace, the mission as
+  `h2`, then dates, duration and place in monospace. External and PDF links are secondary buttons on the right.
+- Achievements in a grid of `minmax(320px, 1fr)` columns: bold title, muted text. No emoji.
+- Card footer: the stack as 32 px logos (six shown, a `+n` chip reveals the rest) and the detail pages as `chip`
+  links.
 
 ### Status pill
 

@@ -1,0 +1,29 @@
+/* ============================================================
+ * COMPOSANTS — Experience timeline
+ * From 768 px: a 112 px rail with the start year and the company
+ * logo, joined by a dashed vertical line.
+ * Reference: docs/style-guide.md § Experience timeline
+ * ============================================================ */
+.experience-item__logo {
+    /* Neutral backdrop that works for both dark and white company logos */
+    background-color: rgb(148 163 184 / 50%);
+}
+
+@media (width >= 768px) {
+    .experience-timeline::before {
+        position: absolute;
+        top: 96px;
+        bottom: 40px;
+        left: 55px;
+        content: "";
+        border-left: 2px dashed color-mix(in srgb, var(--color-on-surface-muted) 35%, transparent);
+    }
+
+    .experience-item__rail {
+        position: relative;
+        z-index: 1;
+        align-self: start;
+        padding-bottom: 8px;
+        background-color: var(--color-surface);
+    }
+}

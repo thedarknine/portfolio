@@ -90,7 +90,7 @@ final class PortfolioController extends AbstractController
                 'level1' => [
                     'url'   => $this->generateUrl('app_experience'),
                     'icon'  => 'hugeicons:briefcase-04',
-                    'label' => 'Experience',
+                    'label' => 'Expérience',
                 ],
                 'level2' => [
                     'url'   => $this->generateUrl('app_experience') . '#' . $job,
