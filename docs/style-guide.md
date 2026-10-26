@@ -196,6 +196,7 @@ moon. In the mobile menu it is a full-width row with the visible label "Mode som
 | Primary | `primary` | `on-primary` | none |
 | Secondary | `panel` | `on-surface` | 1 px `border` |
 | Strong (Contact) | `strong` | `on-strong` | none |
+| Outline (equal-weight choices) | transparent, `chip` on hover | `accent-text` | 1 px `accent-text` |
 
 Height 48 px (52 px for the footer CTA), padding 0 22–28 px, radius 10 px, weight 500. Icons 18 px, 10 px gap.
 One component replaces `.nine-btn-primary`, `.nine-btn-social` and the inline gradient CTAs.
@@ -308,8 +309,8 @@ The legal notice has no photo hero and no quote, it stays sober:
   sticky header does not hide it when following an anchor.
 - Key/value blocks (publisher, host) use `.legal-card`: monospace muted terms, rows split by a border.
 - Credited libraries are small `panel` tiles with the role in monospace on the right, two per row from 640 px.
-- Links in the text are underlined in `accent-text`; the Matomo opt-out widget sits in a `panel` card and inherits
-  the theme colours. Styles live in `assets/styles/pages/legal.css`.
+- Links in the text are underlined in `accent-text`. The cookies section ends with a secondary button that reopens
+  the cookie preferences (it replaces the Matomo opt-out widget). Styles live in `assets/styles/pages/legal.css`.
 
 ### Contact
 
@@ -337,6 +338,25 @@ Styles live in `assets/styles/components/forms.css`.
   hidden from assistive technologies.
 - Flash messages use `.alert`: `.alert--success` on `chip` / `on-chip` with `role="status"`, `.alert--error` on
   `danger-soft` / `danger` with `role="alert"`, both with a leading icon.
+
+### Cookie consent
+
+`components/cookie_consent.html.twig`, driven by `assets/controllers/consent_controller.js`, styles in
+`assets/styles/components/cookie-consent.css`.
+
+- Banner: fixed 16 px from the bottom and sides, 1240 px max, `panel` card with a soft shadow, `cookies.yaml`
+  monospace label (decorative), the text and an "En savoir plus" link to the cookies section of the legal notice.
+- Actions: "Personnaliser" as an underlined text button, then "Tout refuser" and "Tout accepter" as two identical
+  outline buttons, so refusing is as easy as accepting (CNIL). On phones and tablets the two choices share a row
+  and "Personnaliser" moves below.
+- Preferences: native `<dialog>` (same open and close animation as the mobile menu) with one row per purpose:
+  technical cookies marked "Toujours actifs", audience measurement as a checkbox styled as a switch
+  (`role="switch"`), then "Annuler" (secondary) and "Enregistrer mes choix" (primary).
+- The choice is kept 13 months in the `consent_analytics` cookie (`granted` or `denied`). Matomo is loaded by the
+  controller only after consent and only in production; withdrawing consent opts the visitor out and removes the
+  `_pk_*` cookies. Any `[data-consent-open]` element reopens the preferences: "Gérer les cookies" in the footer
+  bottom row and the button of the legal notice.
+- The banner appears with a short slide-up, skipped when the visitor prefers reduced motion.
 
 ### Status pill
 

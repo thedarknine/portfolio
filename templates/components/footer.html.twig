@@ -52,7 +52,10 @@
                 © Nine · {{ page_manager.getStartCareerYear() }}–{{ 'now'|date('Y') }}
                 <span class="ml-2 rounded-md bg-tag px-2 py-0.5 text-white" title="Version du site">{{ site_version }}</span>
             </p>
-            <a class="inline-flex min-h-11 items-center text-band-accent hover:underline" href="#">Retour en haut ↑</a>
+            <div class="flex flex-wrap items-center gap-x-6">
+                <button type="button" class="inline-flex min-h-11 cursor-pointer items-center text-band-accent hover:underline" data-consent-open>Gérer les cookies</button>
+                <a class="inline-flex min-h-11 items-center text-band-accent hover:underline" href="#">Retour en haut ↑</a>
+            </div>
         </div>
     </div>
 </footer>

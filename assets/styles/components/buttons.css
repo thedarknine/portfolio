@@ -64,6 +64,17 @@
         }
     }
 
+    /* Equal-weight choices, e.g. cookie consent: accept and refuse look the same */
+    .btn--outline {
+        color: var(--color-accent-text);
+        background-color: transparent;
+        border-color: var(--color-accent-text);
+
+        &:hover {
+            background-color: var(--color-chip);
+        }
+    }
+
     .btn--lg {
         min-height: 52px;
         padding: 0 28px;
