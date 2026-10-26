@@ -289,6 +289,21 @@ The arcade page is a build log, not a plain gallery:
   brackets, e.g. `[Side Panels]`.
 - Every grid opens in the PhotoSwipe lightbox, one gallery per grid.
 
+### Legal notice
+
+The legal notice has no photo hero and no quote, it stays sober:
+
+- Title block on the page background: `legal.md` monospace label in `accent-text`, then the `h1`, closed by a
+  bottom border.
+- Two columns from 1024 px: a sticky summary on the left (300 px, `panel` card, numbered anchor links at least
+  44 px tall), the text on the right (760 px max).
+- Each section opens with a numbered `h2` (`01`, `02`… in monospace `accent-text`) and `scroll-mt-28` so the
+  sticky header does not hide it when following an anchor.
+- Key/value blocks (publisher, host) use `.legal-card`: monospace muted terms, rows split by a border.
+- Credited libraries are small `panel` tiles with the role in monospace on the right, two per row from 640 px.
+- Links in the text are underlined in `accent-text`; the Matomo opt-out widget sits in a `panel` card and inherits
+  the theme colours. Styles live in `assets/styles/pages/legal.css`.
+
 ### Status pill
 
 Pill on `panel` with a `border`, an 8 px `status-live` dot and a monospace label ("Actuellement Technical Product
