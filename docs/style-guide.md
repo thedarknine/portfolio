@@ -257,6 +257,15 @@ Closing quote of inner pages (`components/page_quote.html.twig`), only when the 
   bordered footer with the certification (`primary` dot) and the option (`level-end` dot).
 - Same hover lift as the other cards.
 
+### Projects
+
+- A short muted introduction, then a grid of project cards (`minmax(460px, 1fr)`, one column on phones).
+- Project card on `panel`: 48 px logo, name as `h2`, period in monospace, category as a `chip` (top right on desktop,
+  above the title on phones), the description, then screenshot thumbnails (96 × 64 px, `border`, `accent-text` border
+  and a zoom icon on hover) that open in the PhotoSwipe lightbox (`.pswp9-gallery` / `.pswp9-link`).
+- Bordered footer in monospace: tags as `#tag` on `surface`, and the number of screenshots.
+- Same hover lift as the other cards.
+
 ### Status pill
 
 Pill on `panel` with a `border`, an 8 px `status-live` dot and a monospace label ("Actuellement Technical Product
