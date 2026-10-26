@@ -266,6 +266,17 @@ Closing quote of inner pages (`components/page_quote.html.twig`), only when the 
 - Bordered footer in monospace: tags as `#tag` on `surface`, and the number of screenshots.
 - Same hover lift as the other cards.
 
+### Galleries
+
+Créations and Photos share `components/gallery_section.html.twig`:
+
+- One section per type, separated by a `border` rule: monospace index, `h2`, and the image count on the right.
+- A grid of square thumbnails, 2 columns on phones, 3 from 640 px, 4 from 1024 px; images are cropped with
+  `object-cover` in a 14 px radius frame on `placeholder`, and shown whole in the PhotoSwipe lightbox, one gallery per
+  section.
+- Hover: a slight zoom of the image (`motion-safe`), and for photos the caption fades in on a night-blue gradient.
+- Every link has an `aria-label` ("Agrandir : …"), every image an `alt` built from the caption or the type name.
+
 ### Status pill
 
 Pill on `panel` with a `border`, an 8 px `status-live` dot and a monospace label ("Actuellement Technical Product
