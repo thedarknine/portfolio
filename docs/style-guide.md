@@ -318,7 +318,7 @@ The legal notice has no photo hero and no quote, it stays sober:
   right the form in a `panel` card (720 px max, 40 px padding from 640 px).
 - Name and email share a row from 640 px; subject and message take the full width.
 - The card ends with a divider, the "Tous les champs sont obligatoires" note in monospace and the primary
-  "Envoyer" button with its paper-plane icon. The Altcha check stays in floating mode and opens on submit.
+  "Envoyer" button with its paper-plane icon, placed under the Altcha check.
 
 ### Forms
 
@@ -331,6 +331,10 @@ Styles live in `assets/styles/components/forms.css`.
   Textareas start at 168 px and only resize vertically.
 - Errors: an invalid input gets `aria-invalid="true"`, a `danger` border and `aria-describedby` pointing to its
   `.field__error` messages (alert-circle icon + text, 14 px, `danger`).
+- Anti-bot check: the Altcha widget in standard display ("Je ne suis pas un robot" checkbox) sits in an
+  `.altcha-field` wrapper that maps its `--altcha-*` variables to the form tokens. It runs through the bundle's
+  Stimulus controller, so no inline or CDN script. A honeypot field is kept off screen, out of the tab order and
+  hidden from assistive technologies.
 - Flash messages use `.alert`: `.alert--success` on `chip` / `on-chip` with `role="status"`, `.alert--error` on
   `danger-soft` / `danger` with `role="alert"`, both with a leading icon.
 

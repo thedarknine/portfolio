@@ -1,0 +1,13 @@
+framework:
+    rate_limiter:
+        # Contact form: at most 3 messages per IP address per hour
+        contact_form:
+            policy: 'sliding_window'
+            limit: 3
+            interval: '1 hour'
+
+when@test:
+    framework:
+        rate_limiter:
+            contact_form:
+                policy: 'no_limit'

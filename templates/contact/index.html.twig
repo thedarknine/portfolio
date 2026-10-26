@@ -75,7 +75,7 @@ Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline
         </div>
 
         <div class="min-w-0 max-w-[720px] flex-1">
-            <div class="rounded-[18px] border border-border bg-panel p-6 sm:p-10">
+            <div class="relative rounded-[18px] border border-border bg-panel p-6 sm:p-10">
                 {% for msg in app.flashes('success') %}
                 <div class="alert alert--success mb-8" role="status" data-flash="success">
                     {{ ux_icon('hugeicons:checkmark-circle-02', { 'aria-hidden': 'true' }) }}
@@ -97,8 +97,17 @@ Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline
                 {{ _self.field(form.subject, 'Sujet') }}
                 {{ _self.field(form.message, 'Message') }}
 
-                {# Altcha widget #}
-                {{ form_row(form.security) }}
+                {# Honeypot: kept off screen and out of the tab order, see ContactController #}
+                <div class="absolute -left-[9999px] size-px overflow-hidden" aria-hidden="true">
+                    <label for="{{ form.website.vars.id }}">Ne pas remplir ce champ</label>
+                    {{ form_widget(form.website) }}
+                </div>
+
+                {# Altcha proof-of-work check, see docs/style-guide.md § Forms #}
+                <div class="field altcha-field">
+                    {{ form_widget(form.security) }}
+                    {{ form_errors(form.security) }}
+                </div>
 
                 <div class="flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
                     <p class="font-mono text-[13px] text-on-surface-muted"><span class="text-accent-text" aria-hidden="true">*</span> Tous les champs sont obligatoires</p>

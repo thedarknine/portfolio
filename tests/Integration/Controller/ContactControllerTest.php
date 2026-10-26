@@ -50,6 +50,31 @@ final class ContactControllerTest extends WebTestCase
         $this->assertSelectorExists('.alert--success');
     }
 
+    // POST with the honeypot filled in — Fake success, no email sent
+    public function testHoneypotSubmitIsDroppedSilently(): void
+    {
+        $client = static::createClient();
+
+        $mailerMock = $this->createMock(MailerInterface::class);
+        $mailerMock->expects($this->never())->method('send');
+        static::getContainer()->set(MailerInterface::class, $mailerMock);
+
+        $client->request('POST', '/contact', [
+            'contact' => [
+                'name'     => 'Spam Bot',
+                'email'    => 'bot@example.com',
+                'subject'  => 'Offre exceptionnelle',
+                'message'  => 'Message de robot suffisamment long.',
+                'website'  => 'https://spam.example.com',
+                'security' => 'mocked-altcha-payload',
+            ],
+        ]);
+
+        $this->assertResponseRedirects('/contact');
+        $client->followRedirect();
+        $this->assertSelectorExists('.alert--success');
+    }
+
     // POST without data — Flash error, no redirection
     public function testEmptySubmitShowsErrorFlashAndStaysOnPage(): void
     {

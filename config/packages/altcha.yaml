@@ -7,10 +7,10 @@ altcha:
     counter_min: 5000
     counter_max: 10000
     timeout: 30.0
-    floating: true
+    floating: false
     overlay: false
-    use_stimulus: false
-    include_script: true
+    use_stimulus: true
+    include_script: false
     hide_logo: false
     hide_footer: false
 
