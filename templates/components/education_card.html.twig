@@ -1,28 +1,34 @@
-<div class="bg-surface-card text-on-surface-card mb-8 shadow-lg rounded-lg hover:translate-x-2 hover:-translate-y-2 hover:shadow-xl transition duration-500">
-    <div class="px-4 py-5 flex-auto w-full">
-        <div class="flex justify-between items-start mb-3">
-            <h3 class="text-2xl font-accent font-semibold text-nine-cyan-500 dark:text-nine-amber-500">{{ education.year }}</h3>
+{# One education entry (pages/education.html.twig) — see docs/style-guide.md § Education #}
+<article class="rounded-[14px] border border-border bg-panel p-6 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] motion-safe:hover:-translate-y-1 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
+    <div class="mb-4 flex items-start justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-3">
+            <p class="text-[26px] leading-none font-bold tracking-[-0.5px] text-timeline-year">{{ education.year }}</p>
             {% if education.mention is not empty %}
-            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-nine-amber-400/10 text-nine-amber-500">Mention {{ education.mention }}</span>
+            <span class="rounded-md bg-highlight px-2.5 py-0.5 font-mono text-[12px] font-medium text-on-highlight">Mention {{ education.mention }}</span>
             {% endif %}
         </div>
-
-        <div class="md:mr-10">
-            <img src="{{ absolute_url('images/education/' ~ education.school.logo) }}" class="w-20 float-end my-3" alt="{{ education.school.name }}">
-        </div>
-        <h4 class="text-xl font-accent font-semibold text-nine-blue-500 dark:text-nine-gray-200">{{ education.title }}</h4>
-        <p class="text-xs text-nine-blue-500 dark:text-nine-gray-400 mt-0.5">{{ education.school.name }} • <span class="text-xs">{{ education.school.city }} ({{ education.school.department|format_number({ min_integer_digit: '2' }) }})</span></p>
-
-        <div class="mt-4 pt-3 border-t border-nine-sand-200/50 dark:border-nine-gray-500/30 flex items-center gap-2 text-xs text-nine-blue-500/80 dark:text-nine-gray-400/80">
-            <span class="inline-block w-2 h-2 rounded-full bg-nine-cyan-500"></span>
-            <strong>{{ education.details }}</strong>
-        </div>
-
-        {% if education.speciality is not empty %}
-        <div class="flex items-center gap-2 text-xs text-nine-blue-500/80 dark:text-nine-gray-400/80">
-            <span class="inline-block w-2 h-2 rounded-full bg-nine-amber-400"></span>
-            Option {{ education.speciality }}
-        </div>
-        {% endif %}
+        <img class="logo-backdrop size-12 shrink-0 rounded-[10px] border border-border object-contain p-1.5" src="{{ asset('images/education/' ~ education.school.logo) }}" alt="{{ education.school.name }}" width="48" height="48" loading="lazy">
     </div>
-</div>
+
+    <h3 class="mb-1 text-xl leading-snug font-bold">{{ education.title }}</h3>
+    <p class="font-mono text-[13px] text-on-surface-muted">
+        {{ education.school.name }} · {{ education.school.city }} ({{ education.school.department|format_number({ min_integer_digit: 2 }) }})
+    </p>
+
+    {% if education.details is not empty or education.speciality is not empty %}
+    <ul class="mt-4 flex flex-col gap-1.5 border-t border-border pt-4 text-[15px]">
+        {% if education.details is not empty %}
+        <li class="flex items-baseline gap-2.5">
+            <span class="size-2 shrink-0 translate-y-[-1px] rounded-full bg-primary" aria-hidden="true"></span>
+            <span class="font-medium">{{ education.details }}</span>
+        </li>
+        {% endif %}
+        {% if education.speciality is not empty %}
+        <li class="flex items-baseline gap-2.5 text-on-surface-muted">
+            <span class="size-2 shrink-0 translate-y-[-1px] rounded-full bg-level-end" aria-hidden="true"></span>
+            <span>Option {{ education.speciality }}</span>
+        </li>
+        {% endif %}
+    </ul>
+    {% endif %}
+</article>

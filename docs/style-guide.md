@@ -243,9 +243,19 @@ Closing quote of inner pages (`components/page_quote.html.twig`), only when the 
 - One section per skill type, separated by a `border` rule. From 1024 px the type sits in a sticky 300 px column on
   the left (monospace index `01`, `h2`, description), the skills fill a grid of `minmax(240px, 1fr)` cards.
 - Skill card on `panel`: 44 px logo on a `surface` tile, name in bold, level label in `accent-text` monospace
-  (Expert from 8, Avancé from 6, Maîtrisé below), a 6 px level bar with the amber gradient (`level-start` at 40 % to `level-end`)
-  on `surface` (decorative, the label carries the meaning), and a monospace footer "pratique · duration", with "en cours" when the skill has no end year.
+  (Expert from 8, Avancé from 6, Maîtrisé below), a 6 px level bar with the amber gradient (`level-start` at 40 %
+  to `level-end`) on `surface` (decorative, the label carries the meaning), and a monospace footer
+  "pratique · duration", with "en cours" when the skill has no end year.
 - Same hover lift as the other cards; no entrance animation.
+
+### Education
+
+- Same section layout as Skills: professional then university training, each with a sticky 300 px column (index,
+  `h2`, the illustration from 1024 px only) and a list of cards up to 760 px wide.
+- Education card on `panel`: the year (26 px bold, `timeline-year`), an optional `highlight` chip "Mention …", the
+  school logo on the shared `.logo-backdrop` tile, the diploma as `h3`, school and place in monospace, then a
+  bordered footer with the certification (`primary` dot) and the option (`level-end` dot).
+- Same hover lift as the other cards.
 
 ### Status pill
 

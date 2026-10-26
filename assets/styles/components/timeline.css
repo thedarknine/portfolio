@@ -4,8 +4,8 @@
  * logo, joined by a dashed vertical line.
  * Reference: docs/style-guide.md § Experience timeline
  * ============================================================ */
-.experience-item__logo {
-    /* Neutral backdrop that works for both dark and white company logos */
+.logo-backdrop {
+    /* Neutral backdrop that works for both dark and white company and school logos */
     background-color: rgb(148 163 184 / 50%);
 }
 
