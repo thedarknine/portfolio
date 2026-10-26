@@ -6,6 +6,7 @@
 @import "./base/animations.css";
 @import "./components/theme-toggle.css";
 @import "./components/buttons.css";
+@import "./components/forms.css";
 @import "./components/header.css";
 @import "./components/hero.css";
 @import "./components/timeline.css";

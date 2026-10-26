@@ -99,6 +99,10 @@
     --color-timeline-year: #2687ab;
     --color-level-start: #ffaa00;
     --color-level-end: #f59e0b;
+    --color-field: #ffffff;
+    --color-field-border: #7d8a9c;
+    --color-danger: #b42318;
+    --color-danger-soft: #fdecea;
 }
 
 /* Safelist for Tailwind CSS classes used in templates */
@@ -153,4 +157,8 @@
     --color-status-live: #3fcf8e;
     --color-placeholder: #273548;
     --color-timeline-year: #3aa3c8;
+    --color-field: #152335;
+    --color-field-border: #6b7c93;
+    --color-danger: #ff8f85;
+    --color-danger-soft: #3a2430;
 }

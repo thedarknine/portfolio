@@ -74,6 +74,10 @@ Token names below are the proposed Tailwind v4 `@theme` names (`--color-*`).
 | `level-start` / `level-end` | Skill level bar gradient | `#ffaa00` / `#f59e0b` | same |
 | `surface-footer` | Footer background | `#172c49` | `#0b1a2c` |
 | `on-surface-footer` | Footer body text | `#b6c2d1` | `#b4bfcc` |
+| `field` | Form input background | `#ffffff` | `#152335` |
+| `field-border` | Form input border (3:1 against the card) | `#7d8a9c` | `#6b7c93` |
+| `danger` | Form errors, error alert text | `#b42318` | `#ff8f85` |
+| `danger-soft` | Error alert background | `#fdecea` | `#3a2430` |
 
 ### Rules
 
@@ -99,6 +103,9 @@ Token names below are the proposed Tailwind v4 `@theme` names (`--color-*`).
 | `on-band-muted` / `band` | 7.79 | 8.51 |
 | `on-highlight` / `highlight` | 9.65 | 9.65 |
 | `on-strong` / `strong` | 14.07 | 8.79 |
+| `field-border` / `panel` (non-text, 3:1) | 3.51 | 3.39 |
+| `danger` / `panel` | 6.57 | 6.55 |
+| `danger` / `danger-soft` | 5.75 | 6.45 |
 
 ## Typography
 
@@ -303,6 +310,29 @@ The legal notice has no photo hero and no quote, it stays sober:
 - Credited libraries are small `panel` tiles with the role in monospace on the right, two per row from 640 px.
 - Links in the text are underlined in `accent-text`; the Matomo opt-out widget sits in a `panel` card and inherits
   the theme colours. Styles live in `assets/styles/pages/legal.css`.
+
+### Contact
+
+- Two columns from 1024 px: on the left a sticky intro (monospace `contact` label, "Écrivez-moi" `h2`, the intro
+  text in muted colour, then the resource links as 44 px `panel` icon buttons under an "Ailleurs" label); on the
+  right the form in a `panel` card (720 px max, 40 px padding from 640 px).
+- Name and email share a row from 640 px; subject and message take the full width.
+- The card ends with a divider, the "Tous les champs sont obligatoires" note in monospace and the primary
+  "Envoyer" button with its paper-plane icon. The Altcha check stays in floating mode and opens on submit.
+
+### Forms
+
+Styles live in `assets/styles/components/forms.css`.
+
+- `.field`: label above the input, 8 px gap. Labels are 15 px medium; a required field shows an `accent-text`
+  asterisk hidden from screen readers (the `required` attribute carries the information).
+- `.field__input`: 48 px minimum height, 16 px text (no zoom on iOS), `field` background, `field-border` border,
+  10 px radius. Hover and focus switch the border to `accent-text`; focus adds a 3 px `accent-text` ring at 30 %.
+  Textareas start at 168 px and only resize vertically.
+- Errors: an invalid input gets `aria-invalid="true"`, a `danger` border and `aria-describedby` pointing to its
+  `.field__error` messages (alert-circle icon + text, 14 px, `danger`).
+- Flash messages use `.alert`: `.alert--success` on `chip` / `on-chip` with `role="status"`, `.alert--error` on
+  `danger-soft` / `danger` with `role="alert"`, both with a leading icon.
 
 ### Status pill
 

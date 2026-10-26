@@ -47,7 +47,7 @@ final class ContactControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/contact');
         $client->followRedirect();
-        $this->assertSelectorExists('.alert-success');
+        $this->assertSelectorExists('.alert--success');
     }
 
     // POST without data — Flash error, no redirection
@@ -63,7 +63,7 @@ final class ContactControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorExists('.text-nine-red-600');
+        $this->assertSelectorExists('.field__error');
         // Not 200 (should be 422 for unprocessable entity, since Symfony 6.2 it validates the form before processing)
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -81,11 +81,10 @@ final class ContactControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorExists('.text-nine-red-600');
+        $this->assertSelectorExists('.field__error');
         // Not 200 (should be 422 for unprocessable entity, since Symfony 6.2 it validates the form before processing)
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         $this->assertSelectorNotExists('[data-flash="success"]');
-        $this->assertSelectorExists('.text-nine-red-600');
-        $this->assertSelectorTextContains('.text-nine-red-600', 'Merci de compléter les champs.');
+        $this->assertSelectorTextContains('.alert--error', 'Merci de compléter les champs.');
     }
 }

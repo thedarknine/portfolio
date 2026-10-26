@@ -1,0 +1,108 @@
+/* ============================================================
+ * COMPOSANTS — Formulaires
+ * Reference: docs/style-guide.md § Forms
+ * ============================================================ */
+@layer components {
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .field__label {
+        font-family: var(--font-sans);
+        font-size: 15px;
+        font-weight: 500;
+        color: var(--color-on-surface);
+    }
+
+    .field__required {
+        margin-left: 2px;
+        color: var(--color-accent-text);
+    }
+
+    .field__input {
+        width: 100%;
+        min-height: 48px;
+        padding: 12px 16px;
+        font-family: var(--font-sans);
+        font-size: 16px;
+        line-height: 1.5;
+        color: var(--color-on-surface);
+        background-color: var(--color-field);
+        border: 1px solid var(--color-field-border);
+        border-radius: 10px;
+        transition:
+            border-color 0.2s ease-out,
+            box-shadow 0.2s ease-out;
+
+        &::placeholder {
+            color: var(--color-on-surface-muted);
+            opacity: 1;
+        }
+
+        &:hover {
+            border-color: var(--color-accent-text);
+        }
+
+        &:focus-visible {
+            outline: none;
+            border-color: var(--color-accent-text);
+            box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent-text) 30%, transparent);
+        }
+
+        &[aria-invalid="true"] {
+            border-color: var(--color-danger);
+        }
+    }
+
+    textarea.field__input {
+        min-height: 168px;
+        resize: vertical;
+    }
+
+    .field__error {
+        display: flex;
+        align-items: flex-start;
+        gap: 6px;
+        font-size: 14px;
+        color: var(--color-danger);
+
+        svg {
+            width: 16px;
+            height: 16px;
+            margin-top: 3px;
+            flex-shrink: 0;
+        }
+    }
+
+    /* Flash messages above a form */
+    .alert {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 14px 18px;
+        font-size: 15px;
+        border: 1px solid;
+        border-radius: 12px;
+
+        svg {
+            width: 20px;
+            height: 20px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+    }
+
+    .alert--success {
+        color: var(--color-on-chip);
+        background-color: var(--color-chip);
+        border-color: color-mix(in srgb, var(--color-on-chip) 30%, transparent);
+    }
+
+    .alert--error {
+        color: var(--color-danger);
+        background-color: var(--color-danger-soft);
+        border-color: color-mix(in srgb, var(--color-danger) 30%, transparent);
+    }
+}
