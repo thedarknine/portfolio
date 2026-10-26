@@ -246,6 +246,25 @@ Closing quote of inner pages (`components/page_quote.html.twig`), only when the 
 - Card footer: the stack as 32 px logos (six shown, a `+n` chip reveals the rest) and the detail pages as `chip`
   links.
 
+### Case studies
+
+Experience detail pages (`pages/experience/*.html.twig`) extend `layout_case_study.html.twig`, which keeps the
+photo hero and the quote of the layout and adds:
+
+- A sticky context column from 1024 px (300 px): a `panel` card with the role in monospace `accent-text`, the
+  experience subtitle, then company, period and duration as monospace key/value rows; links to the other case
+  studies of the same experience; a "Retour à mon parcours" link to the experience anchor on the timeline.
+- The article on the right (760 px max), sections split by a border and 56 px of space.
+- Building blocks, styled in `assets/styles/pages/experience.css`:
+  - `.case-callout`: "Le défi", `panel` card with a 3 px `accent-text` left border.
+  - `.case-step`: a step of the approach, 2 px left border in `accent-text` at 35 %.
+  - `.case-card`: highlighted `panel` card ("Impact mesurable").
+  - `.problem-quote`: the problem statement on `chip`, 3 px `accent-text` left border, italic.
+  - `.case-tools`: tool logos as 44 px `panel` tiles.
+  - `.visual-grid` / `.visual-item` / `.step-visual`: screenshots with a 12 px radius and a `border` outline,
+    `min(100%, 320px)` columns so nothing overflows on phones, captions in `.case-caption` (14 px, muted).
+- Icons use `accent-text`; the crossed icons listing pain points use `danger`.
+
 ### Skills
 
 - One section per skill type, separated by a `border` rule. From 1024 px the type sits in a sticky 300 px column on
