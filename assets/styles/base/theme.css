@@ -97,6 +97,8 @@
     --color-status-live: #1f9d6b;
     --color-placeholder: #dfe5ec;
     --color-timeline-year: #2687ab;
+    --color-level-start: #ffaa00;
+    --color-level-end: #f59e0b;
 }
 
 /* Safelist for Tailwind CSS classes used in templates */

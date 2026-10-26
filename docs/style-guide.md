@@ -71,6 +71,7 @@ Token names below are the proposed Tailwind v4 `@theme` names (`--color-*`).
 | `status-live` | "Currently at…" dot | `#1f9d6b` | `#3fcf8e` |
 | `placeholder` | Image placeholders, skeletons | `#dfe5ec` | `#273548` |
 | `timeline-year` | Start years in the experience timeline (large text) | `#2687ab` | `#3aa3c8` |
+| `level-start` / `level-end` | Skill level bar gradient | `#ffaa00` / `#f59e0b` | same |
 | `surface-footer` | Footer background | `#172c49` | `#0b1a2c` |
 | `on-surface-footer` | Footer body text | `#b6c2d1` | `#b4bfcc` |
 
@@ -236,6 +237,15 @@ Closing quote of inner pages (`components/page_quote.html.twig`), only when the 
 - Achievements in a grid of `minmax(320px, 1fr)` columns: bold title, muted text. No emoji.
 - Card footer: the stack as 32 px logos (six shown, a `+n` chip reveals the rest) and the detail pages as `chip`
   links.
+
+### Skills
+
+- One section per skill type, separated by a `border` rule. From 1024 px the type sits in a sticky 300 px column on
+  the left (monospace index `01`, `h2`, description), the skills fill a grid of `minmax(240px, 1fr)` cards.
+- Skill card on `panel`: 44 px logo on a `surface` tile, name in bold, level label in `accent-text` monospace
+  (Expert from 8, Avancé from 6, Maîtrisé below), a 6 px level bar with the amber gradient (`level-start` at 40 % to `level-end`)
+  on `surface` (decorative, the label carries the meaning), and a monospace footer "pratique · duration", with "en cours" when the skill has no end year.
+- Same hover lift as the other cards; no entrance animation.
 
 ### Status pill
 
