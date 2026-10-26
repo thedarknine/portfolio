@@ -11,7 +11,9 @@ Découvrez mon parcours professionnel : {{ page_manager.getNbYearsExperience() }
     <section class="mx-auto max-w-[1140px] px-6 pt-18 pb-8" aria-label="Mes expériences">
         <ol class="experience-timeline relative flex flex-col gap-7">
             {% for experience in experiences_list %}
-            {{ include('components/experience_item.html.twig', { experience: experience }) }}
+            <li id="{{ experience.slug }}" class="experience-item scroll-mt-28 md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
+                {{ include('components/experience_item.html.twig', { experience: experience }) }}
+            </li>
             {% endfor %}
         </ol>
     </section>

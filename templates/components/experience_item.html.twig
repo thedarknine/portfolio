@@ -1,10 +1,8 @@
-{# One experience of the timeline (pages/experience.html.twig) — see docs/style-guide.md § Experience timeline #}
-<li id="{{ experience.slug }}" class="experience-item scroll-mt-28 md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
-    <div class="experience-item__rail mb-3 flex items-center gap-4 md:mb-0 md:flex-col md:gap-2.5">
-        <span class="text-[30px] leading-none font-bold tracking-[-0.5px] text-timeline-year">{{ experience.startDate|date('Y') }}</span>
-        <img class="experience-item__logo size-16 rounded-xl border border-border object-contain p-2" src="{{ asset('images/company/' ~ experience.company.logo) }}" alt="{{ experience.company.name }}" width="64" height="64" loading="lazy">
-    </div>
-    <article class="min-w-0 rounded-[14px] border border-border bg-panel p-6 md:p-7">
-        {{ include('components/experience_details.html.twig', { experience: experience }) }}
-    </article>
-</li>
+{# Content of one timeline entry, wrapped in its list item by pages/experience.html.twig — see docs/style-guide.md § Experience timeline #}
+<div class="experience-item__rail mb-3 flex items-center gap-4 md:mb-0 md:flex-col md:gap-2.5">
+    <span class="text-[30px] leading-none font-bold tracking-[-0.5px] text-timeline-year">{{ experience.startDate|date('Y') }}</span>
+    <img class="experience-item__logo size-16 rounded-xl border border-border object-contain p-2" src="{{ asset('images/company/' ~ experience.company.logo) }}" alt="{{ experience.company.name }}" width="64" height="64" loading="lazy">
+</div>
+<article class="min-w-0 rounded-[14px] border border-border bg-panel p-6 md:p-7">
+    {{ include('components/experience_details.html.twig', { experience: experience }) }}
+</article>

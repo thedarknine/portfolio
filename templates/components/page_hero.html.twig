@@ -17,7 +17,7 @@
                 {% endif %}
                 <li class="shrink-0 {{ not loop.last ? 'hidden sm:block' }}">
                     {# Shown as a slug, announced with its real label #}
-                    <a href="{{ breadcrumb[level].url }}" aria-label="{{ breadcrumb[level].label }}" title="{{ breadcrumb[level].label }}">{{ loop.first ? breadcrumb[level].url|split('#')|first|trim('/') : breadcrumb[level].label|lower|replace({' ':'-'}) }}</a>
+                    <a href="{{ breadcrumb[level].url }}" aria-label="{{ breadcrumb[level].label }}" title="{{ breadcrumb[level].label }}">{{ loop.first ? breadcrumb[level].url|split('#')|first|trim('/') : breadcrumb[level].label|lower|replace({ ' ': '-' }) }}</a>
                 </li>
                 {% endfor %}
                 <li class="page-hero__sep shrink-0" aria-hidden="true">/</li>
