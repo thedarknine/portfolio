@@ -1,0 +1,24 @@
+{#
+    Photo grid of one arcade build step (pages/arcade.html.twig) — see docs/style-guide.md § Arcade.
+    Params: slug (image folder), items (file names), alt (base alternative text), label (optional sub-part title).
+#}
+{% if items is not empty %}
+<div class="mt-6">
+    {% if label is defined and label %}
+    <h3 class="mb-3 font-mono text-[13px] text-on-surface-muted">[{{ label }}]</h3>
+    {% endif %}
+    <ul class="pswp9-lightbox grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {% for item in items %}
+        <li>
+            <a
+                class="pswp9-link group block overflow-hidden rounded-[12px] border border-border bg-placeholder"
+                href="{{ asset('images/arcade/' ~ slug ~ '/' ~ item) }}"
+                target="_blank"
+                aria-label="Agrandir : {{ alt }}, photo {{ loop.index }}">
+                <img class="block aspect-square w-full object-cover transition duration-500 ease-out motion-safe:group-hover:scale-[1.04]" src="{{ asset('images/arcade/' ~ slug ~ '/' ~ item) }}" alt="{{ alt }}, photo {{ loop.index }}" loading="lazy">
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}

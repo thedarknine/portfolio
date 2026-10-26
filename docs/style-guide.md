@@ -277,6 +277,18 @@ Créations and Photos share `components/gallery_section.html.twig`:
 - Hover: a slight zoom of the image (`motion-safe`), and for photos the caption fades in on a night-blue gradient.
 - Every link has an `aria-label` ("Agrandir : …"), every image an `alt` built from the caption or the type name.
 
+### Arcade
+
+The arcade page is a build log, not a plain gallery:
+
+- Introduction in 18 px muted text, with the mascot illustration on the right (above the text on phones).
+- "This is it!": the finished bartop on a `band` section, square thumbnails in the shared gallery grid.
+- "Les étapes de construction": an ordered timeline reusing the experience rail (`.step-timeline`): the rail shows
+  "étape" in monospace and the step number (40 px bold, `timeline-year`), the content holds the `h3`, the original
+  text and the step photos (`components/arcade_gallery.html.twig`). Sub-parts of a step get a monospace label in
+  brackets, e.g. `[Side Panels]`.
+- Every grid opens in the PhotoSwipe lightbox, one gallery per grid.
+
 ### Status pill
 
 Pill on `panel` with a `border`, an 8 px `status-live` dot and a monospace label ("Actuellement Technical Product
@@ -370,5 +382,7 @@ Items in the current code that this guide retires:
   `text-blueGray-500`, `font-heading`, `d-inline`, `list-unstyled`.
 - Brand gradients: `.nine-bg-gradient`, `.nine-border-gradient`, `.card:hover` border image.
 - `nine-*` palette tokens that no semantic token references once the migration is done.
+- The legacy `--font-normal` and `--font-accent` theme variables: until they go, the Tailwind `font-normal` class
+  sets the Oxygen font family instead of the font weight, so do not use it in new templates.
 - The burger and theme scripts in `app.js`, replaced by Stimulus controllers, and the `.nine-menu` rule whose
   `slide` animation is not defined anywhere.
