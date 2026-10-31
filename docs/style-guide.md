@@ -377,6 +377,28 @@ Styles live in `assets/styles/components/forms.css`.
   bottom row and the button of the legal notice.
 - The banner appears with a short slide-up, skipped when the visitor prefers reduced motion.
 
+### Error pages
+
+`layout_error.html.twig`, used by the 404, 403 and generic (500) templates in `templates/bundles/TwigBundle/Exception/`.
+Each template only sets an `error` hash (code, label, title, lead, command, output, `retry` for the 500).
+
+- The regular header, mobile menu included, then the content on the page background, then a short footer.
+- Intro on the left (`flex: 1 1 440px`): a `highlight` chip with the code and the label in monospace `accent-text`,
+  the title as `h1` (`clamp(40px, 6vw, 56px)`), the lead in 18 px muted text, then two buttons: primary "Retour à
+  l'accueil" and secondary "Me contacter"; on the 500, primary "Réessayer" (reloads the URL) and secondary home.
+- A terminal on the right, below the intro on phones: `#0b1a2c` card (`#0b1726` with a `border` outline in dark mode),
+  16 px radius, the profile card shadow, a monospace title bar (`nine@carolinenoyer.fr`, the code). It replays the
+  request with the real path (`cd ~/la-page`, `cat` for the 500), the error in `#ff8f85`, then `ls ~` listing the
+  root pages as underlined `#4cc3e6` links, and a static `#3aa3c8` cursor. Same palette as the shell breadcrumb.
+- "Vous cherchiez peut-être": three cards in the shared card style (parcours, projets, contact), separated from the
+  intro by a `border` rule.
+- Short footer on `surface-footer`, monospace 13 px: signature with the site version tag, "Gérer les cookies", then
+  the resource links as 44 px icon buttons.
+- `noindex`, no page hero, no quote. The layout must render without the database: `PageService` falls back to
+  `App\Service\FallbackNavigation` when a navigation query fails, so header, menu and footer still show on a 500.
+  Keep that class in line with the published pages and resource links.
+- Mockups: design canvas "Portfolio — Pistes visuelles", artboards `Erreur — terminal + cartes`.
+
 ### Status pill
 
 Pill on `panel` with a `border`, an 8 px `status-live` dot and a monospace label ("Actuellement Technical Product
