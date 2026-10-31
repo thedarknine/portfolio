@@ -67,16 +67,16 @@ services:
         image: adminneoorg/adminneo:latest
         container_name: ${PROJECT_SLUG}-adm
         ports:
-          - "8089:8080"
+            - "8089:8080"
         depends_on:
-          - db
+            - db
         restart: unless-stopped
         environment:
-          - NEO_COLOR_VARIANT=blue
-          - NEO_DEFAULT_SERVER=db
-          - NEO_DEFAULT_DATABASE=${DB_NAME}
+            - NEO_COLOR_VARIANT=blue
+            - NEO_DEFAULT_SERVER=db
+            - NEO_DEFAULT_DATABASE=${DB_NAME}
         networks:
-          - thedarknine-ntwk
+            - thedarknine-ntwk
 
     mailpit:
         image: axllent/mailpit:latest
