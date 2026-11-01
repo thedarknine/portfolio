@@ -78,9 +78,6 @@ class ResourceLinkRepositoryTest extends KernelTestCase
         // 3. Assertions
         $this->assertCount(3, $results);
 
-        // Validate that Doctrine did not hydrate objects (expected return : array)
-        $this->assertIsArray($results[0], 'Each row must be an associative array.');
-
         // Check sorting ASC on the 'position' field (GitHub [1] -> LinkedIn [2] -> Site Externe [3])
         $this->assertSame('GitHub', $results[0]['title'], 'The link positioned at 1 (GitHub) must be first.');
         $this->assertSame('LinkedIn', $results[1]['title'], 'The link positioned at 2 (LinkedIn) must be second.');

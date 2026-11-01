@@ -62,9 +62,6 @@ class PageInfoRepositoryTest extends KernelTestCase
         // 3. Assertions
         $this->assertCount(3, $results);
 
-        // Verify that the results are arrays and not objects
-        $this->assertIsArray($results[0], 'The result of getArrayResult should be a raw array');
-
         // Validate the ASC order based on position (Projets [pos 1] -> Arcade [pos 2] -> Photos [pos 3])
         $this->assertSame('projets', $results[0]['slug'], 'The page "Projets" (position 1) should be first.');
         $this->assertSame('arcade', $results[1]['slug'], 'The page "Arcade" (position 2) should be second.');

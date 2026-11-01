@@ -24,9 +24,7 @@ class SchoolTest extends TestCase
         // 1. Establish relation in both directions
         $education->setSchool($school);
 
-        if (method_exists($school, 'addEducation')) {
-            $school->addEducation($education);
-        }
+        $school->addEducation($education);
 
         $this->assertSame($school, $education->getSchool());
 
