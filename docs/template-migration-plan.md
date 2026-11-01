@@ -24,25 +24,28 @@ The repository is kept as is (history, branches, GitHub settings); the template 
 
 ### 0. Prepare
 
-- [ ] `cno_redesign` merged into `develop` (and deployed if wanted)
-- [ ] `git switch develop && git pull && git switch -c cno_template`
-- [ ] Note the current state as a reference: `make qa` output, local URL working, prod build working
+- [x] `cno_redesign` merged into `develop` (and deployed if wanted)
+- [x] `git switch develop && git pull && git switch -c cno_template`
+- [x] Note the current state as a reference: `make qa` output, local URL working, prod build working
 
 ### 1. Docker
 
 Template files: `.docker/php.Dockerfile`, `.docker/install-tools.sh`, `.docker/php/php.ini`,
 `.docker/nginx/default.conf`, `docker-compose.yaml`, `docker-compose.dev.yaml`, `docker-compose.ci.yaml`.
 
-- [ ] Replace `.docker/php.dockerfile` with the template `php.Dockerfile` (`PHP_VERSION` arg, `install-tools.sh`, UID/GID)
-- [ ] Add to `install-tools.sh` what the portfolio needs and the template does not install:
+- [x] Replace `.docker/php.dockerfile` with the template `php.Dockerfile` (`PHP_VERSION` arg, `install-tools.sh`, UID/GID)
+- [x] Add to `install-tools.sh` what the portfolio needs and the template does not install:
   `chromium` and `chromium-chromedriver` (pa11y / unlighthouse / UI tests), `make` only while the Makefile exists,
   extensions used by the portfolio (`gd`, `zip`, `xsl`, `intl`… compare both extension lists)
-- [ ] Compare the two `default.conf` (nginx) and keep portfolio-specific rules
-- [ ] Split `docker-compose.yml` into base / dev / ci following the template; services renamed `app`, `engine`, `db`, `adm`, `mailpit`
-- [ ] Keep the MySQL config (`.docker/mysql/my.cnf`) and the data / log volumes; check the MySQL version (template: 9.7)
-- [ ] Add `PROJECT_SLUG=portfolio` and ports (`APP_PORT`, `DB_PORT`, `ADM_PORT`, `MAIL_PORT`) to `.env`
-- [ ] Update `DATABASE_URL` host (service name) and `MAILER_DSN` (Mailpit) in `.env.dev`
-- [ ] Rebuild, start, import a dump, check the site, admin and 2FA login
+- [x] Compare the two `default.conf` (nginx) and keep portfolio-specific rules
+- [x] Split `docker-compose.yml` into base / dev / ci following the template; services renamed `app`, `engine`, `db`, `adm`, `mailpit`
+- [x] Keep the MySQL config (`.docker/mysql/my.cnf`) and the data / log volumes; check the MySQL version (template: 9.7)
+  → switched to MariaDB 11.8 to match production (`MARIADB_VERSION`, `serverVersion=11.8.9-MariaDB`);
+  test user created by `.docker/mysql/sql/01-test-user.sql`
+- [x] Add `PROJECT_SLUG=portfolio` and ports (`APP_PORT`, `DB_PORT`, `ADM_PORT`, `MAIL_PORT`) to `.env`
+  → `.env` is now versioned (replaces `.env.sample`), secrets moved to `.env.local`
+- [x] Update `DATABASE_URL` host (service name) and `MAILER_DSN` (Mailpit) in `.env.dev`
+- [x] Rebuild, start, import a dump, check the site, admin and 2FA login
 - Commit: `build(docker): align docker setup with symfony-docker-template`
 
 ### 2. Tool configuration layout

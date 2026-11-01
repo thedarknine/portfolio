@@ -10,7 +10,7 @@ export LC_ALL := C.UTF-8
 # REMOTE_HOST - Remote server hostname
 # REMOTE_SSH_KEY - Path to SSH private key
 # REMOTE_PORT - SSH port (default: 22)
-# DB_ROOT_PASSWORD - Database root password
+# DB_ROOT_PASS - Database root password
 # DB_NAME - Database name
 
 MAKEFLAGS += --no-print-directory
@@ -31,6 +31,7 @@ $(error GNU Make >= $(MIN_MAKE_VERSION) required. Current is $(MAKE_VERSION). On
 endif
 
 -include .env
+-include .env.local
 ENVIRONMENT ?= dev
 PROJECT_NAME ?= Portfolio
 
@@ -48,7 +49,7 @@ TTY_FLAG := $(shell test -t 0 && echo "-it" || echo "-T")
 DOCKER_APP_SERVICE := app
 DOCKER_DB_SERVICE := db
 DOCKER_NGINX_SERVICE := engine
-DOCKER_PORTS := 8000 3306 8088 4444
+DOCKER_PORTS := $(APP_PORT) $(DB_PORT) $(ADM_PORT) $(MAIL_PORT) $(CHROME_PORT)
 
 #= GLOBAL VARIABLES ===================================================
 PROJECT_ROOT 		:= $(shell pwd)
@@ -391,7 +392,7 @@ check-env: ## Check .env file
 	display_subtitle "🔎 Checking .env file..."
 	
 	if [ ! -f .env ]; then
-		display_error ".env file is missing. Please create it from .env.sample."
+		display_error ".env file is missing. It is versioned: restore it with git checkout .env."
 		$(MAKE) _fatal msg=".env file is missing."
 	fi
 	display_success ".env file exists."
@@ -593,7 +594,7 @@ cs-yaml: ## Validate YAML files
 	display_subtitle "🔭 Validate YAML files from config directory..."
 
 	$(SYMFONY) "lint:yaml" config/
-	$(DC_EXEC) yamllint -c .tools/yamllint.yaml .tools/ config/ docker-compose.yml
+	$(DC_EXEC) yamllint -c .tools/yamllint.yaml .tools/ config/ docker-compose.yaml docker-compose.dev.yaml docker-compose.ci.yaml
 	display_success "YAML linting completed."
 
 .PHONY: cs-twig
@@ -768,6 +769,7 @@ test: ## Run PHPUnit tests without UI tests
 	$(SYMFONY) "app:generate-fixtures" --group=test
 	
 	display_subtitle "🎬 Preparing test database..."
+	$(SYMFONY) "doctrine:database:create" --env=test --if-not-exists
 	- $(SYMFONY) "doctrine:schema:drop" --env=test --force --full-database
 	$(SYMFONY) "doctrine:schema:update" --env=test --force
 	$(SYMFONY) "doctrine:fixtures:load" --env=test --group=test --no-interaction
@@ -865,7 +867,7 @@ db-dump: ## Dump database (FILES_CLEAN=1 to clean previous)
 	if [ "$(FILES_CLEAN)" = "1" ]; then
 		rm -f $(EXPORT_DIR)/*.sql
 	fi
-	$(DC) exec -i $(DOCKER_DB_SERVICE) mysqldump -uroot -p$(DB_ROOT_PASSWORD) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE)
+	$(DC) exec -i $(DOCKER_DB_SERVICE) mariadb-dump -uroot -p$(DB_ROOT_PASS) $(DB_NAME) > $(EXPORT_DIR)/$(SQL_FILE)
 	display_success "Database dumped to: $${GREEN}$(EXPORT_DIR)/$(SQL_FILE)$${RESET}"
 
 .PHONY: deploy

@@ -1,0 +1,83 @@
+# Development services, added on top of docker-compose.yaml through COMPOSE_FILE in .env.
+# In production, set COMPOSE_FILE=docker-compose.yaml so these services are not started.
+services:
+  app:
+    build:
+      args:
+        # On Linux (and in CI), the bind-mounted project belongs to the host user: www-data gets
+        # the same uid/gid so PHP can write vendor/, var/... Defaults to 82, fine with Docker Desktop.
+        - UID=${HOST_UID:-82}
+        - GID=${HOST_GID:-82}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    # Portfolio: MariaDB, same engine and version as production (Hostinger)
+    image: mariadb:${MARIADB_VERSION:-11.8}
+    container_name: ${PROJECT_SLUG:-portfolio}-db
+    restart: unless-stopped
+    environment:
+      - MARIADB_ROOT_PASSWORD=${DB_ROOT_PASS}
+      - MARIADB_DATABASE=${DB_NAME}
+      - MARIADB_USER=${DB_USER}
+      - MARIADB_PASSWORD=${DB_PASS}
+    ports:
+      - "${DB_PORT:-3306}:3306"
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    networks:
+      - app-network
+    # Portfolio: data, logs, init scripts and server config are bind-mounted from .docker/
+    volumes:
+      - ./.docker/mysql/data:/var/lib/mysql
+      - ./.docker/volumes/logs/mysql:/var/log/mysql
+      - ./.docker/mysql/sql:/docker-entrypoint-initdb.d
+      - ./.docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  adm:
+    image: adminneoorg/adminneo:latest
+    container_name: ${PROJECT_SLUG:-portfolio}-adm
+    ports:
+      - "${ADM_PORT:-8089}:8080"
+    depends_on:
+      - db
+    restart: unless-stopped
+    environment:
+      - NEO_COLOR_VARIANT=blue
+      - NEO_DEFAULT_SERVER=db
+      - NEO_DEFAULT_DATABASE=${DB_NAME}
+    networks:
+      - app-network
+
+  # Catches every email sent by the application: web UI on MAIL_PORT, SMTP on mailpit:1025
+  mailpit:
+    image: axllent/mailpit:latest
+    container_name: ${PROJECT_SLUG:-portfolio}-mailpit
+    restart: unless-stopped
+    ports:
+      - "${MAIL_PORT:-8025}:8025"
+    environment:
+      - MP_SMTP_AUTH_ACCEPT_ANY=1
+      - MP_SMTP_AUTH_ALLOW_INSECURE=1
+    networks:
+      - app-network
+
+  # Portfolio: Selenium Chromium for Panther UI tests (tests/UI)
+  chrome:
+    image: seleniarm/standalone-chromium:latest
+    container_name: ${PROJECT_SLUG:-portfolio}-chrome
+    restart: unless-stopped
+    volumes:
+      - /dev/shm:/dev/shm # Avoid Chrome memory crashes
+    ports:
+      - "${CHROME_PORT:-4444}:4444"
+    networks:
+      - app-network

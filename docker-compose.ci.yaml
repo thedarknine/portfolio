@@ -1,0 +1,9 @@
+# CI only (set in COMPOSE_FILE by .github/workflows/ci.yml): stores the image layers in the
+# GitHub Actions cache, so the app image is only rebuilt when the Dockerfile or its scripts change.
+services:
+  app:
+    build:
+      cache_from:
+        - type=gha,scope=app
+      cache_to:
+        - type=gha,scope=app,mode=max

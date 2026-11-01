@@ -12,6 +12,8 @@ source "$SCRIPT_DIR/utils.sh"
 if [ -f "$PROJECT_ROOT/.env" ]; then
     set +u # Désactiver la vérification des variables non-définies temporairement
     source "$PROJECT_ROOT/.env"
+    # shellcheck source=/dev/null
+    [ -f "$PROJECT_ROOT/.env.local" ] && source "$PROJECT_ROOT/.env.local"
     set -u
 else
     display_error ".env file not found at $PROJECT_ROOT/.env"
