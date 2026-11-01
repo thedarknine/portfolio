@@ -1,0 +1,66 @@
+{% extends 'layout.html.twig' %}
+
+{# Experience case study (pages/experience/*) — see docs/style-guide.md § Case studies #}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('styles/pages/experience.css') }}">
+{% endblock %}
+
+{% block body %}
+{% set duration = experience.duration %}
+{% set other_case_studies = experience.links|filter(link => link.type.value == 'detail' and link.page.slug != current_page.slug) %}
+<div class="font-sans text-base leading-relaxed text-on-surface">
+    <div class="mx-auto flex max-w-[1240px] flex-col gap-10 px-6 py-16 lg:flex-row lg:gap-14 lg:py-18">
+        <aside class="lg:sticky lg:top-28 lg:w-[300px] lg:shrink-0 lg:self-start" aria-label="Contexte">
+            <div class="rounded-[14px] border border-border bg-panel p-5">
+                <p class="mb-3 font-mono text-[13px] text-on-surface-muted">contexte</p>
+                <p class="font-mono text-[13px] text-accent-text">{{ experience.title }}</p>
+                <p class="mb-3 text-[20px] leading-[1.25] font-bold">{{ experience.subtitle }}</p>
+                <dl class="flex flex-col gap-2 border-t border-border pt-3 text-[15px]">
+                    <div class="flex justify-between gap-4">
+                        <dt class="font-mono text-[13px] leading-[1.9] text-on-surface-muted">chez</dt>
+                        <dd class="text-right">{{ experience.company.name }}</dd>
+                    </div>
+                    <div class="flex justify-between gap-4">
+                        <dt class="font-mono text-[13px] leading-[1.9] text-on-surface-muted">période</dt>
+                        <dd class="text-right">
+                            {% if experience.endDate is null %}Depuis {{ experience.startDate|date('m/Y') }}{% else %}{{ experience.startDate|date('m/Y') }} → {{ experience.endDate|date('m/Y') }}{% endif %}
+                        </dd>
+                    </div>
+                    <div class="flex justify-between gap-4">
+                        <dt class="font-mono text-[13px] leading-[1.9] text-on-surface-muted">durée</dt>
+                        <dd class="text-right">
+                            {%- if duration.nbYears > 0 %}{{ duration.nbYears }} an{{ duration.nbYears > 1 ? 's' }}{% endif %}
+                            {%- if duration.nbMonths != 0 %}{{ duration.nbYears > 0 ? ' et ' }}{{ duration.nbMonths }} mois{% endif -%}
+                        </dd>
+                    </div>
+                </dl>
+            </div>
+
+            {% if other_case_studies is not empty %}
+            <p class="mt-8 mb-3 font-mono text-[13px] text-on-surface-muted">Sur la même mission</p>
+            <ul class="flex flex-col gap-2">
+                {% for link in other_case_studies %}
+                <li>
+                    <a class="flex min-h-11 items-center justify-between gap-3 rounded-[10px] border border-border bg-panel px-4 py-2 text-[15px] transition-colors hover:border-accent-text hover:text-accent-text" href="{{ path('app_experience_slug', { job: experience.slug, slug: link.page.slug }) }}">
+                        {{ link.title|default(link.page.title) }}
+                        {{ ux_icon('hugeicons:arrow-right-02', { class: 'size-4 shrink-0', 'aria-hidden': 'true' }) }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <a class="mt-6 inline-flex min-h-11 items-center gap-2 font-medium text-accent-text hover:underline" href="{{ path('app_experience') }}#{{ experience.slug }}">
+                {{ ux_icon('hugeicons:arrow-left-02', { class: 'size-4', 'aria-hidden': 'true' }) }}
+                Retour à mon parcours
+            </a>
+        </aside>
+
+        <article class="case-study min-w-0 max-w-[760px] flex-1">
+            {% block case_study %}{% endblock %}
+        </article>
+    </div>
+</div>
+{% endblock %}

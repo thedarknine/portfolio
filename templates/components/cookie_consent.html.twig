@@ -1,0 +1,74 @@
+{# Cookie consent banner and preferences — see docs/style-guide.md § Cookie consent #}
+<div
+    {{ stimulus_controller('consent', {
+        matomoUrl: app.environment == 'prod' ? 'https://analytics.carolinenoyer.fr/' : '',
+        matomoSiteId: '1',
+    }) }}>
+    <section
+        class="cookie-banner"
+        aria-label="Gestion des cookies"
+        data-consent-target="banner"
+        hidden>
+        <div class="cookie-banner__card">
+            <div class="min-w-0 flex-1">
+                <p class="mb-1 font-mono text-[13px] text-accent-text" aria-hidden="true">cookies.yaml</p>
+                <p class="text-[15px] leading-relaxed">
+                    Ce site utilise des cookies techniques indispensables à son fonctionnement et, avec votre accord,
+                    Matomo pour mesurer son audience de façon anonyme.
+                    <a class="cookie-banner__link" href="{{ path('app_legal') }}#cookies">En savoir plus</a>
+                </p>
+            </div>
+            <div class="cookie-banner__actions">
+                <button type="button" class="cookie-banner__customize" data-action="consent#openPreferences">Personnaliser</button>
+                <button type="button" class="btn btn--outline" data-action="consent#refuseAll">Tout refuser</button>
+                <button type="button" class="btn btn--outline" data-action="consent#acceptAll">Tout accepter</button>
+            </div>
+        </div>
+    </section>
+
+    <dialog
+        class="cookie-dialog"
+        aria-labelledby="cookie-dialog-title"
+        data-consent-target="dialog"
+        data-action="click->consent#closeOnBackdrop">
+        <div class="cookie-dialog__panel">
+            <div class="mb-6 flex items-start justify-between gap-4">
+                <div>
+                    <p class="mb-1 font-mono text-[13px] text-accent-text">cookies.yaml</p>
+                    <h2 id="cookie-dialog-title" class="text-[24px] leading-[1.2] font-bold tracking-[-0.4px]">Vos préférences</h2>
+                </div>
+                <button type="button" class="cookie-dialog__close" data-action="consent#closePreferences" aria-label="Fermer">
+                    {{ ux_icon('hugeicons:cancel-01', { 'aria-hidden': 'true' }) }}
+                </button>
+            </div>
+
+            <ul class="flex flex-col gap-3">
+                <li class="cookie-option">
+                    <div class="min-w-0 flex-1">
+                        <p class="font-medium">Cookies techniques</p>
+                        <p class="text-[14px] text-on-surface-muted">Thème clair ou sombre, sécurité du formulaire de contact. Indispensables au site.</p>
+                    </div>
+                    <span class="font-mono text-[13px] text-on-surface-muted">Toujours actifs</span>
+                </li>
+                <li class="cookie-option">
+                    <div class="min-w-0 flex-1">
+                        <label for="cookie-analytics" class="font-medium">Mesure d’audience</label>
+                        <p id="cookie-analytics-help" class="text-[14px] text-on-surface-muted">Matomo auto-hébergé, adresses IP anonymisées, aucune donnée partagée avec des tiers.</p>
+                    </div>
+                    <input
+                        id="cookie-analytics"
+                        class="cookie-switch"
+                        type="checkbox"
+                        role="switch"
+                        aria-describedby="cookie-analytics-help"
+                        data-consent-target="analytics">
+                </li>
+            </ul>
+
+            <div class="mt-8 flex flex-wrap justify-end gap-3">
+                <button type="button" class="btn btn--secondary" data-action="consent#closePreferences">Annuler</button>
+                <button type="button" class="btn btn--primary" data-action="consent#savePreferences">Enregistrer mes choix</button>
+            </div>
+        </div>
+    </dialog>
+</div>

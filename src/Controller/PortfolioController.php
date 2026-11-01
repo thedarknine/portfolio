@@ -86,11 +86,12 @@ final class PortfolioController extends AbstractController
 
         return $this->render('pages/experience/' . $slug . '.html.twig', [
             'current_page' => $page,
+            'experience'   => $experience,
             'breadcrumb'   => [
                 'level1' => [
                     'url'   => $this->generateUrl('app_experience'),
                     'icon'  => 'hugeicons:briefcase-04',
-                    'label' => 'Experience',
+                    'label' => 'Expérience',
                 ],
                 'level2' => [
                     'url'   => $this->generateUrl('app_experience') . '#' . $job,

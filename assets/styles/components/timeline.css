@@ -1,0 +1,36 @@
+/* ============================================================
+ * COMPOSANTS — Experience timeline
+ * From 768 px: a 112 px rail with the start year and the company
+ * logo (or the arcade step number), joined by a dashed vertical line.
+ * Reference: docs/style-guide.md § Experience timeline
+ * ============================================================ */
+.logo-backdrop {
+    /* Neutral backdrop that works for both dark and white company and school logos */
+    background-color: rgb(148 163 184 / 50%);
+}
+
+@media (width >= 768px) {
+    .experience-timeline::before,
+    .step-timeline::before {
+        position: absolute;
+        top: 96px;
+        bottom: 40px;
+        left: 55px;
+        content: "";
+        border-left: 2px dashed color-mix(in srgb, var(--color-on-surface-muted) 35%, transparent);
+    }
+
+    .step-timeline::before {
+        /* The step rail is shorter than the experience rail (no logo) */
+        top: 72px;
+    }
+
+    .experience-item__rail,
+    .step-timeline__rail {
+        position: relative;
+        z-index: 1;
+        align-self: start;
+        padding-bottom: 8px;
+        background-color: var(--color-surface);
+    }
+}

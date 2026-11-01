@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{# Photos #}
+{# Photos — see docs/style-guide.md § Galleries #}
 
 {% block meta_description %}
 Ma galerie photo personnelle : paysages inspirants et instants capturés au fil du temps. Un regard différent sur le monde, en dehors du numérique.
@@ -12,27 +12,15 @@ Ma galerie photo personnelle : paysages inspirants et instants capturés au fil 
 {% endblock %}
 
 {% block body %}
-{% for type in photos_data.types %}
-<section class="{% if loop.index is even %}bg-surface-alt{% else %}bg-surface{% endif %} py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-medium text-nine-cyan-500">{{ type.name }}</h2>
-        {% set listItemsPhotos = photos_data.photos[type.slug] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox">
-            {% for photo in listItemsPhotos %}
-            <div class="w-full rounded-lg overflow-hidden animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                <a
-                    href="{{ absolute_url('images/photos/' ~ type.slug ~ '/' ~ photo.filename) }}"
-                    aria-label="{{ type.name }} | Photo {{ photo.filename }}"
-                    class="pswp9-link"
-                    data-pswp-width="1000"
-                    data-pswp-height="1000"
-                    target="_blank">
-                    <img src="{{ absolute_url('images/photos/' ~ type.slug ~ '/' ~ photo.filename) }}" alt="{{ type.name }} | Photo {{ photo.filename }}" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-{% endfor %}
+<div class="font-sans text-base leading-relaxed text-on-surface">
+    {% for type in photos_data.types %}
+    {% set items = [] %}
+    {% for photo in photos_data.photos[type.slug] ?? [] %}
+    {% set items = items|merge([{ src: asset('images/photos/' ~ type.slug ~ '/' ~ photo.filename), alt: photo.caption ?: type.name ~ ' — photo ' ~ loop.index, caption: photo.caption }]) %}
+    {% endfor %}
+    {% if items is not empty %}
+    {{ include('components/gallery_section.html.twig', { index: loop.index, slug: type.slug, title: type.name, items: items }) }}
+    {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

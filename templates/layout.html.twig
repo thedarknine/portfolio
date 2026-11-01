@@ -24,6 +24,7 @@
         <link rel="preload" as="image" href="{{ absolute_url(asset('images/volcans-cnoyer.webp')) }}" fetchpriority="high">
         {% endif %}
 
+
         {# Open Graph / Facebook #}
         <meta property="og:type" content="website">
         <meta property="og:url" content="{{ absolute_url(app.request.uri) }}">
@@ -94,30 +95,10 @@
         {{ importmap('app', { nonce: csp_nonce('script') }) }}
         {% endblock %}
 
-        {# Start Matomo #}
-        {% if app.environment == 'prod' %}
-        <script>
-            var _paq = window._paq = window._paq || [];
-            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-            _paq.push(["setDoNotTrack", true]);
-            _paq.push(['trackPageView']);
-            _paq.push(['enableLinkTracking']);
-            (function() {
-                var u="https://analytics.carolinenoyer.fr/";
-                _paq.push(['setTrackerUrl', u+'matomo.php']);
-                _paq.push(['setSiteId', '1']);
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-            })();
-        </script>
-        {% endif %}
-        {# End Matomo Code #}
     </head>
     <body>
         <div class="main" id="{{ current_page.slug ?? 'home' }}">
             {{ include('components/header.html.twig') }}
-
-            {{ include('components/menu_mobile.html.twig') }}
 
             <main>
                 {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
@@ -133,6 +114,8 @@
         </div>
 
         {{ include('components/footer.html.twig') }}
+        {# Matomo is loaded by consent_controller.js once the visitor accepts #}
+        {{ include('components/cookie_consent.html.twig') }}
 
     </body>
 </html>

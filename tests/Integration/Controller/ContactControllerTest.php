@@ -47,7 +47,32 @@ final class ContactControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/contact');
         $client->followRedirect();
-        $this->assertSelectorExists('.alert-success');
+        $this->assertSelectorExists('.alert--success');
+    }
+
+    // POST with the honeypot filled in — Fake success, no email sent
+    public function testHoneypotSubmitIsDroppedSilently(): void
+    {
+        $client = static::createClient();
+
+        $mailerMock = $this->createMock(MailerInterface::class);
+        $mailerMock->expects($this->never())->method('send');
+        static::getContainer()->set(MailerInterface::class, $mailerMock);
+
+        $client->request('POST', '/contact', [
+            'contact' => [
+                'name'     => 'Spam Bot',
+                'email'    => 'bot@example.com',
+                'subject'  => 'Offre exceptionnelle',
+                'message'  => 'Message de robot suffisamment long.',
+                'website'  => 'https://spam.example.com',
+                'security' => 'mocked-altcha-payload',
+            ],
+        ]);
+
+        $this->assertResponseRedirects('/contact');
+        $client->followRedirect();
+        $this->assertSelectorExists('.alert--success');
     }
 
     // POST without data — Flash error, no redirection
@@ -63,7 +88,7 @@ final class ContactControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorExists('.text-nine-red-600');
+        $this->assertSelectorExists('.field__error');
         // Not 200 (should be 422 for unprocessable entity, since Symfony 6.2 it validates the form before processing)
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -81,11 +106,10 @@ final class ContactControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorExists('.text-nine-red-600');
+        $this->assertSelectorExists('.field__error');
         // Not 200 (should be 422 for unprocessable entity, since Symfony 6.2 it validates the form before processing)
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         $this->assertSelectorNotExists('[data-flash="success"]');
-        $this->assertSelectorExists('.text-nine-red-600');
-        $this->assertSelectorTextContains('.text-nine-red-600', 'Merci de compléter les champs.');
+        $this->assertSelectorTextContains('.alert--error', 'Merci de compléter les champs.');
     }
 }

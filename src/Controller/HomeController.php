@@ -30,13 +30,6 @@ final class HomeController extends AbstractController
             'slug'          => 'home',
             'technicalName' => 'home',
         ];
-        $data['mental_landscape'] = [
-            'rugby'    => ['image' => 'images/home/rugby-asm.webp', 'alt' => 'Équipe de rugby en discussion, symbolisant l\'esprit d\'équipe', 'big' => false],
-            'zen'      => ['image' => 'images/home/lac-zen.webp', 'alt' => 'Ponton en bois sur un lac calme, représentant la clarté et la structure', 'big' => true],
-            'chat'     => ['image' => 'images/home/chat.webp', 'alt' => 'Chat endormi sur un coussin, illustrant l\'équilibre et le bien-être', 'big' => false],
-            'auvergne' => ['image' => 'images/home/auvergne.webp', 'alt' => 'Paysage volcanique d\'Auvergne sous un ciel dégagé, symbolisant la vision globale et la réflexion stratégique', 'big' => false],
-            'equipe'   => ['image' => 'images/home/equipe.webp', 'alt' => 'Équipe de développeurs en collaboration, illustrant le pragmatisme, l\'organisation et l\'approche méthodique', 'big' => false],
-        ];
         $data['last_experiences'] = $this->doctrine->getRepository(Experience::class)->getExperiencesWithCompany(3);
 
         return $this->render('pages/home.html.twig', [

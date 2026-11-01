@@ -1,63 +1,61 @@
-<footer class="py-20">
-    <section class="py-20">
-        <div class="container px-4 mx-auto">
-            <div class="flex flex-wrap mb-12 lg:mb-20 -mx-3 text-center lg:text-left">
-                <div class="w-full lg:w-2/5 px-3 mb-8 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="600ms">
-                    <p class="max-w-md mx-auto lg:max-w-full lg:mx-0 lg:pr-32 text-sm leading-relaxed pb-2">
-                        <strong>Product Owner depuis 2019</strong>, j’allie une <strong>solide expertise technique</strong> de 12 ans (PHP/Symfony) à une maîtrise éprouvée du delivery.
-                    </p>
-                    <p class="max-w-md mx-auto lg:max-w-full lg:mx-0 lg:pr-32 text-blue-gray-400 text-sm leading-relaxed pb-2">
-                        Forte d'une double <strong>sensibilité UX/UI</strong>, je pilote des équipes transverses et R&amp;D sur des produits SaaS (B2B/B2C).
-                    </p>
-                    <p class="max-w-md mx-auto lg:max-w-full lg:mx-0 lg:pr-32 text-blue-gray-400 text-sm leading-relaxed">
-                        Mon approche axée sur <strong>la qualité</strong> et <strong>l'automatisation</strong> me permet de résoudre des problématiques complexes, de l'infrastructure à l'expérience utilisateur.
-                    </p>
-                </div>
-                <div class="w-full lg:w-1/5 px-3 mb-6 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="300ms">
-                    <a class="inline-block mx-auto lg:mx-0 text-3xl font-semibold leading-none" href="{{ site_url }}" aria-label="{{ owner_name }} — {{ owner_role }}">
-                        <img class="h-14 mx-auto" src="{{ asset('images/cnoyer-logo.webp') }}" alt="Caroline Noyer | Accueil">
-                    </a>
-                </div>
-                <div class="w-full lg:w-1/5 px-3 mb-8 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="900ms">
-                    <p class="mb-2 lg:text-lg font-accent util-smallcaps text-nine-cyan-500">Parcours</p>
-                    <ul class="list-unstyled mb-0">
-                        {% for page in page_manager.getPublishedRootPages() %}
-                        {% if page.category.value == 'career' %}
-                        <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs hover:text-nine-cyan-500" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
-                </div>
-                <div class="w-full lg:w-1/5 px-3 animate__animated" data-animate="animate__fadeInUp" data-delay="1200ms">
-                    <p class="mb-2 lg:text-lg font-accent util-smallcaps text-nine-cyan-500">Centres d'intérêt</p>
-                    <ul class="list-unstyled mb-8">
-                        {% for page in page_manager.getPublishedRootPages() %}
-                        {% if page.category.value == 'interest' %}
-                        <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs hover:text-nine-cyan-500" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
-                        {% endif %}
-                        {% endfor %}
-                    </ul>
+{# Site footer — see docs/style-guide.md § Footer #}
+{% set footer_columns = [
+    { title: 'Parcours', category: 'career', pages: page_manager.getPublishedRootPages() },
+    { title: 'Centres d’intérêt', category: 'interest', pages: page_manager.getPublishedRootPages() },
+    { title: 'À propos', category: 'about', pages: page_manager.getPublishedPages() },
+] %}
+<footer class="bg-surface-footer pt-24 pb-10 font-sans text-base leading-relaxed text-on-surface-footer">
+    <div class="mx-auto max-w-[1240px] px-6">
+        <div class="flex flex-wrap gap-x-16 gap-y-14">
+            <div class="max-w-[520px] min-w-0 flex-[1_1_420px]">
+                <p class="leading-relaxed">
+                    <span class="font-medium text-white">Développeuse devenue Product Owner</span>, j’aime les produits clairs, les équipes soudées et le travail bien fait.
+                    Basée en Auvergne, je travaille à distance.
+                </p>
 
-                    <p class="mb-2 lg:text-lg font-accent util-smallcaps text-nine-cyan-500">À propos</p>
-                    <ul class="list-unstyled mb-0">
-                        {% for page in page_manager.getPublishedPages() %}
-                        {% if page.category.value == 'about' %}
-                        <li class="mb-2"><a href="/{{ page.slug }}" class="text-blue-gray-400 text-xs hover:text-nine-cyan-500" aria-label="{{ page.title }} — {{ page.subtitle }}">{{ page.title }}</a></li>
+                <ul class="mt-7 flex flex-wrap gap-2" aria-label="Réseaux et liens">
+                    {% for resource in page_manager.getPublishedResourceLinks() %}
+                    <li>
+                        <a
+                            class="inline-flex size-11 items-center justify-center rounded-[10px] border border-band-border text-white transition-colors hover:border-band-accent hover:text-band-accent"
+                            href="{{ resource.url }}"
+                            target="_blank"
+                            rel="noopener"
+                            aria-label="{{ resource.title }}">
+                            {{ ux_icon(resource.icon, { class: 'size-5', 'aria-hidden': 'true' }) }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <nav class="grid min-w-0 flex-[1_1_520px] grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-8" aria-label="Plan du site">
+                {% for column in footer_columns %}
+                <div>
+                    <p class="mb-4 font-mono text-[13px] text-band-accent">{{ column.title }}</p>
+                    <ul class="flex flex-col">
+                        {% for page in column.pages %}
+                        {% if page.category.value == column.category %}
+                        <li>
+                            <a class="flex min-h-10 items-center text-white transition-colors hover:text-band-accent" href="/{{ page.slug }}">{{ page.title }}</a>
+                        </li>
                         {% endif %}
                         {% endfor %}
                     </ul>
                 </div>
-            </div>
-            <div class="flex flex-col lg:flex-row items-center lg:justify-between">
-                <p class="text-xs text-blue-gray-400 animate__animated" data-animate="animate__fadeInUp" data-delay="1500ms"><b>&copy;Nine | Copyright</b> {{ page_manager.getStartCareerYear() }}-{{ 'now'|date('Y') }} {# &bull; <a x-on:click="showPrivacyPolicy = true" class="" href="#"> View Privacy Policy </a> #}</p>
-                <div class="order-first lg:order-last -mx-2 mb-4 lg:mb-0 animate__animated" data-animate="animate__fadeInUp" data-delay="1800ms">
-                    <ul class="util-list-inline">
-                        {% for resource in page_manager.getPublishedResourceLinks() %}
-                        <li class="util-list-inline__item"><a href="{{ resource.url }}" target="_blank" title="{{ resource.title }}" aria-label="{{ resource.title }}">{{ ux_icon(resource.icon, { class: 'w-5 h-5 hover:text-nine-cyan-500' }) }}</a></li>
-                        {% endfor %}
-                    </ul>
-                </div>
+                {% endfor %}
+            </nav>
+        </div>
+
+        <div class="mt-18 flex flex-wrap items-center justify-between gap-x-6 gap-y-3 border-t border-band-border pt-6 font-mono text-[13px]">
+            <p>
+                © Nine · {{ page_manager.getStartCareerYear() }}–{{ 'now'|date('Y') }}
+                <span class="ml-2 rounded-md bg-tag px-2 py-0.5 text-white" title="Version du site">{{ site_version }}</span>
+            </p>
+            <div class="flex flex-wrap items-center gap-x-6">
+                <button type="button" class="inline-flex min-h-11 cursor-pointer items-center text-band-accent hover:underline" data-consent-open>Gérer les cookies</button>
+                <a class="inline-flex min-h-11 items-center text-band-accent hover:underline" href="#">Retour en haut ↑</a>
             </div>
         </div>
-    </section>
+    </div>
 </footer>

@@ -1,0 +1,67 @@
+/* ============================================================
+ * COMPOSANTS — Home hero
+ * Full-bleed photo with a night-blue gradient. The text column
+ * redefines the colour tokens locally so it always reads on the
+ * photo, in both themes. The profile card keeps the theme tokens.
+ * Reference: docs/style-guide.md § Home hero
+ * ============================================================ */
+.home-hero__overlay {
+    background: rgb(23 44 73 / 82%);
+
+    @media (width >= 768px) {
+        background: linear-gradient(90deg, rgb(23 44 73 / 94%) 0%, rgb(23 44 73 / 78%) 42%, rgb(23 44 73 / 10%) 75%);
+    }
+}
+
+.home-hero__content {
+    --color-on-surface: #ffffff;
+    --color-on-surface-muted: #d3dbe6;
+    --color-accent-text: #6cc6e2;
+    --color-primary: #4cc3e6;
+    --color-on-primary: #172c49;
+    --color-panel: rgb(255 255 255 / 10%);
+    --color-border: rgb(255 255 255 / 30%);
+    --color-status-live: #3fcf8e;
+
+    color: var(--color-on-surface);
+}
+
+/* ------------------------------------------------------------
+ * Inner page hero (components/page_hero.html.twig)
+ * ------------------------------------------------------------ */
+.page-hero__overlay {
+    background: rgb(23 44 73 / 92%);
+
+    @media (width >= 768px) {
+        background: linear-gradient(90deg, rgb(23 44 73 / 100%) 0%, rgb(23 44 73 / 93%) 50%, rgb(23 44 73 / 50%) 100%);
+    }
+}
+
+.page-hero__breadcrumb {
+    color: #b9c6d6;
+    background-color: rgb(11 26 44 / 60%);
+    border-color: rgb(255 255 255 / 12%);
+
+    a:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+}
+
+.page-hero__prompt {
+    color: #3fcf8e;
+}
+
+.page-hero__sep {
+    color: #8fa1b9;
+}
+
+.page-hero__cursor {
+    width: 8px;
+    height: 16px;
+    background-color: #3aa3c8;
+}
+
+.page-hero__tagline {
+    color: #3aa3c8;
+}

@@ -1,10 +1,102 @@
-div#matomo-opt-out {
-    p {
-        padding: 10px;
-        margin-top: 10px;
+/* Legal notice — see docs/style-guide.md § Legal notice */
+
+.legal-prose {
+    p + p,
+    p + dl,
+    p + ul,
+    ul + ul {
+        margin-top: 0.75rem;
     }
 
-    input {
-        margin: 10px;
+    strong {
+        font-weight: 600;
+    }
+
+    a {
+        color: var(--color-accent-text);
+        text-decoration: underline;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+        overflow-wrap: anywhere;
+
+        &:hover {
+            text-decoration-thickness: 2px;
+        }
+    }
+}
+
+/* Key/value card (publisher, host) */
+.legal-card {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: var(--color-panel);
+
+    > div {
+        display: grid;
+        gap: 0.125rem 1.5rem;
+        padding: 0.75rem 0;
+
+        & + div {
+            border-top: 1px solid var(--color-border);
+        }
+
+        @media (min-width: 640px) {
+            grid-template-columns: 120px 1fr;
+        }
+    }
+
+    dt {
+        font-family: var(--font-mono);
+        font-size: 13px;
+        line-height: 1.9;
+        color: var(--color-on-surface-muted);
+    }
+
+    dd {
+        margin: 0;
+    }
+}
+
+/* Credits list */
+.legal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+
+    li::marker {
+        color: var(--color-accent-text);
+    }
+}
+
+.legal-libraries {
+    display: grid;
+    gap: 0.5rem;
+    margin-left: 1.25rem;
+
+    @media (min-width: 640px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    li {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.25rem 0.75rem;
+        padding: 0.625rem 0.875rem;
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        background: var(--color-panel);
+    }
+
+    span {
+        font-family: var(--font-mono);
+        font-size: 12px;
+        color: var(--color-on-surface-muted);
     }
 }

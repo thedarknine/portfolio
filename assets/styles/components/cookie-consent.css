@@ -1,0 +1,266 @@
+/* ============================================================
+ * COMPOSANTS — Cookie consent
+ * Banner + preferences <dialog>, driven by consent_controller.js
+ * Reference: docs/style-guide.md § Cookie consent
+ * ============================================================ */
+@layer components {
+    .cookie-banner {
+        position: fixed;
+        inset: auto 16px 16px;
+        z-index: 50;
+        font-family: var(--font-sans);
+        color: var(--color-on-surface);
+
+        &[hidden] {
+            display: none;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            animation: cookie-banner-in 0.35s ease-out;
+        }
+    }
+
+    .cookie-banner__card {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 16px 32px;
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 20px 24px;
+        border: 1px solid var(--color-border);
+        border-radius: 18px;
+        background-color: var(--color-panel);
+        box-shadow: 0 24px 48px -24px rgb(15 34 56 / 45%);
+
+        @media (min-width: 1024px) {
+            flex-wrap: nowrap;
+            padding: 24px 32px;
+        }
+    }
+
+    .cookie-banner__link {
+        color: var(--color-accent-text);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+
+        &:hover {
+            text-decoration-thickness: 2px;
+        }
+    }
+
+    /* Phones and tablets: the two choices share a row, "Personnaliser" goes below */
+    .cookie-banner__actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 12px;
+        width: 100%;
+
+        .btn {
+            padding: 0 12px;
+        }
+
+        @media (min-width: 1024px) {
+            display: flex;
+            align-items: center;
+            width: auto;
+            flex-shrink: 0;
+
+            .btn {
+                padding: 0 22px;
+            }
+        }
+    }
+
+    .cookie-banner__customize {
+        display: inline-flex;
+        grid-column: 1 / -1;
+        order: 1;
+        align-items: center;
+        justify-content: center;
+        min-height: 48px;
+        padding: 0 8px;
+        font-weight: 500;
+        color: var(--color-accent-text);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+        cursor: pointer;
+
+        &:hover {
+            text-decoration-thickness: 2px;
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-accent-text);
+            outline-offset: 2px;
+            border-radius: 6px;
+        }
+
+        @media (min-width: 1024px) {
+            order: 0;
+        }
+    }
+
+    /* Preferences dialog */
+    .cookie-dialog {
+        width: min(560px, calc(100% - 32px));
+        max-height: calc(100dvh - 32px);
+        margin: auto;
+        padding: 0;
+        border: 1px solid var(--color-border);
+        border-radius: 18px;
+        background-color: var(--color-panel);
+        color: var(--color-on-surface);
+        font-family: var(--font-sans);
+        line-height: 1.5;
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+            opacity 0.2s ease-in,
+            transform 0.2s ease-in,
+            overlay 0.2s ease-in allow-discrete,
+            display 0.2s ease-in allow-discrete;
+
+        &[open] {
+            opacity: 1;
+            transform: none;
+            transition-duration: 0.25s;
+            transition-timing-function: ease-out;
+
+            @starting-style {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+        }
+
+        &::backdrop {
+            background-color: rgb(15 34 56 / 0%);
+            transition:
+                background-color 0.2s ease-in,
+                overlay 0.2s ease-in allow-discrete,
+                display 0.2s ease-in allow-discrete;
+        }
+
+        &[open]::backdrop {
+            background-color: rgb(15 34 56 / 60%);
+
+            @starting-style {
+                background-color: rgb(15 34 56 / 0%);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            &,
+            &[open],
+            &::backdrop,
+            &[open]::backdrop {
+                transition: none;
+                transform: none;
+            }
+        }
+    }
+
+    .cookie-dialog__panel {
+        padding: 24px;
+
+        @media (min-width: 640px) {
+            padding: 32px;
+        }
+    }
+
+    .cookie-dialog__close {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        color: var(--color-on-surface-muted);
+        cursor: pointer;
+
+        &:hover {
+            color: var(--color-on-surface);
+            background-color: var(--color-chip);
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-accent-text);
+            outline-offset: 2px;
+        }
+
+        svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+    .cookie-option {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 16px;
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+    }
+
+    /* Native checkbox styled as a switch (role="switch") */
+    .cookie-switch {
+        position: relative;
+        flex-shrink: 0;
+        width: 48px;
+        height: 28px;
+        margin: 0;
+        border: 1px solid var(--color-field-border);
+        border-radius: 14px;
+        background-color: var(--color-field);
+        appearance: none;
+        cursor: pointer;
+        transition:
+            background-color 0.2s ease-out,
+            border-color 0.2s ease-out;
+
+        &::before {
+            content: "";
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--color-field-border);
+            transition:
+                transform 0.2s ease-out,
+                background-color 0.2s ease-out;
+        }
+
+        &:checked {
+            border-color: var(--color-primary);
+            background-color: var(--color-primary);
+
+            &::before {
+                background-color: var(--color-on-primary);
+                transform: translateX(20px);
+            }
+        }
+
+        &:focus-visible {
+            outline: 2px solid var(--color-accent-text);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            &,
+            &::before {
+                transition: none;
+            }
+        }
+    }
+}
+
+@keyframes cookie-banner-in {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+}

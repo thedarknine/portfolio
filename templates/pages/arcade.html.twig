@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{# Arcade #}
+{# Arcade — build log of the bartop, see docs/style-guide.md § Arcade #}
 
 {% block meta_description %}
 Mon projet ludique et expérimental : conception, assemblage et design pour le plaisir de créer et d'allier technique à créativité.
@@ -12,232 +12,109 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
 {% endblock %}
 
 {% block body %}
-<section class="bg-surface text-on-surface my-15">
-    <div class="container">
-        <img src="{{ absolute_url('images/arcade/cnoyer-arcade.png') }}" alt="Mascotte outils" class="sm:float-right sm:ml-14 mx-auto w-48 animate__animated" data-animate="animate__fadeInTopRight" data-delay="600ms">
-        <div class="mb-10 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="600ms">
-            Tout est parti d’un magazine qui trainait sur une table au boulot, et hop pourquoi pas nous lancer dans la réalisation d’une borne. Ah oui ! Mais d’en avoir une à la maison ce serait encore mieux.
-        </div>
-        <div class="animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="600ms">
-            Pour mon arcade perso, j’étais d’abord partie sur l’idée d’acheter un kit bartop prêt à monter. Cependant ceux de base, permettant de recevoir un écran jusqu’à 19", me paraissent insuffisamment larges pour jouer à deux. Quant aux versions XXL, les différents tarifs sont rédhibitoires.  Je pèse le pour et le contre, j’évalue les budgets selon les modèles et le matériel que j’aimerais intégrer. Puis se rappellent à moi mes années de bricolage, et quoi de plus challengeant que de faire tout moi-même ! Le défi est lancé.
-        </div>
-    </div>
-</section>
+{% set photos = arcade_data.items %}
+<div class="font-sans text-base leading-relaxed text-on-surface">
 
-<section class="bg-surface-alt text-on-surface-alt py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">This is it!</h2>
-        {% set listItemsArcade = arcade_data.items['final'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="w-full h-full rounded overflow-hidden shadow-lg animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                <a
-                    href="{{ absolute_url('images/arcade/final/' ~ arcade) }}"
-                    aria-label="This is it! | Voir la photo {{ arcade }}"
-                    class="pswp9-link"
-                    data-pswp-width="1000"
-                    data-pswp-height="1000"
-                    target="_blank">
-                    <img src="{{ absolute_url('images/arcade/final/' ~ arcade) }}" alt="This is it! | Voir la photo {{ arcade }}" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
-                </a>
+    {# INTRO #}
+    <section class="mx-auto max-w-[1240px] px-6 pt-18 pb-16" aria-label="Le projet">
+        <div class="flex flex-col-reverse items-start gap-8 sm:flex-row sm:gap-12">
+            <div class="flex max-w-[720px] flex-1 flex-col gap-4 text-lg text-on-surface-muted">
+                <p>Tout est parti d’un magazine qui trainait sur une table au boulot, et hop pourquoi pas nous lancer dans la réalisation d’une borne. Ah oui ! Mais d’en avoir une à la maison ce serait encore mieux.</p>
+                <p>Pour mon arcade perso, j’étais d’abord partie sur l’idée d’acheter un kit bartop prêt à monter. Cependant ceux de base, permettant de recevoir un écran jusqu’à 19", me paraissent insuffisamment larges pour jouer à deux. Quant aux versions XXL, les différents tarifs sont rédhibitoires. Je pèse le pour et le contre, j’évalue les budgets selon les modèles et le matériel que j’aimerais intégrer. Puis se rappellent à moi mes années de bricolage, et quoi de plus challengeant que de faire tout moi-même ! <strong class="font-medium text-on-surface">Le défi est lancé.</strong></p>
             </div>
-            {% endfor %}
+            <img class="w-36 shrink-0 sm:w-48" src="{{ asset('images/arcade/cnoyer-arcade.png') }}" alt="" width="192" height="192">
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="bg-surface text-on-surface py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#1: les plans.</h2>
-        <p class="mb-10 animate__animated" data-animate="animate__fadeIn">Je regarde ce qu’il se fait... Les plans pour bartop n’envahissent pas le web, et ne
-            correspondent pas entièrement à ce que j’ai en tête. Ok, alors allons-y pour un plan
-            personnalisé. Je suis partie des plans mis à dispo par
-            <a href="http://forum.hfsplay.fr/plans-prets-emploi/bartop-frankeez-version-t8468.html" alt="Frankeezz" target="_blank">Frankeezz</a>.
-            Je souhaite limiter au max la hauteur du control panel, tout en y insérant un tiroir pour un clavier.</p>
-        {% set listItemsArcade = arcade_data.items['at-the-beginning'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <div>
+    {# FINAL RESULT #}
+    {% if photos['final'] is defined and photos['final'] is not empty %}
+    <section class="bg-band py-18" aria-labelledby="arcade-final">
+        <div class="mx-auto max-w-[1240px] px-6">
+            <p class="mb-2 font-mono text-[13px] text-band-accent">Le résultat</p>
+            <h2 id="arcade-final" class="mb-8 text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px] text-on-band">This is it!</h2>
+            <ul class="pswp9-lightbox grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+                {% for item in photos['final'] %}
+                <li>
                     <a
-                        href="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}"
-                        aria-label="Step#1: les plans | Voir la photo {{ arcade }}"
-                        class="pswp9-link"
-                        data-pswp-width="1000"
-                        data-pswp-height="1000"
-                        target="_blank">
-                        <img src="{{ absolute_url('images/arcade/at-the-beginning/' ~ arcade) }}" alt="Step#1: les plans | Voir la photo {{ arcade }}" class="rounded-lg">
+                        class="pswp9-link group block overflow-hidden rounded-[14px] border border-band-border"
+                        href="{{ asset('images/arcade/final/' ~ item) }}"
+                        target="_blank"
+                        aria-label="Agrandir : la borne terminée, photo {{ loop.index }}">
+                        <img class="block aspect-square w-full object-cover transition duration-500 ease-out motion-safe:group-hover:scale-[1.04]" src="{{ asset('images/arcade/final/' ~ item) }}" alt="La borne terminée, photo {{ loop.index }}" loading="lazy">
                     </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
+    {% endif %}
+
+    {# BUILD STEPS #}
+    <section class="mx-auto max-w-[1140px] px-6 pt-18 pb-24" aria-labelledby="arcade-steps">
+        <h2 id="arcade-steps" class="mb-10 font-mono text-[13px] text-accent-text">Les étapes de construction</h2>
+
+        <ol class="step-timeline relative flex flex-col gap-14">
+            <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
+                {{ include('components/arcade_step_rail.html.twig', { number: 1 }) }}
+                <div class="min-w-0">
+                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold">Les plans</h3>
+                    <p class="max-w-[720px] text-on-surface-muted">
+                        Je regarde ce qu’il se fait... Les plans pour bartop n’envahissent pas le web, et ne correspondent pas entièrement à ce que j’ai en tête.
+                        Ok, alors allons-y pour un plan personnalisé. Je suis partie des plans mis à dispo par
+                        <a class="text-accent-text underline underline-offset-2" href="http://forum.hfsplay.fr/plans-prets-emploi/bartop-frankeez-version-t8468.html" target="_blank" rel="noopener">Frankeezz</a>.
+                        Je souhaite limiter au max la hauteur du control panel, tout en y insérant un tiroir pour un clavier.
+                    </p>
+                    {{ include('components/arcade_gallery.html.twig', { slug: 'at-the-beginning', items: photos['at-the-beginning'] ?? [], alt: 'Étape 1, les plans' }) }}
                 </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
+            </li>
 
-<section class="bg-surface-alt text-on-surface-alt py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#2 : la découpe.</h2>
-        <p class="mb-10">L'étape la plus importante, et aussi la plus délicate quand on est perfectionniste !</p>
-
-        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Side Panels]</h3>
-        {% set listItemsArcade = arcade_data.items['side-panels'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <div>
-                    <a
-                        href="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}"
-                        aria-label="Step#2 : la découpe | Voir la photo {{ arcade }}"
-                        class="pswp9-link"
-                        data-pswp-width="1000"
-                        data-pswp-height="1000"
-                        target="_blank">
-                        <img src="{{ absolute_url('images/arcade/side-panels/' ~ arcade) }}" alt="Step#2 : la découpe | Voir la photo {{ arcade }}" class="rounded-lg">
-                    </a>
+            <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
+                {{ include('components/arcade_step_rail.html.twig', { number: 2 }) }}
+                <div class="min-w-0">
+                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold">La découpe</h3>
+                    <p class="max-w-[720px] text-on-surface-muted">L’étape la plus importante, et aussi la plus délicate quand on est perfectionniste !</p>
+                    {% for part in [
+                        { slug: 'side-panels', label: 'Side Panels' },
+                        { slug: 'control-panel', label: 'Control Panel' },
+                        { slug: 'upper-part', label: 'Upper Part' },
+                        { slug: 'back-side', label: 'Back Side' },
+                    ] %}
+                    {{ include('components/arcade_gallery.html.twig', { slug: part.slug, items: photos[part.slug] ?? [], alt: 'Étape 2, la découpe : ' ~ part.label, label: part.label }) }}
+                    {% endfor %}
                 </div>
-            </div>
-            {% endfor %}
-        </div>
+            </li>
 
-        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Control Panel]</h3>
-        {% set listItemsArcade = arcade_data.items['control-panel'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <div>
-                    <a
-                        href="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}"
-                        aria-label="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}"
-                        class="pswp9-link"
-                        data-pswp-width="1000"
-                        data-pswp-height="1000"
-                        target="_blank">
-                        <img src="{{ absolute_url('images/arcade/control-panel/' ~ arcade) }}" alt="Step#2 : la découpe [Control Panel] | Voir la photo {{ arcade }}" class="rounded-lg">
-                    </a>
+            <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
+                {{ include('components/arcade_step_rail.html.twig', { number: 3 }) }}
+                <div class="min-w-0">
+                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold">L’assemblage</h3>
+                    <p class="max-w-[720px] text-on-surface-muted">Les différentes pièces se finalisent petit à petit, on monte et on redémonte histoire de contrôler que tout est ok. Au passage un petit coup de peinture. Ça se précise !</p>
+                    {{ include('components/arcade_gallery.html.twig', { slug: 'assembling', items: photos['assembling'] ?? [], alt: 'Étape 3, l’assemblage' }) }}
                 </div>
-            </div>
-            {% endfor %}
-        </div>
+            </li>
 
-        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Upper Part]</h3>
-        {% set listItemsArcade = arcade_data.items['upper-part'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <div>
-                    <a
-                        href="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}"
-                        aria-label="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}"
-                        class="pswp9-link"
-                        data-pswp-width="1000"
-                        data-pswp-height="1000"
-                        target="_blank">
-                        <img src="{{ absolute_url('images/arcade/upper-part/' ~ arcade) }}" alt="Step#2 : la découpe [Upper Part] | Voir la photo {{ arcade }}" class="rounded-lg">
-                    </a>
+            <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
+                {{ include('components/arcade_step_rail.html.twig', { number: 4 }) }}
+                <div class="min-w-0">
+                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold">Le design</h3>
+                    <p class="max-w-[720px] text-on-surface-muted">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez modernes malgré tout.</p>
+                    {{ include('components/arcade_gallery.html.twig', { slug: 'design', items: photos['design'] ?? [], alt: 'Étape 4, le design' }) }}
                 </div>
-            </div>
-            {% endfor %}
-        </div>
+            </li>
 
-        <h3 class="text-nine-gray-600 dark:text-nine-gray-400 text-xl font-semibold text-center mt-10 mb-8">[Back Side]</h3>
-        {% set listItemsArcade = arcade_data.items['back-side'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <div>
-                    <a
-                        href="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}"
-                        aria-label="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}"
-                        class="pswp9-link"
-                        data-pswp-width="1000"
-                        data-pswp-height="1000"
-                        target="_blank">
-                        <img src="{{ absolute_url('images/arcade/back-side/' ~ arcade) }}" alt="Step#2 : la découpe [Back Side] | Voir la photo {{ arcade }}" class="rounded-lg">
-                    </a>
+            <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
+                {{ include('components/arcade_step_rail.html.twig', { number: 5 }) }}
+                <div class="min-w-0">
+                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold">L’émulateur</h3>
+                    <p class="max-w-[720px] text-on-surface-muted">
+                        Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
+                        <a class="text-accent-text underline underline-offset-2" href="https://www.recalbox.com" target="_blank" rel="noopener">RecalBox</a>
+                        viendra s’installer dans ma borne.
+                    </p>
+                    {{ include('components/arcade_gallery.html.twig', { slug: 'recalbox', items: photos['recalbox'] ?? [], alt: 'Étape 5, l’émulateur' }) }}
                 </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="bg-surface text-on-surface py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#3 : l’assemblage.</h2>
-        <p class="mb-10">Les différentes pièces se finalisent petit à petit, on monte et on redémonte histoire de
-            contrôler que tout est ok. Au passage un petit coup de peinture. Ca se précise !</p>
-        {% set listItemsArcade = arcade_data.items['assembling'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <div>
-                    <a
-                        href="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}"
-                        aria-label="Step#3 : l'assemblage | Voir la photo {{ arcade }}"
-                        class="pswp9-link"
-                        data-pswp-width="1000"
-                        data-pswp-height="1000"
-                        target="_blank">
-                        <img src="{{ absolute_url('images/arcade/assembling/' ~ arcade) }}" alt="Step#3 : l'assemblage | Voir la photo {{ arcade }}" class="rounded-lg">
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="bg-surface-alt text-on-surface-alt py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#4 : le design.</h2>
-        <p class="mb-10">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario
-            et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez
-            modernes malgré tout.</p>
-        {% set listItemsArcade = arcade_data.items['design'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <a
-                    href="{{ absolute_url('images/arcade/design/' ~ arcade) }}"
-                    aria-label="Step#4 : le design | Voir la photo {{ arcade }}"
-                    class="pswp9-link"
-                    data-pswp-width="1000"
-                    data-pswp-height="1000"
-                    target="_blank">
-                    <img src="{{ absolute_url('images/arcade/design/' ~ arcade) }}" alt="Step#4 : le design" class="rounded-lg">
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-
-<section class="bg-surface text-on-surface py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-semibold text-nine-cyan-500 animate__animated" data-animate="animate__fadeInDown">Step#5 : l’émulateur.</h2>
-        <p class="mb-10">Sur ce point j’ai surtout suivi les conseils de mes collègues. Un petit
-            <a href="https://www.recalbox.com" title="RecalBox" target="_blank">RecalBox</a> viendra
-            s’installer dans ma borne.
-        </p>
-        {% set listItemsArcade = arcade_data.items['recalbox'] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox animate__animated" data-animate="animate__fadeIn">
-            {% for arcade in listItemsArcade %}
-            <div class="shadow-lg mb-4">
-                <div>
-                    <a
-                        href="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}"
-                        aria-label="Step#5 : l'émulateur | Voir la photo {{ arcade }}"
-                        class="pswp9-link"
-                        data-pswp-width="1000"
-                        data-pswp-height="1000"
-                        target="_blank">
-                        <img src="{{ absolute_url('images/arcade/recalbox/' ~ arcade) }}" alt="Step#5 : l'émulateur | Voir la photo {{ arcade }}" class="rounded-lg">
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
+            </li>
+        </ol>
+    </section>
+</div>
 {% endblock %}

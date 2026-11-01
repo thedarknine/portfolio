@@ -1,62 +1,117 @@
 /* ============================================================
- * COMPOSANTS — Header / Navigation
+ * COMPOSANTS — Header & mobile menu
+ * Reference: docs/style-guide.md § Header, § Mobile menu, § Motion
  * ============================================================ */
-.nine-sticky-bar {
-    position: relative;
-    z-index: 3;
-    font-family: var(--font-accent);
-    color: var(--color-nine-sand-200);
+.site-header {
+    a:focus-visible,
+    button:focus-visible {
+        outline: 2px solid var(--color-accent-text);
+        outline-offset: 2px;
+    }
+}
 
-    .nine-menu__item {
-        /* RENAME: .nine-menu-item */
-        font-size: 1.1rem !important;
-        font-weight: 400;
-        border-bottom: 4px solid transparent;
+/* Mobile menu: native <dialog> opened with showModal() by menu_controller.js */
+.mobile-menu {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(360px, 86vw);
+    max-width: none;
+    height: 100dvh;
+    max-height: none;
+    margin: 0;
+    padding: 0;
+    color: var(--color-on-surface);
+    background-color: var(--color-panel);
+    border: 0;
+    border-left: 1px solid var(--color-border);
 
-        &.is-active {
-            /* RENAME: .nine-active */
-            font-weight: 500;
-            color: var(--color-nine-cyan-500) !important;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--color-nine-cyan-500);
-        }
+    /* Closed state, also the state the panel animates back to */
+    transform: translateX(100%);
+    transition:
+        transform 0.2s ease-in,
+        overlay 0.2s ease-in allow-discrete,
+        display 0.2s ease-in allow-discrete;
 
-        &:hover:not(.is-active) {
-            color: var(--color-nine-cyan-500);
-            background-color: rgb(106 106 106 / 30%);
-            border-bottom: 4px solid var(--color-nine-cyan-500);
-            border-radius: 6px 6px 0 0;
-            transition-delay: 0.3s;
-            transition-timing-function: ease-out;
-            transition-duration: 0.6s;
+    &[open] {
+        transform: translateX(0);
+        transition:
+            transform 0.25s ease-out,
+            overlay 0.25s ease-out allow-discrete,
+            display 0.25s ease-out allow-discrete;
+
+        @starting-style {
+            transform: translateX(100%);
         }
     }
 
-    &.is-sticky {
-        /* RENAME: .nine-stick */
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 999;
-        width: 100%;
-        margin-top: 0 !important;
-        color: var(--color-nine-sand-200);
-        background-color: rgb(15 34 56 / 94%);
-        box-shadow: 0 8px 10px 0 rgb(0 0 0 / 15%);
-        animation: fadeInDown 700ms ease-in-out both;
+    &::backdrop {
+        background-color: rgb(15 34 56 / 0%);
+        transition:
+            background-color 0.2s ease-in,
+            overlay 0.2s ease-in allow-discrete,
+            display 0.2s ease-in allow-discrete;
+    }
 
-        .nine-menu__item {
-            color: var(--color-nine-sand-200);
+    &[open]::backdrop {
+        background-color: rgb(15 34 56 / 60%);
+        transition-duration: 0.25s;
+        transition-timing-function: ease-out;
 
-            &:hover {
-                color: var(--color-nine-cyan-500);
-            }
+        @starting-style {
+            background-color: rgb(15 34 56 / 0%);
         }
     }
 }
 
-.nine-menu {
-    /* RENAME: .nine-navbar-menu */
-    animation: slide 700ms forwards;
-    animation-delay: 2s;
+/* Keep the page from scrolling behind the open menu */
+html:has(.mobile-menu[open]) {
+    overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mobile-menu,
+    .mobile-menu[open],
+    .mobile-menu::backdrop,
+    .mobile-menu[open]::backdrop {
+        transition: none;
+    }
+}
+
+/* Logo: dark version on the light theme, white version on the dark theme */
+.site-logo--on-dark,
+[data-theme="dark"] .site-logo--on-light {
+    display: none;
+}
+
+[data-theme="dark"] .site-logo--on-dark {
+    display: block;
+}
+
+/*
+ * Overlay header (home page): transparent over the photo hero until the page scrolls.
+ * The bar redefines the colour tokens locally so every utility class inside it switches to the
+ * on-photo palette; the mobile menu <dialog> sits outside the bar and keeps the theme tokens.
+ */
+.site-header--overlay:not(.is-scrolled) {
+    background-color: transparent;
+    border-color: rgb(255 255 255 / 14%);
+    backdrop-filter: none;
+
+    .site-header__bar {
+        --color-on-surface: #ffffff;
+        --color-accent-text: #6cc6e2;
+        --color-panel: rgb(255 255 255 / 10%);
+        --color-border: rgb(255 255 255 / 22%);
+        --color-placeholder: rgb(255 255 255 / 18%);
+        --color-strong: #ffb020;
+        --color-on-strong: #172c49;
+    }
+
+    .site-logo--on-light {
+        display: none;
+    }
+
+    .site-logo--on-dark {
+        display: block;
+    }
 }

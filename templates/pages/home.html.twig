@@ -1,371 +1,194 @@
 {% extends 'layout.html.twig' %}
 
-{# Homepage #}
-
-{# % block meta_description %}
-15 ans en développement web, aujourd'hui Product Owner technique. Je structure des produits SaaS alignés sur les besoins métiers et techniques.
-{% endblock % #}
-
-{% block stylesheets %}
-{{ parent() }}
-<link rel="stylesheet" href="{{ asset('styles/pages/home.css') }}">
-{% endblock %}
-
-{% block importmap %}
-{{ importmap(['app', 'home']) }}
-{% endblock %}
+{# Homepage — see docs/style-guide.md #}
 
 {% block body %}
-{# Hero section #}
-<section class="nine-home-area -mt-24 pt-24 static">
-    <img src="{{ asset('images/volcans-cnoyer.webp') }}" alt="Volcans d'Auvergne" class="hero-background" fetchpriority="high">
-    <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
-        <div class="md:pt-12">
-            <div class="animate__animated animate__fadeInUp" data-delay="1000ms">
-                <img class="lg:h-80 h-40 mx-auto nine-jump rounded " src="{{ absolute_url(asset('images/cnoyer-logo.webp')) }}" alt="Caroline Noyer - Logo">
-            </div>
-        </div>
-        <div class="mb-16 mt-12 lg:mt-32 xl:mt-40 xl:mr-12">
-            <div class="max-w-2xl mx-auto mb-8">
-                <h1 class="text-3xl text-white lg:text-5xl lg:leading-normal mb-4 font-bold font-heading animate__animated" data-animate="animate__fadeIn" data-delay="0.5s">Passionnée par le <span class="text-turquoise">digital</span> depuis 2005</h1>
-                <p class="text-nine-cyan-500 text-xl leading-relaxed animate__animated" data-animate="animate__fadeIn" data-delay="1000ms"><strong>Expérience</strong> en <span id="typedtext" class="text-white typewrite d-inline text-brand"></span></p>
-            </div>
-            <div class="max-w-2xl mx-auto">
-                {% for resource in page_manager.getPublishedResourceLinksInHero() %}
-                <span class="text-center inline-flex items-center justify-center w-12 h-12 p-3 mb-5 mr-3 nine-btn-social rounded-full border-nine-gray-400 border-2 animate__animated" data-animate="animate__bounceInRight" data-delay="{{ 500 + loop.index * 500 }}ms">
-                    <a
-                        href="{{ resource.url }}"
-                        title="{{ resource.title }}"
-                        class="text-2xl"
-                        target="_blank"
-                        aria-label="{{ resource.title }}">
-                        {{ ux_icon(resource.icon, { class: 'text-nine-sand-200' }) }}
+{% set current_experience = last_experiences|first %}
+{% set nb_years = page_manager.getNbYearsExperience() %}
+<div class="font-sans text-base leading-relaxed text-on-surface">
+
+    {# HERO — full-bleed photo, the header floats over it (header_controller.js) #}
+    <section class="home-hero relative overflow-hidden bg-[#172c49]">
+        <img class="absolute inset-0 size-full object-cover object-[60%_60%]" src="{{ asset('images/volcans-cnoyer.webp') }}" alt="" width="1920" height="1309" fetchpriority="high">
+        <div class="home-hero__overlay absolute inset-0" aria-hidden="true"></div>
+
+        <div class="relative mx-auto flex max-w-[1240px] flex-wrap items-end justify-between gap-12 px-6 pt-40 pb-24 lg:pt-44 lg:pb-28">
+            <div class="home-hero__content min-w-0 flex-[1_1_520px] lg:max-w-[620px]">
+                {% if current_experience and current_experience.endDate is null %}
+                <p class="mb-7 inline-flex items-center gap-2 rounded-2xl border border-border bg-panel px-3.5 py-1.5 font-mono text-[13px]">
+                    <span class="size-2 shrink-0 rounded-full bg-status-live" aria-hidden="true"></span>
+                    <span>Actuellement {{ current_experience.title }} chez {{ current_experience.company.name }}</span>
+                </p>
+                {% endif %}
+                <h1 class="mb-6 text-[clamp(40px,6vw,68px)] leading-[1.04] font-bold tracking-[-1.5px]">
+                    Je fais le lien entre <span class="text-accent-text">le métier</span> et <span class="text-accent-text">la technique.</span>
+                </h1>
+                <p class="mb-9 max-w-[540px] text-lg text-on-surface-muted">
+                    Dans le web depuis {{ nb_years }} ans, j'ai longtemps codé avant de passer côté produit en 2019. Aujourd'hui, je cadre, je priorise et j'aide les équipes à livrer ce qui compte, avec rigueur et une touche d'humour.
+                </p>
+                <div class="flex flex-wrap gap-3">
+                    <a class="btn btn--primary" href="{{ path('app_experience') }}">
+                        Découvrir mon parcours
+                        {{ ux_icon('hugeicons:arrow-right-02', { 'aria-hidden': 'true' }) }}
                     </a>
-                </span>
+                    <a class="btn btn--secondary" href="{{ cv_url }}" target="_blank" rel="noopener">
+                        {{ ux_icon('hugeicons:download-04', { 'aria-hidden': 'true' }) }}
+                        Télécharger mon CV
+                    </a>
+                </div>
+            </div>
+
+            <aside class="w-full max-w-[320px] overflow-hidden lg:self-start rounded-2xl border border-border bg-panel text-on-surface shadow-[0_24px_48px_-24px_rgb(0_0_0/55%)]" aria-label="Fiche profil">
+                <div class="flex items-center justify-between border-b border-border px-4 py-3 font-mono text-xs text-on-surface-muted">
+                    <span>profil.yaml</span><span>{{ site_version }}</span>
+                </div>
+                <dl class="grid grid-cols-[max-content_minmax(0,1fr)] gap-x-4 gap-y-2.5 px-4 pt-3 pb-4 font-mono text-[13px]">
+                    <dt class="text-on-surface-muted">base</dt>
+                    <dd>Auvergne · remote</dd>
+                    <dt class="text-on-surface-muted">depuis</dt>
+                    <dd>{{ page_manager.getStartCareerYear() }} dans le web</dd>
+                    <dt class="text-on-surface-muted">stack</dt>
+                    <dd class="flex flex-wrap gap-1.5">
+                        {% for tech in ['Symfony', 'PHP', 'n8n'] %}
+                        <span class="rounded-md bg-chip px-2 py-0.5 text-on-chip">{{ tech }}</span>
+                        {% endfor %}
+                    </dd>
+                </dl>
+            </aside>
+        </div>
+    </section>
+
+    {# POSITIONNEMENT #}
+    <section class="mx-auto max-w-[1240px] px-6 pt-8 pb-24" aria-labelledby="home-positioning">
+        <p class="mb-2 font-mono text-[13px] text-accent-text">Mon positionnement</p>
+        <h2 id="home-positioning" class="mb-8 text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Penser le produit. Comprendre la technique. Faire le lien.</h2>
+        <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
+            {% for card in [
+                { index: '01', title: 'Mon parcours', text: nb_years ~ ' ans dans le web, d’abord en développement, aujourd’hui au service du produit. Je connais les deux côtés de la table.', link: path('app_experience'), cta: 'Découvrir mon parcours' },
+                { index: '02', title: 'Mon expertise', text: 'J’aide les équipes à cadrer les besoins, à faire les bons choix techniques et à mieux travailler ensemble.', link: path('app_skills'), cta: 'Voir mes compétences' },
+                { index: '03', title: 'Mon approche', text: 'J’aime comprendre, structurer et donner forme aux idées. En produit, en code ou en création, je cherche la simplicité.', link: path('app_projects'), cta: 'Voir mes réalisations' },
+            ] %}
+            <article class="rounded-[14px] border border-border bg-panel p-7 transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
+                <p class="mb-5 font-mono text-[13px] text-on-surface-muted">{{ card.index }}</p>
+                <h3 class="mb-2 text-[22px] font-bold">{{ card.title }}</h3>
+                <p class="mb-5 text-on-surface-muted">{{ card.text }}</p>
+                <a class="inline-flex min-h-11 items-center gap-2 font-medium text-accent-text hover:underline" href="{{ card.link }}">
+                    {{ card.cta }} {{ ux_icon('hugeicons:arrow-right-02', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
+                </a>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    {# EXPÉRIENCES #}
+    <section class="bg-band py-22 text-on-band-muted" aria-labelledby="home-experiences">
+        <div class="mx-auto max-w-[1240px] px-6">
+            <div class="mb-10 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
+                <div>
+                    <p class="mb-2 font-mono text-[13px] text-band-accent">Mes expériences</p>
+                    <h2 id="home-experiences" class="text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px] text-on-band">Là où produit et technique se rencontrent</h2>
+                </div>
+                <a class="inline-flex min-h-11 items-center font-medium text-band-accent hover:underline" href="{{ path('app_experience') }}">Tout mon parcours, depuis {{ page_manager.getStartCareerYear() }} →</a>
+            </div>
+            <div class="flex flex-col gap-3">
+                {% for experience in last_experiences %}
+                {% set is_current = experience.endDate is null %}
+                <article class="flex flex-wrap gap-x-8 gap-y-3 rounded-xl border border-band-border p-6 transition duration-300 ease-out motion-safe:hover:translate-x-1.5 hover:border-band-accent {{ is_current ? 'bg-band-card' : '' }}">
+                    <div class="flex flex-[0_0_170px] flex-col gap-2">
+                        {% if is_current %}
+                        <span class="self-start rounded-md bg-highlight px-2.5 py-0.5 font-mono text-[13px] font-medium text-on-highlight">v{{ experience.startDate|date('Y') }} · actuel</span>
+                        {% else %}
+                        <span class="self-start rounded-md bg-tag px-2.5 py-0.5 font-mono text-[13px] text-on-band">v{{ experience.startDate|date('Y') }}</span>
+                        {% endif %}
+                        <span class="font-mono text-[13px]">{{ experience.company.name }}</span>
+                    </div>
+                    <div class="min-w-0 flex-[1_1_420px]">
+                        <h3 class="mb-1.5 text-xl font-bold text-on-band">{{ experience.subtitle }}</h3>
+                        <p class="mb-1 font-mono text-[13px] text-band-accent">{{ experience.title }}</p>
+                        {% if experience.summary %}
+                        <p>{{ experience.summary }}</p>
+                        {% endif %}
+                    </div>
+                </article>
                 {% endfor %}
             </div>
         </div>
-    </div>
-</section>
-<div class="relative bottom-0 z-50">
-    <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-0 w-full block" viewBox="0 0 1440 320" style="height:140px;top:-139px" preserveAspectRatio="none">
-        <path class="fill-surface" fill-opacity="1" d="M 0 288 L 80 288 C 160 288 320 288 480 245.3 C 640 203 800 117 960 96 C 1120 75 1280 117 1360 138.7 L 1440 160 L 1440 320 L 0 320 Z"></path>
-    </svg>
-</div>
+    </section>
 
-{# Positionnement section #}
-<section id="competences" class="bg-surface text-on-surface py-10">
-    <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
-        <p class="nine-section-subheader">
-            Mon positionnement
-        </p>
-        <h2 class="text-3xl md:text-4xl font-semibold">
-            Penser le produit. Comprendre la technique. Faire le lien.
-        </h2>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        {# CARD #}
-        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="0ms">
-            {# ICON #}
-            <div class="mb-6 text-3xl">🧭</div>
-            {# MINI TITLE #}
-            <p class="text-sm text-slate-500 mb-2">Du développement au produit</p>
-            {# TITLE #}
-            <h3 class="text-xl font-semibold mb-4">Parcours</h3>
-
-            {# TEXT #}
-            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                15 ans en développement web, aujourd’hui complétés par un rôle de Product Owner technique.
-                J’interviens à la croisée du produit et de la technique pour structurer des solutions efficaces.
-            </p>
-            {# CTA #}
-            <a href="{{ path('app_experience') }}" aria-label="En savoir plus sur mon parcours" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-                Découvrir mon parcours {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
-            </a>
-        </div>
-
-        {# CARD #}
-        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="400ms">
-            <div class="mb-6 text-3xl">⚙️</div>
-            <p class="text-sm text-slate-500 mb-2">Faire le lien métier / tech</p>
-            <h3 class="text-xl font-semibold mb-4">Expertise</h3>
-
-            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                J’accompagne les équipes pour cadrer les besoins, orienter les choix techniques et fluidifier la collaboration.
-                Une approche pragmatique, centrée sur la valeur.
-            </p>
-            <a href="{{ path('app_skills') }}" aria-label="En savoir plus sur mon expertise" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-                En savoir plus {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
-            </a>
-        </div>
-
-        {# CARD #}
-        <div class="group p-8 rounded-2xl backdrop-blur bg-white/70 dark:bg-white/5 border border-white/10 hover:-translate-y-2 hover:shadow-2xl transition duration-500 animate__animated" data-animate="animate__fadeInBottomLeft" data-delay="800ms">
-            <div class="mb-6 text-3xl">✨</div>
-            <p class="text-sm text-slate-500 mb-2">Structurer &amp; simplifier</p>
-            <h3 class="text-xl font-semibold mb-4">Approche</h3>
-
-            <p class="text-slate-600 dark:text-slate-400 leading-relaxed">
-                J’aime comprendre, structurer et donner forme aux idées.
-                Que ce soit en produit, en code ou en création, je privilégie précision et simplicité.
-            </p>
-            <a href="{{ path('app_projects') }}" aria-label="En savoir plus sur mon approche" class="mt-6 text-sm font-medium flex items-center gap-2 text-[#0C91B9] group-hover:gap-3 transition-all after:absolute after:inset-0 after:z-10">
-                Voir mes réalisations {{ ux_icon('fa7-solid:right-long', { class: 'w-4 h-4' }) }}
-            </a>
-        </div>
-    </div>
-</section>
-
-{# Parcours section #}
-<section class="bg-nine-blue-800 text-nine-gray-200 py-10">
-    <div class="text-center max-w-2xl mx-auto mb-20 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
-        <p class="nine-section-subheader">
-            Mon parcours
-        </p>
-        <h2 class="text-3xl md:text-4xl font-semibold">
-            Un parcours construit sur la technique, aujourd’hui au service du produit
-        </h2>
-    </div>
-
-    {# TIMELINE #}
-    <div class="relative max-w-3xl mx-auto">
-
-        {# ligne #}
-        <div class="absolute left-4 top-0 w-px h-full bg-white/10"></div>
-
-        {# ITEM #}
-        <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-            <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-md">
-                {{ ux_icon('hugeicons:plant-04', { class: 'w-6 h-6 text-nine-blue-500' }) }}
+    {# À PROPOS #}
+    <section class="mx-auto max-w-[1240px] px-6 py-24" aria-labelledby="home-about">
+        <div class="flex flex-wrap items-start gap-12">
+            <div class="flex-[0_1_320px]">
+                <img class="aspect-square w-full rounded-2xl border border-border object-cover" src="{{ asset('images/cnoyer.webp') }}" alt="Caroline Noyer" width="320" height="320" loading="lazy">
             </div>
-
-            <div class="p-2 rounded-2xl backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
-                <h3 class="text-xl font-semibold mb-1">Développement</h3>
-                <h4 class="text-md font-bold mb-2 text-nine-gray-400">Les fondations</h4>
-                <p>
-                    15 ans en développement web (PHP, Symfony, bases de données).<br>
-                    Une expertise construite sur des projets concrets : jeux vidéo, santé, contrats courts, assets management...<br>
-                    Une vision transverse des environnements techniques et métier.
-                </p>
-            </div>
-        </div>
-
-        <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-            <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-md">
-                {{ ux_icon('hugeicons:certificate-01', { class: 'w-6 h-6 text-nine-blue-500' }) }}
-            </div>
-
-            <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
-                <h3 class="text-xl font-semibold mb-1">Expertise technique</h3>
-                <h4 class="text-md font-bold mb-2 text-nine-gray-400">Comprendre en profondeur</h4>
-                <p>
-                    Architecture, performance, automatisation...<br>
-                    Une maîtrise des systèmes qui permet d’anticiper les contraintes et de faire des choix solides.
-                </p>
-            </div>
-        </div>
-
-        <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-            <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-lg">
-                {{ ux_icon('hugeicons:package-moving', { class: 'w-6 h-6 text-nine-blue-500' }) }}
-            </div>
-
-            <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
-                <h3 class="text-xl font-semibold mb-1">Transition produit</h3>
-                <h4 class="text-md font-bold mb-2 text-nine-gray-400">Faire le lien</h4>
-                <p>
-                    Cadrage, priorisation, échanges avec les métiers.<br>
-                    Une évolution naturelle vers un rôle d’interface entre les équipes.
-                </p>
-            </div>
-        </div>
-
-        <div class="relative pl-12 mb-8 group animate__animated" data-animate="animate__fadeInLeft">
-            <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-lg">
-                {{ ux_icon('hugeicons:checkmark-badge-04', { class: 'w-6 h-6 text-nine-blue-500' }) }}
-            </div>
-
-            <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
-                <h3 class="text-xl font-semibold mb-1">Product Owner technique</h3>
-                <h4 class="text-md font-bold mb-2 text-nine-gray-400">Structurer et livrer</h4>
-                <p>
-                    Pilotage produit, coordination des équipes, décisions éclairées.<br>
-                    Une approche orientée valeur, impact et qualité.
-                </p>
-            </div>
-        </div>
-
-        <div class="relative pl-12 mb-8group animate__animated" data-animate="animate__fadeInLeft">
-            <div class="absolute left-0 top-1 w-8 h-8 rounded-full bg-nine-amber-400 flex items-center justify-center text-nine-blue-500 text-lg">
-                {{ ux_icon('hugeicons:paint-board', { class: 'w-6 h-6 text-nine-blue-500' }) }}
-            </div>
-
-            <div class="p-2 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-2xl transition duration-500">
-                <h3 class="text-xl font-semibold mb-1">Culture UX</h3>
-                <h4 class="text-md font-bold mb-2 text-nine-gray-400">Penser l’expérience</h4>
-                <p>
-                    UX, prototypage, design produit.<br>
-                    Une attention portée à la clarté, à l’usage et à la cohérence des interfaces.
-                </p>
-            </div>
-        </div>
-
-    </div>
-</section>
-
-{# Experience section #}
-<section id="experience" class="bg-surface py-10">
-    <div class="text-center max-w-2xl mx-auto mb-16 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
-        <p class="nine-section-subheader">
-            Mes expériences
-        </p>
-        <h2 class="text-3xl md:text-4xl font-semibold">
-            Des expériences où produit, technique et collaboration s’alignent pour créer de la valeur
-        </h2>
-    </div>
-
-    {% for experience in last_experiences %}
-    <div class="container px-4 sm:px-8 lg:grid lg:grid-cols-12 lg:gap-x-12 text-blue-dark pb-12">
-        <div class="lg:col-span-5">
-            <div class="mb-16 lg:mb-0 xl:mt-16 animate__animated" data-animate="animate__fadeInLeft">
-                <div class="w-10/12 sm:w-12/12 mx-auto">
-                    <div class="relative flex flex-col min-w-0 wrap-break-words w-full mb-6 shadow-lg rounded-lg bg-brand-{{ experience.company.slug }}">
-                        <img alt="..." src="{{ absolute_url('images/company/header-' ~ experience.company.slug ~ '.webp') }}" class="w-full align-middle rounded-t-lg">
-                        <blockquote class="relative p-8 mb-4">
-                            <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block" style="height:95px;top:-94px">
-                                <polygon points="-30,95 583,95 583,65" class="fill-brand-{{ experience.company.slug }}"></polygon>
-                            </svg>
-                            <h3 class="text-xl font-bold text-white">{{ experience.title }}</h3>
-                            <h4 class="mb-8 font-semibold text-white/70">{{ experience.subtitle }}</h4>
-                            <p class="text-md font-light mt-2 text-nine-sand-200">{{ experience.summary }}</p>
-                        </blockquote>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="lg:col-span-7">
-            <div class="sm:px-8">
-                <div class="mt-4 xl:mt-20 animate__animated" data-animate="animate__fadeInRight" data-delay="0.3s">
-                    <ul class="space-y-3">
-                        {% for item in experience.items %}
-                        <li class="flex">
-                            <p class="h-lh w-5.5 shrink-0 pt-1">{{ item.picto }}</p>
-                            <div class="pl-4 rounded-lg backdrop-blur hover:translate-x-2 hover:shadow-xl transition duration-500">
-                                <h5 class="text-xl mb-1 font-semibold text-nine-blue-500 dark:text-nine-gray-400">{{ item.title }}</h5>
-                                <p class="mb-5">
-                                    {{ item.details }}
-                                </p>
-                            </div>
+            <div class="min-w-0 flex-[1_1_520px]">
+                <p class="mb-2 font-mono text-[13px] text-accent-text">À propos de moi</p>
+                <h2 id="home-about" class="mb-6 text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Le pont entre l’architecture technique et l’expérience utilisateur</h2>
+                <div class="flex max-w-[680px] flex-col gap-4 text-on-surface-muted">
+                    <p>
+                        Passionnée par le digital depuis plus de deux décennies, mon parcours est celui d’une évolution constante.
+                        De <strong class="text-on-surface">développeuse PHP</strong> senior au sein de la R&amp;D de Coffreo à <strong class="text-on-surface">Product Owner</strong>,
+                        j’ai appris une vérité fondamentale : la technique n’est puissante que lorsqu’elle est au service d’une vision claire.
+                    </p>
+                    <p>
+                        Aujourd’hui, j’allie mes bases solides en ingénierie à une sensibilité de <strong class="text-on-surface">Product Designer</strong>
+                        pour concevoir des produits qui ne sont pas seulement fonctionnels, mais véritablement justes pour l’utilisateur.
+                        Ma double culture me permet de parler le langage des développeurs tout en pilotant la stratégie produit avec précision.
+                    </p>
+                    <p>Pour moi, un projet réussi repose sur deux piliers :</p>
+                    <ul class="flex flex-col gap-3">
+                        <li class="rounded-xl border border-border bg-panel p-4 transition duration-300 ease-out motion-safe:hover:translate-x-1.5">
+                            <strong class="text-on-surface">Intelligence collective.</strong> Je crois fermement que la valeur du groupe dépasse la somme des talents.
+                            J’aime insuffler cette cohésion, ce dynamisme (et parfois cette touche d’humour) qui transforme un backlog en une réussite commune.
                         </li>
-                        {% endfor %}
+                        <li class="rounded-xl border border-border bg-panel p-4 transition duration-300 ease-out motion-safe:hover:translate-x-1.5">
+                            <strong class="text-on-surface">Évolution permanente.</strong> Curieuse de nature, je vois chaque défi comme un terrain d’apprentissage.
+                            Qu’il s’agisse d’optimiser un workflow ou de me former à de nouvelles méthodologies, je cherche toujours à donner du sens et de l’efficience à mes actions.
+                        </li>
                     </ul>
+                    <p>
+                        <strong class="text-on-surface">Mon moteur ?</strong> Relever des challenges qui demandent autant de rigueur technique que d’ouverture d’esprit,
+                        pour continuer à grandir et faire grandir vos produits.
+                    </p>
                 </div>
             </div>
         </div>
-    </div>
-    {% endfor %}
+    </section>
 
-    <div class="text-center mt-10 animate__animated" data-animate="animate__fadeIn">
-        <a href="{{ path('app_experience') }}" aria-label="Découvrez mon parcours professionnel" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-gray-400/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
-            <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue-500)] to-[var(--color-nine-cyan-500)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
-            <span class="relative z-10 flex items-center gap-2">
-                <span>Découvrir mon parcours</span>
-                {{ ux_icon('fa7-solid:right-long', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
-            </span>
-        </a>
-    </div>
-</section>
-
-{# Moodboard section #}
-<section id="paysage" class="bg-nine-blue-800 text-on-surface-alt py-10">
-    <div class="container mx-auto py-8">
-        <div class="text-center animate__animated" data-animate="animate__fadeInUp" data-delay="0.6s">
-            <p class="nine-section-subheader">
-                Moodboard
-            </p>
+    {# À CÔTÉ DU TRAVAIL #}
+    <section class="mx-auto max-w-[1240px] px-6 pb-24" aria-labelledby="home-side">
+        <p class="mb-2 font-mono text-[13px] text-accent-text">À côté du travail</p>
+        <h2 id="home-side" class="mb-8 text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Ce que je construis pour le plaisir</h2>
+        <div class="grid auto-rows-[220px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <a class="row-span-2 flex flex-col justify-between gap-4 rounded-[14px] border border-border bg-panel p-6 text-on-surface hover:border-accent-text transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ path('app_arcade') }}">
+                <span class="font-mono text-[13px] text-on-surface-muted">hardware · DIY</span>
+                <img class="min-h-0 w-full flex-1 rounded-[10px] bg-placeholder object-cover" src="{{ asset('images/pages/hero-arcade.webp') }}" alt="" loading="lazy">
+                <span class="text-2xl font-bold">Ma borne d’arcade</span>
+            </a>
+            <a class="flex flex-col justify-between rounded-[14px] border border-border bg-panel p-6 text-on-surface hover:border-accent-text transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ path('app_photos') }}">
+                <span class="font-mono text-[13px] text-on-surface-muted">galerie</span>
+                <span class="text-2xl font-bold">Mes photos</span>
+            </a>
+            <a class="flex flex-col justify-between rounded-[14px] border border-border bg-panel p-6 text-on-surface hover:border-accent-text transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ path('app_creations') }}">
+                <span class="font-mono text-[13px] text-on-surface-muted">galerie</span>
+                <span class="text-2xl font-bold">Mes créations</span>
+            </a>
+            <a class="flex flex-col justify-between rounded-[14px] bg-primary p-6 sm:col-span-2 text-on-primary transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="https://github.com/thedarknine/portfolio" target="_blank" rel="noopener">
+                <span class="font-mono text-[13px]">sous le capot</span>
+                <span class="text-[22px] font-bold">Ce site : Symfony, Tailwind et Docker</span>
+            </a>
         </div>
-        <div class="grid-cols-4 p-8 md:space-y-0 md:grid md:gap-3 md:grid-rows-2">
-            {% for landscape in mental_landscape %}
-            <div class="w-full h-full rounded overflow-hidden {% if landscape.big %}col-span-2 row-span-2{% endif %} animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                <img src="{{ absolute_url(landscape.image) }}" alt="{{ landscape.alt }}" class="block h-full w-full grayscale-50 rounded-lg my-4 lg:my-0 object-cover object-center hover:scale-110 hover:grayscale-0 transition duration-500">
+    </section>
+
+    {# CONTACT #}
+    <section class="border-t border-border py-18" aria-labelledby="home-contact">
+        <div class="mx-auto flex max-w-[1240px] flex-wrap items-center justify-between gap-6 px-6">
+            <div class="min-w-0 flex-[1_1_420px]">
+                <h2 id="home-contact" class="mb-3 text-[clamp(32px,4vw,44px)] leading-[1.1] font-bold tracking-[-1px]">Envie d’en parler ?</h2>
+                <p class="max-w-[520px] text-on-surface-muted">Un projet, une opportunité ou simplement l’envie d’échanger sur le produit et la technique : je serai ravie de vous répondre.</p>
             </div>
-            {% endfor %}
+            <a class="btn btn--strong btn--lg" href="{{ path('app_contact') }}">Me contacter</a>
         </div>
-        <p class="col-span-4 text-center text-on-surface-muted w-3/5 mx-auto">Mon moodboard : une source d’inspiration pour allier esthétique, fonctionnalité et harmonie dans mes projets. Chaque image reflète une valeur ou une approche qui guide mon travail : la collaboration, la précision, la sérénité, et l’innovation.</p>
-    </div>
-</section>
-
-{# About me section #}
-<section id="about" class="bg-surface py-10">
-    <div class="text-center max-w-2xl mx-auto mb-8 animate__animated animate__slow" data-animate="animate__fadeIn" data-delay="200ms">
-        <p class="nine-section-subheader">
-            A propos de moi
-        </p>
-        <h2 class="text-3xl md:text-4xl font-semibold">
-            Le pont entre l’architecture technique et l’expérience utilisateur
-        </h2>
-    </div>
-
-    <div class="container flex flex-wrap text-on-surface-muted">
-        <div class="w-5/6 sm:w-1/3 p-6 animate__animated" data-animate="animate__zoomInUp">
-            <img src="{{ absolute_url('images/cnoyer.webp') }}" alt="Caroline Noyer • Technical Product Owner &amp; Développeur web senior" class="drop-shadow-xl rounded-full w-3/4 mx-auto mt-10 nine-border-gradient">
-        </div>
-        <div class="w-full sm:w-2/3 p-6 mt-10 animate__animated" data-animate="animate__zoomIn">
-            <p class="mb-4">
-                Passionnée par le digital depuis plus de deux décennies, mon parcours est celui d’une
-                évolution constante. De <strong>développeuse PHP</strong> senior au sein de la R&D de Coffreo à <strong>Product Owner</strong>,
-                j’ai appris une vérité fondamentale : la technique n’est puissante que lorsqu’elle est au service
-                d’une vision claire.
-            </p>
-            <p class="mb-4">
-                Aujourd'hui, j'allie mes bases solides en ingénierie à une sensibilité de <strong>Product Designer</strong>
-                pour concevoir des produits qui ne sont pas seulement fonctionnels, mais véritablement justes pour
-                l’utilisateur. Ma double culture me permet de parler le langage des développeurs tout en pilotant
-                la stratégie produit avec précision.
-            </p>
-            <p class="mb-0">
-                Pour moi, un projet réussi repose sur deux piliers :
-            </p>
-            <ul class="list-disc list-inside mb-4">
-                <li><strong>Intelligence collective</strong> : Je crois fermement que la valeur du groupe
-                    dépasse la somme des talents. J’aime insuffler cette cohésion, ce dynamisme (et parfois
-                    cette touche d’humour) qui transforme un backlog en une réussite commune.</li>
-                <li><strong>Évolution permanente</strong> : Curieuse de nature, je vois chaque défi comme
-                    un terrain d'apprentissage. Qu’il s’agisse d’optimiser un workflow ou de me former à de
-                    nouvelles méthodologies d’amélioration de soi, je cherche toujours à donner du sens et de
-                    l'efficience à mes actions.</li>
-            </ul>
-            <p class="mb-4">
-                <strong>Mon moteur ?</strong> Relever des challenges qui demandent autant de rigueur technique que
-                d'ouverture d'esprit pour continuer à grandir, et faire grandir vos produits.
-            </p>
-        </div>
-    </div>
-</section>
-
-{# Section Contact #}
-<section id="contact" class="bg-surface-alt text-on-surface py-16">
-    <div class="max-w-4xl mx-auto text-center px-4">
-        <p class="nine-section-subheader mb-4">Me contacter</p>
-        <h2 class="text-3xl md:text-4xl font-semibold mb-6">
-            Prêt à collaborer ?
-        </h2>
-
-        {# Texte d'introduction #}
-        <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8 leading-relaxed">
-            Que ce soit pour discuter d’un projet, d’une opportunité ou simplement échanger sur le produit et la technique,
-            n’hésitez pas à me contacter. Je serai ravie d’échanger avec vous.
-        </p>
-
-        {# Bouton vers la page de contact #}
-        <a href="{{ path('app_contact') }}" aria-label="Me contacter" class="relative inline-flex items-center justify-center px-6 py-2.5 rounded-lg bg-gray-400/60 backdrop-blur-sm text-sm font-semibold text-nine-blue shadow-sm transition-all duration-300 hover:text-white hover:shadow-md hover:-translate-y-0.5 group overflow-hidden">
-            <span class="absolute inset-0 bg-gradient-to-r from-[var(--color-nine-blue-500)] to-[var(--color-nine-cyan-500)] opacity-0 group-hover:opacity-100 transition-opacity duration-300 ease-out-in z-0"></span>
-            <span class="relative z-10 flex items-center gap-2">
-                <span>Me contacter</span>
-                {{ ux_icon('fa7-solid:paper-plane', { class: 'transition-transform group-hover:translate-x-1 w-4 h-4' }) }}
-            </span>
-        </a>
-    </div>
-</section>
+    </section>
+</div>
 {% endblock %}

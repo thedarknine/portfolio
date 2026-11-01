@@ -1,54 +1,32 @@
-<section class="nine-page-hero bg-surface-hero text-on-surface-hero">
-    <div class="grid grid-cols-1 md:grid-cols-3 md:gap-16 items-stretch pr-0 mr-0">
-        <div class="col-span-2 md:ml-40 nine-hero-content animate__animated flex flex-col min-h-full" data-animate="animate__fadeInLeft">
+{# Inner page hero — see docs/style-guide.md § Page hero #}
+<section class="page-hero relative overflow-hidden bg-[#172c49] font-sans text-white">
+    <img class="absolute inset-0 size-full object-cover" src="{{ asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp') }}" alt="" fetchpriority="high">
+    <div class="page-hero__overlay absolute inset-0" aria-hidden="true"></div>
 
-            <div class="flex-1 flex items-center">
-                <div>
-                    <span class="nine-page-hero__label">{{ current_page.tagline }}</span>
-                    <h1 class="nine-page-hero__title text-3xl font-bold mb-6">{{ current_page.subtitle }}</h1>
-                </div>
-            </div>
+    <div class="relative mx-auto max-w-[1240px] px-6 pt-8 pb-16">
+        {# Breadcrumb styled as a shell path: ~/experience/coffreo/refonte-app-mobile #}
+        <nav class="page-hero__breadcrumb mb-14 inline-flex max-w-full items-center gap-2.5 rounded-[10px] border px-3.5 py-2 font-mono text-[13px] sm:text-sm" aria-label="Fil d’Ariane">
+            <span class="page-hero__prompt shrink-0" aria-hidden="true">❯</span>
+            <ol class="flex min-w-0 items-center">
+                <li class="shrink-0"><a href="{{ path('app_home') }}" aria-label="Accueil">~</a></li>
+                {% set levels = ['level1', 'level2']|filter(level => breadcrumb[level] is defined) %}
+                {% for level in levels %}
+                <li class="page-hero__sep shrink-0 {{ not loop.last ? 'hidden sm:block' }}" aria-hidden="true">/</li>
+                {% if loop.first and levels|length > 1 %}
+                <li class="page-hero__sep shrink-0 sm:hidden" aria-hidden="true">/…</li>
+                {% endif %}
+                <li class="shrink-0 {{ not loop.last ? 'hidden sm:block' }}">
+                    {# Shown as a slug, announced with its real label #}
+                    <a href="{{ breadcrumb[level].url }}" aria-label="{{ breadcrumb[level].label }}" title="{{ breadcrumb[level].label }}">{{ loop.first ? breadcrumb[level].url|split('#')|first|trim('/') : breadcrumb[level].label|lower|replace({ ' ': '-' }) }}</a>
+                </li>
+                {% endfor %}
+                <li class="page-hero__sep shrink-0" aria-hidden="true">/</li>
+                <li class="min-w-0 truncate"><span class="text-white" aria-current="page" title="{{ current_page.title }}"><span aria-hidden="true">{{ current_page.slug }}</span><span class="sr-only">{{ current_page.title }}</span></span></li>
+            </ol>
+            <span class="page-hero__cursor shrink-0" aria-hidden="true"></span>
+        </nav>
 
-            {% if breadcrumb.level1 is defined %}
-            <nav class="mt-auto pb-4 w-full" aria-label="Breadcrumb">
-                <ol class="inline-flex items-center space-x-1 md:space-x-2 w-full">
-                    <li class="hidden md:inline-flex items-center">
-                        <a href="{{ path('app_home') }}" class="text-xs text-on-surface-hero/70 hover:text-on-surface-hero inline-flex items-center transition-colors duration-200">
-                            {{ ux_icon('hugeicons:home-09', { class: 'mr-1' }) }}&nbsp;Accueil
-                        </a>
-                    </li>
-
-                    <li class="inline-flex items-center">
-                        <div class="flex items-center">
-                            {{ ux_icon('flowbite:chevron-right-outline', { class: 'text-on-surface-muted/50 text-base hidden md:inline-block mr-1 md:mr-2 text-xl' }) }}
-                            {{ ux_icon('hugeicons:arrow-left-04', { class: 'text-on-surface-muted text-base md:hidden mr-1' }) }}
-                            <a href="{{ breadcrumb.level1.url }}" class="text-xs font-medium text-on-surface-hero/70 hover:text-on-surface-hero inline-flex items-center transition-colors duration-200">
-                                {{ ux_icon('hugeicons:briefcase-04', { class: 'mr-1 hidden md:inline-block' }) }}&nbsp;{{ breadcrumb.level1.label }}
-                            </a>
-                        </div>
-                    </li>
-
-                    {% if breadcrumb.level2 is defined %}
-                    <li aria-current="page" class="hidden md:inline-flex items-center">
-                        <div class="flex items-center">
-                            {{ ux_icon('flowbite:chevron-right-outline', { class: 'text-on-surface-muted/50 text-base mr-1 md:mr-2 text-xl' }) }}
-                            <a href="{{ breadcrumb.level2.url }}" class="text-xs font-medium text-on-surface-hero inline-flex items-center truncate max-w-[260px]">
-                                {{ breadcrumb.level2.icon ? ux_icon(breadcrumb.level2.icon, { class: 'mr-1 shrink-0' }) : '' }}&nbsp;{{ breadcrumb.level2.label }}
-                            </a>
-                        </div>
-                    </li>
-                    {% endif %}
-                </ol>
-            </nav>
-            {% endif %}
-        </div>
-
-        <div class="nine-page-hero__visual animate__animated" data-animate="animate__fadeInRight">
-            <div class="nine-hero-image-wrapper">
-                <img
-                    src="{{ asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp') }}"
-                    alt="{{ current_page.title }}">
-            </div>
-        </div>
+        <p class="page-hero__tagline mb-3 font-mono text-[13px] tracking-wide uppercase">{{ current_page.tagline }}</p>
+        <h1 class="max-w-[760px] text-[clamp(34px,4.6vw,52px)] leading-[1.08] font-bold tracking-[-1px]">{{ current_page.subtitle }}</h1>
     </div>
 </section>

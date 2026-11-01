@@ -6,7 +6,11 @@
 @import "./base/animations.css";
 @import "./components/theme-toggle.css";
 @import "./components/buttons.css";
+@import "./components/forms.css";
+@import "./components/cookie-consent.css";
 @import "./components/header.css";
+@import "./components/hero.css";
+@import "./components/timeline.css";
 
 /* ============================================================
  * BASE
@@ -18,19 +22,6 @@
         font-size: 14px;
         color: var(--color-on-surface);
         background-color: var(--color-surface);
-        transition:
-            background-color 0.4s ease,
-            color 0.4s ease;
-    }
-}
-
-/* ============================================================
- * GLOBAL COMPONENTS
- * ============================================================ */
-@layer components {
-    footer {
-        color: var(--color-on-surface-footer);
-        background-color: var(--color-surface-footer);
         transition:
             background-color 0.4s ease,
             color 0.4s ease;
@@ -159,10 +150,6 @@
             }
         }
     }
-}
-
-.nine-no-hero {
-    padding-top: 5rem;
 }
 
 /* ============================================================

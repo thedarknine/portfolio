@@ -1,137 +1,120 @@
-.nine-experience-timeline {
-    position: relative;
-    padding-bottom: 4rem;
+/* Experience case studies (layout_case_study.html.twig) — see docs/style-guide.md § Case studies */
 
-    .container {
-        position: relative;
+.case-study {
+    > section + section {
+        margin-top: 3.5rem;
+        padding-top: 3.5rem;
+        border-top: 1px solid var(--color-border);
     }
 
-    .nine-tags {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.75rem;
-        margin-top: 2rem;
+    h3 {
+        line-height: 1.35;
+    }
 
-        span {
-            padding: 0.5rem 1rem;
-            font-size: 0.9rem;
-            color: #14345d;
-            background: #efe7d8;
-            border-radius: 999px;
-        }
+    svg {
+        flex-shrink: 0;
     }
 }
 
-.nine-work-approach {
-    padding: 6rem 0;
+/* "Le défi" callout at the top of a case study */
+.case-callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 16px 20px;
+    border: 1px solid var(--color-border);
+    border-left: 3px solid var(--color-accent-text);
+    border-radius: 12px;
+    background-color: var(--color-panel);
+}
 
-    .nine-approach-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
+/* Highlighted card, e.g. "Impact mesurable" */
+.case-card {
+    padding: 20px 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background-color: var(--color-panel);
+}
 
-        article {
-            padding: 2rem;
+/* Numbered or named step of the approach */
+.case-step {
+    padding-left: 20px;
+    border-left: 2px solid color-mix(in srgb, var(--color-accent-text) 35%, transparent);
+}
 
-            h2 {
-                margin-top: 1.2rem;
-                margin-bottom: 1rem;
-                font-size: 1.4rem;
-                font-weight: 700;
-            }
+.case-link {
+    color: var(--color-accent-text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
 
-            p {
-                line-height: 1.8;
-                opacity: 0.8;
-            }
-        }
-
-        article:not(:first-child) {
-            border-left: 1px solid rgb(255 255 255 / 15%);
-        }
+    &:hover {
+        text-decoration-thickness: 2px;
     }
 }
 
-.fade-up {
-    opacity: 0;
-    transform: translateY(40px);
-    animation: fade-up 1s ease forwards;
-}
+/* Tools used: logo tiles */
+.case-tools {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
 
-.fade-in {
-    opacity: 0;
-    animation: fade-in 1.2s ease forwards;
-}
-
-@keyframes fade-up {
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes fade-in {
-    to {
-        opacity: 1;
-    }
-}
-
-@media screen and (width <= 992px) {
-    .nine-page-hero,
-    .nine-skills-overview .cards-grid,
-    .nine-work-approach .nine-approach-grid,
-    .nine-experience-timeline .nine-timeline-item {
-        grid-template-columns: 1fr;
-    }
-
-    .nine-experience-timeline {
-        .timeline-line,
-        .timeline-dot {
-            display: none;
-        }
-    }
-
-    .nine-page-hero {
-        padding: 5rem 0;
-    }
-}
-
-.visual-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-    gap: 2rem;
-    margin: 1rem 0;
-}
-
-.visual-item {
-    text-align: center;
-
-    img {
-        width: 100%;
-        border-radius: 0.4rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        margin-bottom: 1rem;
+    > span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        border: 1px solid var(--color-border);
+        border-radius: 10px;
+        background-color: var(--color-panel);
     }
 }
 
 .problem-quote {
-    background: var(--color-surface-quote);
-    padding: 1.5rem;
-    border-left: 4px solid var(--color-nine-cyan-500);
     margin: 1.5rem 0;
+    padding: 20px 24px;
+    border-left: 3px solid var(--color-accent-text);
+    border-radius: 0 12px 12px 0;
+    background-color: var(--color-chip);
+    color: var(--color-on-surface);
     font-style: italic;
-    color: var(--color-on-surface-quote);
-    border-radius: 0.4rem;
 }
 
-.step-visual,
-.visual-item {
-    img {
-        margin: 1rem auto;
-        transition: transform 0.3s;
-    }
+/* Screenshots */
+.story-visual {
+    margin-top: 2.5rem;
+}
 
-    img:hover {
-        transform: scale(1.02);
+.visual-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 24px;
+    margin: 1rem 0;
+}
+
+.visual-item,
+.step-visual {
+    margin-top: 1rem;
+
+    img {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+        margin: 0 auto;
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        background-color: var(--color-placeholder);
     }
+}
+
+.step-visual img {
+    width: auto;
+}
+
+.case-caption {
+    margin-top: 10px;
+    font-size: 14px;
+    text-align: center;
+    color: var(--color-on-surface-muted);
 }

@@ -18,11 +18,15 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
 use Tito10047\AltchaBundle\Type\AltchaType;
+use Tito10047\AltchaBundle\Validator\Altcha;
 
 class ContactType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $altcha          = new Altcha();
+        $altcha->message = 'Merci de cocher la case de vérification anti-robot.';
+
         $builder
             ->add('name', TextType::class, [
                 'label'       => false,
@@ -53,16 +57,19 @@ class ContactType extends AbstractType
                     new Assert\Length(min: 10, minMessage: 'Votre message est trop court.'),
                 ],
             ])
+            // Honeypot: hidden from people, filled in by most spam bots (checked in ContactController)
+            ->add('website', TextType::class, [
+                'label'    => false,
+                'mapped'   => false,
+                'required' => false,
+                'attr'     => ['autocomplete' => 'off', 'tabindex' => '-1'],
+            ])
             ->add('security', AltchaType::class, [
                 'label'       => false,
-                'floating'    => true,
+                'floating'    => false,
                 'hide_logo'   => false,
                 'hide_footer' => false,
-                // Optional: override global config
-                // 'cost' => 5000,
-                // 'timeout' => 30.0,
-                // 'counter_min' => 5000,
-                // 'counter_max' => 10000,
+                'constraints' => [$altcha],
             ]);
     }
 

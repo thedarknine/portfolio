@@ -2,7 +2,11 @@
  * TOKENS DESIGN SYSTEM
  * ============================================================ */
 @theme {
-    /* Typo */
+    /* Typo — redesign (see docs/style-guide.md) */
+    --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    /* Typo — legacy, removed once every template is migrated */
     --font-normal: "Oxygen", "Inter", sans-serif;
     --font-accent: "League Spartan", sans-serif;
 
@@ -51,21 +55,54 @@
     --color-nine-secondary: var(--color-nine-cyan-500);
 
     /* Surfaces */
-    --color-surface: var(--color-nine-sand-50);
+    --color-surface: #eef1f5;
     --color-surface-alt: var(--color-nine-sand-200);
     --color-surface-hero: var(--color-nine-blue-700);
     --color-surface-quote: var(--color-nine-gray-400);
     --color-surface-card: var(--color-nine-sand-50);
-    --color-surface-footer: var(--color-nine-blue-900);
+    --color-surface-footer: #172c49;
 
     /* Textes */
-    --color-on-surface: var(--color-nine-blue-600);
-    --color-on-surface-muted: var(--color-nine-gray-600);
+    --color-on-surface: #172c49;
+    --color-on-surface-muted: #4f5d70;
     --color-on-surface-subheader: var(--color-nine-gray-600);
     --color-on-surface-hero: var(--color-nine-sand-200);
     --color-on-surface-quote: var(--color-nine-blue-600);
     --color-on-surface-card: var(--color-nine-gray-500);
-    --color-on-surface-footer: var(--color-nine-gray-400);
+    --color-on-surface-footer: #b6c2d1;
+
+    /* ------------------------------------------------------------------
+     * SEMANTIC TOKENS — redesign, light mode (default values)
+     * Reference: docs/style-guide.md. New components use these tokens only.
+     * ------------------------------------------------------------------ */
+    --color-surface-header: rgb(238 241 245 / 92%);
+    --color-panel: #ffffff;
+    --color-border: #d5dbe4;
+    --color-accent-text: #076f8c;
+    --color-primary: #087a9c;
+    --color-on-primary: #ffffff;
+    --color-strong: #172c49;
+    --color-on-strong: #ffffff;
+    --color-chip: #e6f3f7;
+    --color-on-chip: #065f7a;
+    --color-band: #172c49;
+    --color-band-card: #1f3757;
+    --color-band-border: #2d4566;
+    --color-on-band: #ffffff;
+    --color-on-band-muted: #b6c2d1;
+    --color-band-accent: #5cc8e8;
+    --color-tag: #2a4263;
+    --color-highlight: #ffcf70;
+    --color-on-highlight: #172c49;
+    --color-status-live: #1f9d6b;
+    --color-placeholder: #dfe5ec;
+    --color-timeline-year: #2687ab;
+    --color-level-start: #ffaa00;
+    --color-level-end: #f59e0b;
+    --color-field: #ffffff;
+    --color-field-border: #7d8a9c;
+    --color-danger: #b42318;
+    --color-danger-soft: #fdecea;
 }
 
 /* Safelist for Tailwind CSS classes used in templates */
@@ -84,18 +121,44 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root[data-theme="dark"] {
-    --color-surface: var(--color-nine-blue-900);
+    --color-surface: #0f2238;
     --color-surface-alt: var(--color-nine-blue-800);
     --color-surface-hero: var(--color-nine-gray-800);
     --color-surface-quote: var(--color-nine-gray-800);
     --color-surface-card: var(--color-nine-gray-700);
-    --color-surface-footer: var(--color-nine-blue-900);
+    --color-surface-footer: #0b1a2c;
 
-    --color-on-surface: var(--color-nine-gray-200);
-    --color-on-surface-muted: var(--color-nine-gray-400);
+    --color-on-surface: #e6ecf4;
+    --color-on-surface-muted: #a6b5c8;
     --color-on-surface-subtle: var(--color-nine-gray-600);
     --color-on-surface-hero: var(--color-nine-gray-400);
     --color-on-surface-quote: var(--color-nine-gray-400);
     --color-on-surface-card: var(--color-nine-sand-200);
-    --color-on-surface-footer: var(--color-nine-gray-400);
+    --color-on-surface-footer: #b4bfcc;
+
+    /* Redesign tokens — dark mode */
+    --color-surface-header: rgb(15 34 56 / 94%);
+    --color-panel: #1c2a3f;
+    --color-border: #2f3d52;
+    --color-accent-text: #4cc3e6;
+    --color-primary: #4cc3e6;
+    --color-on-primary: #0b1726;
+    --color-strong: #ffb020;
+    --color-on-strong: #0f2238;
+    --color-chip: #263447;
+    --color-on-chip: #8fdcf2;
+    --color-band: #152335;
+    --color-band-card: #1c2a3f;
+    --color-band-border: #2f3d52;
+    --color-on-band: #ffffff;
+    --color-on-band-muted: #b4bfcc;
+    --color-band-accent: #4cc3e6;
+    --color-tag: #2f3d52;
+    --color-status-live: #3fcf8e;
+    --color-placeholder: #273548;
+    --color-timeline-year: #3aa3c8;
+    --color-field: #152335;
+    --color-field-border: #6b7c93;
+    --color-danger: #ff8f85;
+    --color-danger-soft: #3a2430;
 }
