@@ -69,11 +69,17 @@ Template layout: configs in `.tools/config/`, scripts in `.tools/scripts/`, task
 
 ### 3. Scripts
 
-- [ ] Take template scripts: `init.sh`, `help.sh`, `pre-commit.sh`, `utils.sh`, `build-prod.sh`
-- [ ] Merge portfolio `utils.sh` helpers into the template one if some are missing
-- [ ] Keep the Hostinger deployment: `prod-build.sh`, `prod-deploy.sh` (and `.tools/deploy.sh-prod`); compare
+- [x] Take template scripts: `init.sh`, `help.sh`, `pre-commit.sh`, `utils.sh` (`build-prod.sh` not taken, see notes)
+- [x] Merge portfolio `utils.sh` helpers into the template one if some are missing
+- [x] Keep the Hostinger deployment: `prod-build.sh`, `prod-deploy.sh` (and `.tools/deploy.sh-prod`); compare
   `prod-build.sh` with the template `build-prod.sh` and keep a single build script
-- [ ] Keep `audit.sh`; replace `dev.sh` and `run-pre-commit.sh` with template equivalents if they cover the same need
+- [x] Keep `audit.sh`; replace `dev.sh` and `run-pre-commit.sh` with template equivalents if they cover the same need
+- Notes: `utils.sh` is the template one plus the deployment checks (`check_on_main_branch`, ...) and still hides
+  nested success boxes for `make` (`MAKELEVEL`) until step 4. `prod-build.sh` is kept: it builds the assets and
+  pushes the `production` branch, which the template `build-prod.sh` (a build check in a temporary copy) does not
+  do. `dev.sh` has no template equivalent and is kept. `run-pre-commit.sh` is replaced by `pre-commit.sh`
+  (gitleaks, Biome and yamllint on staged files); the full gitleaks scan, checkmake and the README refresh are no
+  longer run on commit. `help.sh` and `init.sh` are used from step 4 (Taskfile).
 - Commit: `chore(scripts): adopt template scripts and keep hostinger deployment`
 
 ### 4. Makefile → Taskfile
