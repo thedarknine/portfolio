@@ -1,4 +1,4 @@
-// .tools/unlighthouse.config.ts
+// .tools/config/unlighthouse.config.ts
 import { defineUnlighthouseConfig } from 'unlighthouse/config'
 
 export default defineUnlighthouseConfig({

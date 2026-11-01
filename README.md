@@ -33,7 +33,7 @@ et transitions soignées)
 
 Pour garantir la maintenabilité et la robustesse de l'application, une suite complète d'outils d'analyse
 statique et d'automatisation est intégrée via **GrumPHP** (les configurations sont centralisées dans le
-dossier `.tools/`).
+dossier `.tools/config/`).
 
 Le projet intègre notamment :
 
@@ -250,11 +250,11 @@ S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127
     composer require --dev qossmic/deptrac-shim
     vendor/bin/deptrac init
     vendor/bin/deptrac analyse --config-file=deptrac.yaml
-    vendor/bin/deptrac debug:layer --config-file=.tools/deptrac.yaml
+    vendor/bin/deptrac debug:layer --config-file=.tools/config/deptrac.yaml
 
     # Rector (Analysis of refactoring rules / Dry-run)
     composer require --dev rector/rector
-    vendor/bin/rector process --dry-run --config .tools/rector.php
+    vendor/bin/rector process --dry-run --config .tools/config/rector.php
 ```
 
 ### 🏗️ Backoffice & Sécurité (EasyAdmin)

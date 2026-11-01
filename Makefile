@@ -53,7 +53,8 @@ DOCKER_PORTS := $(APP_PORT) $(DB_PORT) $(ADM_PORT) $(MAIL_PORT) $(CHROME_PORT)
 
 #= GLOBAL VARIABLES ===================================================
 PROJECT_ROOT 		:= $(shell pwd)
-TOOLS_CONFIG_DIR	:= .tools
+TOOLS_CONFIG_DIR	:= .tools/config
+TOOLS_CACHE_DIR		:= .tools/cache
 SCRIPTS_DIR 		:= .tools/scripts
 REPORTS_DIR 		:= .tools/reports
 TARGET_MAX_CHAR_NUM	:= 24
@@ -72,11 +73,11 @@ GRUMPHP		:= $(DC_EXEC) vendor/bin/grumphp --config=$(TOOLS_CONFIG_DIR)/grumphp.y
 PHPUNIT		:= $(DC_EXEC) php vendor/bin/phpunit --configuration $(TOOLS_CONFIG_DIR)/phpunit.xml
 INFECTION	:= $(DC_EXEC) php vendor/bin/infection --configuration=$(TOOLS_CONFIG_DIR)/infection.json
 PHPARKITECT	:= $(DC_EXEC) php vendor/bin/phparkitect --config=$(TOOLS_CONFIG_DIR)/phparkitect.php
-DEPTRAC		:= $(DC_EXEC) vendor/bin/deptrac --config-file=$(TOOLS_CONFIG_DIR)/deptrac.yaml  --cache-file=$(TOOLS_CONFIG_DIR)/.deptrac.cache
+DEPTRAC		:= $(DC_EXEC) vendor/bin/deptrac --config-file=$(TOOLS_CONFIG_DIR)/deptrac.yaml  --cache-file=$(TOOLS_CACHE_DIR)/.deptrac.cache
 PHPSTAN		:= $(DC_EXEC) php vendor/bin/phpstan --memory-limit=512M --configuration=$(TOOLS_CONFIG_DIR)/phpstan.neon
 RECTOR		:= $(DC_EXEC) vendor/bin/rector process --config $(TOOLS_CONFIG_DIR)/rector.php
-CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.php --cache-file=$(TOOLS_CONFIG_DIR)/.php-cs-fixer.cache
-CSTWIG		:= $(DC_EXEC) vendor/bin/twig-cs-fixer --config=$(TOOLS_CONFIG_DIR)/.twig-cs-fixer.php
+CSPHP		:= $(DC_EXEC) php vendor/bin/php-cs-fixer --config=$(TOOLS_CONFIG_DIR)/php-cs-fixer.php
+CSTWIG		:= $(DC_EXEC) vendor/bin/twig-cs-fixer --config=$(TOOLS_CONFIG_DIR)/twig-cs-fixer.php
 ESLINT		:= $(DC_EXEC) pnpm exec eslint --config $(TOOLS_CONFIG_DIR)/eslint.config.mjs
 BIOME		:= $(DC_EXEC) pnpm biome check --config-path=$(TOOLS_CONFIG_DIR)/biome.json
 
@@ -419,8 +420,8 @@ check-tools-directory: ## Check if tools configuration directory exists
 	display_subtitle "🔎 Checking tools directory..."
 	
 	if [ ! -d $(TOOLS_CONFIG_DIR) ]; then
-		display_error ".tools directory is missing."
-		$(MAKE) _fatal msg=".tools directory is missing."
+		display_error "$(TOOLS_CONFIG_DIR) directory is missing."
+		$(MAKE) _fatal msg="$(TOOLS_CONFIG_DIR) directory is missing."
 	fi
 	display_success "Tools directory exists."
 
@@ -594,7 +595,7 @@ cs-yaml: ## Validate YAML files
 	display_subtitle "🔭 Validate YAML files from config directory..."
 
 	$(SYMFONY) "lint:yaml" config/
-	$(DC_EXEC) yamllint -c .tools/yamllint.yaml .tools/ config/ docker-compose.yaml docker-compose.dev.yaml docker-compose.ci.yaml
+	$(DC_EXEC) yamllint -c $(TOOLS_CONFIG_DIR)/yamllint.yaml .tools/ config/ docker-compose.yaml docker-compose.dev.yaml docker-compose.ci.yaml
 	display_success "YAML linting completed."
 
 .PHONY: cs-twig
@@ -676,7 +677,7 @@ lint-docker: ## Validate Dockerfiles with hadolint
 	@source $(SCRIPTS_DIR)/utils.sh
 	$(call assert_not_prod)
 	display_subtitle "🐳 Validating Dockerfiles with hadolint"
-	$(DC_EXEC) hadolint .docker/*.dockerfile
+	$(DC_EXEC) hadolint --config $(TOOLS_CONFIG_DIR)/hadolint.yaml .docker/*.Dockerfile
 	display_success "Dockerfile validation completed."
 
 .PHONY: lint-md
@@ -684,7 +685,7 @@ lint-md: ## Validate Markdown files with markdownlint
 	@source $(SCRIPTS_DIR)/utils.sh
 	$(call assert_not_prod)
 	display_subtitle "📝 Validating Markdown files"
-	$(PNPX) markdownlint-cli2 --config .tools/markdownlint-cli2.yaml
+	$(PNPX) markdownlint-cli2 --config $(TOOLS_CONFIG_DIR)/markdownlint-cli2.yaml
 	display_success "Markdown validation completed."
 
 # =====================================================================
@@ -695,10 +696,10 @@ pre-commit: ## Run pre-commit checks
 	@source $(SCRIPTS_DIR)/utils.sh
 	if [ -f /.dockerenv ]; then
 		display_subtitle "🔍 Running gitleaks"
-		gitleaks detect --source . -v -c .tools/gitleaks.toml
+		gitleaks detect --source . -v -c $(TOOLS_CONFIG_DIR)/gitleaks.toml
 	else
 		display_subtitle "🔍 Running gitleaks"
-		$(DC_EXEC) gitleaks detect --source . -v -c .tools/gitleaks.toml
+		$(DC_EXEC) gitleaks detect --source . -v -c $(TOOLS_CONFIG_DIR)/gitleaks.toml
 	fi
 	$(MAKE) cs-makefile
 	$(MAKE) readme
@@ -853,7 +854,7 @@ cover: ## Run PHPUnit tests with coverage
 
 # =====================================================================
 ##@ ENVIRONMENT
-EXPORT_DIR=$(TOOLS_CONFIG_DIR)/export
+EXPORT_DIR=.tools/export
 ZIP_NAME=portfolio_prod-$(TODAY).zip
 SQL_FILE=portfolio_db-$(NOW).sql
 # CMD_PROD=zip -r archive-portfolio-$(TODAY).zip * -x analytics/* -x medias/movies/*

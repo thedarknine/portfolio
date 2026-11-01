@@ -38,7 +38,8 @@ Template files: `.docker/php.Dockerfile`, `.docker/install-tools.sh`, `.docker/p
   `chromium` and `chromium-chromedriver` (pa11y / unlighthouse / UI tests), `make` only while the Makefile exists,
   extensions used by the portfolio (`gd`, `zip`, `xsl`, `intl`… compare both extension lists)
 - [x] Compare the two `default.conf` (nginx) and keep portfolio-specific rules
-- [x] Split `docker-compose.yml` into base / dev / ci following the template; services renamed `app`, `engine`, `db`, `adm`, `mailpit`
+- [x] Split `docker-compose.yml` into base / dev / ci following the template; services renamed
+`app`, `engine`, `db`, `adm`, `mailpit`
 - [x] Keep the MySQL config (`.docker/mysql/my.cnf`) and the data / log volumes; check the MySQL version (template: 9.7)
   → switched to MariaDB 11.8 to match production (`MARIADB_VERSION`, `serverVersion=11.8.9-MariaDB`);
   test user created by `.docker/mysql/sql/01-test-user.sql`
@@ -52,15 +53,18 @@ Template files: `.docker/php.Dockerfile`, `.docker/install-tools.sh`, `.docker/p
 
 Template layout: configs in `.tools/config/`, scripts in `.tools/scripts/`, tasks in `.tools/tasks/`, cache in `.tools/cache/`.
 
-- [ ] Move configs to `.tools/config/` with the template names:
+- [x] Move configs to `.tools/config/` with the template names:
   `.php-cs-fixer.php` → `php-cs-fixer.php`, `.twig-cs-fixer.php` → `twig-cs-fixer.php`, `biome.json`, `gitleaks.toml`,
   `grumphp.yml`, `phpstan.neon`, `phpunit.xml`, `rector.php`, `yamllint.yaml`, plus portfolio-only configs
   (`deptrac.yaml`, `phparkitect.php`, `infection.json`, `pa11y.json`, `unlighthouse.config.ts`, `eslint.config.mjs`,
   `markdownlint-cli2.yaml`)
-- [ ] Add template-only configs: `commitlint.config.cjs`, `hadolint.yaml`
-- [ ] Merge rule sets where both exist (php-cs-fixer, phpstan level/paths, rector sets, biome): keep the stricter rule
-- [ ] Fix every path pointing to the old locations (Makefile, scripts, CI, `composer.json`, `package.json`, `.gitignore`)
+- [x] Add template-only configs: `commitlint.config.cjs`, `hadolint.yaml`
+- [x] Merge rule sets where both exist (php-cs-fixer, phpstan level/paths, rector sets, biome): keep the stricter rule
+- [x] Fix every path pointing to the old locations (Makefile, scripts, CI, `composer.json`, `package.json`, `.gitignore`)
 - [ ] Drop `checkmake.ini` at step 4 (no Makefile anymore)
+- Notes: tool caches now live in `.tools/cache/` (ignored). PHPStan also analyses `tests/`; the template's
+  Symfony container settings for PHPStan need `phpstan/phpstan-symfony`, not installed yet. GrumPHP now checks
+  commit messages and runs twig-cs-fixer. `run-pre-commit.sh` is renamed at step 3.
 - Commit: `chore(tools): move tool configuration to .tools/config`
 
 ### 3. Scripts
@@ -78,7 +82,7 @@ Template: `Taskfile.yml` with includes `docker`, `symfony`, `lint`, `cs`, `quali
 (`.tools/tasks/*.yml`). Bring all `.tools/tasks/*.yml` from the template, then map the Makefile targets:
 
 | Makefile | Taskfile | Note |
-|---|---|---|
+| --- | --- | --- |
 | build, up, down, destroy, restart, shell, logs | `docker:*` | template |
 | doctor, check-tools, check-docker, check-containers, check-ports, check-env, check-dependencies, check-tools-directory | `check:*` | template, compare checks |
 | cc, secret, watch, composer-clear, pnpm-clear, pnpm-prune | `symfony:*` | check which exist |

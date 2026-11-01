@@ -9,8 +9,6 @@ Thumbs.db
 # ==============================================================================
 .tools/export/
 .tools/reports/
-.tools/.infection/
-.tools/.deptrac.cache
 
 .docker/mysql/data/*
 !.docker/mysql/data/.gitkeep
@@ -65,23 +63,13 @@ error_log
 
 ###> phpunit/phpunit ###
 /phpunit.xml
-/.tools/.phpunit.cache
 /coverage/
 ###< phpunit/phpunit ###
-
-###> infection/infection ###
-/.tools/infection.log
-/.tools/infection-report.*
-###< infection/infection ###
 
 ###> deptrac/deptrac ###
 /.deptrac.cache
 ###< deptrac/deptrac ###
 
-###> friendsofphp/php-cs-fixer ###
-/.tools/.php-cs-fixer.cache
-###< friendsofphp/php-cs-fixer ###
-
-###> vincentlanglet/twig-cs-fixer ###
-/.tools/.twig-cs-fixer.cache
-###< vincentlanglet/twig-cs-fixer ###
+# Caches of the QA tools (phpunit, php-cs-fixer, phpstan, rector, deptrac, infection...)
+/.tools/cache/*
+!/.tools/cache/.gitkeep

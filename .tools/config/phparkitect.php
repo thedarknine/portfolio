@@ -20,7 +20,7 @@ use Arkitect\Rules\Rule;
 
 return static function (Config $config): void {
     // 1. Define the set of files to analyze
-    $classSet = ClassSet::fromDir(__DIR__ . '/../src');
+    $classSet = ClassSet::fromDir(__DIR__ . '/../../src');
 
     $rules = [];
 

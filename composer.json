@@ -36,7 +36,7 @@
         "symfony/validator": "8.1.*",
         "symfony/yaml": "8.1.*",
         "symfonycasts/tailwind-bundle": "^0.12.0",
-        "tito10047/altcha-bundle": "*",
+        "tito10047/altcha-bundle": "^3.1",
         "twig/extra-bundle": "^2.12|^3.24",
         "twig/intl-extra": "^3.26",
         "twig/twig": "^2.12|^3.28.0"
@@ -104,7 +104,7 @@
             "require": "8.1.*"
         },
         "grumphp": {
-            "config-default-path": ".tools/grumphp.yml",
+            "config-default-path": ".tools/config/grumphp.yml",
             "disable-plugin": false
         }
     },
