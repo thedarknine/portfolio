@@ -17,5 +17,6 @@
         "@default": true
     },
     "testFramework": "phpunit",
+    "testFrameworkOptions": "--exclude-group=UI",
     "tmpDir": "../cache/infection"
 }

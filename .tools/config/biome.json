@@ -8,7 +8,7 @@
     },
     "files": {
         "includes": [
-            "**",
+            "assets/**",
             "!assets/vendor/**",
             "!assets/controllers/csrf_protection_controller.js"
         ]
@@ -22,7 +22,7 @@
     "linter": {
         "enabled": true,
         "rules": {
-            "recommended": true,
+            "preset": "recommended",
             "complexity": {
                 "noImportantStyles": "off"
             },
