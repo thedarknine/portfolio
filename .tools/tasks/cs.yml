@@ -1,0 +1,64 @@
+# https://taskfile.dev
+version: '3'
+
+# UI_NESTED hides the success box of php, twig and front when run from cs:all
+# Tasks only check by default: add fix=1 to fix the files (task cs:php fix=1, task cs:all fix=1).
+# Variables given on the command line are global, so cs:all passes fix to php, twig and front.
+
+tasks:
+    all:
+        desc: Run all CS fixers - php, twig, front (fix=1)
+        vars:
+            START: { sh: date +%s }
+        cmds:
+            - '{{.UI}} title "🔍 {{if .fix}}Fixing{{else}}Checking{{end}} coding standards"'
+            - task: php
+              vars: { NESTED: '1' }
+            - task: twig
+              vars: { NESTED: '1' }
+            - task: front
+              vars: { NESTED: '1' }
+            - '{{.UI}} elapsed {{.START}}'
+            - '{{.UI}} success "Coding standards {{if .fix}}fixed{{else}}checked{{end}}."'
+
+    php:
+        desc: Check PHP coding standards with PHP CS Fixer (fix=1)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        vars:
+            CS_PHP: '{{.EXEC}} vendor/bin/php-cs-fixer --config={{.CONFIG_DIR}}/php-cs-fixer.php'
+        cmds:
+            - '{{.UI}} subtitle "🐘 {{if .fix}}Fixing{{else}}Checking{{end}} PHP coding standards with PHP CS Fixer"'
+            - >-
+              {{.CS_PHP}} {{if .fix}}fix{{else}}check --diff{{end}} --verbose
+              || { {{.UI}} error "PHP CS Fixer found issues." "Fix them with: task cs:php fix=1"; exit 1; }
+            - '{{.UI}} success "PHP coding standards {{if .fix}}fixed{{else}}checked{{end}}."'
+
+    twig:
+        desc: Check Twig templates with Twig CS Fixer and lint:twig (fix=1)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        vars:
+            CS_TWIG: '{{.EXEC}} vendor/bin/twig-cs-fixer --config={{.CONFIG_DIR}}/twig-cs-fixer.php'
+        cmds:
+            - '{{.UI}} subtitle "🌿 {{if .fix}}Fixing{{else}}Checking{{end}} Twig templates with Twig CS Fixer"'
+            - >-
+              {{.CS_TWIG}} {{if .fix}}fix{{else}}check{{end}} templates/
+              || { {{.UI}} error "Twig CS Fixer found issues." "Fix them with: task cs:twig fix=1"; exit 1; }
+            - >-
+              {{.EXEC}} bin/console lint:twig templates/
+              || { {{.UI}} error "Twig syntax errors found."; exit 1; }
+            - '{{.UI}} success "Twig templates {{if .fix}}fixed{{else}}checked{{end}}."'
+
+    front:
+        desc: Check JS and CSS assets with ESLint and Biome (fix=1)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🎨 {{if .fix}}Fixing{{else}}Checking{{end}} JS and CSS assets with ESLint and Biome"'
+            # Portfolio-only: ESLint also checks the HTML of the Twig templates
+            - >-
+              {{.EXEC}} pnpm exec eslint --config {{.CONFIG_DIR}}/eslint.config.mjs assets/scripts/ templates/
+              {{if .fix}}--fix{{end}}
+              || { {{.UI}} error "ESLint found issues." "Fix them with: task cs:front fix=1"; exit 1; }
+            - >-
+              {{.EXEC}} pnpm exec biome check --config-path={{.CONFIG_DIR}}/biome.json {{if .fix}}--write{{end}} assets/
+              || { {{.UI}} error "Biome found issues." "Fix them with: task cs:front fix=1"; exit 1; }
+            - '{{.UI}} success "JS and CSS assets {{if .fix}}fixed{{else}}checked{{end}}."'

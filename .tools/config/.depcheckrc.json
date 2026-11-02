@@ -1,0 +1,7 @@
+{
+    "ignores": [
+        "animate.css",
+        "@biomejs/biome",
+        "depcheck"
+    ]
+}

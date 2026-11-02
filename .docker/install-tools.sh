@@ -7,11 +7,9 @@ set -eu
 HADOLINT_VERSION="${HADOLINT_VERSION:-2.15.1}"
 GITLEAKS_VERSION="${GITLEAKS_VERSION:-8.30.1}"
 PNPM_VERSION="${PNPM_VERSION:-12.16.1}"
-CHECKMAKE_VERSION="${CHECKMAKE_VERSION:-0.3.2}"
 SITEONE_VERSION="${SITEONE_VERSION:-2.5.1}"
 
 # Portfolio: chromium + chromedriver for pa11y, unlighthouse and Panther UI tests.
-# make (and checkmake below) only while the Makefile exists (removed at migration step 4).
 PACKAGES="
     git
     curl
@@ -35,7 +33,6 @@ PACKAGES="
     shadow
     chromium
     chromium-chromedriver
-    make
 "
 
 # Not listed: pdo, opcache, dom, mbstring are already built into the official php image
@@ -90,8 +87,6 @@ curl -fsSL "$GITHUB/gitleaks/gitleaks/releases/download/v$GITLEAKS_VERSION/gitle
 chmod +x /usr/local/bin/hadolint /usr/local/bin/gitleaks
 
 # Portfolio-only tools
-curl -fsSL -o /usr/local/bin/checkmake "$GITHUB/checkmake/checkmake/releases/download/v$CHECKMAKE_VERSION/checkmake-v$CHECKMAKE_VERSION.linux.$ARCH"
-chmod +x /usr/local/bin/checkmake
 curl -fsSL "$GITHUB/janreges/siteone-crawler/releases/download/v$SITEONE_VERSION/siteone-crawler-v$SITEONE_VERSION-linux-musl-$SITEONE_ARCH.tar.gz" |
     tar -xz -C /opt
 chmod +x /opt/siteone-crawler/siteone-crawler

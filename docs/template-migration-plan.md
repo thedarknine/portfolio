@@ -105,9 +105,23 @@ Template: `Taskfile.yml` with includes `docker`, `symfony`, `lint`, `cs`, `quali
 | dev, readme, readme-check, help | template `help` / new | |
 | cs-makefile | — | drop |
 
-- [ ] Write missing tasks, keep the template UI helpers (`{{.UI}}`, `{{.EXEC}}`)
-- [ ] Run every task once
-- [ ] Delete `Makefile` and `checkmake.ini`
+- [x] Write missing tasks, keep the template UI helpers (`{{.UI}}`, `{{.EXEC}}`)
+- [x] Run every task once (`task qa` passes; `prod:*` tested at step 8)
+- [x] Delete `Makefile` and `checkmake.ini` (and `make` / checkmake from `.docker/install-tools.sh`)
+- Notes: final mapping differs from the table above. Portfolio-only includes: `clean` (all, build, cache,
+  test, composer, pnpm), `utils` (secret, seo-audit `target=dev|prod`, prune with depcheck as a dev dependency),
+  `prod` (build, deploy, dev, release; `release` always switches back to `main` through `defer`). Root `update`
+  replaces `update-project` (confirmation prompt, refused when `ENVIRONMENT` is prod). `check-project` became
+  `quality:audit` plus `docker compose config` in `lint:docker`. Deptrac moved to `quality:deptrac`, ESLint
+  joined Biome in `cs:front`, `lint:yaml` also runs `bin/console lint:yaml config/`. `test:prepare` loads the
+  test database (`composer pipeline:fixtures`); `test:all` excludes the UI group; `qa` adds arch, mutation and
+  ui. Template `symfony:build-prod` not kept. Dropped: `readme`, `readme-check`, `grum-pre-commit`, `cs-makefile`.
+  `destroy` became `docker:reset`, which also deletes the database volume. Coverage moved to `var/coverage/`.
+  Include `linters` renamed `lint` (`.tools/tasks/lint.yml`). `quality:audit` blocks on runtime pnpm packages only
+  (`pnpm audit --prod`): the dev tools never reach production. Infection excludes the UI group. `test:prepare`
+  empties `src/DataFixtures/Testing` first (leftovers of another group break the loader). Biome limited to
+  `assets/**`, yamllint ignores `pnpm-lock.yaml`. Rector is out of `quality:all` until its 112 suggestions are
+  reviewed. After recreating `app`, restart `engine` (nginx keeps the old IP: 502).
 - Commit: `build(task): replace the Makefile with the template Taskfile`
 
 ### 5. CI and hooks
@@ -131,7 +145,7 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 - [ ] README rewritten from the template README (requirements with Task, services table, commands) plus portfolio specifics
   (Hostinger, docs / medias subdomains, deployment)
 - [ ] Add `AGENTS.md` from the template, adapted (Conventional Commits in English, `cno_` branches, repo in English)
-- [ ] Update `UPDATE.md` (`task update-project`)
+- [ ] Update `UPDATE.md` (`task update`)
 - [ ] `.editorconfig`, `.gitignore`, `.env.sample` / `.env` aligned with the template
 - [ ] Remove leftovers: `tmp/`, old paths, unused scripts
 - Commit: `docs: document the template-based setup`
@@ -142,10 +156,16 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 - [ ] PR `cno_template` → `develop`, CI green
 - [ ] Prod build and deployment tested before merging to `main` / `production`
 
+## Later (after the migration)
+
+- [ ] Replace depcheck with knip (also finds unused files and exports)
+- [ ] Review and apply the Rector suggestions, then put `rector` back in `quality:all`
+- [ ] Dev database: mark the migrations as executed (`doctrine:migrations:version --add --all` after `schema:validate`)
+
 ## Portfolio-only tools (to keep)
 
 deptrac, phparkitect, infection, pa11y, unlighthouse, eslint, markdownlint, bash tests, Hostinger deployment scripts.
-Dropped: checkmake (Makefile removed).
+Dropped: checkmake (Makefile removed). depcheck kept as a dev dependency until knip replaces it.
 
 ## Template-only additions
 

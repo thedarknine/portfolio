@@ -11,7 +11,6 @@
 #
 # UI_NESTED=1 hides success boxes, so a task called by another one
 # (lint:all -> lint:yaml) doesn't print a box at each step.
-# Same for a nested make call (MAKELEVEL > 1), until the Makefile is gone.
 
 # =====================================================================
 # COLORS
@@ -71,7 +70,7 @@ display_subtitle() {
 }
 
 display_success() {
-    if [ -z "${UI_NESTED:-}" ] && [ "${MAKELEVEL:-0}" -le 1 ]; then
+    if [ -z "${UI_NESTED:-}" ]; then
         display_box "$BG_GREEN" "$GREEN" "✅ SUCCESS" "$@"
     fi
 }

@@ -1,0 +1,61 @@
+# https://taskfile.dev
+version: '3'
+
+# build-prod is not kept: the portfolio builds and deploys with prod:build / prod:release
+
+tasks:
+    install:
+        desc: Install Composer and pnpm dependencies, build Tailwind CSS and lock the icons
+        cmds:
+            - '{{.UI}} subtitle "📦 Installing Composer dependencies"'
+            - '{{.EXEC}} composer install || { {{.UI}} error "Composer install failed."; exit 1; }'
+            - '{{.EXEC}} pnpm install --frozen-lockfile || { {{.UI}} error "pnpm install failed."; exit 1; }'
+            - '{{.EXEC}} bin/console tailwind:build || { {{.UI}} error "Tailwind build failed."; exit 1; }'
+            - '{{.EXEC}} bin/console ux:icons:lock || { {{.UI}} error "Icons lock failed."; exit 1; }'
+            - '{{.UI}} success "Composer dependencies installed."'
+
+    composer:
+        desc: 'Run Composer (task symfony:composer -- require symfony/lock)'
+        cmds:
+            - '{{.EXEC}} composer {{.CLI_ARGS}}'
+
+    pnpm:
+        desc: 'Run pnpm (task symfony:pnpm -- add -D @biomejs/biome)'
+        cmds:
+            - '{{.EXEC}} pnpm {{.CLI_ARGS}}'
+
+    console:
+        desc: 'Run the Symfony console (task symfony:console -- cache:clear)'
+        cmds:
+            - '{{.EXEC}} bin/console {{.CLI_ARGS}}'
+
+    cc:
+        desc: Clear the Symfony cache (task symfony:cc -- env=prod)
+        cmds:
+            - '{{.UI}} subtitle "🧹 Clearing the Symfony cache"'
+            - '{{.EXEC}} bin/console cache:clear {{.CLI_ARGS}} || { {{.UI}} error "Cache clear failed."; exit 1; }'
+            - '{{.UI}} success "Symfony cache cleared."'
+
+    tailwind:
+        desc: Build Tailwind CSS (task symfony:tailwind -- --minify)
+        cmds:
+            - '{{.UI}} subtitle "🎨 Building Tailwind CSS"'
+            - >-
+              {{.EXEC}} bin/console tailwind:build {{.CLI_ARGS}}
+              || { {{.UI}} error "Tailwind build failed."; exit 1; }
+            - '{{.UI}} success "Tailwind CSS built."'
+
+    watch:
+        desc: Watch Tailwind CSS changes and re-build
+        cmds:
+            - '{{.UI}} title "👀 Watching Tailwind CSS changes (Ctrl+C to stop)"'
+            - '{{.EXEC}} bin/console tailwind:build --watch'
+
+    icons:
+        desc: Download the icons used in the templates to assets/icons/
+        cmds:
+            - '{{.UI}} subtitle "🖼️ Locking UX icons"'
+            - >-
+              {{.EXEC}} bin/console ux:icons:lock {{.CLI_ARGS}}
+              || { {{.UI}} error "Icons lock failed."; exit 1; }
+            - '{{.UI}} success "Icons saved in assets/icons/."'

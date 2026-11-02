@@ -1,0 +1,61 @@
+# https://taskfile.dev
+version: '3'
+
+# UI_NESTED hides the success box when the task is called by another one (restart)
+
+tasks:
+    build:
+        desc: Build the containers
+        cmds:
+            - '{{.UI}} subtitle "🐳 Building the containers"'
+            - '{{.COMPOSE}} build || { {{.UI}} error "Build failed."; exit 1; }'
+            - '{{.UI}} success "Containers built."'
+
+    up:
+        desc: Build and start the containers
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🐳 Starting the containers"'
+            - '{{.COMPOSE}} up -d --build || { {{.UI}} error "Containers failed to start."; exit 1; }'
+            - '{{.UI}} success "Containers started."'
+
+    down:
+        desc: Stop the containers (keeps the database volume)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🐳 Stopping the containers"'
+            - '{{.COMPOSE}} down'
+            - '{{.UI}} success "Containers stopped."'
+
+    restart:
+        desc: Restart the containers
+        cmds:
+            - task: down
+              vars: { NESTED: '1' }
+            - task: up
+              vars: { NESTED: '1' }
+            - '{{.UI}} success "Containers restarted."'
+
+    reset:
+        desc: Stop the containers and delete the database volume
+        prompt: This deletes the database volume. Continue?
+        cmds:
+            - '{{.UI}} subtitle "🐳 Removing the containers and the database volume"'
+            - '{{.COMPOSE}} down -v'
+            - '{{.UI}} success "Containers and database volume removed."'
+
+    ps:
+        desc: List the containers
+        cmds:
+            - '{{.COMPOSE}} ps'
+
+    logs:
+        desc: 'Follow logs (all services, or one: task docker:logs -- db)'
+        cmds:
+            - '{{.COMPOSE}} logs -f {{.CLI_ARGS}}'
+
+    shell:
+        desc: Open a shell in the PHP container
+        interactive: true
+        cmds:
+            - '{{.EXEC}} bash'
