@@ -24,6 +24,7 @@ HEADER;
 $finder = (new PhpCsFixer\Finder())
     ->in($rootDir)
     ->exclude([
+        '.docker',
         '.tools',
         'assets',
         'config',
