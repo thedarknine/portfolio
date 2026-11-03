@@ -164,7 +164,8 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 ## Later (after the migration)
 
 - [x] Replace depcheck with knip (also finds unused files and exports)
-- [ ] Review and apply the Rector suggestions, then put `rector` back in `quality:all`
+- [x] Review and apply the Rector suggestions, then put `rector` back in `quality:all`
+  (no `codingStyle` set: php-cs-fixer owns the formatting; instanceof flips and named-args sorting skipped)
 - [x] Migrations squashed into one baseline (`Version20261103080725`, old ones in `.tools/cache/old/migrations`)
   and marked as executed in dev with `doctrine:migrations:rollup`
 - [ ] Prod: run `php bin/console doctrine:migrations:rollup` once, right after the first deployment
