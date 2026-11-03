@@ -155,7 +155,9 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 
 ### 8. Release
 
-- [ ] Fresh clone test: `task init` (or equivalent) from zero works
+- [x] Fresh clone test: `task init` (or equivalent) from zero works
+  → fixed on the way: chrome host port removed, `docker:reset` empties the bind-mounted data,
+  migrations squashed into a baseline that replays on an empty database, `app:create-user` documented
 - [ ] PR `cno_template` → `develop`, CI green
 - [ ] Prod build and deployment tested before merging to `main` / `production`
 

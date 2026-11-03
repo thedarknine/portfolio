@@ -52,6 +52,12 @@ the project health. It can be run again at any time.
 To start from real content, import a dump of the production database (see `task db:dump` and
 the AdminNeo import), or load the fixtures with `task db:fixtures`.
 
+To log in to the back office, create an administrator (it asks for the email and the password):
+
+```bash
+task symfony:console -- app:create-user
+```
+
 - Website: <http://localhost:8000>, back office: <http://localhost:8000/backstage>
 - AdminNeo (database UI): <http://localhost:8089> (server `db`, credentials from `.env`)
 - Mailpit (emails sent by the site): <http://localhost:8025>
