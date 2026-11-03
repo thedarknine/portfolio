@@ -1,0 +1,8 @@
+{
+    "ignores": [
+        "animate.css",
+        "@biomejs/biome",
+        "depcheck",
+        "@commitlint/cli"
+    ]
+}

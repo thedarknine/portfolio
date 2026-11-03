@@ -1,0 +1,167 @@
+# https://taskfile.dev
+version: '3'
+
+# UI_NESTED hides the success box of each check when run from check:health
+
+vars:
+    REQUIRED_TOOLS: docker jq lsof
+    REQUIRED_DIRS: '{{.CONFIG_DIR}} {{.TOOLS_DIR}}/scripts {{.TOOLS_DIR}}/tasks'
+
+tasks:
+    health:
+        desc: Check system requirements and project health
+        vars:
+            START: { sh: date +%s }
+        cmds:
+            - '{{.UI}} title "🪲 Running health check"'
+            - task: tools
+              vars: { NESTED: '1' }
+            - task: docker
+              vars: { NESTED: '1' }
+            - task: env
+              vars: { NESTED: '1' }
+            - task: directories
+              vars: { NESTED: '1' }
+            - task: ports
+              vars: { NESTED: '1' }
+            - task: containers
+              vars: { NESTED: '1' }
+            - task: dependencies
+              vars: { NESTED: '1' }
+            - task: database
+              vars: { NESTED: '1' }
+            - '{{.UI}} elapsed {{.START}}'
+            - >-
+              {{.UI}} success "Tools are installed" "Docker is running" "Environment is configured"
+              "Tools directories exist" "Ports are available" "Containers are running"
+              "Dependencies are installed" "Database is reachable" "All systems are ok! The project is ready."
+
+    tools:
+        desc: Check if required CLI tools are installed
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking required tools..."'
+            - |
+              missing=""
+              for tool in {{.REQUIRED_TOOLS}}; do
+                  command -v "$tool" >/dev/null 2>&1 || missing="$missing $tool"
+              done
+              if [ -n "$missing" ]; then
+                  {{.UI}} error "Missing tools:$missing" "Install them with: brew install$missing"
+                  exit 1
+              fi
+            - '{{.UI}} success "All required tools are installed: {{.REQUIRED_TOOLS}}"'
+
+    docker:
+        desc: Check Docker is running
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking Docker daemon..."'
+            - >-
+              docker info >/dev/null 2>&1
+              || { {{.UI}} error "Docker daemon unavailable. Please start Docker Desktop."; exit 1; }
+            - '{{.UI}} success "Docker is running."'
+
+    env:
+        desc: Check .env files
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking .env files..."'
+            - >-
+              [ -f .env ]
+              || { {{.UI}} error ".env file is missing." "Restore it with: git checkout .env"; exit 1; }
+            - >-
+              [ -f .env.local ]
+              || {{.UI}} warning "No .env.local: using default development credentials from .env."
+            - '{{.UI}} success ".env file exists."'
+
+    directories:
+        desc: Check if tools directories exist - config, scripts, tasks
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking tools directories..."'
+            - |
+              missing=""
+              for dir in {{.REQUIRED_DIRS}}; do
+                  [ -d "$dir" ] || missing="$missing $dir"
+              done
+              if [ -n "$missing" ]; then
+                  {{.UI}} error "Missing directories:$missing"
+                  exit 1
+              fi
+            - '{{.UI}} success "Tools directories exist."'
+
+    ports:
+        desc: Check if required ports are available or used by this project
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking network ports..."'
+            - |
+              # Published ports are read from the compose files, no list to maintain
+              ports=$({{.COMPOSE}} config --format json | jq -r '.services[].ports[]?.published' | sort -un)
+              project_ids=$({{.COMPOSE}} ps -q --no-trunc 2>/dev/null | tr '\n' ' ')
+              conflict=0
+              set --
+              for port in $ports; do
+                  pid=$(lsof -Pi ":$port" -sTCP:LISTEN -t 2>/dev/null | head -1)
+                  if [ -z "$pid" ]; then
+                      set -- "$@" "Port $port is free and ready"
+                      continue
+                  fi
+                  owner=$(docker ps -q --no-trunc --filter "publish=$port" 2>/dev/null)
+                  if [ -n "$owner" ] && echo "$project_ids" | grep -qw "$owner"; then
+                      set -- "$@" "Port $port is used by this project - already up"
+                  elif [ -n "$owner" ]; then
+                      set -- "$@" "Port $port is blocked by ANOTHER Docker project"
+                      conflict=1
+                  else
+                      set -- "$@" "Port $port is blocked by ANOTHER native application - PID: $pid"
+                      conflict=1
+                  fi
+              done
+              if [ "$conflict" -eq 1 ]; then
+                  {{.UI}} error "$@" "Stop the other services, or change the ports in the compose files."
+                  exit 1
+              fi
+              {{.UI}} success "$@"
+
+    containers:
+        desc: Check if Docker containers are running
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking Docker containers..."'
+            - |
+              running=$({{.COMPOSE}} ps --status running --services 2>/dev/null)
+              stopped=""
+              for service in $({{.COMPOSE}} config --services); do
+                  echo "$running" | grep -qx "$service" || stopped="$stopped $service"
+              done
+              if [ -n "$stopped" ]; then
+                  {{.UI}} error "Services not running:$stopped" "Start them with: task up"
+                  exit 1
+              fi
+            - '{{.UI}} success "Containers are running."'
+
+    dependencies:
+        desc: Check if PHP dependencies - vendor directory - are installed
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking PHP dependencies..."'
+            - |
+              if ! {{.COMPOSE}} ps --status running --services 2>/dev/null | grep -qx app; then
+                  {{.UI}} warning "The app container is not running. Cannot check 'vendor' (run 'task up')."
+                  exit 0
+              fi
+              {{.EXEC}} test -d vendor \
+                  || { {{.UI}} error "'vendor' directory is missing." "Install it with: task symfony:install"; exit 1; }
+              {{.UI}} success "PHP dependencies - vendor - are installed."
+
+    database:
+        desc: Check the database connection
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔎 Checking database connection..."'
+            - >-
+              {{.EXEC}} bin/console dbal:run-sql "SELECT 1" >/dev/null 2>&1
+              || { {{.UI}} error "Cannot connect to the database." "Check DATABASE_URL, then: task docker:ps"; exit 1; }
+            - '{{.UI}} success "Database is reachable."'

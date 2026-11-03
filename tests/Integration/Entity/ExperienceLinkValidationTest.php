@@ -37,7 +37,7 @@ class ExperienceLinkValidationTest extends KernelTestCase
     public function testValidExperienceLinkHasNoViolation(): void
     {
         $enumCases   = LinkType::cases();
-        $defaultType = !empty($enumCases) ? $enumCases[0] : null;
+        $defaultType = $enumCases[0];
 
         $link = (new ExperienceLink())
             ->setTitle('Dépôt GitHub')

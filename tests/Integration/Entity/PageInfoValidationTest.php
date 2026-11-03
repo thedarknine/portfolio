@@ -33,7 +33,7 @@ class PageInfoValidationTest extends KernelTestCase
     public function testValidPageInfoHasNoViolation(): void
     {
         $enumCases       = PageCategory::cases();
-        $defaultCategory = !empty($enumCases) ? $enumCases[0] : null;
+        $defaultCategory = $enumCases[0];
 
         $page = (new PageInfo())
             ->setTitle('Expérience')
@@ -87,7 +87,7 @@ class PageInfoValidationTest extends KernelTestCase
     public function testNegativePositionTriggerViolation(): void
     {
         $enumCases       = PageCategory::cases();
-        $defaultCategory = !empty($enumCases) ? $enumCases[0] : null;
+        $defaultCategory = $enumCases[0];
 
         $page = (new PageInfo())
             ->setTitle('Page Mal Rangée')

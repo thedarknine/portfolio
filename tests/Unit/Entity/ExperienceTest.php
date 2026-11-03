@@ -29,9 +29,7 @@ class ExperienceTest extends TestCase
         $item       = new ExperienceItem();
 
         $item->setExperience($experience);
-        if (method_exists($experience, 'addItem')) {
-            $experience->addItem($item);
-        }
+        $experience->addItem($item);
 
         $this->assertSame($experience, $item->getExperience());
 

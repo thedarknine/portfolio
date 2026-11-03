@@ -71,7 +71,6 @@ class AdminDashboardServiceTest extends TestCase
         $service = $this->createService();
         $stats   = $service->getStats();
 
-        $this->assertIsArray($stats);
         $this->assertEquals(15, $stats['projects']);
         $this->assertEquals(5, $stats['publicPages']);
         $this->assertEquals(42, $stats['technologiesCount']);

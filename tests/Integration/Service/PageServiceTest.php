@@ -37,7 +37,6 @@ class PageServiceTest extends KernelTestCase
         // Assuming your fixtures created a page with the slug 'experience'
         $page = $this->pageService->getActivePageBySlug('experience');
 
-        $this->assertNotNull($page);
         $this->assertSame('experience', $page->getSlug());
     }
 
@@ -53,7 +52,6 @@ class PageServiceTest extends KernelTestCase
     {
         $pages = $this->pageService->getPublishedPages();
 
-        $this->assertIsArray($pages);
         $this->assertNotEmpty($pages);
 
         foreach ($pages as $page) {
@@ -65,7 +63,6 @@ class PageServiceTest extends KernelTestCase
     {
         $pages = $this->pageService->getPublishedPagesInHeader();
 
-        $this->assertIsArray($pages);
         $this->assertNotEmpty($pages);
 
         foreach ($pages as $page) {

@@ -13,11 +13,12 @@ namespace App\Tests\Integration\Controller;
 use App\Entity\PageInfo;
 use App\Enum\PageCategory;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HomeControllerTest extends WebTestCase
 {
-    private $client;
+    private KernelBrowser $client;
     private EntityManagerInterface $entityManager;
 
     protected function setUp(): void

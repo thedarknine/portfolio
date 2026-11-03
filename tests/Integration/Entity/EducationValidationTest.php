@@ -34,7 +34,7 @@ class EducationValidationTest extends KernelTestCase
     public function testValidEducationHasNoViolation(): void
     {
         $enumCases   = EducationType::cases();
-        $defaultType = !empty($enumCases) ? $enumCases[0] : null;
+        $defaultType = $enumCases[0];
 
         $education = (new Education())
             ->setTitle('DEUG MIAS')

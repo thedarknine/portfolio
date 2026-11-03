@@ -25,9 +25,7 @@ class CompanyTest extends TestCase
         $experience->setCompany($company);
 
         // Force add to company's collection if entity doesn't do it in setCompany
-        if (method_exists($company, 'addExperience')) {
-            $company->addExperience($experience);
-        }
+        $company->addExperience($experience);
 
         $this->assertSame($company, $experience->getCompany());
 
@@ -45,9 +43,7 @@ class CompanyTest extends TestCase
         $skill = new \App\Entity\Skill();
 
         $skill->setSkillType($type);
-        if (method_exists($type, 'addSkill')) {
-            $type->addSkill($skill);
-        }
+        $type->addSkill($skill);
 
         $type->removeSkill($skill);
 

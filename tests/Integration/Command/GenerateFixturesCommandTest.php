@@ -76,11 +76,14 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $commandTester->assertCommandIsSuccessful();
 
         // Clean up after the test if the directory was created specifically for the test
-        if ($expectedSubFolder && isset($filesystem)) {
-            $filesystem->remove($targetDir);
+        if ($expectedSubFolder) {
+            (new Filesystem())->remove($kernel->getProjectDir() . $expectedSubFolder);
         }
     }
 
+    /**
+     * @return array<string, array{string, ?string}>
+     */
     public static function provideFixtureGroups(): array
     {
         return [

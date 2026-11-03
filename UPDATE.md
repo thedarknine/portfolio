@@ -1,249 +1,157 @@
-# Guide de Mise à Jour Symfony
+# Update guide
 
-Ce document fournit des instructions détaillées pour mettre à jour le projet Portfolio vers une
-version plus récente de Symfony.
+How to keep the dependencies up to date and upgrade Symfony to a new minor or major version.
 
-## Table des matières
+- [Routine updates](#routine-updates)
+- [Upgrading Symfony](#upgrading-symfony)
+- [Checking the dependencies](#checking-the-dependencies)
+- [Common problems](#common-problems)
+- [Checklist](#checklist)
 
-- [Mise à jour vers Symfony 8.1](#mise-à-jour-vers-symfony-81)
-- [Vérification des dépendances](#vérification-des-dépendances)
-- [Résolution des problèmes courants](#résolution-des-problèmes-courants)
-- [Points d'attention](#points-dattention)
+## Routine updates
 
----
-
-## Mise à jour vers Symfony 8.1
-
-### Prérequis
-
-- PHP >= 8.4
-- Accès à Internet pour télécharger les dépendances
-- Git pour gérer les branches
-- La suite de tests doit être en état de réussite avant de commencer
-
-### 1. Préparation
+Dependabot opens weekly pull requests on `develop` for the GitHub Actions, Composer and pnpm
+dependencies. To update everything locally at once:
 
 ```bash
-# Créer une branche dédiée à la migration
-git checkout -b upgrade/symfony-8.1
-
-# S'assurer que tout fonctionne actuellement
-docker compose exec app composer install
-make cc
-make test
+git switch develop && git pull && git switch -c cno_update
+task update   # pulls the Docker images, rebuilds the containers, composer update, pnpm update
+task qa deep=1
 ```
 
-### 2. Mise à jour des dépendances
+To upgrade MariaDB, change `MARIADB_VERSION` in `.env` (and the `serverVersion` of `DATABASE_URL`)
+only when Hostinger upgrades the production server: dev and prod must run the same version.
 
-Mettre à jour le fichier composer.json en modifiant tous les packages Symfony `8.0.*` vers `8.1.*` dans la section "require".
+## Upgrading Symfony
 
-```json
-"require": {
-    "php": ">=8.4",
-    "ext-ctype": "*",
-    "ext-iconv": "*",
-    "symfony/asset": "8.1.*",
-    "symfony/asset-mapper": "8.1.*",
-    "symfony/console": "8.1.*",
-    "symfony/dotenv": "8.1.*",
-    "symfony/flex": "^2.11",
-    "symfony/form": "8.1.*",
-    "symfony/framework-bundle": "8.1.*",
-    "symfony/mailer": "8.1.*",
-    "symfony/monolog-bundle": "^4.0.2",
-    "symfony/rate-limiter": "8.1.*",
-    "symfony/runtime": "8.1.*",
-    "symfony/twig-bundle": "8.1.*",
-    "symfony/ux-icons": "^3.3",
-    "symfony/validator": "8.1.*",
-    "symfony/yaml": "8.1.*",
-    ...
-}
-```
+The example below upgrades from 8.0 to 8.1.
 
-Et dans la section "require-dev" :
+### Requirements
 
-```json
-"require-dev": {
-    "symfony/browser-kit": "8.1.*",
-    "symfony/css-selector": "8.1.*",
-    "symfony/maker-bundle": "^1.67",
-    "symfony/panther": "^2.4",
-    ...
-}
-```
+- PHP version required by the new Symfony version (`PHP_VERSION` in `.env`, then `task docker:build`)
+- The whole test suite passes before starting
 
-### 3. Mise à jour des dépendances
-
-- Vérifier les incompatibilités (sans installer)
-`docker compose exec app composer update --dry-run`
-
-- Si tout semble bon, mettre à jour les packages Symfony
-`docker compose exec app composer update "symfony/*"`
-
-- Mettre à jour les autres dépendances si nécessaire
-`docker compose exec app composer update`
-
-### 4. Nettoyage du cache
+### 1. Prepare
 
 ```bash
-docker compose exec app rm -rf var/cache/*
-docker compose exec app php bin/console cache:clear
-docker compose exec app php bin/console cache:warmup
+git switch develop && git pull && git switch -c cno_symfony-8.1
+task symfony:install
+task cc
+task qa deep=1
 ```
 
-### 5. Validation finale
+### 2. Update the constraints
+
+In `composer.json`, change every Symfony package from `8.0.*` to `8.1.*` in `require` and
+`require-dev`, and `extra.symfony.require` to `8.1.*`.
+
+### 3. Update the dependencies
 
 ```bash
-# Vérifier que l'application fonctionne
-docker compose exec app php bin/console debug:router
+# Check the incompatibilities without installing anything
+task symfony:composer -- update --dry-run
 
-# Lancer les tests
-make test
-make test-ui
+# Update the Symfony packages, then the others if needed
+task symfony:composer -- update "symfony/*" --with-all-dependencies
+task symfony:composer -- update
 
-# Linters et coding standard
-make cs
-
-# Outils de qualité de code
-make qa
+# Apply the recipe updates, one by one, and review each diff
+task symfony:composer -- recipes:update
 ```
 
-## Vérification des dépendances
-
-### Bundles critiques à vérifier
-
-| Bundle | Version minimale | Raison |
-| ------ | ---------------- | ------ |
-| easycorp/easyadmin-bundle | >= 5.2.0 | Compatibilité Symfony 8.1 |
-| symfonycasts/tailwind-bundle | >= 0.12.0 | Intégration CSS |
-| stof/doctrine-extensions-bundle | >= 1.15.3 | ORM |
-| gedmo/doctrine-extensions | >= 3.22 | Slugs, timestamps |
-| nelmio/security-bundle | >= 3.9 | Sécurité |
-
-### Vérifier la compatibilité d'un bundle
+### 4. Clear the cache
 
 ```bash
-# Afficher les informations d'un package
-composer show vendor/package
-
-# Chercher les versions compatibles
-composer search vendor/package | head -20
+task clean:cache
+task cc
 ```
 
-### Bundles avec versions wildcards
-
-⚠️ Attention spéciale au bundle tito10047/altcha-bundle qui utilise * comme version.
+### 5. Check everything
 
 ```bash
-# Vérifier la version installée
-composer show tito10047/altcha-bundle
-
-# Si problématique, fixer une version
-composer require tito10047/altcha-bundle:^1.0
+task symfony:console -- debug:router
+task qa deep=1
+task symfony:build-prod
 ```
 
-## Résolution des problèmes courants
+Read `var/log/dev.log` and the deprecations in the web profiler, then apply the Rector upgrade
+sets (`task quality:rector`, then `fix=1` if the changes are right).
 
-### Erreur : 'Class not found' après mise à jour
+## Checking the dependencies
 
-**Cause** : Cache corrompu hérité de l'ancienne version
+### Bundles to watch
 
-**Solution** :
+| Bundle                          | Why                                  |
+| ------------------------------- | ------------------------------------ |
+| easycorp/easyadmin-bundle       | Back office, follows Symfony closely |
+| symfonycasts/tailwind-bundle    | CSS build                            |
+| stof/doctrine-extensions-bundle | Sluggable, timestampable, sortable   |
+| gedmo/doctrine-extensions       | Same                                 |
+| nelmio/security-bundle          | Security headers and CSP             |
+| tito10047/altcha-bundle         | Contact form anti-spam               |
+| symfony/panther                 | UI tests                             |
+
+### Check a bundle
 
 ```bash
-docker compose exec app rm -rf var/cache/*
-docker compose exec app php bin/console cache:clear
-docker compose exec app php bin/console cache:warmup
+# Installed version and requirements
+task symfony:composer -- show vendor/package
+
+# Why a package blocks the update
+task symfony:composer -- why-not symfony/framework-bundle 8.1.*
 ```
 
-### Erreur : Incompatibilité de bundle
+## Common problems
 
-**Cause** : Un bundle tiers n'est pas compatible avec la nouvelle version Symfony
+### "Class not found" after the update
 
-**Solution** :
+The cache was built by the previous version:
 
 ```bash
-# Identifier le bundle problématique
-docker compose exec app composer show | grep -i "bundle"
-
-# Chercher une version compatible
-docker compose exec app composer require vendor/bundle:^X.Y
-
-# Ou supprimer et remplacer
-docker compose exec app composer remove vendor/bundle
-docker compose exec app composer require alternative/bundle
+task clean:cache
+task cc
 ```
 
-### Tests qui échouent après mise à jour
+### Incompatible bundle
 
-**Cause** : APIs ou comportements Symfony ont changé
-
-**Solution** :
-
-1. Consulter le UPGRADE guide officiel
-2. Mettre à jour les assertions des tests
-3. Adapter le code si des breaking changes sont appliqués
-
-Exemple pour VarExporter et cache :
+A third-party bundle does not support the new Symfony version yet: find the blocking package
+with `why-not`, require a compatible version, or wait and keep the previous Symfony version.
 
 ```bash
-docker compose exec app rm -rf var/cache/test/*
-docker compose exec app php bin/console cache:clear --env=test
-make test
+task symfony:composer -- require vendor/bundle:^X.Y
 ```
 
-### Erreur Twig : "Class not found: Hydrator"
+### Failing tests
 
-**Cause** : Cache Twig incompatible avec la nouvelle version Symfony
-
-**Solution** :
+An API or a behavior changed. Read the `UPGRADE-8.x.md` of the Symfony repository, adapt the code
+or the assertions, then regenerate the test database:
 
 ```bash
-docker compose exec app rm -rf var/cache/*/twig/*
-make cc
+task test:prepare
+task test
 ```
 
-### Tests UI échouent après mise à jour
+### Failing UI tests
 
-**Cause** : Structure HTML peut avoir changé, sélecteurs CSS obsolètes
-
-**Solution** :
-
-1. Inspecter le HTML généré via le navigateur
-2. Mettre à jour les sélecteurs CSS dans les tests
-3. Ajouter des waits explicites si timing issues
+The HTML may have changed: inspect the page, update the CSS selectors, and wait explicitly for
+the elements that appear late:
 
 ```php
-$webDriver->wait(5)->until(
-    WebDriverExpectedCondition::visibilityOfElementLocated(
-        WebDriverBy::cssSelector('.my-selector')
-    )
-);
+$client->waitForVisibility('.my-selector', 5);
 ```
 
-## Points d'attention
+## Checklist
 
-✅ À vérifier impérativement
+Before merging:
 
-- [ ] PHP >= 8.4 installé
-- [ ] Extensions ext-ctype et ext-iconv activées
-- [ ] Tous les tests passent avant la migration
-- [ ] Pas de bundles abandonnés avec * comme version
-- [ ] Logs Symfony vérifiés pour les dépréciations
-- [ ] Tests UI passent avec les nouveaux sélecteurs
+- [ ] `task qa deep=1` passes
+- [ ] No new deprecation in the logs
+- [ ] `task symfony:build-prod` passes
+- [ ] The CI is green on the pull request
 
-⚠️ Configurations à adapter
+To avoid:
 
-- [ ] Configuration Doctrine si breaking changes en 8.1
-- [ ] Assets et Asset Mapper si modifiés
-- [ ] Services custom exploitant des APIs Symfony
-- [ ] Fixtures de test si changements en Doctrine
-
-🚫 À éviter
-
-- ❌ Ne pas pousser sans tests verts
-- ❌ Ne pas ignorer les warnings de dépréciations
-- ❌ Ne pas mettre à jour plusieurs majors à la fois
-- ❌ Ne pas mettre à jour directement en production sans test en staging
-- ❌ Ne pas modifier composer.lock manuellement
+- Pushing without green tests
+- Ignoring the deprecations
+- Upgrading several major versions at once
+- Editing `composer.lock` by hand

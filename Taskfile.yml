@@ -1,0 +1,165 @@
+# https://taskfile.dev
+version: '3'
+
+# Hide task's own "task: [name] command" lines; tasks print their messages through UI
+silent: true
+
+dotenv: ['.env.local', '.env']
+
+vars:
+    COMPOSE: docker compose
+    # No TTY in CI (GitHub Actions sets CI=true): -T avoids "the input device is not a TTY"
+    EXEC: '{{.COMPOSE}} exec {{if .CI}}-T {{end}}app'
+    # Tools layout: configs, caches and scripts live under .tools/
+    TOOLS_DIR: .tools
+    CONFIG_DIR: '{{.TOOLS_DIR}}/config'
+    # Standardized output: {{.UI}} title|subtitle|success|error|warning|info|elapsed|link
+    UI: 'bash {{.TOOLS_DIR}}/scripts/utils.sh'
+
+includes:
+    docker:
+        taskfile: ./.tools/tasks/docker.yml
+
+    symfony:
+        taskfile: ./.tools/tasks/symfony.yml
+
+    lint:
+        taskfile: ./.tools/tasks/lint.yml
+
+    cs:
+        taskfile: ./.tools/tasks/cs.yml
+
+    check:
+        taskfile: ./.tools/tasks/check.yml
+
+    db:
+        taskfile: ./.tools/tasks/db.yml
+
+    test:
+        taskfile: ./.tools/tasks/test.yml
+
+    quality:
+        taskfile: ./.tools/tasks/quality.yml
+
+    # Portfolio-only
+    clean:
+        taskfile: ./.tools/tasks/clean.yml
+
+    utils:
+        taskfile: ./.tools/tasks/utils.yml
+
+    prod:
+        taskfile: ./.tools/tasks/prod.yml
+
+tasks:
+    default:
+        cmds:
+            - task: help
+
+    help:
+        desc: Show this help message
+        cmds:
+            - 'bash {{.TOOLS_DIR}}/scripts/help.sh'
+
+    up:
+        desc: Build and start the containers
+        cmds:
+            - task: docker:up
+
+    down:
+        desc: Stop the containers
+        cmds:
+            - task: docker:down
+
+    restart:
+        desc: Restart the containers
+        cmds:
+            - task: docker:restart
+
+    cc:
+        desc: Clear the Symfony cache
+        cmds:
+            - task: symfony:cc
+
+    test:
+        desc: Run all the tests
+        cmds:
+            - task: test:all
+
+    health:
+        desc: Check system requirements and project health
+        cmds:
+            - task: check:health
+
+    qa:
+        desc: Run all checks before committing - cs, lint, quality, tests, arch (fix=1, deep=1 adds mutation and ui)
+        cmds:
+            - task: cs:all
+            - task: lint:all
+            # fix=1 only applies the CS fixes: Rector refactorings stay a deliberate step
+            - task: quality:all
+              vars: { NO_REFACTOR: '1' }
+            - task: test:all
+            # Portfolio-only test suites. Mutation and UI tests are slow: only with deep=1 (not in CI)
+            - task: test:arch
+            - task: test:mutation
+              if: '[ "{{.deep}}" = "1" ]'
+            - task: test:ui
+              if: '[ "{{.deep}}" = "1" ]'
+
+    update:
+        desc: Update the Docker images, Composer and pnpm dependencies
+        prompt: This pulls the Docker images, rebuilds the containers and updates Composer and pnpm. Continue?
+        preconditions:
+            - sh: '[ "{{.ENVIRONMENT}}" != "prod" ] && [ "{{.ENVIRONMENT}}" != "production" ]'
+              msg: Authorised only in the development environment
+        vars:
+            START: { sh: date +%s }
+        cmds:
+            - '{{.UI}} title "⬇️ Updating the project"'
+            - '{{.UI}} subtitle "🐳 Pulling the Docker images"'
+            - '{{.COMPOSE}} pull || { {{.UI}} error "Docker pull failed."; exit 1; }'
+            - task: docker:down
+              vars: { NESTED: '1' }
+            - task: docker:up
+              vars: { NESTED: '1' }
+            - '{{.UI}} subtitle "🐘 Updating the Composer dependencies"'
+            - '{{.EXEC}} composer update || { {{.UI}} error "Composer update failed."; exit 1; }'
+            - '{{.UI}} subtitle "📦 Updating the pnpm dependencies"'
+            - '{{.EXEC}} pnpm update || { {{.UI}} error "pnpm update failed."; exit 1; }'
+            - '{{.UI}} elapsed {{.START}}'
+            - >-
+              {{.UI}} success "Docker images updated" "Containers rebuilt and restarted"
+              "Composer dependencies updated" "pnpm dependencies updated"
+
+    init:
+        desc: Set up the project - name, ports, containers, dependencies, database
+        interactive: true
+        cmds:
+            - task: check:tools
+              vars: { NESTED: '1' }
+            - task: check:docker
+              vars: { NESTED: '1' }
+            - 'bash {{.TOOLS_DIR}}/scripts/init.sh'
+            # .env is only loaded when Task starts, and its values are exported to the commands:
+            # unset the ones init.sh may have changed, so that the new Task process reads them again
+            - >-
+              unset PROJECT_NAME PROJECT_SLUG APP_PORT DB_PORT ADM_PORT MAIL_PORT HOST_UID HOST_GID;
+              task setup
+
+    setup:
+        # No desc: hidden from the help, run by "task init" in a new Task process
+        cmds:
+            - task: docker:up
+              vars: { NESTED: '1' }
+            - task: symfony:install
+            - task: db:create
+              vars: { NESTED: '1' }
+            - task: db:migrate
+              vars: { NESTED: '1' }
+            - task: check:health
+            - >-
+              {{.UI}} success "{{.PROJECT_NAME}} is ready."
+              "Application: http://localhost:{{.APP_PORT}}"
+              "AdminNeo: http://localhost:{{.ADM_PORT}} - server db, credentials from .env"
+              "Mailpit: http://localhost:{{.MAIL_PORT}}"

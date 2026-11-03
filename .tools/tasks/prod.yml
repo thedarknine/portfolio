@@ -1,0 +1,34 @@
+# https://taskfile.dev
+version: '3'
+
+# Portfolio-only: Hostinger deployment.
+# prod:build commits the built assets to the production branch, prod:deploy pushes it to the server,
+# prod:dev switches back to main. The remote side runs .tools/deploy.sh-prod, copied to the user folder.
+# Needs REMOTE_* and DB_* variables in .env.local.
+
+tasks:
+    release:
+        desc: Full production deployment - build, deploy, back to development
+        cmds:
+            - '{{.UI}} title "🚀 Starting the full production deployment"'
+            # Runs even if build or deploy fails, so the working copy never stays on the production branch
+            - defer: { task: dev }
+            - task: build
+            - task: deploy
+            - '{{.UI}} success "Full production deployment completed!"'
+
+    build:
+        desc: Build the assets and commit them to the production branch
+        cmds:
+            - 'bash {{.TOOLS_DIR}}/scripts/prod-build.sh'
+
+    deploy:
+        desc: Deploy the production branch to the server - needs prod:build first
+        interactive: true
+        cmds:
+            - 'bash {{.TOOLS_DIR}}/scripts/prod-deploy.sh'
+
+    dev:
+        desc: Switch back to the development environment
+        cmds:
+            - 'bash {{.TOOLS_DIR}}/scripts/dev.sh'

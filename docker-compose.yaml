@@ -1,0 +1,35 @@
+services:
+  app:
+    container_name: ${PROJECT_SLUG:-portfolio}-app
+    build:
+      context: .docker
+      dockerfile: php.Dockerfile
+      args:
+        - PHP_VERSION=8.4
+    restart: unless-stopped
+    expose:
+      - "9000"
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - app-network
+
+  engine:
+    container_name: ${PROJECT_SLUG:-portfolio}-server
+    image: nginx:${NGINX_VERSION:-1.30}-alpine
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8000}:80"
+    volumes:
+      - ./:/var/www/html:ro
+      - ./.docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - app-network
+    depends_on:
+      - app
+
+# Names are prefixed with PROJECT_SLUG (.env) so several projects from this template can run side by side
+networks:
+  app-network:
+    driver: bridge
+    name: ${PROJECT_SLUG:-portfolio}-network

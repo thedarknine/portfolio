@@ -1,0 +1,57 @@
+# https://taskfile.dev
+version: '3'
+
+# Portfolio-only: remove generated files, or reinstall the dependencies from scratch
+# UI_NESTED hides the success box of build, cache and test when run from clean:all
+
+tasks:
+    all:
+        desc: Remove the temporary files - build, cache, logs, coverage
+        cmds:
+            - '{{.UI}} title "🧹 Cleaning the temporary files"'
+            - task: build
+              vars: { NESTED: '1' }
+            - task: cache
+              vars: { NESTED: '1' }
+            - task: test
+              vars: { NESTED: '1' }
+            - '{{.UI}} success "Temporary files cleaned."'
+
+    build:
+        desc: Remove the build artifacts - public/build, public/assets
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - rm -rf public/build/* public/assets/*
+            - '{{.UI}} success "Build artifacts removed."'
+
+    cache:
+        desc: Remove the Symfony cache and logs
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - rm -rf var/cache/* var/log/*
+            - '{{.UI}} success "Cache and logs removed."'
+
+    test:
+        desc: Remove the PHPUnit cache and the coverage reports
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - rm -rf var/coverage/ coverage/ .phpunit.result.cache {{.TOOLS_DIR}}/cache/.phpunit.cache
+            - '{{.UI}} success "PHPUnit cache and coverage removed."'
+
+    composer:
+        desc: Clear the Composer cache and reinstall the dependencies
+        cmds:
+            - '{{.UI}} subtitle "🧹 Reinstalling the Composer dependencies"'
+            - rm -rf vendor/
+            - '{{.EXEC}} composer clear-cache'
+            - '{{.EXEC}} composer install || { {{.UI}} error "Composer install failed."; exit 1; }'
+            - '{{.UI}} success "Composer cache cleared and dependencies reinstalled."'
+
+    pnpm:
+        desc: Prune the pnpm store and reinstall the dependencies
+        cmds:
+            - '{{.UI}} subtitle "🧹 Reinstalling the pnpm dependencies"'
+            - rm -rf node_modules/
+            - '{{.EXEC}} pnpm store prune'
+            - '{{.EXEC}} pnpm install || { {{.UI}} error "pnpm install failed."; exit 1; }'
+            - '{{.UI}} success "pnpm store pruned and dependencies reinstalled."'

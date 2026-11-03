@@ -61,7 +61,6 @@ class PageServiceFallbackTest extends TestCase
         $pages = $this->pageService->getPublishedRootPagesInHeader();
 
         $this->assertNotEmpty($pages);
-        $this->assertContainsOnlyInstancesOf(PageInfo::class, $pages);
         foreach ($pages as $page) {
             $this->assertTrue($page->isInHeader());
         }

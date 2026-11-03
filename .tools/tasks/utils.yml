@@ -1,0 +1,29 @@
+# https://taskfile.dev
+version: '3'
+
+# Portfolio-only shortcuts
+
+tasks:
+    secret:
+        desc: Generate a new APP_SECRET and display it
+        vars:
+            SECRET: { sh: openssl rand -hex 32 }
+        cmds:
+            - '{{.UI}} success "APP_SECRET generated - copy it to .env.local:" "{{.SECRET}}"'
+
+    seo-audit:
+        desc: Run the Lighthouse, Unlighthouse and pa11y audits (target=dev|prod)
+        cmds:
+            - '{{.UI}} title "🔍 Running the SEO and accessibility audit ({{.target | default "dev"}})"'
+            - 'bash {{.TOOLS_DIR}}/scripts/audit.sh {{.target | default "dev"}}'
+
+    prune:
+        desc: Prune the pnpm store and list the unused packages with depcheck
+        cmds:
+            - '{{.UI}} subtitle "🧹 Pruning the pnpm store"'
+            - '{{.EXEC}} pnpm store prune'
+            - '{{.UI}} subtitle "🔍 Looking for unused packages"'
+            - >-
+              {{.EXEC}} pnpm exec depcheck --config={{.CONFIG_DIR}}/.depcheckrc.json
+              || { {{.UI}} error "depcheck found unused or missing packages."; exit 1; }
+            - '{{.UI}} success "pnpm store pruned, no unused package."'

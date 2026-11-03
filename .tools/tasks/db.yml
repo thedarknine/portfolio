@@ -1,0 +1,76 @@
+# https://taskfile.dev
+version: '3'
+
+# UI_NESTED hides the success box of create and migrate when run from reset
+
+tasks:
+    create:
+        desc: Create the database if it does not exist
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🗄️ Creating the database"'
+            - >-
+              {{.EXEC}} bin/console doctrine:database:create --if-not-exists
+              || { {{.UI}} error "Database creation failed."; exit 1; }
+            - '{{.UI}} success "Database is ready."'
+
+    diff:
+        desc: Generate a migration from the entity changes
+        cmds:
+            - '{{.UI}} subtitle "📝 Generating a migration"'
+            - >-
+              {{.EXEC}} bin/console doctrine:migrations:diff
+              || { {{.UI}} error "Migration generation failed."; exit 1; }
+            - '{{.UI}} success "Migration generated in src/Migrations/."'
+
+    migrate:
+        desc: Run the pending migrations
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🚀 Running migrations"'
+            - >-
+              {{.EXEC}} bin/console doctrine:migrations:migrate --no-interaction --allow-no-migration
+              || { {{.UI}} error "Migrations failed."; exit 1; }
+            - '{{.UI}} success "Database is up to date."'
+
+    reset:
+        desc: Drop and recreate the database, then run the migrations
+        prompt: This will delete all the data of the database. Continue?
+        cmds:
+            - '{{.UI}} subtitle "💣 Resetting the database"'
+            - >-
+              {{.EXEC}} bin/console doctrine:database:drop --force --if-exists
+              || { {{.UI}} error "Database drop failed."; exit 1; }
+            - task: create
+              vars: { NESTED: '1' }
+            - task: migrate
+              vars: { NESTED: '1' }
+            - '{{.UI}} success "Database reset and migrated."'
+
+    # Portfolio-only
+    fixtures:
+        desc: Load the Doctrine fixtures - purges the database
+        prompt: This replaces all the data of the database with the fixtures. Continue?
+        preconditions:
+            - sh: '[ "{{.ENVIRONMENT}}" != "prod" ] && [ "{{.ENVIRONMENT}}" != "production" ]'
+              msg: Authorised only in the development environment
+        cmds:
+            - '{{.UI}} subtitle "🌱 Loading the fixtures"'
+            - >-
+              {{.EXEC}} bin/console doctrine:fixtures:load --no-interaction
+              || { {{.UI}} error "Fixtures loading failed."; exit 1; }
+            - '{{.UI}} success "Fixtures loaded."'
+
+    dump:
+        desc: Dump the database to .tools/export/ (clean=1 removes the previous dumps)
+        vars:
+            EXPORT_DIR: '{{.TOOLS_DIR}}/export'
+            SQL_FILE: { sh: 'echo "portfolio_db-$(date +%Y%m%d_%H%M%S).sql"' }
+        cmds:
+            - '{{.UI}} subtitle "💾 Dumping the database"'
+            - mkdir -p {{.EXPORT_DIR}}
+            - '[ -z "{{.clean}}" ] || rm -f {{.EXPORT_DIR}}/*.sql'
+            - >-
+              {{.COMPOSE}} exec -T db mariadb-dump -uroot -p"$DB_ROOT_PASS" "$DB_NAME" > {{.EXPORT_DIR}}/{{.SQL_FILE}}
+              || { {{.UI}} error "Database dump failed."; exit 1; }
+            - '{{.UI}} success "Database dumped to {{.EXPORT_DIR}}/{{.SQL_FILE}}."'
