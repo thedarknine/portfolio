@@ -23,8 +23,8 @@ use Symfony\Component\Routing\Attribute\Route;
 final class ContactController extends AbstractController
 {
     public function __construct(
-        private PageService $pageService,
-        private RateLimiterFactoryInterface $contactFormLimiter,
+        private readonly PageService $pageService,
+        private readonly RateLimiterFactoryInterface $contactFormLimiter,
     ) {
     }
 
@@ -56,7 +56,7 @@ final class ContactController extends AbstractController
 
                 $data = $form->getData();
 
-                $email = (new Email())
+                $email = new Email()
                     ->from('contact@carolinenoyer.fr')
                     ->to('studio@carolinenoyer.fr')
                     ->replyTo($data['email'])

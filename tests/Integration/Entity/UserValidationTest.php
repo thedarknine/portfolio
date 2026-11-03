@@ -31,7 +31,7 @@ class UserValidationTest extends KernelTestCase
      */
     public function testValidUserHasNoViolation(): void
     {
-        $user = (new User())
+        $user = new User()
             ->setEmail('studio@carolinenoyer.fr')
             ->setPassword('$2y$13$dummyhashedpasswordstrings');
 
@@ -48,7 +48,7 @@ class UserValidationTest extends KernelTestCase
      */
     public function testInvalidEmailFormatTriggerViolation(): void
     {
-        $user = (new User())
+        $user = new User()
             ->setEmail('ceci-n-est-pas-un-email')
             ->setPassword('password123');
 
@@ -62,7 +62,7 @@ class UserValidationTest extends KernelTestCase
      */
     public function testRolesManagement(): void
     {
-        $user = (new User())->setRoles(['ROLE_ADMIN']);
+        $user = new User()->setRoles(['ROLE_ADMIN']);
 
         $this->assertContains('ROLE_ADMIN', $user->getRoles());
         $this->assertContains('ROLE_USER', $user->getRoles()); // Always guaranteed
@@ -73,7 +73,7 @@ class UserValidationTest extends KernelTestCase
      */
     public function testSerializationSecuresPasswordHash(): void
     {
-        $user = (new User())
+        $user = new User()
             ->setEmail('admin@test.fr')
             ->setPassword('super_secret_hash');
 
@@ -95,7 +95,6 @@ class UserValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($user);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($user, 1);
 
         $this->assertSame(1, $user->getId());

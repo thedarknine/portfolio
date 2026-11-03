@@ -39,6 +39,7 @@ class SkillCrudController extends AbstractCrudController
         return Skill::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -53,11 +54,13 @@ class SkillCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters->add(EntityFilter::new('skillType')->autocomplete());
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $actions = $this->addSortableActions($actions);
@@ -71,6 +74,7 @@ class SkillCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -85,7 +89,7 @@ class SkillCrudController extends AbstractCrudController
 
         yield TextField::new('logo', 'Logo')
             ->setHelp('Exemple : skills-sysadmin.png (doit être présent dans public/images/skills/)')
-            ->formatValue(function ($value, $entity) {
+            ->formatValue(function ($value, $entity): string {
                 // If no file is provided in the database, return a placeholder or empty string
                 if (!$value) {
                     return '<span class="text-muted">Aucun</span>';
@@ -95,7 +99,7 @@ class SkillCrudController extends AbstractCrudController
                 return sprintf(
                     '<img src="/images/skills/%s" class="bg-white rounded" style="max-height: 30px; max-width: 30px; object-fit: contain;" alt="%s">',
                     $value,
-                    htmlspecialchars($entity->getName()),
+                    htmlspecialchars((string) $entity->getName()),
                 );
             });
 

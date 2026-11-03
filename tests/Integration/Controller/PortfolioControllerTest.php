@@ -106,14 +106,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageIsSuccessful(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Tech Corp')
             ->setSlug('tech-corp')
             ->setLogo('tech-corp.png')
             ->setCity('Tech City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setSlug('senior-developer')
             ->setDescription('A great experience')
@@ -148,14 +148,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageWithNonExistentPageSlugReturns404(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Tech Corp')
             ->setSlug('tech-corp')
             ->setLogo('tech-corp.png')
             ->setCity('Tech City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setSlug('senior-developer')
             ->setDescription('A great experience')
@@ -178,14 +178,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageRendersCorrectTemplate(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Tech Corp')
             ->setSlug('tech-corp')
             ->setLogo('tech-corp.png')
             ->setCity('Tech City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setSlug('senior-developer')
             ->setDescription('A great experience')
@@ -211,14 +211,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageBreadcrumbData(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Acme Corporation')
             ->setSlug('acme-corporation')
             ->setLogo('acme-corporation.png')
             ->setCity('Acme City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Frontend Developer')
             ->setSlug('frontend-developer')
             ->setDescription('Building amazing UIs')
@@ -251,7 +251,7 @@ class PortfolioControllerTest extends WebTestCase
 
         // IF case: "bartop" type will have its directory and a file
         if (null === $arcadeRepo->findOneBy(['slug' => 'bartop'])) {
-            $this->entityManager->persist((new ArcadeType())->setName('Bartop')->setSlug('bartop'));
+            $this->entityManager->persist(new ArcadeType()->setName('Bartop')->setSlug('bartop'));
         }
         $arcadeDir = $this->publicImagesDir . '/arcade/bartop';
         $this->filesystem->mkdir($arcadeDir);
@@ -259,7 +259,7 @@ class PortfolioControllerTest extends WebTestCase
 
         // ELSE case: "dossier-fantome-arcade" type will not have a physical directory
         if (null === $arcadeRepo->findOneBy(['slug' => 'dossier-fantome-arcade'])) {
-            $this->entityManager->persist((new ArcadeType())->setName('Fantome')->setSlug('dossier-fantome-arcade'));
+            $this->entityManager->persist(new ArcadeType()->setName('Fantome')->setSlug('dossier-fantome-arcade'));
         }
 
         // ==========================================
@@ -269,7 +269,7 @@ class PortfolioControllerTest extends WebTestCase
 
         // IF case: "sculptures" type will have its directory and a file
         if (null === $creationRepo->findOneBy(['slug' => 'sculptures'])) {
-            $this->entityManager->persist((new CreationType())->setName('Sculptures')->setSlug('sculptures'));
+            $this->entityManager->persist(new CreationType()->setName('Sculptures')->setSlug('sculptures'));
         }
         $creationDir = $this->publicImagesDir . '/creations/sculptures';
         $this->filesystem->mkdir($creationDir);
@@ -277,7 +277,7 @@ class PortfolioControllerTest extends WebTestCase
 
         // ELSE case: "dossier-fantome-creations" type will not have a physical directory
         if (null === $creationRepo->findOneBy(['slug' => 'dossier-fantome-creations'])) {
-            $this->entityManager->persist((new CreationType())->setName('Fantome')->setSlug('dossier-fantome-creations'));
+            $this->entityManager->persist(new CreationType()->setName('Fantome')->setSlug('dossier-fantome-creations'));
         }
 
         // ==========================================
@@ -287,7 +287,7 @@ class PortfolioControllerTest extends WebTestCase
 
         // IF case: "paysages" type will have its directory and files
         if (null === $photoRepo->findOneBy(['slug' => 'paysages'])) {
-            $this->entityManager->persist((new PhotoType())->setName('Paysages')->setSlug('paysages'));
+            $this->entityManager->persist(new PhotoType()->setName('Paysages')->setSlug('paysages'));
         }
         $photoDir = $this->publicImagesDir . '/photos/paysages';
         $this->filesystem->mkdir($photoDir);
@@ -296,7 +296,7 @@ class PortfolioControllerTest extends WebTestCase
 
         // ELSE case: "dossier-fantome-photos" type will not have a physical directory
         if (null === $photoRepo->findOneBy(['slug' => 'dossier-fantome-photos'])) {
-            $this->entityManager->persist((new PhotoType())->setName('Fantome')->setSlug('dossier-fantome-photos'));
+            $this->entityManager->persist(new PhotoType()->setName('Fantome')->setSlug('dossier-fantome-photos'));
         }
 
         $this->entityManager->flush();
@@ -311,7 +311,7 @@ class PortfolioControllerTest extends WebTestCase
         // Example to force a page in the navigation list if your test database is empty:
         $pageRepo = $this->entityManager->getRepository(PageInfo::class);
         if (null === $pageRepo->findOneBy(['technicalName' => 'experience'])) {
-            $page = (new PageInfo())
+            $page = new PageInfo()
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
                 ->setCategory(PageCategory::CAREER)

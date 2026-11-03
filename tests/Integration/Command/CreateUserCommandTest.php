@@ -11,13 +11,14 @@
 namespace App\Tests\Integration\Command;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
 
 class CreateUserCommandTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
 
     protected function setUp(): void
     {
@@ -131,7 +132,7 @@ class CreateUserCommandTest extends KernelTestCase
     public function testExecuteFailsIfUserAlreadyExists(): void
     {
         // 1. Insert an existing user in the database
-        $existingUser = (new User())
+        $existingUser = new User()
             ->setEmail('double@portfolio.fr')
             ->setRoles(['ROLE_ADMIN'])
             ->setPassword('any_hash');

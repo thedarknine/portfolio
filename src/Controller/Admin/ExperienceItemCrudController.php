@@ -39,6 +39,7 @@ class ExperienceItemCrudController extends AbstractCrudController
         return ExperienceItem::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -53,11 +54,13 @@ class ExperienceItemCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters->add(EntityFilter::new('experience')->autocomplete());
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $actions = $this->addSortableActions($actions);
@@ -71,6 +74,7 @@ class ExperienceItemCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -90,7 +94,7 @@ class ExperienceItemCrudController extends AbstractCrudController
         // Manage the picto (optional, can be an emoji or a short text)
         yield TextField::new('picto', 'Picto')
             ->setHelp('Exemple : Copier un emoji.')
-            ->formatValue(function ($value, $entity) {
+            ->formatValue(function ($value, $entity): string {
                 if (!$value) {
                     return '<span class="text-muted">Aucun</span>';
                 }

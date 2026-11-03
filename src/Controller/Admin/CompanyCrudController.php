@@ -29,6 +29,7 @@ class CompanyCrudController extends AbstractCrudController
         return Company::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -39,6 +40,7 @@ class CompanyCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
@@ -50,6 +52,7 @@ class CompanyCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -61,7 +64,7 @@ class CompanyCrudController extends AbstractCrudController
         // Logo Management (Text file name + HTML preview)
         yield TextField::new('logo', 'Fichier Logo')
             ->setHelp('Exemple : logo-leviia.svg (doit être dans public/uploads/companies/)')
-            ->formatValue(function ($value, $entity) {
+            ->formatValue(function ($value, $entity): string {
                 if (!$value) {
                     return '<span class="text-muted">Aucun</span>';
                 }
@@ -69,7 +72,7 @@ class CompanyCrudController extends AbstractCrudController
                 return sprintf(
                     '<img src="/images/company/%s" class="bg-white rounded" style="max-height: 30px; max-width: 30px; object-fit: contain;" alt="%s">',
                     $value,
-                    htmlspecialchars($entity->getName()),
+                    htmlspecialchars((string) $entity->getName()),
                 );
             });
 

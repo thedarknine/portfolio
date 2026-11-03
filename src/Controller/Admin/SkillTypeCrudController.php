@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
@@ -12,16 +14,11 @@ namespace App\Controller\Admin;
 
 use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Entity\SkillType;
-use Doctrine\ORM\QueryBuilder;
-use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
-use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -46,6 +43,7 @@ class SkillTypeCrudController extends AbstractCrudController
         return SkillType::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -57,6 +55,7 @@ class SkillTypeCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters->add(BooleanFilter::new('deleted'));
@@ -73,6 +72,7 @@ class SkillTypeCrudController extends AbstractCrudController
         return $qb;
     }*/
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -103,6 +103,7 @@ class SkillTypeCrudController extends AbstractCrudController
         yield BooleanField::new('deleted', 'Archivé');
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $actions = $this->addSortableActions($actions);

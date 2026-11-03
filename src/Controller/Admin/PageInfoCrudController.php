@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
@@ -14,6 +16,7 @@ use App\Controller\Admin\Trait\SortableCrudTrait;
 use App\Entity\PageInfo;
 use App\Enum\PageCategory;
 use App\Repository\PageInfoRepository;
+use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -42,6 +45,7 @@ class PageInfoCrudController extends AbstractCrudController
         return PageInfo::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -52,6 +56,7 @@ class PageInfoCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $actions = $this->addSortableActions($actions);
@@ -65,6 +70,7 @@ class PageInfoCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -74,11 +80,9 @@ class PageInfoCrudController extends AbstractCrudController
 
         yield AssociationField::new('parent', 'Parent')
             ->setFormTypeOption('choice_label', 'title')
-            ->setFormTypeOption('query_builder', function (PageInfoRepository $repository) {
-                return $repository->createQueryBuilder('p')
-                    ->andWhere('p.parent IS NULL')
-                    ->orderBy('p.position', 'ASC');
-            })
+            ->setFormTypeOption('query_builder', fn (PageInfoRepository $repository): QueryBuilder => $repository->createQueryBuilder('p')
+                ->andWhere('p.parent IS NULL')
+                ->orderBy('p.position', 'ASC'))
             ->setHelp('Sélectionnez la page parente si cette page est une sous-page.');
 
         yield ChoiceField::new('category', 'Catégorie')
@@ -87,9 +91,7 @@ class PageInfoCrudController extends AbstractCrudController
                 'Centre d\'intérêt' => PageCategory::INTEREST,
                 'À propos'          => PageCategory::ABOUT,
             ])
-            ->formatValue(function ($value, $entity) {
-                return $value instanceof PageCategory ? $value->getLabel() : $value;
-            });
+            ->formatValue(fn ($value, $entity) => $value instanceof PageCategory ? $value->getLabel() : $value);
 
         yield IntegerField::new('position', 'Ordre d\'affichage')
             ->setRequired(false)

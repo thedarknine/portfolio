@@ -33,7 +33,7 @@ class SkillValidationTest extends KernelTestCase
      */
     public function testValidSkillHasNoViolation(): void
     {
-        $skill = (new Skill())
+        $skill = new Skill()
             ->setName('Symfony')
             ->setSlug('symfony')
             ->setStartYear(2011)
@@ -42,7 +42,7 @@ class SkillValidationTest extends KernelTestCase
             ->setPosition(1)
             ->setDisplay(true)
             ->setSkillType(
-                (new SkillType())
+                new SkillType()
                     ->setName('Programming')
                     ->setSlug('programming')
                     ->setPosition(1),
@@ -63,10 +63,10 @@ class SkillValidationTest extends KernelTestCase
      */
     public function testGetDurationForPastSkill(): void
     {
-        $skill = (new Skill())->setStartYear(2015)->setEndYear(2018);
+        $skill = new Skill()->setStartYear(2015)->setEndYear(2018);
         $this->assertSame('3 ans', $skill->getDuration());
 
-        $skillShort = (new Skill())->setStartYear(2015)->setEndYear(2016);
+        $skillShort = new Skill()->setStartYear(2015)->setEndYear(2016);
         $this->assertSame('1 an', $skillShort->getDuration());
     }
 
@@ -75,9 +75,9 @@ class SkillValidationTest extends KernelTestCase
      */
     public function testGetDurationForActiveSkill(): void
     {
-        $currentYear = intval((new \DateTime())->format('Y'));
+        $currentYear = intval(new \DateTime()->format('Y'));
 
-        $skill = (new Skill())->setStartYear($currentYear - 4);
+        $skill = new Skill()->setStartYear($currentYear - 4);
 
         $this->assertNull($skill->getEndYear());
         $this->assertSame('4 ans', $skill->getDuration());
@@ -88,7 +88,7 @@ class SkillValidationTest extends KernelTestCase
      */
     public function testInvalidEndYearTriggerCallbackViolation(): void
     {
-        $skill = (new Skill())
+        $skill = new Skill()
             ->setName('PHP')
             ->setStartYear(2026)
             ->setEndYear(2022)
@@ -126,7 +126,6 @@ class SkillValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($skill);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($skill, 7);
 
         $this->assertSame(7, $skill->getId());

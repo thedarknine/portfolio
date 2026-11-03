@@ -184,7 +184,7 @@ class PageInfo implements SortableEntityInterface
     public function getPublishedChildren(): array
     {
         return $this->children
-            ->filter(fn (self $child) => $child->isPublished())
+            ->filter(fn (self $child): bool => $child->isPublished())
             ->toArray();
     }
 

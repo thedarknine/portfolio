@@ -166,7 +166,7 @@ class Skill implements SortableEntityInterface
     public function getDuration(): ?string
     {
         if (null === $this->endYear) {
-            $endYear = intval((new \DateTime())->format('Y'));
+            $endYear = intval(new \DateTime()->format('Y'));
         } else {
             $endYear = $this->endYear;
         }

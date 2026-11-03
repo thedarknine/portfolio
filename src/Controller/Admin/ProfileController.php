@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
@@ -39,7 +41,7 @@ class ProfileController extends AbstractController
         $secretKey = $user->getGoogleAuthenticatorSecret();
 
         // 3. Optionnel : On formate la clé par blocs de 4 lettres pour la rendre lisible
-        $formattedSecret = chunk_split($secretKey, 4, ' ');
+        $formattedSecret = chunk_split((string) $secretKey, 4, ' ');
 
         return $this->render('admin/profile.html.twig', [
             'secretKey' => $formattedSecret,

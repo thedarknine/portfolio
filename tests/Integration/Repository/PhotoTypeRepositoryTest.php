@@ -12,11 +12,12 @@ namespace App\Tests\Integration\Repository;
 
 use App\Entity\PhotoType;
 use App\Repository\PhotoTypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PhotoTypeRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private PhotoTypeRepository $photoTypeRepository;
 
     protected function setUp(): void
@@ -43,9 +44,9 @@ class PhotoTypeRepositoryTest extends KernelTestCase
     public function testGetPhotoTypesOrdersByPositionAscending(): void
     {
         // Insert photo types in random order to test the QueryBuilder
-        $type2 = (new PhotoType())->setName('Portraits')->setSlug('portraits')->setPosition(2);
-        $type1 = (new PhotoType())->setName('Paysages')->setSlug('paysages')->setPosition(1);
-        $type3 = (new PhotoType())->setName('Macro')->setSlug('macro')->setPosition(3);
+        $type2 = new PhotoType()->setName('Portraits')->setSlug('portraits')->setPosition(2);
+        $type1 = new PhotoType()->setName('Paysages')->setSlug('paysages')->setPosition(1);
+        $type3 = new PhotoType()->setName('Macro')->setSlug('macro')->setPosition(3);
 
         $this->entityManager->persist($type2);
         $this->entityManager->persist($type1);

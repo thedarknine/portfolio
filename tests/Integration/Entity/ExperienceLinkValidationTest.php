@@ -16,6 +16,7 @@ use App\Entity\ExperienceLink;
 use App\Entity\PageInfo;
 use App\Enum\LinkType;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -39,7 +40,7 @@ class ExperienceLinkValidationTest extends KernelTestCase
         $enumCases   = LinkType::cases();
         $defaultType = $enumCases[0];
 
-        $link = (new ExperienceLink())
+        $link = new ExperienceLink()
             ->setTitle('Dépôt GitHub')
             ->setSlug('depot-github')
             ->setUrl('https://github.com/carolinenoyer')
@@ -60,7 +61,7 @@ class ExperienceLinkValidationTest extends KernelTestCase
      */
     public function testValidExperienceLinkDetailHasNoViolation(): void
     {
-        $link = (new ExperienceLink())
+        $link = new ExperienceLink()
             ->setTitle('Dépôt GitHub')
             ->setSlug('depot-github')
             ->setUrl(null)
@@ -81,7 +82,7 @@ class ExperienceLinkValidationTest extends KernelTestCase
      */
     public function testInvalidUrlFormatTriggerViolation(): void
     {
-        $link = (new ExperienceLink())
+        $link = new ExperienceLink()
             ->setTitle('Lien cassé')
             ->setUrl('pas-une-url-valide')
             ->setSlug('lien-casse')
@@ -105,7 +106,6 @@ class ExperienceLinkValidationTest extends KernelTestCase
         // Bypass setUrl() to inject directly a whitespace-only value
         // in property, to test validateUrlOrPage() in isolation.
         $reflection = new \ReflectionProperty(ExperienceLink::class, 'url');
-        $reflection->setAccessible(true);
         $reflection->setValue($link, '   ');
 
         $context = $this->createMock(ExecutionContextInterface::class);
@@ -125,7 +125,7 @@ class ExperienceLinkValidationTest extends KernelTestCase
 
         $urlViolations = array_filter(
             iterator_to_array($violations),
-            fn ($violation) => 'url' === $violation->getPropertyPath(),
+            fn (ConstraintViolationInterface $violation): bool => 'url' === $violation->getPropertyPath(),
         );
 
         $this->assertNotCount(
@@ -144,7 +144,6 @@ class ExperienceLinkValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($link);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($link, 742);
 
         $this->assertSame(742, $link->getId());
@@ -155,7 +154,7 @@ class ExperienceLinkValidationTest extends KernelTestCase
      */
     private function createValidMockExperience(): Experience
     {
-        return (new Experience())
+        return new Experience()
             ->setTitle('Product Owner')
             ->setSlug('product-owner')
             ->setDescription('Une description d’expérience valide.')
@@ -168,7 +167,7 @@ class ExperienceLinkValidationTest extends KernelTestCase
      */
     private function createValidMockPage(): PageInfo
     {
-        return (new PageInfo())
+        return new PageInfo()
             ->setTitle('Page de détail')
             ->setSlug('detail')
             ->setTechnicalName('detail')

@@ -38,7 +38,7 @@ class ExperienceValidationTest extends KernelTestCase
         // Create a quick Company instance required for the relation
         $company = new Company();
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Product Owner Technique')
             ->setSlug('product-owner-technique')
             ->setSummary('Gestion du backlog produit et architecture technique.')
@@ -62,7 +62,7 @@ class ExperienceValidationTest extends KernelTestCase
     {
         $company = new Company();
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Product Owner Technique')
             ->setSlug('product-owner-technique')
             ->setDescription('Gestion du backlog produit et architecture technique.')
@@ -82,7 +82,7 @@ class ExperienceValidationTest extends KernelTestCase
     public function testSubtitleTooLongTriggerViolation(): void
     {
         $company    = new Company();
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Développeur Symfony')
             ->setSlug('developpeur-symfony')
             ->setDescription('Une description valide')
@@ -140,7 +140,7 @@ class ExperienceValidationTest extends KernelTestCase
      */
     public function testEndDateBeforeStartDateTriggerViolation(): void
     {
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Developer')
             ->setDescription('Valid description')
             ->setCompany(new Company())
@@ -159,7 +159,7 @@ class ExperienceValidationTest extends KernelTestCase
     public function testInvalidSkillInCollectionTriggersViolation(): void
     {
         // 1. Create a valid experience as base
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Développeur Full-Stack')
             ->setDescription('Description valide')
             ->setCompany(new Company())
@@ -173,7 +173,7 @@ class ExperienceValidationTest extends KernelTestCase
         $invalidSkill->setEndYear(2022);
         $invalidSkill->setLevel(85);
         $invalidSkill->setSkillType(
-            (new SkillType())
+            new SkillType()
                 ->setName('Programming')
                 ->setSlug('programming')
                 ->setPosition(1),
@@ -239,7 +239,6 @@ class ExperienceValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($experience);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($experience, 7);
 
         $this->assertSame(7, $experience->getId());

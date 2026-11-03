@@ -30,7 +30,7 @@ class CompanyValidationTest extends KernelTestCase
      */
     public function testValidCompanyHasNoViolation(): void
     {
-        $company = (new Company())
+        $company = new Company()
             ->setName('Mon Entreprise Retro')
             ->setSlug('mon-entreprise-retro')
             ->setCity('Orléans')
@@ -53,7 +53,7 @@ class CompanyValidationTest extends KernelTestCase
     public function testCityConstraints(): void
     {
         // Case 1: Empty city
-        $company = (new Company())
+        $company = new Company()
             ->setName('Ma Super Entreprise')
             ->setSlug('ma-super-entreprise')
             ->setCity('')
@@ -64,7 +64,7 @@ class CompanyValidationTest extends KernelTestCase
         $this->assertSame('city', $errors[0]->getPropertyPath()); // Maintenant c'est bien elle la première !
 
         // Case 2: City too long
-        $companyLong = (new Company())
+        $companyLong = new Company()
             ->setName('Ma Super Entreprise')
             ->setSlug('ma-super-entreprise')
             ->setCity(str_repeat('X', 101))
@@ -81,7 +81,7 @@ class CompanyValidationTest extends KernelTestCase
     public function testDepartmentConstraints(): void
     {
         // Case 1: Department out of bounds (e.g., 9999)
-        $company = (new Company())
+        $company = new Company()
             ->setName('Ma Super Entreprise')
             ->setSlug('ma-super-entreprise')
             ->setCity('Paris')
@@ -93,7 +93,7 @@ class CompanyValidationTest extends KernelTestCase
         $this->assertSame('department', $errors[0]->getPropertyPath());
 
         // Case 2: Negative department
-        $companyNeg = (new Company())
+        $companyNeg = new Company()
             ->setName('Ma Super Entreprise')
             ->setSlug('ma-super-entreprise')
             ->setCity('Paris')
@@ -108,7 +108,7 @@ class CompanyValidationTest extends KernelTestCase
      */
     public function testUrlConstraint(): void
     {
-        $company = (new Company())
+        $company = new Company()
             ->setCity('Lyon')
             ->setDepartment(69)
             ->setUrl('pas-une-url-valide');
@@ -148,7 +148,6 @@ class CompanyValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($company);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($company, 7);
 
         $this->assertSame(7, $company->getId());

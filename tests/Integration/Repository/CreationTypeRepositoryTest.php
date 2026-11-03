@@ -12,11 +12,12 @@ namespace App\Tests\Integration\Repository;
 
 use App\Entity\CreationType;
 use App\Repository\CreationTypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class CreationTypeRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private CreationTypeRepository $creationTypeRepository;
 
     protected function setUp(): void
@@ -44,9 +45,9 @@ class CreationTypeRepositoryTest extends KernelTestCase
     public function testGetCreationTypesOrdersByPositionAscending(): void
     {
         // Insert in random order to validate ASC sorting by QueryBuilder
-        $creation2 = (new CreationType())->setName('Modelage')->setSlug('modelage')->setPosition(2);
-        $creation1 = (new CreationType())->setName('Tournage')->setSlug('tournage')->setPosition(1);
-        $creation3 = (new CreationType())->setName('Sculpture')->setSlug('sculpture')->setPosition(3);
+        $creation2 = new CreationType()->setName('Modelage')->setSlug('modelage')->setPosition(2);
+        $creation1 = new CreationType()->setName('Tournage')->setSlug('tournage')->setPosition(1);
+        $creation3 = new CreationType()->setName('Sculpture')->setSlug('sculpture')->setPosition(3);
 
         $this->entityManager->persist($creation2);
         $this->entityManager->persist($creation1);

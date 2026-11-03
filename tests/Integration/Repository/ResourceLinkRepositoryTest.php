@@ -12,11 +12,12 @@ namespace App\Tests\Integration\Repository;
 
 use App\Entity\ResourceLink;
 use App\Repository\ResourceLinkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ResourceLinkRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private ResourceLinkRepository $resourceLinkRepository;
 
     protected function setUp(): void
@@ -43,7 +44,7 @@ class ResourceLinkRepositoryTest extends KernelTestCase
     public function testFindAllAsArrayReturnsSortedArrays(): void
     {
         // 1. Insert 3 resource links in random order
-        $linkLinkedIn = (new ResourceLink())
+        $linkLinkedIn = new ResourceLink()
             ->setTitle('LinkedIn')
             ->setSlug('linkedin')
             ->setUrl('https://linkedin.com/in/mon-profil')
@@ -51,7 +52,7 @@ class ResourceLinkRepositoryTest extends KernelTestCase
             ->setPosition(2)
             ->setInHero(true);
 
-        $linkGitHub = (new ResourceLink())
+        $linkGitHub = new ResourceLink()
             ->setTitle('GitHub')
             ->setSlug('github')
             ->setUrl('https://github.com/mon-pseudo')
@@ -59,7 +60,7 @@ class ResourceLinkRepositoryTest extends KernelTestCase
             ->setPosition(1)
             ->setInHero(true);
 
-        $linkAutre = (new ResourceLink())
+        $linkAutre = new ResourceLink()
             ->setTitle('Site Externe')
             ->setSlug('site-externe')
             ->setUrl('https://example.com')

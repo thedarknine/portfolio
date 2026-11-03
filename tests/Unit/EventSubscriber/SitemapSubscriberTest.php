@@ -200,7 +200,7 @@ class SitemapSubscriberTest extends TestCase
         $calls        = [];
         $urlContainer = $this->createStub(UrlContainerInterface::class);
         $urlContainer->method('addUrl')
-            ->willReturnCallback(function ($url, $section) use (&$calls) {
+            ->willReturnCallback(function ($url, $section) use (&$calls): void {
                 $calls[] = [$url, $section];
             });
 

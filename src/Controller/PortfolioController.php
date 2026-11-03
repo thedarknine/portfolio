@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class PortfolioController extends AbstractController
 {
-    public function __construct(private PageService $pageService)
+    public function __construct(private readonly PageService $pageService)
     {
     }
 

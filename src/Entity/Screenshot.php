@@ -19,7 +19,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScreenshotRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class Screenshot implements SortableEntityInterface
+class Screenshot implements SortableEntityInterface, \Stringable
 {
     use TimeStampableTrait;
     use SortableTrait;
