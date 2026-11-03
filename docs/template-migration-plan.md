@@ -169,7 +169,7 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
   and marked as executed in dev with `doctrine:migrations:rollup`
 - [ ] Prod: run `php bin/console doctrine:migrations:rollup` once, right after the first deployment
 - [x] CI: use `task db:migrate` instead of `doctrine:schema:create`
-- [ ] Split the single PHPUnit suite into named `Unit`, `Integration` and `UI` suites; the test tasks then use
+- [x] Split the single PHPUnit suite into named `Unit`, `Integration` and `UI` suites; the test tasks then use
   `--testsuite` instead of paths (suites also listed in PhpStorm)
 
 ## Portfolio-only tools (to keep)

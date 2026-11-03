@@ -144,7 +144,7 @@ default and apply the fixes with `fix=1`.
 | Rector                                              | `quality:rector`                | PHP, Symfony, Doctrine and PHPUnit upgrades                        |
 | `composer audit`, `pnpm audit`                      | `quality:audit`                 | Known vulnerabilities in the dependencies                          |
 | PHPUnit                                             | `test:unit`, `test:integration` | Unit tests, kernel and database tests                              |
-| PHPUnit + Panther                                   | `test:ui`                       | Navigation in a real browser (`UI` group, needs Chromium)          |
+| PHPUnit + Panther                                   | `test:ui`                       | Navigation in a real browser (`UI` suite, needs Chromium)          |
 | Infection                                           | `test:mutation`                 | Mutation testing                                                   |
 | PHPArkitect                                         | `test:arch`                     | Architecture rules                                                 |
 | Bats                                                | `test:bash`                     | Shell scripts, run on the host                                     |
