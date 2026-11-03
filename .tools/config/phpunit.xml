@@ -9,6 +9,7 @@
          failOnWarning="true"
          bootstrap="../../tests/bootstrap.php"
          cacheDirectory="../cache/.phpunit.cache"
+         defaultTestSuite="Unit,Integration"
 >
     <php>
         <ini name="display_errors" value="1" />
@@ -20,9 +21,16 @@
         <server name="SHELL_VERBOSITY" value="-1" />
     </php>
 
+    <!-- defaultTestSuite: a bare run skips the UI suite, which needs the chrome container -->
     <testsuites>
-        <testsuite name="Project Test Suite">
-            <directory>../../tests</directory>
+        <testsuite name="Unit">
+            <directory>../../tests/Unit</directory>
+        </testsuite>
+        <testsuite name="Integration">
+            <directory>../../tests/Integration</directory>
+        </testsuite>
+        <testsuite name="UI">
+            <directory>../../tests/UI</directory>
         </testsuite>
     </testsuites>
 

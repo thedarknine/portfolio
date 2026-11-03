@@ -58,11 +58,13 @@ jobs:
 
             # Portfolio-only: the test fixtures are generated from the dev database (composer pipeline:fixtures),
             # so it needs the schema and the committed fixtures first.
-            # Schema from the entities: the migrations do not replay on an empty database (see the plan, "Later")
+            # Migrations rather than the entities: checks that they replay on an empty database,
+            # then that they match the entities (a forgotten migration fails here)
             - name: Set up the dev database
               run: |
                   task db:create
-                  task symfony:console -- doctrine:schema:create
+                  task db:migrate
+                  task symfony:console -- doctrine:schema:validate
                   task --yes db:fixtures
 
             - name: Run the QA suite
