@@ -10,6 +10,7 @@
         "includes": [
             "assets/**",
             "!assets/vendor/**",
+            "!assets/icons/**",
             "!assets/controllers/csrf_protection_controller.js"
         ]
     },
