@@ -40,12 +40,15 @@ tasks:
             - '{{.UI}} success "Containers restarted."'
 
     reset:
-        desc: Stop the containers and delete the database volume
-        prompt: This deletes the database volume. Continue?
+        desc: Stop the containers and delete the database data
+        prompt: This deletes all the database data. Continue?
         cmds:
-            - '{{.UI}} subtitle "🐳 Removing the containers and the database volume"'
+            - '{{.UI}} subtitle "🐳 Removing the containers and the database data"'
             - '{{.COMPOSE}} down -v'
-            - '{{.UI}} success "Containers and database volume removed."'
+            # The data lives in a bind mount (.docker/mysql/data) that "down -v" keeps: empty it from a
+            # throwaway container, which owns the files whatever the host user (.gitkeep is kept)
+            - "{{.COMPOSE}} run --rm --no-deps --entrypoint sh db -c 'rm -rf /var/lib/mysql/*'"
+            - '{{.UI}} success "Containers and database data removed."'
 
     ps:
         desc: List the containers
