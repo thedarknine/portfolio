@@ -162,6 +162,9 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 
 - [ ] Replace depcheck with knip (also finds unused files and exports)
 - [ ] Review and apply the Rector suggestions, then put `rector` back in `quality:all`
+- [ ] Migrations do not replay on an empty database (`Version20260521193743` adds `created_at`, already created by
+  `Version20260520214033`): squash them into one baseline, mark it as executed in prod and dev, then use
+  `task db:migrate` in the CI instead of `doctrine:schema:create`
 - [ ] Dev database: mark the migrations as executed (`doctrine:migrations:version --add --all` after `schema:validate`)
 
 ## Portfolio-only tools (to keep)
