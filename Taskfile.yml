@@ -92,7 +92,7 @@ tasks:
             - task: check:health
 
     qa:
-        desc: Run all checks before committing - cs, lint, quality, tests, arch, mutation, ui (fix=1)
+        desc: Run all checks before committing - cs, lint, quality, tests, arch (fix=1, deep=1 adds mutation and ui)
         cmds:
             - task: cs:all
             - task: lint:all
@@ -100,10 +100,12 @@ tasks:
             - task: quality:all
               vars: { NO_REFACTOR: '1' }
             - task: test:all
-            # Portfolio-only test suites
+            # Portfolio-only test suites. Mutation and UI tests are slow: only with deep=1 (not in CI)
             - task: test:arch
             - task: test:mutation
+              if: '[ "{{.deep}}" = "1" ]'
             - task: test:ui
+              if: '[ "{{.deep}}" = "1" ]'
 
     update:
         desc: Update the Docker images, Composer and pnpm dependencies

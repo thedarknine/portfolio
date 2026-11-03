@@ -1,8 +1,6 @@
 # https://taskfile.dev
 version: '3'
 
-# build-prod is not kept: the portfolio builds and deploys with prod:build / prod:release
-
 tasks:
     install:
         desc: Install Composer and pnpm dependencies, build Tailwind CSS and lock the icons
@@ -13,6 +11,15 @@ tasks:
             - '{{.EXEC}} bin/console tailwind:build || { {{.UI}} error "Tailwind build failed."; exit 1; }'
             - '{{.EXEC}} bin/console ux:icons:lock || { {{.UI}} error "Icons lock failed."; exit 1; }'
             - '{{.UI}} success "Composer dependencies installed."'
+
+    build-prod:
+        desc: Check the production build in a temporary copy - no dev dependencies, minified assets, prod cache
+        cmds:
+            - '{{.UI}} subtitle "🏭 Checking the production build"'
+            - >-
+              {{.EXEC}} sh {{.TOOLS_DIR}}/scripts/build-prod.sh
+              || { {{.UI}} error "Production build failed."; exit 1; }
+            - '{{.UI}} success "Production build succeeded." "Your working copy is unchanged."'
 
     composer:
         desc: 'Run Composer (task symfony:composer -- require symfony/lock)'

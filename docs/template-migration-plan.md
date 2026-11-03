@@ -126,9 +126,11 @@ Template: `Taskfile.yml` with includes `docker`, `symfony`, `lint`, `cs`, `quali
 
 ### 5. CI and hooks
 
-- [ ] Replace `.github/workflows/ci.yml` with the template one (uses `docker-compose.ci.yaml`), add portfolio-only jobs
-  (mutation, architecture, UI / accessibility) if they ran in CI before
-- [ ] Add `.github/dependabot.yml` (target `develop`)
+- [x] Replace `.github/workflows/ci.yml` with the template one (uses `docker-compose.ci.yaml`). `task qa` runs the
+  architecture tests; mutation and UI tests are slow and only run with `task qa deep=1`, so they stay out of the CI
+- [x] `symfony:build-prod` and `build-prod.sh` restored from the template (with `importmap:install`): the CI checks
+  the production build on pull requests to `main`; `prod:build` cannot be used there (prompt, pushes `production`)
+- [x] Add `.github/dependabot.yml` (target `develop`)
 - [ ] GrumPHP + commitlint hook as in the template; check a bad commit message is rejected
 - [ ] CI green on the PR
 - Commit: `ci: align workflow and hooks with symfony-docker-template`
