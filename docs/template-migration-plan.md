@@ -168,7 +168,7 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 - [x] Migrations squashed into one baseline (`Version20261103080725`, old ones in `.tools/cache/old/migrations`)
   and marked as executed in dev with `doctrine:migrations:rollup`
 - [ ] Prod: run `php bin/console doctrine:migrations:rollup` once, right after the first deployment
-- [ ] CI: use `task db:migrate` instead of `doctrine:schema:create`
+- [x] CI: use `task db:migrate` instead of `doctrine:schema:create`
 - [ ] Split the single PHPUnit suite into named `Unit`, `Integration` and `UI` suites; the test tasks then use
   `--testsuite` instead of paths (suites also listed in PhpStorm)
 
