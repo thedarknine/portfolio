@@ -76,8 +76,7 @@ services:
     container_name: ${PROJECT_SLUG:-portfolio}-chrome
     restart: unless-stopped
     volumes:
-      - /dev/shm:/dev/shm.  # Avoid Chrome memory crashes
-    ports:
-      - "${CHROME_PORT:-4444}:4444"
+      - /dev/shm:/dev/shm  # Avoid Chrome memory crashes
+    # No host port: tests reach it on the Docker network (chrome:4444)
     networks:
       - app-network

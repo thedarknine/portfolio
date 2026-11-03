@@ -25,7 +25,7 @@ QA tools, git hooks, CI), extended with the tools and the deployment specific to
 | `db`      | `portfolio-db`      | `mariadb:11.8`                  | `DB_PORT`     | dev         |
 | `adm`     | `portfolio-adm`     | `adminneoorg/adminneo`          | `ADM_PORT`    | dev         |
 | `mailpit` | `portfolio-mailpit` | `axllent/mailpit`               | `MAIL_PORT`   | dev         |
-| `chrome`  | `portfolio-chrome`  | `seleniarm/standalone-chromium` | `CHROME_PORT` | dev         |
+| `chrome`  | `portfolio-chrome`  | `seleniarm/standalone-chromium` | -             | dev         |
 
 The MariaDB data is stored in `.docker/mysql/data` and its logs in `.docker/volumes/logs/mysql`
 (both git-ignored).
