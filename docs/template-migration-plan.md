@@ -145,12 +145,12 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 
 ### 7. Docs and cleanup
 
-- [ ] README rewritten from the template README (requirements with Task, services table, commands) plus portfolio specifics
+- [x] README rewritten from the template README (requirements with Task, services table, commands) plus portfolio specifics
   (Hostinger, docs / medias subdomains, deployment)
-- [ ] Add `AGENTS.md` from the template, adapted (Conventional Commits in English, `cno_` branches, repo in English)
-- [ ] Update `UPDATE.md` (`task update`)
-- [ ] `.editorconfig`, `.gitignore`, `.env.sample` / `.env` aligned with the template
-- [ ] Remove leftovers: `tmp/`, old paths, unused scripts
+- [x] Add `AGENTS.md` from the template, adapted (Conventional Commits in English, `cno_` branches, repo in English)
+- [x] Update `UPDATE.md` (`task update`)
+- [x] `.editorconfig`, `.gitignore`, `.env` aligned with the template (no `.env.sample` in either repo)
+- [x] Remove leftovers: `tmp/` (old audit outputs) moved to `.tools/cache/old/`, Makefile mentions removed
 - Commit: `docs: document the template-based setup`
 
 ### 8. Release

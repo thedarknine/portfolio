@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Pretty help for Taskfile, styled like the Dashboard Makefile.
+# Pretty help for the Taskfile.
 # Sections = include namespaces (docker:up -> "Docker"), root tasks -> "General".
 # Text in parentheses at the end of a desc is shown as options (purple).
 set -euo pipefail
