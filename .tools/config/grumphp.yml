@@ -38,8 +38,9 @@ grumphp:
             configuration: .tools/config/phpstan.neon
             memory_limit: 512M
             use_grumphp_paths: true
-            # Excluded in phpstan.neon: if it is the only staged PHP file, PHPStan fails with "No files found"
-            ignore_patterns: ['#^config/reference\.php$#', '#^src/DataFixtures/#']
+            # Excluded from (or not in) phpstan.neon paths: if it is the only staged PHP file, PHPStan fails
+            # with "No files found"; deleted files are passed too and fail with "Path does not exist"
+            ignore_patterns: ['#^config/reference\.php$#', '#^src/DataFixtures/#', '#^migrations/#']
             triggered_by: [php]
 
         phpunit:

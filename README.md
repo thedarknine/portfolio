@@ -192,7 +192,9 @@ task prod:release
    dumps the sitemap. If it fails, the `production` branch is rolled back.
 3. `prod:dev`: restores the development dependencies, cache and assets, even after a failure.
 
-The deployment does not run the migrations: apply them on the server by hand when needed.
+The deployment does not run the migrations: apply them on the server by hand when needed
+(`php bin/console doctrine:migrations:migrate`). The migrations were squashed into one baseline
+in November 2026: a database created before it only needs `doctrine:migrations:rollup` once.
 
 `task symfony:build-prod` checks the production build in a temporary copy, without touching the
 working copy or the branches.

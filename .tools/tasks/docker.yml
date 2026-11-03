@@ -16,7 +16,10 @@ tasks:
         env: { UI_NESTED: '{{.NESTED}}' }
         cmds:
             - '{{.UI}} subtitle "🐳 Starting the containers"'
-            - '{{.COMPOSE}} up -d --build || { {{.UI}} error "Containers failed to start."; exit 1; }'
+            - >-
+              {{.COMPOSE}} up -d --build
+              || { {{.UI}} error "Containers failed to start."
+              "A host port may already be used: change it in .env, then run task init again."; exit 1; }
             - '{{.UI}} success "Containers started."'
 
     down:

@@ -163,10 +163,10 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 
 - [ ] Replace depcheck with knip (also finds unused files and exports)
 - [ ] Review and apply the Rector suggestions, then put `rector` back in `quality:all`
-- [ ] Migrations do not replay on an empty database (`Version20260521193743` adds `created_at`, already created by
-  `Version20260520214033`): squash them into one baseline, mark it as executed in prod and dev, then use
-  `task db:migrate` in the CI instead of `doctrine:schema:create`
-- [ ] Dev database: mark the migrations as executed (`doctrine:migrations:version --add --all` after `schema:validate`)
+- [x] Migrations squashed into one baseline (`Version20261103080725`, old ones in `.tools/cache/old/migrations`)
+  and marked as executed in dev with `doctrine:migrations:rollup`
+- [ ] Prod: run `php bin/console doctrine:migrations:rollup` once, right after the first deployment
+- [ ] CI: use `task db:migrate` instead of `doctrine:schema:create`
 - [ ] Split the single PHPUnit suite into named `Unit`, `Integration` and `UI` suites; the test tasks then use
   `--testsuite` instead of paths (suites also listed in PhpStorm)
 
