@@ -29,7 +29,9 @@ tasks:
         cmds:
             - task: prepare
             - '{{.UI}} subtitle "🧪 Running all the tests"'
-            - '{{.PHPUNIT}} --testsuite=Unit,Integration {{.CLI_ARGS}} || { {{.UI}} error "Some tests failed."; exit 1; }'
+            - >-
+              {{.PHPUNIT}} --testsuite=Unit,Integration {{.CLI_ARGS}}
+              || { {{.UI}} error "Some tests failed."; exit 1; }
             - '{{.UI}} success "All tests passed."'
 
     unit:
