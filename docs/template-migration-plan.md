@@ -139,8 +139,9 @@ Template: `Taskfile.yml` with includes `docker`, `symfony`, `lint`, `cs`, `quali
 
 Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Integration`, `tests/UI`, `tests/bash`.
 
-- [ ] Keep the portfolio layout (richer); only make sure `phpunit.xml` test suites and the test tasks match it
-- Commit if anything changes: `test: align test suites with the task setup`
+- [x] Keep the portfolio layout (richer); only make sure `phpunit.xml` test suites and the test tasks match it
+- Checked: unit tests never boot the kernel, integration tests all do, the UI test carries the `UI` group and the
+  tasks select `tests/Unit`, `tests/Integration` or the group. Nothing to change (see Later for named suites)
 
 ### 7. Docs and cleanup
 
@@ -166,6 +167,8 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
   `Version20260520214033`): squash them into one baseline, mark it as executed in prod and dev, then use
   `task db:migrate` in the CI instead of `doctrine:schema:create`
 - [ ] Dev database: mark the migrations as executed (`doctrine:migrations:version --add --all` after `schema:validate`)
+- [ ] Split the single PHPUnit suite into named `Unit`, `Integration` and `UI` suites; the test tasks then use
+  `--testsuite` instead of paths (suites also listed in PhpStorm)
 
 ## Portfolio-only tools (to keep)
 
