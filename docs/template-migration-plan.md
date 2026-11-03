@@ -61,7 +61,7 @@ Template layout: configs in `.tools/config/`, scripts in `.tools/scripts/`, task
 - [x] Add template-only configs: `commitlint.config.cjs`, `hadolint.yaml`
 - [x] Merge rule sets where both exist (php-cs-fixer, phpstan level/paths, rector sets, biome): keep the stricter rule
 - [x] Fix every path pointing to the old locations (Makefile, scripts, CI, `composer.json`, `package.json`, `.gitignore`)
-- [ ] Drop `checkmake.ini` at step 4 (no Makefile anymore)
+- [x] Drop `checkmake.ini` at step 4 (no Makefile anymore)
 - Notes: tool caches now live in `.tools/cache/` (ignored). PHPStan also analyses `tests/`; the template's
   Symfony container settings for PHPStan need `phpstan/phpstan-symfony`, not installed yet. GrumPHP now checks
   commit messages and runs twig-cs-fixer. `run-pre-commit.sh` is renamed at step 3.
@@ -131,8 +131,8 @@ Template: `Taskfile.yml` with includes `docker`, `symfony`, `lint`, `cs`, `quali
 - [x] `symfony:build-prod` and `build-prod.sh` restored from the template (with `importmap:install`): the CI checks
   the production build on pull requests to `main`; `prod:build` cannot be used there (prompt, pushes `production`)
 - [x] Add `.github/dependabot.yml` (target `develop`)
-- [ ] GrumPHP + commitlint hook as in the template; check a bad commit message is rejected
-- [ ] CI green on the PR
+- [x] GrumPHP + commitlint hook as in the template; check a bad commit message is rejected
+- [x] CI green on the PR
 - Commit: `ci: align workflow and hooks with symfony-docker-template`
 
 ### 6. Tests layout (optional)
@@ -158,7 +158,7 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 - [x] Fresh clone test: `task init` (or equivalent) from zero works
   → fixed on the way: chrome host port removed, `docker:reset` empties the bind-mounted data,
   migrations squashed into a baseline that replays on an empty database, `app:create-user` documented
-- [ ] PR `cno_template` → `develop`, CI green
+- [x] PR `cno_template` → `develop`, CI green
 - [ ] Prod build and deployment tested before merging to `main` / `production`
 
 ## Later (after the migration)
