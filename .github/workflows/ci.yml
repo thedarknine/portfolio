@@ -56,6 +56,14 @@ jobs:
             - name: Install dependencies
               run: task symfony:install
 
+            # Portfolio-only: the test fixtures are generated from the dev database (composer pipeline:fixtures),
+            # so it needs the schema and the committed fixtures first
+            - name: Set up the dev database
+              run: |
+                  task db:create
+                  task db:migrate
+                  task --yes db:fixtures
+
             - name: Run the QA suite
               run: task qa
 
