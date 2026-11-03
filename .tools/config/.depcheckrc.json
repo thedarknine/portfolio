@@ -2,6 +2,7 @@
     "ignores": [
         "animate.css",
         "@biomejs/biome",
-        "depcheck"
+        "depcheck",
+        "@commitlint/cli"
     ]
 }
