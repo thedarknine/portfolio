@@ -163,7 +163,7 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 
 ## Later (after the migration)
 
-- [ ] Replace depcheck with knip (also finds unused files and exports)
+- [x] Replace depcheck with knip (also finds unused files and exports)
 - [ ] Review and apply the Rector suggestions, then put `rector` back in `quality:all`
 - [x] Migrations squashed into one baseline (`Version20261103080725`, old ones in `.tools/cache/old/migrations`)
   and marked as executed in dev with `doctrine:migrations:rollup`
@@ -175,7 +175,7 @@ Template: `tests/Unit`, `tests/Functional`. Portfolio: `tests/Unit`, `tests/Inte
 ## Portfolio-only tools (to keep)
 
 deptrac, phparkitect, infection, pa11y, unlighthouse, eslint, markdownlint, bash tests, Hostinger deployment scripts.
-Dropped: checkmake (Makefile removed). depcheck kept as a dev dependency until knip replaces it.
+Dropped: checkmake (Makefile removed), depcheck (replaced by knip, `.tools/config/knip.json`).
 
 ## Template-only additions
 
