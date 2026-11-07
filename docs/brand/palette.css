@@ -1,0 +1,17 @@
+/* Palette Caroline Noyer — pétrole, cyan-turquoise, safran */
+:root {
+  --cn-petrole: #24506A;      /* NOYER, titres */
+  --cn-cyan: #0B8C9E;         /* Caroline, liens */
+  --cn-accent: #F59E0B;       /* safran : fonds de boutons (texte foncé dessus) */
+  --cn-accent-text: #B45309;  /* safran foncé : texte en safran sur fond clair */
+  --cn-on-accent: #111111;
+  --cn-font: "Figtree", system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --cn-petrole: #FFFFFF;
+    --cn-cyan: #4FD1DB;
+    --cn-accent-text: #F59E0B;
+  }
+}
