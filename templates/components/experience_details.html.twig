@@ -11,7 +11,7 @@
             {% if is_current %}<span class="rounded-md bg-highlight px-2.5 py-0.5 font-medium text-on-highlight">actuel</span>{% endif %}
             <span class="text-accent-text">{{ experience.title }}</span>
         </p>
-        <h2 class="mb-1.5 text-[26px] leading-[1.2] font-bold">{{ experience.subtitle }}</h2>
+        <h2 class="mb-1.5 text-[26px] leading-[1.2] font-bold tracking-[-0.5px] text-title">{{ experience.subtitle }}</h2>
         <p class="font-mono text-[13px] text-on-surface-muted">
             {% if is_current %}Depuis {{ experience.startDate|date('m/Y') }}{% else %}{{ experience.startDate|date('m/Y') }} → {{ experience.endDate|date('m/Y') }}{% endif %}
             ·
@@ -26,7 +26,7 @@
         {% for link in external_links %}
         <li>
             <a
-                class="inline-flex min-h-10 items-center gap-2 rounded-[10px] border border-border px-3.5 text-sm font-medium text-on-surface transition-colors hover:border-accent-text hover:text-accent-text"
+                class="inline-flex min-h-11 items-center gap-2 rounded-[10px] border-[1.5px] border-border-button px-3.5 text-[15px] font-medium text-title transition-colors hover:border-accent-text hover:text-accent-text"
                 href="{{ link.type.value == 'pdf' ? 'https://docs.carolinenoyer.fr/' ~ link.url : link.url }}"
                 target="_blank"
                 rel="noopener noreferrer">
@@ -44,7 +44,7 @@
 <ul class="mb-6 grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-x-8 gap-y-4">
     {% for item in experience.items %}
     <li>
-        <h3 class="mb-0.5 font-bold">{{ item.title }}</h3>
+        <h3 class="mb-0.5 font-semibold text-title">{{ item.title }}</h3>
         <p class="text-on-surface-muted">{{ item.details }}</p>
     </li>
     {% endfor %}
@@ -61,7 +61,7 @@
         <input type="checkbox" id="skills-toggle-{{ experience.id }}" class="peer sr-only">
         {% for skill in experience.skills %}
         <img
-            class="size-8 rounded-lg bg-surface object-contain p-1 {{ loop.index > nb_displayed_skills ? 'experience-skills__extra hidden peer-checked:inline-block' }}"
+            class="size-8 rounded-lg bg-surface-alt-brand object-contain p-1 {{ loop.index > nb_displayed_skills ? 'experience-skills__extra hidden peer-checked:inline-block' }}"
             src="{{ asset('images/skills/' ~ skill.logo) }}"
             alt="{{ skill.name }}"
             title="{{ skill.name }}"
@@ -81,7 +81,7 @@
     <ul class="flex flex-wrap gap-2">
         {% for link in detail_links %}
         <li>
-            <a class="inline-flex min-h-9 items-center gap-1.5 rounded-lg bg-chip px-3 text-sm font-medium text-on-chip transition-colors hover:underline" href="{{ path('app_experience_slug', { job: experience.slug, slug: link.page.slug }) }}">
+            <a class="inline-flex min-h-11 items-center gap-1.5 rounded-lg px-3 text-[15px] font-medium text-accent-text transition-colors hover:underline" href="{{ path('app_experience_slug', { job: experience.slug, slug: link.page.slug }) }}">
                 {{ link.title|default('Voir le détail') }} →
             </a>
         </li>
