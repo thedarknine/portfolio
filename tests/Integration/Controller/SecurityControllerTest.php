@@ -10,6 +10,7 @@
 
 namespace App\Tests\Integration\Controller;
 
+use App\Controller\SecurityController;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
@@ -156,7 +157,7 @@ class SecurityControllerTest extends WebTestCase
     {
         // 1. Instantiate the controller directly (without going through the Kernel)
         $container  = static::getContainer();
-        $controller = $container->get(\App\Controller\SecurityController::class);
+        $controller = $container->get(SecurityController::class);
 
         // 2. Expect the LogicException from Symfony to be thrown
         $this->expectException(\LogicException::class);
@@ -173,7 +174,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $passwordHasher = static::getContainer()->get(UserPasswordHasherInterface::class);
 
-        $admin = (new User())
+        $admin = new User()
             ->setEmail('studiotest@carolinenoyer.fr')
             ->setRoles(['ROLE_ADMIN']);
 

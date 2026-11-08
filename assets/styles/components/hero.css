@@ -6,22 +6,22 @@
  * Reference: docs/style-guide.md § Home hero
  * ============================================================ */
 .home-hero__overlay {
-    background: rgb(23 44 73 / 82%);
+    background: rgb(15 34 56 / 82%);
 
     @media (width >= 768px) {
-        background: linear-gradient(90deg, rgb(23 44 73 / 94%) 0%, rgb(23 44 73 / 78%) 42%, rgb(23 44 73 / 10%) 75%);
+        background: linear-gradient(90deg, rgb(15 34 56 / 94%) 0%, rgb(15 34 56 / 78%) 42%, rgb(15 34 56 / 10%) 75%);
     }
 }
 
 .home-hero__content {
     --color-on-surface: #ffffff;
-    --color-on-surface-muted: #d3dbe6;
-    --color-accent-text: #6cc6e2;
-    --color-primary: #4cc3e6;
-    --color-on-primary: #172c49;
+    --color-on-surface-muted: #b8c6d1;
+    --color-title: #ffffff;
+    --color-cyan: #7fcfd6;
+    --color-accent-text: #7fcfd6;
     --color-panel: rgb(255 255 255 / 10%);
     --color-border: rgb(255 255 255 / 30%);
-    --color-status-live: #3fcf8e;
+    --color-border-button: rgb(255 255 255 / 40%);
 
     color: var(--color-on-surface);
 }
@@ -29,18 +29,19 @@
 /* ------------------------------------------------------------
  * Inner page hero (components/page_hero.html.twig)
  * ------------------------------------------------------------ */
+/* Uniform night blue veil over the page photo (same in both themes, slightly deeper in dark) */
 .page-hero__overlay {
-    background: rgb(23 44 73 / 92%);
+    background: rgb(15 34 56 / 85%);
 
-    @media (width >= 768px) {
-        background: linear-gradient(90deg, rgb(23 44 73 / 100%) 0%, rgb(23 44 73 / 93%) 50%, rgb(23 44 73 / 50%) 100%);
+    [data-theme="dark"] & {
+        background: rgb(10 24 41 / 88%);
     }
 }
 
 .page-hero__breadcrumb {
-    color: #b9c6d6;
-    background-color: rgb(11 26 44 / 60%);
-    border-color: rgb(255 255 255 / 12%);
+    color: #b8c6d1;
+    background-color: rgb(255 255 255 / 4%);
+    border-color: #24405f;
 
     a:hover {
         color: #ffffff;
@@ -49,19 +50,19 @@
 }
 
 .page-hero__prompt {
-    color: #3fcf8e;
+    color: #f59e0b;
 }
 
 .page-hero__sep {
-    color: #8fa1b9;
+    color: #9fb0be;
 }
 
 .page-hero__cursor {
     width: 8px;
     height: 16px;
-    background-color: #3aa3c8;
+    background-color: #7fcfd6;
 }
 
 .page-hero__tagline {
-    color: #3aa3c8;
+    color: #7fcfd6;
 }

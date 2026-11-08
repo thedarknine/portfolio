@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
@@ -32,6 +34,7 @@ class EducationCrudController extends AbstractCrudController
         return Education::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -42,6 +45,7 @@ class EducationCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
@@ -53,6 +57,7 @@ class EducationCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -81,9 +86,7 @@ class EducationCrudController extends AbstractCrudController
                 'Universitaire' => EducationType::UNIVERSITARY,
                 'Professionnel' => EducationType::PROFESSIONAL,
             ])
-            ->formatValue(function ($value, $entity) {
-                return $value instanceof EducationType ? $value->getLabel() : $value;
-            });
+            ->formatValue(fn ($value, $entity) => $value instanceof EducationType ? $value->getLabel() : $value);
 
         yield TextField::new('details', 'Description succincte / Acquis')
             ->hideOnIndex(); // Hide on index for a cleaner look, but show on forms and detail pages

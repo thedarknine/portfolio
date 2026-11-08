@@ -26,11 +26,11 @@ class PageService
     private bool $databaseAvailable = true;
 
     public function __construct(
-        private PageInfoRepository $pageInfoRepository,
-        private ResourceLinkRepository $resourceLinkRepository,
-        private ParameterBagInterface $params,
-        private FallbackNavigation $fallbackNavigation,
-        private LoggerInterface $logger,
+        private readonly PageInfoRepository $pageInfoRepository,
+        private readonly ResourceLinkRepository $resourceLinkRepository,
+        private readonly ParameterBagInterface $params,
+        private readonly FallbackNavigation $fallbackNavigation,
+        private readonly LoggerInterface $logger,
     ) {
     }
 

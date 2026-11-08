@@ -13,11 +13,12 @@ namespace App\Tests\Integration\Repository;
 use App\Entity\Company;
 use App\Entity\Experience;
 use App\Repository\ExperienceRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ExperienceRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private ExperienceRepository $experienceRepository;
 
     protected function setUp(): void
@@ -45,7 +46,7 @@ class ExperienceRepositoryTest extends KernelTestCase
     public function testGetExperiencesWithCompanyAppliesDefaultLimitAndOrder(): void
     {
         // 1. Create a test company
-        $company = (new Company())
+        $company = new Company()
             ->setName('Tech Solutions')
             ->setSlug('tech-solutions')
             ->setLogo('company-logo.png')
@@ -55,25 +56,25 @@ class ExperienceRepositoryTest extends KernelTestCase
         $this->entityManager->persist($company);
 
         // 2. Insert 4 experiences spread over time (in reverse chronological order)
-        $exp2010 = (new Experience())
+        $exp2010 = new Experience()
             ->setTitle('Dev Mid')
             ->setSlug('dev-mid')
             ->setCompany($company)
             ->setStartDate(new \DateTime('2010-01-01'))
             ->setDescription('Description 2010');
-        $exp2026 = (new Experience())
+        $exp2026 = new Experience()
             ->setTitle('Product Owner')
             ->setSlug('product-owner')
             ->setCompany($company)
             ->setStartDate(new \DateTime('2026-01-01'))
             ->setDescription('Description 2026');
-        $exp2006 = (new Experience())
+        $exp2006 = new Experience()
             ->setTitle('Dev Junior')
             ->setSlug('dev-junior')
             ->setCompany($company)
             ->setStartDate(new \DateTime('2006-10-01'))
             ->setDescription('Description 2006');
-        $exp2018 = (new Experience())
+        $exp2018 = new Experience()
             ->setTitle('Dev Senior')
             ->setSlug('dev-senior')
             ->setCompany($company)

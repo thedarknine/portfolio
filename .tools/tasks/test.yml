@@ -1,7 +1,7 @@
 # https://taskfile.dev
 version: '3'
 
-# The portfolio keeps one PHPUnit suite: tasks select tests/Unit, tests/Integration or the UI group.
+# PHPUnit suites (phpunit.xml): Unit, Integration and UI; without --testsuite, Unit and Integration run.
 # Unit and integration tests read the test database: test:prepare loads it with the test fixtures.
 
 vars:
@@ -25,35 +25,37 @@ tasks:
               || { {{.UI}} error "Test database preparation failed."; exit 1; }
 
     all:
-        desc: Run all the tests except the UI group (task test:all -- --filter Home)
+        desc: Run the Unit and Integration suites (task test:all -- --filter Home)
         cmds:
             - task: prepare
             - '{{.UI}} subtitle "🧪 Running all the tests"'
-            - '{{.PHPUNIT}} --exclude-group=UI {{.CLI_ARGS}} || { {{.UI}} error "Some tests failed."; exit 1; }'
+            - >-
+              {{.PHPUNIT}} --testsuite=Unit,Integration {{.CLI_ARGS}}
+              || { {{.UI}} error "Some tests failed."; exit 1; }
             - '{{.UI}} success "All tests passed."'
 
     unit:
-        desc: Run the unit tests - tests/Unit
+        desc: Run the Unit suite - tests/Unit
         cmds:
             - '{{.UI}} subtitle "🧪 Running the unit tests"'
-            - '{{.PHPUNIT}} tests/Unit {{.CLI_ARGS}} || { {{.UI}} error "Some unit tests failed."; exit 1; }'
+            - '{{.PHPUNIT}} --testsuite=Unit {{.CLI_ARGS}} || { {{.UI}} error "Some unit tests failed."; exit 1; }'
             - '{{.UI}} success "Unit tests passed."'
 
     integration:
-        desc: Run the integration tests - tests/Integration
+        desc: Run the Integration suite - tests/Integration
         cmds:
             - task: prepare
             - '{{.UI}} subtitle "🧪 Running the integration tests"'
             - >-
-              {{.PHPUNIT}} tests/Integration {{.CLI_ARGS}}
+              {{.PHPUNIT}} --testsuite=Integration {{.CLI_ARGS}}
               || { {{.UI}} error "Some integration tests failed."; exit 1; }
             - '{{.UI}} success "Integration tests passed."'
 
     ui:
-        desc: Run the UI tests - PHPUnit UI group, needs Chromium
+        desc: Run the UI suite - tests/UI, needs the chrome container
         cmds:
             - '{{.UI}} subtitle "🧪 Running the UI tests"'
-            - '{{.PHPUNIT}} --group=UI {{.CLI_ARGS}} || { {{.UI}} error "Some UI tests failed."; exit 1; }'
+            - '{{.PHPUNIT}} --testsuite=UI {{.CLI_ARGS}} || { {{.UI}} error "Some UI tests failed."; exit 1; }'
             - '{{.UI}} success "UI tests passed."'
 
     coverage:
@@ -62,12 +64,12 @@ tasks:
             - task: prepare
             - '{{.UI}} subtitle "📊 Generating the code coverage report"'
             - >-
-              {{.PHPUNIT}} --exclude-group=UI --coverage-html var/coverage --coverage-text
+              {{.PHPUNIT}} --testsuite=Unit,Integration --coverage-html var/coverage --coverage-text
               || { {{.UI}} error "Coverage generation failed."; exit 1; }
             - '{{.UI}} success "Coverage report generated." "Open var/coverage/index.html"'
 
     mutation:
-        desc: Run the mutation tests with Infection - UI group excluded in infection.json
+        desc: Run the mutation tests with Infection - UI suite excluded in infection.json
         cmds:
             # The integration tests read the test database
             - task: prepare

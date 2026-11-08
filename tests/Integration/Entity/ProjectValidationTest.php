@@ -14,6 +14,7 @@ use App\Entity\Project;
 use App\Entity\ProjectTag;
 use App\Entity\Screenshot;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -33,7 +34,7 @@ class ProjectValidationTest extends KernelTestCase
      */
     public function testValidProjectHasNoViolation(): void
     {
-        $project = (new Project())
+        $project = new Project()
             ->setName('Borne Arcade Retro')
             ->setSlug('borne-arcade-retro')
             ->setPeriod('3 mois')
@@ -61,7 +62,7 @@ class ProjectValidationTest extends KernelTestCase
      */
     public function testBlankFieldsTriggerViolations(): void
     {
-        $project = (new Project())
+        $project = new Project()
             ->setName('Projet Vide')
             ->setSlug('projet-vide')
             ->setPeriod('')
@@ -73,7 +74,7 @@ class ProjectValidationTest extends KernelTestCase
 
         $this->assertGreaterThan(0, count($errors));
 
-        $paths = array_map(fn ($e) => $e->getPropertyPath(), iterator_to_array($errors));
+        $paths = array_map(fn (ConstraintViolationInterface $e): string => $e->getPropertyPath(), iterator_to_array($errors));
         $this->assertContains('period', $paths);
         $this->assertContains('description', $paths);
     }
@@ -83,7 +84,7 @@ class ProjectValidationTest extends KernelTestCase
      */
     public function testCategoryTooLongTriggerViolation(): void
     {
-        $project = (new Project())
+        $project = new Project()
             ->setName('Projet Test')
             ->setSlug('projet-test')
             ->setPeriod('Saison 1')
@@ -106,7 +107,6 @@ class ProjectValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($project);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($project, 1337);
 
         $this->assertSame(1337, $project->getId());

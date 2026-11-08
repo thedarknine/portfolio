@@ -24,11 +24,11 @@ Découvrez mon parcours professionnel : {{ page_manager.getNbYearsExperience() }
             {% for card in [
                 { icon: 'hugeicons:user-group-03', title: 'Construire collectivement', text: 'J’apprécie les environnements collaboratifs où chacun contribue à faire avancer le produit.' },
                 { icon: 'hugeicons:link-01', title: 'Faire le lien', text: 'Créer des passerelles entre technique, produit et utilisateurs fait partie de ce qui me motive.' },
-                { icon: 'hugeicons:healtcare', title: 'Concevoir avec sens', text: 'Je porte une attention particulière à la clarté des interfaces et des parcours.' },
+                { icon: 'hugeicons:bulb', title: 'Concevoir avec sens', text: 'Je porte une attention particulière à la clarté des interfaces et des parcours.' },
             ] %}
             <article class="rounded-[14px] border border-border bg-panel p-7 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] motion-safe:hover:-translate-y-1 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
-                {{ ux_icon(card.icon, { class: 'mb-4 size-8 text-accent-text', 'aria-hidden': 'true' }) }}
-                <h3 class="mb-2 text-[22px] font-bold">{{ card.title }}</h3>
+                {{ ux_icon(card.icon, { class: 'mb-4 block size-7 text-icon-muted', 'aria-hidden': 'true' }) }}
+                <h3 class="mb-2 text-[22px] font-semibold text-title">{{ card.title }}</h3>
                 <p class="text-on-surface-muted">{{ card.text }}</p>
             </article>
             {% endfor %}

@@ -19,7 +19,7 @@ final class ContactControllerTest extends WebTestCase
     // GET /contact — Display page
     public function testContactPageLoads(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('GET', '/contact');
 
         $this->assertResponseIsSuccessful();
@@ -29,11 +29,11 @@ final class ContactControllerTest extends WebTestCase
     // POST valide — Email sent + flash success + redirection
     public function testValidSubmitSendsEmailAndRedirects(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $mailerMock = $this->createMock(MailerInterface::class);
         $mailerMock->expects($this->once())->method('send');
-        static::getContainer()->set(MailerInterface::class, $mailerMock);
+        self::getContainer()->set(MailerInterface::class, $mailerMock);
 
         $client->request('POST', '/contact', [
             'contact' => [
@@ -53,11 +53,11 @@ final class ContactControllerTest extends WebTestCase
     // POST with the honeypot filled in — Fake success, no email sent
     public function testHoneypotSubmitIsDroppedSilently(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $mailerMock = $this->createMock(MailerInterface::class);
         $mailerMock->expects($this->never())->method('send');
-        static::getContainer()->set(MailerInterface::class, $mailerMock);
+        self::getContainer()->set(MailerInterface::class, $mailerMock);
 
         $client->request('POST', '/contact', [
             'contact' => [
@@ -78,7 +78,7 @@ final class ContactControllerTest extends WebTestCase
     // POST without data — Flash error, no redirection
     public function testEmptySubmitShowsErrorFlashAndStaysOnPage(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('POST', '/contact', [
             'contact' => [
                 'name'    => '',
@@ -96,7 +96,7 @@ final class ContactControllerTest extends WebTestCase
     // POST invalid email — No redirection, form re-displayed
     public function testInvalidEmailStaysOnPage(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('POST', '/contact', [
             'contact' => [
                 'name'    => 'Test',

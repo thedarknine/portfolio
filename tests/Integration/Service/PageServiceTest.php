@@ -13,6 +13,7 @@ namespace App\Tests\Integration\Service;
 use App\Service\PageService;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageServiceTest extends KernelTestCase
 {
@@ -43,7 +44,7 @@ class PageServiceTest extends KernelTestCase
     public function testGetActivePageBySlugThrowsNotFound(): void
     {
         // Verify that the expected exception is thrown if the page does not exist
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
 
         $this->pageService->getActivePageBySlug('slug-qui-n-existe-pas');
     }

@@ -21,8 +21,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SitemapSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private PageInfoRepository $pageInfoRepository,
-        private ExperienceLinkRepository $experienceLinkRepository,
+        private readonly PageInfoRepository $pageInfoRepository,
+        private readonly ExperienceLinkRepository $experienceLinkRepository,
     ) {
     }
 

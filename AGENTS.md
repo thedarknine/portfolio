@@ -76,7 +76,8 @@ Three specifics worth spelling out, because they are easy to get wrong:
 
 - `tests/Unit`: plain `TestCase`, never boots the kernel, mocks the dependencies.
 - `tests/Integration`: `KernelTestCase` or `WebTestCase`, reads the test database.
-- `tests/UI`: Panther tests with the `#[Group('UI')]` attribute, run by `task test:ui`.
+- `tests/UI`: Panther tests, run by `task test:ui`.
+- Each folder is a PHPUnit suite (`Unit`, `Integration`, `UI`); a bare `phpunit` runs Unit and Integration.
 - `tests/bash`: Bats tests of the shell scripts, run on the host by `task test:bash`.
 
 The test database is loaded with fixtures generated into `src/DataFixtures/Testing`

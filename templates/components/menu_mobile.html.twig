@@ -8,7 +8,7 @@
             <p class="m-0 font-mono text-[13px] text-on-surface-muted">Menu</p>
             <button
                 type="button"
-                class="inline-flex size-11 items-center justify-center rounded-[10px] border border-border text-on-surface"
+                class="inline-flex size-11 items-center justify-center rounded-[10px] border-[1.5px] border-title text-title"
                 aria-label="Fermer le menu"
                 {{ stimulus_action('menu', 'close') }}>
                 {{ ux_icon('hugeicons:cancel-01', { class: 'size-5', 'aria-hidden': 'true' }) }}
@@ -21,23 +21,29 @@
                 {% if page.slug != 'contact' %}
                 {% set is_current = current_page.slug == page.slug %}
                 <li>
-                    <a class="flex min-h-14 items-center border-b border-border text-xl font-medium {{ is_current ? 'text-accent-text' : 'text-on-surface' }}" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
+                    <a class="flex min-h-14 items-center justify-between border-b border-border text-xl font-medium text-title" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>
+                        <span class="{{ is_current ? 'border-b-2 border-primary leading-[1.3]' }}">{{ page.title }}</span>
+                        {% if is_current %}<span class="font-mono text-xs text-on-surface-muted">page actuelle</span>{% endif %}
+                    </a>
                 </li>
                 {% endif %}
                 {% endfor %}
             </ul>
         </nav>
 
-        <a class="btn btn--strong btn--lg w-full" href="{{ path('app_contact') }}">Me contacter</a>
+        <a class="btn btn--primary btn--lg w-full" href="{{ path('app_contact') }}">
+            {{ ux_icon('hugeicons:mail-01', { 'aria-hidden': 'true' }) }}
+            Me contacter
+        </a>
 
         <div class="mt-auto flex flex-col gap-4">
             {{ include('components/theme_toggle.html.twig', { is_dark: is_dark, with_label: true }) }}
 
             <ul class="flex gap-2">
-                {% for resource in page_manager.getPublishedResourceLinks() %}
+                {% for resource in page_manager.getPublishedResourceLinksInHero() %}
                 <li>
                     <a
-                        class="inline-flex size-11 items-center justify-center rounded-[10px] border border-border text-on-surface hover:text-accent-text"
+                        class="inline-flex size-11 items-center justify-center rounded-[10px] border border-border-strong text-title hover:text-accent-text"
                         href="{{ resource.url }}"
                         target="_blank"
                         rel="noopener"

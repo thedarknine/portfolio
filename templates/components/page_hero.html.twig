@@ -1,5 +1,5 @@
-{# Inner page hero — see docs/style-guide.md § Page hero #}
-<section class="page-hero relative overflow-hidden bg-[#172c49] font-sans text-white">
+{# Inner page hero — page photo under a uniform night blue veil (docs/brand/brand-guide.md) #}
+<section class="page-hero relative overflow-hidden bg-[#0f2238] font-sans text-white">
     <img class="absolute inset-0 size-full object-cover" src="{{ asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp') }}" alt="" fetchpriority="high">
     <div class="page-hero__overlay absolute inset-0" aria-hidden="true"></div>
 
@@ -27,6 +27,6 @@
         </nav>
 
         <p class="page-hero__tagline mb-3 font-mono text-[13px] tracking-wide uppercase">{{ current_page.tagline }}</p>
-        <h1 class="max-w-[760px] text-[clamp(34px,4.6vw,52px)] leading-[1.08] font-bold tracking-[-1px]">{{ current_page.subtitle }}</h1>
+        <h1 class="max-w-[760px] text-[clamp(34px,4.6vw,52px)] leading-[1.08] font-bold tracking-[-1.5px]">{{ current_page.subtitle }}</h1>
     </div>
 </section>

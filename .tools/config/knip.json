@@ -1,0 +1,27 @@
+{
+    "$schema": "https://unpkg.com/knip@6/schema.json",
+    "entry": [
+        "assets/app.js",
+        "assets/scripts/*.js",
+        "assets/controllers/*_controller.js"
+    ],
+    "project": ["assets/**/*.js", "!assets/vendor/**"],
+    "eslint": {
+        "config": [".tools/config/eslint.config.mjs"]
+    },
+    "commitlint": {
+        "config": [".tools/config/commitlint.config.cjs"]
+    },
+    "ignoreDependencies": [
+        "@hotwired/stimulus",
+        "@symfony/stimulus-bundle",
+        "@biomejs/biome",
+        "markdownlint-cli2",
+        "lighthouse",
+        "unlighthouse",
+        "@unlighthouse/cli",
+        "pa11y",
+        "pa11y-ci",
+        "pa11y-ci-reporter-html"
+    ]
+}

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
@@ -12,6 +14,8 @@ namespace App\Tests\Unit\Entity;
 
 use App\Entity\Company;
 use App\Entity\Experience;
+use App\Entity\Skill;
+use App\Entity\SkillType;
 use PHPUnit\Framework\TestCase;
 
 class CompanyTest extends TestCase
@@ -39,8 +43,8 @@ class CompanyTest extends TestCase
 
     public function testSkillTypeRemoveSkillClearsRelation(): void
     {
-        $type  = new \App\Entity\SkillType();
-        $skill = new \App\Entity\Skill();
+        $type  = new SkillType();
+        $skill = new Skill();
 
         $skill->setSkillType($type);
         $type->addSkill($skill);

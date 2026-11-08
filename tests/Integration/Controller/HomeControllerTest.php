@@ -26,7 +26,7 @@ class HomeControllerTest extends WebTestCase
         $this->client        = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
 
-        $projectDir = static::getContainer()->getParameter('kernel.project_dir');
+        static::getContainer()->getParameter('kernel.project_dir');
 
         $this->createRequiredPages();
     }
@@ -71,7 +71,7 @@ class HomeControllerTest extends WebTestCase
         // Example to force a page in the navigation list if your test database is empty:
         $pageRepo = $this->entityManager->getRepository(PageInfo::class);
         if (null === $pageRepo->findOneBy(['technicalName' => 'experience'])) {
-            $page = (new PageInfo())
+            $page = new PageInfo()
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
                 ->setCategory(PageCategory::CAREER)

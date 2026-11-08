@@ -16,6 +16,7 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ absolute_url(asset('images/global/favicon.ico')) }}">
         <link rel="apple-touch-icon" sizes="180x180" href="{{ absolute_url(asset('images/global/apple-touch-icon.png')) }}">
+        <link rel="icon" type="image/svg+xml" href="{{ absolute_url(asset('images/global/favicon.svg')) }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ absolute_url(asset('images/global/favicon-32x32.png')) }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ absolute_url(asset('images/global/favicon-16x16.png')) }}">
 
@@ -34,7 +35,7 @@
                                 <span class="rounded-md bg-highlight px-2.5 py-0.5 font-medium text-on-highlight">{{ error.code }}</span>
                                 <span class="text-accent-text">{{ error.label }}</span>
                             </p>
-                            <h1 id="error-title" class="mb-5 text-[clamp(40px,6vw,56px)] leading-[1.04] font-bold tracking-[-1.5px]">{{ error.title }}</h1>
+                            <h1 id="error-title" class="mb-5 text-[clamp(40px,6vw,56px)] leading-[1.04] font-bold tracking-[-1.5px] text-title">{{ error.title }}</h1>
                             <p class="mb-9 text-lg text-on-surface-muted">{{ error.lead }}</p>
                             <div class="flex flex-wrap gap-3">
                                 {% if error.retry ?? false %}
@@ -42,39 +43,45 @@
                                     {{ ux_icon('hugeicons:reload', { 'aria-hidden': 'true' }) }}
                                     Réessayer
                                 </a>
-                                <a class="btn btn--secondary" href="{{ path('app_home') }}">Retour à l’accueil</a>
+                                <a class="btn btn--secondary" href="{{ path('app_home') }}">
+                                    {{ ux_icon('hugeicons:home-01', { 'aria-hidden': 'true' }) }}
+                                    Retour à l’accueil
+                                </a>
                                 {% else %}
                                 <a class="btn btn--primary" href="{{ path('app_home') }}">
                                     {{ ux_icon('hugeicons:home-01', { 'aria-hidden': 'true' }) }}
                                     Retour à l’accueil
                                 </a>
-                                <a class="btn btn--secondary" href="{{ path('app_contact') }}">Me contacter</a>
+                                <a class="btn btn--secondary" href="{{ path('app_contact') }}">
+                                    {{ ux_icon('hugeicons:mail-01', { 'aria-hidden': 'true' }) }}
+                                    Me contacter
+                                </a>
                                 {% endif %}
                             </div>
                         </div>
 
-                        {# Terminal: same palette as the shell breadcrumb of the page hero, in both themes #}
-                        <figure class="m-0 min-w-0 flex-[1_1_460px] overflow-hidden rounded-2xl border border-[#0b1a2c] bg-[#0b1a2c] shadow-[0_24px_48px_-24px_rgb(11_26_44/25%)] dark:border-border dark:bg-[#0b1726] dark:shadow-[0_24px_48px_-24px_rgb(5_12_22/60%)]">
-                            <figcaption class="flex items-center justify-between gap-3 border-b border-white/12 px-[18px] py-3 font-mono text-xs text-[#8fa1b9]">
+                        {# Terminal: brand night blues, with a darker title bar (same palette as the page hero breadcrumb) #}
+                        <figure class="m-0 min-w-0 flex-[1_1_460px] overflow-hidden rounded-2xl border border-[#24405f] bg-[#0f2238] shadow-[0_24px_48px_-24px_rgb(15_34_56/35%)] dark:bg-[#0a1829] dark:shadow-[0_24px_48px_-24px_rgb(0_0_0/60%)]">
+                            <figcaption class="flex items-center justify-between gap-3 border-b border-[#24405f] bg-[#0a1829] px-[18px] py-3 font-mono text-xs text-[#9fb0be] dark:bg-[#06101c]">
                                 <span>nine@carolinenoyer.fr</span>
                                 <span aria-hidden="true">{{ error.code }}</span>
                             </figcaption>
-                            <div class="px-[22px] pt-6 pb-7 font-mono text-sm leading-[1.9] wrap-anywhere text-[#b9c6d6]">
-                                <p><span class="text-[#3fcf8e]" aria-hidden="true">❯ </span><span class="text-white">{{ error.command }} ~{{ request_path }}</span></p>
+                            <div class="px-[22px] pt-6 pb-7 font-mono text-sm leading-[1.9] wrap-anywhere text-[#b8c6d1]">
+                                <p><span class="text-[#f59e0b]" aria-hidden="true">❯ </span><span class="text-white">{{ error.command }} ~{{ request_path }}</span></p>
                                 <p class="mb-3.5 text-[#ff8f85]">{{ error.output }}</p>
-                                <p><span class="text-[#3fcf8e]" aria-hidden="true">❯ </span><span class="text-white">ls ~</span></p>
+                                <p><span class="text-[#f59e0b]" aria-hidden="true">❯ </span><span class="text-white">ls ~</span></p>
                                 <nav aria-label="Pages du site">
                                     <ul class="mb-3.5 flex flex-wrap gap-x-5 gap-y-1">
                                         {% for page in page_manager.getPublishedRootPages() %}
                                         {% if page.category.value != 'about' and page.slug != 'contact' %}
                                         <li>
-                                            <a class="inline-flex min-h-8 items-center text-[#4cc3e6] underline decoration-[#4cc3e6]/35 underline-offset-4 hover:decoration-[#4cc3e6]" href="/{{ page.slug }}" title="{{ page.title }}">{{ page.slug }}/</a>
+                                            <a class="inline-flex min-h-8 items-center text-[#7fcfd6] underline decoration-[#7fcfd6]/35 underline-offset-4 hover:decoration-[#7fcfd6]" href="/{{ page.slug }}" title="{{ page.title }}">{{ page.slug }}/</a>
                                         </li>
                                         {% endif %}
                                         {% endfor %}
                                     </ul>
                                 </nav>
-                                <p aria-hidden="true"><span class="text-[#3fcf8e]">❯ </span><span class="inline-block h-[18px] w-[9px] align-[-3px] bg-[#3aa3c8]"></span></p>
+                                <p aria-hidden="true"><span class="text-[#f59e0b]">❯ </span><span class="inline-block h-[18px] w-[9px] align-[-3px] bg-[#7fcfd6]"></span></p>
                             </div>
                         </figure>
                     </section>
@@ -83,14 +90,14 @@
                         <h2 id="error-suggestions" class="mb-6 font-mono text-[13px] [font-weight:400] text-on-surface-muted">Vous cherchiez peut-être</h2>
                         <ul class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
                             {% for card in [
-                                { index: '01', title: 'Mon parcours', text: page_manager.getNbYearsExperience() ~ ' ans dans le web, du code au rôle de Product Owner technique.', link: path('app_experience'), cta: 'Voir mes expériences' },
-                                { index: '02', title: 'Mes projets', text: 'Ce que j’ai construit, au travail et pour le plaisir.', link: path('app_projects'), cta: 'Voir les projets' },
-                                { index: '03', title: 'Me contacter', text: 'Une question, un lien cassé à signaler ? Écrivez-moi.', link: path('app_contact'), cta: 'Écrire un message' },
+                                { icon: 'hugeicons:route-01', title: 'Mon parcours', text: page_manager.getNbYearsExperience() ~ ' ans dans le web, du code au rôle de Product Owner technique.', link: path('app_experience'), cta: 'Voir mes expériences' },
+                                { icon: 'hugeicons:layers-01', title: 'Mes projets', text: 'Ce que j’ai construit, au travail et pour le plaisir.', link: path('app_projects'), cta: 'Voir les projets' },
+                                { icon: 'hugeicons:mail-01', title: 'Me contacter', text: 'Une question, un lien cassé à signaler ? Écrivez-moi.', link: path('app_contact'), cta: 'Écrire un message' },
                             ] %}
                             <li>
-                                <a class="flex h-full flex-col gap-1.5 rounded-[14px] border border-border bg-panel p-7 text-on-surface transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ card.link }}">
-                                    <span class="font-mono text-[13px] text-on-surface-muted">{{ card.index }}</span>
-                                    <span class="text-[22px] leading-[1.3] font-bold">{{ card.title }}</span>
+                                <a class="flex h-full flex-col gap-1.5 rounded-[14px] border border-border bg-panel p-7 text-on-surface transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(36_80_106/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ card.link }}">
+                                    {{ ux_icon(card.icon, { class: 'mb-3.5 block size-7 text-icon-muted', 'aria-hidden': 'true' }) }}
+                                    <span class="text-[22px] leading-[1.3] font-semibold text-title">{{ card.title }}</span>
                                     <span class="text-on-surface-muted">{{ card.text }}</span>
                                     <span class="mt-2 inline-flex items-center gap-2 font-medium text-accent-text">
                                         {{ card.cta }} {{ ux_icon('hugeicons:arrow-right-02', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
@@ -112,7 +119,10 @@
                             © Nine · {{ page_manager.getStartCareerYear() }}–{{ 'now'|date('Y') }}
                             <span class="ml-2 rounded-md bg-tag px-2 py-0.5 text-white" title="Version du site">{{ site_version }}</span>
                         </span>
-                        <button type="button" class="inline-flex min-h-11 cursor-pointer items-center text-band-accent hover:underline" data-consent-open>Gérer les cookies</button>
+                        <button type="button" class="inline-flex min-h-11 cursor-pointer items-center gap-2 text-band-accent hover:underline" data-consent-open>
+                            {{ ux_icon('hugeicons:cookie', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
+                            Gérer les cookies
+                        </button>
                     </p>
                     <ul class="flex flex-wrap gap-2" aria-label="Réseaux et liens">
                         {% for resource in page_manager.getPublishedResourceLinks() %}

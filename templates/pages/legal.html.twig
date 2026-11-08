@@ -23,7 +23,7 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
 ] %}
 
 {% macro section_heading(section, index) %}
-<h2 id="{{ section.id }}" class="mb-4 flex scroll-mt-28 items-baseline gap-3 text-[clamp(22px,2.4vw,26px)] leading-[1.2] font-bold tracking-[-0.4px]">
+<h2 id="{{ section.id }}" class="mb-4 flex scroll-mt-28 items-baseline gap-3 text-[clamp(22px,2.4vw,26px)] leading-[1.2] font-bold tracking-[-0.4px] text-title">
     <span class="font-mono text-[13px] font-medium tracking-normal text-accent-text">{{ '%02d'|format(index) }}</span>
     {{ section.title }}
 </h2>
@@ -34,7 +34,7 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
     <header class="border-b border-border">
         <div class="mx-auto max-w-[1240px] px-6 pt-16 pb-12 lg:pt-20">
             <p class="mb-3 font-mono text-[13px] text-accent-text">legal.md</p>
-            <h1 class="text-[clamp(36px,5vw,52px)] leading-[1.08] font-bold tracking-[-1px]">Mentions légales</h1>
+            <h1 class="text-[clamp(36px,5vw,52px)] leading-[1.08] font-bold tracking-[-1.5px] text-title">Mentions légales</h1>
         </div>
     </header>
 

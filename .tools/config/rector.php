@@ -3,6 +3,9 @@
 declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
+use Rector\CodeQuality\Rector\Attribute\SortAttributeNamedArgsRector;
+use Rector\CodeQuality\Rector\FuncCall\SortCallLikeNamedArgsRector;
+use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
 use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
 
@@ -25,6 +28,11 @@ return RectorConfig::configure()
         $rootDir . '/src/DataFixtures/Testing',
         $rootDir . '/src/DataFixtures/*AutoFixture.php',
         $rootDir . '/tests/bootstrap.php',
+        // null === $x is kept: instanceof checks on nullable properties add nothing (and use FQCN instead of self)
+        FlipTypeControlToUseExclusiveTypeRector::class,
+        // Named arguments keep the order chosen in the code
+        SortAttributeNamedArgsRector::class,
+        SortCallLikeNamedArgsRector::class,
     ])
     ->withCache(__DIR__ . '/../cache/rector', FileCacheStorage::class)
 
@@ -42,10 +50,10 @@ return RectorConfig::configure()
         SetList::TYPE_DECLARATION,
         SetList::PRIVATIZATION,
     ])
+    // No codingStyle set: php-cs-fixer owns the formatting (Yoda style, newlines, quotes...)
     ->withPreparedSets(
         deadCode: true,
         codeQuality: true,
-        codingStyle: true,
         typeDeclarations: true,
         earlyReturn: true,
     )

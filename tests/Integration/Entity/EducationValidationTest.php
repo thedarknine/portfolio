@@ -36,7 +36,7 @@ class EducationValidationTest extends KernelTestCase
         $enumCases   = EducationType::cases();
         $defaultType = $enumCases[0];
 
-        $education = (new Education())
+        $education = new Education()
             ->setTitle('DEUG MIAS')
             ->setSlug('deug-mias')
             ->setYear(2002)
@@ -44,7 +44,7 @@ class EducationValidationTest extends KernelTestCase
             ->setSpeciality('Algèbre et développement')
             ->setMention('Assez bien')
             ->setSchool(
-                (new School())
+                new School()
                     ->setName('Université de Paris')
                     ->setSlug('universite-de-paris')
                     ->setCity('Paris')
@@ -69,7 +69,7 @@ class EducationValidationTest extends KernelTestCase
      */
     public function testDetailsTooLongTriggerViolation(): void
     {
-        $education = (new Education())
+        $education = new Education()
             ->setTitle('Licence')
             ->setSlug('licence')
             ->setYear(2026)
@@ -87,7 +87,7 @@ class EducationValidationTest extends KernelTestCase
      */
     public function testInvalidYearTriggerViolation(): void
     {
-        $education = (new Education())
+        $education = new Education()
             ->setTitle('Master')
             ->setYear(1989)
             ->setDetails('Un cursus valide')
@@ -108,7 +108,6 @@ class EducationValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($education);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($education, 45);
 
         $this->assertSame(45, $education->getId());

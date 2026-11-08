@@ -18,6 +18,7 @@ use App\Repository\SkillRepository;
 use Composer\InstalledVersions;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class AdminDashboardService
 {
@@ -25,12 +26,12 @@ class AdminDashboardService
 
     // Injected repositories directly
     public function __construct(
-        private ParameterBagInterface $params,
-        private Kernel $kernel,
-        private ProjectRepository $projectRepository,
-        private PageInfoRepository $pageInfoRepository,
-        private SkillRepository $skillRepository,
-        private ExperienceRepository $experienceRepository,
+        private readonly ParameterBagInterface $params,
+        private readonly Kernel $kernel,
+        private readonly ProjectRepository $projectRepository,
+        private readonly PageInfoRepository $pageInfoRepository,
+        private readonly SkillRepository $skillRepository,
+        private readonly ExperienceRepository $experienceRepository,
     ) {
     }
 
@@ -81,9 +82,9 @@ class AdminDashboardService
         }
 
         $finder->files()->in($directory)->sortByModifiedTime();
-        $files = array_filter(iterator_to_array($finder), fn ($file) => 'hero-photos.jpg' !== $file->getFilename());
+        $files = array_filter(iterator_to_array($finder), fn (SplFileInfo $file): bool => 'hero-photos.jpg' !== $file->getFilename());
 
-        if (empty($files)) {
+        if ([] === $files) {
             return null;
         }
 

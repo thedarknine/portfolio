@@ -6,7 +6,7 @@ version: '3'
 
 tasks:
     all:
-        desc: Run all quality checks - phpstan, deptrac, audit
+        desc: Run all quality checks - phpstan, deptrac, rector, audit
         vars:
             START: { sh: date +%s }
         cmds:
@@ -15,9 +15,8 @@ tasks:
               vars: { NESTED: '1' }
             - task: deptrac
               vars: { NESTED: '1' }
-            # Rector disabled until its suggestions are reviewed (see docs/template-migration-plan.md)
-            # - task: rector
-            #   vars: { NESTED: '1', NO_REFACTOR: '{{.NO_REFACTOR}}' }
+            - task: rector
+              vars: { NESTED: '1', NO_REFACTOR: '{{.NO_REFACTOR}}' }
             - task: audit
               vars: { NESTED: '1' }
             - '{{.UI}} elapsed {{.START}}'

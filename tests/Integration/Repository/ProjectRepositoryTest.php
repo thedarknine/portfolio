@@ -12,11 +12,12 @@ namespace App\Tests\Integration\Repository;
 
 use App\Entity\Project;
 use App\Repository\ProjectRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ProjectRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private ProjectRepository $projectRepository;
 
     protected function setUp(): void
@@ -43,7 +44,7 @@ class ProjectRepositoryTest extends KernelTestCase
     public function testGetProjectsOrdersByYearDescending(): void
     {
         // 1. Insert 3 projects in random chronological order
-        $projectIntermediaire = (new Project())
+        $projectIntermediaire = new Project()
             ->setName('Refonte Portfolio v3')
             ->setSlug('portfolio-v3')
             ->setYear(2022)
@@ -52,7 +53,7 @@ class ProjectRepositoryTest extends KernelTestCase
             ->setCategory('Web')
             ->setLogo('logo-v3.png');
 
-        $projectAncien = (new Project())
+        $projectAncien = new Project()
             ->setName('Ancien Site Pro')
             ->setSlug('ancien-site')
             ->setYear(2015)
@@ -61,7 +62,7 @@ class ProjectRepositoryTest extends KernelTestCase
             ->setCategory('Web')
             ->setLogo('logo-ancien.png');
 
-        $projectRecent = (new Project())
+        $projectRecent = new Project()
             ->setName('Plateforme Symfony v4')
             ->setSlug('plateforme-symfony-v4')
             ->setYear(2026)

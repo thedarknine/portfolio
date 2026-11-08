@@ -32,7 +32,7 @@ class SchoolValidationTest extends KernelTestCase
      */
     public function testValidSchoolHasNoViolation(): void
     {
-        $school = (new School())
+        $school = new School()
             ->setName('Université d’Orléans')
             ->setSlug('universite-d-orleans')
             ->setCity('Orléans')
@@ -70,7 +70,7 @@ class SchoolValidationTest extends KernelTestCase
      */
     public function testInvalidCityTriggerViolations(): void
     {
-        $school = (new School())
+        $school = new School()
             ->setName('École Test')
             ->setSlug('ecole-test')
             ->setCity('')
@@ -86,7 +86,7 @@ class SchoolValidationTest extends KernelTestCase
      */
     public function testInvalidDepartmentTriggerViolation(): void
     {
-        $school = (new School())
+        $school = new School()
             ->setName('École Test')
             ->setSlug('ecole-test')
             ->setCity('Paris')
@@ -106,7 +106,6 @@ class SchoolValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($school);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($school, 45);
 
         $this->assertSame(45, $school->getId());

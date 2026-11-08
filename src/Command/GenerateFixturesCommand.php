@@ -27,8 +27,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 class GenerateFixturesCommand extends Command
 {
     public function __construct(
-        private EntityManagerInterface $em,
-        private KernelInterface $kernel,
+        private readonly EntityManagerInterface $em,
+        private readonly KernelInterface $kernel,
     ) {
         parent::__construct();
     }
@@ -75,8 +75,8 @@ class GenerateFixturesCommand extends Command
         if ('portfolio' === $group) {
             $cleanupSubFolder = '/src/DataFixtures';
         } else {
-            $subParts         = explode('_', $group);
-            $formattedParts   = array_map('ucfirst', $subParts);
+            $subParts         = explode('_', (string) $group);
+            $formattedParts   = array_map(ucfirst(...), $subParts);
             $cleanupSubFolder = 'test' === $group
                 ? '/src/DataFixtures/Testing'
                 : '/src/DataFixtures/Testing/' . implode('/', array_slice($formattedParts, 1));
@@ -104,7 +104,7 @@ class GenerateFixturesCommand extends Command
             $shortName = $reflect->getShortName();
 
             $records = $this->em->getRepository($fqcn)->findAll();
-            if (empty($records)) {
+            if ([] === $records) {
                 $io->text(sprintf('ℹ️ %s: No data found in database, skipping.', $shortName));
 
                 continue;
@@ -152,8 +152,8 @@ class GenerateFixturesCommand extends Command
             } else {
                 // If $group = 'test' -> App\DataFixtures\Testing
                 // If $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
-                $subParts       = explode('_', $group);
-                $formattedParts = array_map('ucfirst', $subParts); // ['Testing', 'Unit']
+                $subParts       = explode('_', (string) $group);
+                $formattedParts = array_map(ucfirst(...), $subParts); // ['Testing', 'Unit']
 
                 // To match exactly with path
                 if ('test' === $group) {
@@ -178,12 +178,12 @@ class GenerateFixturesCommand extends Command
 
             $code .= "use Doctrine\Bundle\FixturesBundle\Fixture;\n";
             $code .= "use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;\n";
-            if (!empty($detectedDependencies)) {
+            if ([] !== $detectedDependencies) {
                 $code .= "use Doctrine\Common\DataFixtures\DependentFixtureInterface;\n";
             }
             $code .= "use Doctrine\Persistence\ObjectManager;\n\n";
 
-            if (!empty($detectedDependencies)) {
+            if ([] !== $detectedDependencies) {
                 $code .= "class $fixtureClassName extends Fixture implements DependentFixtureInterface, FixtureGroupInterface\n{\n";
             } else {
                 $code .= "class $fixtureClassName extends Fixture implements FixtureGroupInterface\n{\n";
@@ -301,7 +301,7 @@ class GenerateFixturesCommand extends Command
             $code .= "        \$manager->flush();\n    }\n";
 
             // --- GENERATE DEPENDENCIES METHOD AT THE BOTTOM ---
-            if (!empty($detectedDependencies)) {
+            if ([] !== $detectedDependencies) {
                 $code .= "\n    /**\n     * @return array<int, class-string<Fixture>>\n     */\n";
                 $code .= "    public function getDependencies(): array\n    {\n";
                 $code .= "        return [\n" . implode("\n", $detectedDependencies) . "\n        ];\n    }\n";
@@ -321,8 +321,8 @@ class GenerateFixturesCommand extends Command
             } else {
                 // If $group = 'test' -> App\DataFixtures\Testing
                 // If $group = 'testing_unit' -> App\DataFixtures\Testing\Unit
-                $subParts       = explode('_', $group);
-                $formattedParts = array_map('ucfirst', $subParts); // ['Testing', 'Unit']
+                $subParts       = explode('_', (string) $group);
+                $formattedParts = array_map(ucfirst(...), $subParts); // ['Testing', 'Unit']
 
                 // Match exactly your expected path :
                 if ('test' === $group) {
@@ -346,7 +346,7 @@ class GenerateFixturesCommand extends Command
             $fixturePath = $directoryPath . "/$fixtureClassName.php";
             file_put_contents($fixturePath, $code);
 
-            $io->text(sprintf('✅ Generated fixture: <info>%s/%s.php</info> %s', $subFolder, $fixtureClassName, !empty($detectedDependencies) ? '(with explicit dependencies)' : ''));
+            $io->text(sprintf('✅ Generated fixture: <info>%s/%s.php</info> %s', $subFolder, $fixtureClassName, [] === $detectedDependencies ? '' : '(with explicit dependencies)'));
         }
 
         $io->success('All automated fixtures re-generated successfully with English comments!');

@@ -33,7 +33,7 @@ class ExperienceItemValidationTest extends KernelTestCase
      */
     public function testValidExperienceItemHasNoViolation(): void
     {
-        $experienceItem = (new ExperienceItem())
+        $experienceItem = new ExperienceItem()
             ->setTitle('Développement Backend')
             ->setDetails('Conception d’API REST et optimisation des requêtes de la base de données.')
             ->setPosition(0)
@@ -54,7 +54,7 @@ class ExperienceItemValidationTest extends KernelTestCase
      */
     public function testBlankDetailsTriggerViolation(): void
     {
-        $experienceItem = (new ExperienceItem())
+        $experienceItem = new ExperienceItem()
             ->setTitle('Item sans détails')
             ->setDetails('')
             ->setPosition(1)
@@ -72,7 +72,7 @@ class ExperienceItemValidationTest extends KernelTestCase
      */
     public function testNegativePositionTriggerViolation(): void
     {
-        $experienceItem = (new ExperienceItem())
+        $experienceItem = new ExperienceItem()
             ->setTitle('Item mal rangé')
             ->setDetails('Quelques détails...')
             ->setPosition(-5)
@@ -94,7 +94,6 @@ class ExperienceItemValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($experienceItem);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($experienceItem, 99);
 
         $this->assertSame(99, $experienceItem->getId());
@@ -105,7 +104,7 @@ class ExperienceItemValidationTest extends KernelTestCase
      */
     private function createValidMockExperience(): Experience
     {
-        return (new Experience())
+        return new Experience()
             ->setTitle('Product Owner')
             ->setSlug('product-owner')
             ->setDescription('Une description d’expérience valide.')

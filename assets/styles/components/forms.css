@@ -13,7 +13,7 @@
         font-family: var(--font-sans);
         font-size: 15px;
         font-weight: 500;
-        color: var(--color-on-surface);
+        color: var(--color-title);
     }
 
     .field__required {
@@ -89,7 +89,7 @@
         --altcha-color-primary: var(--color-primary);
         --altcha-color-primary-content: var(--color-on-primary);
         --altcha-color-error: var(--color-danger);
-        --altcha-color-success: var(--color-status-live);
+        --altcha-color-success: var(--color-cyan); /* brand cyan: #0b8c9e light, #7fcfd6 dark */
         --altcha-checkbox-border-color: var(--color-field-border);
         --altcha-checkbox-outline-color: var(--color-accent-text);
         --altcha-spinner-color: var(--color-accent-text);

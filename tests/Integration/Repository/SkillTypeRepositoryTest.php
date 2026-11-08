@@ -12,11 +12,12 @@ namespace App\Tests\Integration\Repository;
 
 use App\Entity\SkillType;
 use App\Repository\SkillTypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class SkillTypeRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private SkillTypeRepository $skillTypeRepository;
 
     protected function setUp(): void
@@ -43,13 +44,13 @@ class SkillTypeRepositoryTest extends KernelTestCase
     public function testGetSkillTypesFiltersDeletedAndOrdersByPosition(): void
     {
         // 1. Insert valid types in random position order
-        $type2 = (new SkillType())
+        $type2 = new SkillType()
             ->setName('Front-end')
             ->setSlug('front-end')
             ->setLogo('front-end.png')
             ->setPosition(2)
             ->setDeleted(false);
-        $type1 = (new SkillType())
+        $type1 = new SkillType()
             ->setName('Back-end')
             ->setSlug('back-end')
             ->setLogo('back-end.png')
@@ -57,7 +58,7 @@ class SkillTypeRepositoryTest extends KernelTestCase
             ->setDeleted(false);
 
         // 2. Insert a type marked as deleted (it should not be returned)
-        $typeDeleted = (new SkillType())
+        $typeDeleted = new SkillType()
             ->setName('Ancien truc')
             ->setSlug('ancien-truc')
             ->setLogo('ancien-truc.png')

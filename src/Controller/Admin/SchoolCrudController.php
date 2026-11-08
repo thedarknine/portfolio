@@ -29,6 +29,7 @@ class SchoolCrudController extends AbstractCrudController
         return School::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -39,6 +40,7 @@ class SchoolCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
@@ -50,6 +52,7 @@ class SchoolCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -60,7 +63,7 @@ class SchoolCrudController extends AbstractCrudController
         // Management of the logo with a simple TextField + HTML preview on index
         yield TextField::new('logo', 'Nom du fichier Logo')
             ->setHelp('Exemple : logo-ubp.png (doit être dans public/uploads/schools/)')
-            ->formatValue(function ($value, $entity) {
+            ->formatValue(function ($value, $entity): string {
                 if (!$value) {
                     return '<span class="text-muted">Aucun</span>';
                 }
@@ -69,7 +72,7 @@ class SchoolCrudController extends AbstractCrudController
                 return sprintf(
                     '<img src="/images/education/%s" class="bg-white rounded" style="max-height: 30px; max-width: 30px; object-fit: contain;" alt="%s">',
                     $value,
-                    htmlspecialchars($entity->getName()),
+                    htmlspecialchars((string) $entity->getName()),
                 );
             });
 

@@ -106,8 +106,8 @@ class ExperienceTest extends TestCase
      */
     public function testGetDisplayNameWithAllData(): void
     {
-        $company    = (new Company())->setName('Tech Corp');
-        $experience = (new Experience())
+        $company    = new Company()->setName('Tech Corp');
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setStartDate(new \DateTime('2026-06-15'))
             ->setCompany($company);
@@ -122,10 +122,10 @@ class ExperienceTest extends TestCase
      */
     public function testGetDisplayNameWithDifferentYears(): void
     {
-        $company = (new Company())->setName('Old Corp');
+        $company = new Company()->setName('Old Corp');
 
         // Test with 2000
-        $experience2000 = (new Experience())
+        $experience2000 = new Experience()
             ->setTitle('Dev Junior')
             ->setStartDate(new \DateTime('2000-03-20'))
             ->setCompany($company);
@@ -133,7 +133,7 @@ class ExperienceTest extends TestCase
         $this->assertSame('Dev Junior - Old Corp (2000)', $experience2000->getDisplayName());
 
         // Test with 2024
-        $experience2024 = (new Experience())
+        $experience2024 = new Experience()
             ->setTitle('Dev Senior')
             ->setStartDate(new \DateTime('2024-12-25'))
             ->setCompany($company);
@@ -146,8 +146,8 @@ class ExperienceTest extends TestCase
      */
     public function testGetDisplayNameWithSpecialCharacters(): void
     {
-        $company    = (new Company())->setName('L\'Entreprise & Co.');
-        $experience = (new Experience())
+        $company    = new Company()->setName('L\'Entreprise & Co.');
+        $experience = new Experience()
             ->setTitle('Chef de Projet C++')
             ->setStartDate(new \DateTime('2020-07-01'))
             ->setCompany($company);
@@ -162,8 +162,8 @@ class ExperienceTest extends TestCase
      */
     public function testGetDisplayNameFormatConsistency(): void
     {
-        $company    = (new Company())->setName('Company Name');
-        $experience = (new Experience())
+        $company    = new Company()->setName('Company Name');
+        $experience = new Experience()
             ->setTitle('Position Title')
             ->setStartDate(new \DateTime('2023-06-15'))
             ->setCompany($company);
@@ -182,8 +182,8 @@ class ExperienceTest extends TestCase
      */
     public function testGetDisplayNameWithValidData(): void
     {
-        $company    = (new Company())->setName('Tech Corp');
-        $experience = (new Experience())
+        $company    = new Company()->setName('Tech Corp');
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setStartDate(new \DateTime('2026-06-15'))
             ->setCompany($company);
@@ -217,8 +217,8 @@ class ExperienceTest extends TestCase
         ];
 
         foreach ($experiences as $data) {
-            $company    = (new Company())->setName($data['company']);
-            $experience = (new Experience())
+            $company    = new Company()->setName($data['company']);
+            $experience = new Experience()
                 ->setTitle($data['title'])
                 ->setStartDate(new \DateTime($data['year'] . '-01-01'))
                 ->setCompany($company);
@@ -233,7 +233,7 @@ class ExperienceTest extends TestCase
      */
     public function testGetDisplayNameWithNullCompanyThrowsException(): void
     {
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Freelancer Position')
             ->setStartDate(new \DateTime('2025-01-01'))
             ->setCompany(null);
@@ -249,8 +249,8 @@ class ExperienceTest extends TestCase
      */
     public function testGetDisplayNameWithLongTitles(): void
     {
-        $company    = (new Company())->setName('International Software Development Company LLC');
-        $experience = (new Experience())
+        $company    = new Company()->setName('International Software Development Company LLC');
+        $experience = new Experience()
             ->setTitle('Senior Lead Full-Stack Software Engineer')
             ->setStartDate(new \DateTime('2022-03-20'))
             ->setCompany($company);

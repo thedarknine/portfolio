@@ -35,7 +35,6 @@ class ScreenshotValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($screenshot);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($screenshot, 88);
 
         $this->assertSame(88, $screenshot->getId());
@@ -43,7 +42,7 @@ class ScreenshotValidationTest extends KernelTestCase
 
     public function testToStringReturnsFilename(): void
     {
-        $screenshot = (new Screenshot())
+        $screenshot = new Screenshot()
             ->setFilename('image.jpg');
 
         $this->assertSame('image.jpg', (string) $screenshot);
@@ -58,7 +57,7 @@ class ScreenshotValidationTest extends KernelTestCase
 
     public function testItIsValidWhenAllFieldsAreFilled(): void
     {
-        $screenshot = (new Screenshot())
+        $screenshot = new Screenshot()
             ->setFilename('image.jpg')
             ->setDescription('Description de la capture')
             ->setPosition(1);
@@ -73,7 +72,7 @@ class ScreenshotValidationTest extends KernelTestCase
 
     public function testFilenameMustNotBeBlank(): void
     {
-        $screenshot = (new Screenshot())
+        $screenshot = new Screenshot()
             ->setDescription('Description de la capture');
 
         $project = new Project();
@@ -88,7 +87,7 @@ class ScreenshotValidationTest extends KernelTestCase
 
     public function testDescriptionMustNotBeBlank(): void
     {
-        $screenshot = (new Screenshot())
+        $screenshot = new Screenshot()
             ->setFilename('image.jpg');
 
         $project = new Project();
@@ -103,7 +102,7 @@ class ScreenshotValidationTest extends KernelTestCase
 
     public function testPositionMustNotBeBlank(): void
     {
-        $screenshot = (new Screenshot())
+        $screenshot = new Screenshot()
             ->setFilename('image.jpg')
             ->setDescription('Description de la capture');
 

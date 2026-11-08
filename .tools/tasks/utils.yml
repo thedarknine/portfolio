@@ -18,12 +18,13 @@ tasks:
             - 'bash {{.TOOLS_DIR}}/scripts/audit.sh {{.target | default "dev"}}'
 
     prune:
-        desc: Prune the pnpm store and list the unused packages with depcheck
+        desc: Prune the pnpm store and list the unused packages, files and exports with knip
         cmds:
             - '{{.UI}} subtitle "🧹 Pruning the pnpm store"'
             - '{{.EXEC}} pnpm store prune'
-            - '{{.UI}} subtitle "🔍 Looking for unused packages"'
+            # Importmap packages and the dev tools called from the Taskfile are ignored in knip.json
+            - '{{.UI}} subtitle "🔍 Looking for unused packages, files and exports"'
             - >-
-              {{.EXEC}} pnpm exec depcheck --config={{.CONFIG_DIR}}/.depcheckrc.json
-              || { {{.UI}} error "depcheck found unused or missing packages."; exit 1; }
-            - '{{.UI}} success "pnpm store pruned, no unused package."'
+              {{.EXEC}} pnpm exec knip --config {{.CONFIG_DIR}}/knip.json
+              || { {{.UI}} error "knip found unused or missing packages, files or exports."; exit 1; }
+            - '{{.UI}} success "pnpm store pruned, nothing unused."'

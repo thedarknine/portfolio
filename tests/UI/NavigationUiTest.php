@@ -11,6 +11,7 @@
 namespace App\Tests\UI;
 
 use Facebook\WebDriver\WebDriverBy;
+use Facebook\WebDriver\WebDriverDimension;
 use PHPUnit\Framework\Attributes\Group;
 use Symfony\Component\Panther\Client as PantherClient;
 use Symfony\Component\Panther\PantherTestCase;
@@ -18,8 +19,8 @@ use Symfony\Component\Panther\PantherTestCase;
 #[Group('UI')]
 class NavigationUiTest extends PantherTestCase
 {
-    private const SELENIUM_URL = 'http://chrome:4444/wd/hub';
-    private const SITE_URL     = 'http://engine';
+    private const string SELENIUM_URL = 'http://chrome:4444/wd/hub';
+    private const string SITE_URL     = 'http://engine';
 
     /**
      * 🖥️ TEST AFFICHAGE BUREAU (Desktop).
@@ -31,7 +32,7 @@ class NavigationUiTest extends PantherTestCase
         $webDriver = $client->getWebDriver();
 
         $client->request('GET', '/');
-        $client->getWebDriver()->manage()->window()->setSize(new \Facebook\WebDriver\WebDriverDimension(1280, 800));
+        $client->getWebDriver()->manage()->window()->setSize(new WebDriverDimension(1280, 800));
 
         $desktopMenu = $webDriver->findElement(WebDriverBy::cssSelector('.site-nav'));
         $this->assertTrue($desktopMenu->isDisplayed(), 'Le menu desktop complet devrait être affiché sur grand écran.');
@@ -52,7 +53,7 @@ class NavigationUiTest extends PantherTestCase
         $webDriver = $client->getWebDriver();
 
         $client->request('GET', '/');
-        $client->getWebDriver()->manage()->window()->setSize(new \Facebook\WebDriver\WebDriverDimension(375, 667));
+        $client->getWebDriver()->manage()->window()->setSize(new WebDriverDimension(375, 667));
 
         $desktopMenu     = $webDriver->findElement(WebDriverBy::cssSelector('.site-nav'));
         $burgerButton    = $webDriver->findElement(WebDriverBy::cssSelector('.site-header__menu-button'));
