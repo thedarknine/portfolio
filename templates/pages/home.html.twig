@@ -24,7 +24,7 @@
                     Je fais le lien entre <span class="text-cyan">le métier</span> et <span class="text-cyan">la technique.</span>
                 </h1>
                 <p class="mb-9 max-w-[540px] text-lg text-on-surface-muted">
-                    Dans le web depuis {{ nb_years }} ans, j'ai longtemps codé avant de passer côté produit en 2019. Aujourd'hui, je cadre, je priorise et j'aide les équipes à livrer ce qui compte, avec rigueur et une touche d'humour.
+                    Dans le web depuis {{ nb_years }} ans, j’ai longtemps codé avant de passer côté produit en 2019. Aujourd’hui, je cadre, je priorise et j’aide les équipes à livrer ce qui compte, avec rigueur et une touche d’humour.
                 </p>
                 <div class="flex flex-wrap gap-3">
                     <a class="btn btn--primary" href="{{ path('app_experience') }}">
@@ -61,11 +61,11 @@
     {# POSITIONNEMENT #}
     <section class="bg-surface-alt-brand" aria-labelledby="home-positioning">
         <div class="mx-auto max-w-[1240px] px-6 pt-22 pb-24">
-            <p class="mb-2 font-mono text-[13px] text-accent-text">Mon positionnement</p>
-            <h2 id="home-positioning" class="mb-8 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Penser le produit. Comprendre la technique. Faire le lien.</h2>
+            <p class="mb-2 font-mono text-[13px] text-accent-text">Positionnement</p>
+            <h2 id="home-positioning" class="mb-8 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Penser le produit, <span class="text-cyan">comprendre la technique</span></h2>
             <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
                 {% for card in [
-                { icon: 'hugeicons:route-01', title: 'Mon parcours', text: nb_years ~ ' ans dans le web, d’abord en développement, aujourd’hui au service du produit. Je connais les deux côtés de la table.', link: path('app_experience'), cta: 'Découvrir mon parcours' },
+                { icon: 'hugeicons:route-01', title: 'Mon parcours', text: 'Je sais ce qu’une story coûte à développer, et pourquoi elle compte pour l’utilisateur. Je connais les deux côtés de la table.', link: path('app_experience'), cta: 'Découvrir mon parcours' },
                 { icon: 'hugeicons:wrench-01', title: 'Mon expertise', text: 'J’aide les équipes à cadrer les besoins, à faire les bons choix techniques et à mieux travailler ensemble.', link: path('app_skills'), cta: 'Voir mes compétences' },
                 { icon: 'hugeicons:layers-01', title: 'Mon approche', text: 'J’aime comprendre, structurer et donner forme aux idées. En produit, en code ou en création, je cherche la simplicité.', link: path('app_projects'), cta: 'Voir mes réalisations' },
             ] %}
@@ -87,8 +87,8 @@
         <div class="mx-auto max-w-[1240px] px-6">
             <div class="mb-10 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
                 <div>
-                    <p class="mb-2 font-mono text-[13px] text-band-accent">Mes expériences</p>
-                    <h2 id="home-experiences" class="text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px] text-on-band">Là où produit et technique se rencontrent</h2>
+                    <p class="mb-2 font-mono text-[13px] text-band-accent">Expériences</p>
+                    <h2 id="home-experiences" class="text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px] text-on-band">Mes derniers postes</h2>
                 </div>
                 <a class="inline-flex min-h-11 items-center font-medium text-band-accent hover:underline" href="{{ path('app_experience') }}">Tout mon parcours, depuis {{ page_manager.getStartCareerYear() }} →</a>
             </div>
@@ -124,33 +124,31 @@
                 <img class="aspect-square w-full rounded-2xl border border-border object-cover" src="{{ asset('images/cnoyer.webp') }}" alt="Caroline Noyer" width="320" height="320" loading="lazy">
             </div>
             <div class="min-w-0 flex-[1_1_520px]">
-                <p class="mb-2 font-mono text-[13px] text-accent-text">À propos de moi</p>
-                <h2 id="home-about" class="mb-6 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Le pont entre l’architecture technique et l’expérience utilisateur</h2>
-                <div class="flex max-w-[680px] flex-col gap-4 text-on-surface-muted">
+                <p class="mb-2 font-mono text-[13px] text-accent-text">À propos</p>
+                <h2 id="home-about" class="mb-6 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Développeuse d’abord, Product Owner aujourd’hui</h2>
+                <div class="flex flex-col gap-4 text-on-surface-muted">
                     <p>
-                        Passionnée par le digital depuis plus de deux décennies, mon parcours est celui d’une évolution constante.
-                        De <strong class="text-on-surface">développeuse PHP</strong> senior au sein de la R&amp;D de Coffreo à <strong class="text-on-surface">Product Owner</strong>,
-                        j’ai appris une vérité fondamentale : la technique n’est puissante que lorsqu’elle est au service d’une vision claire.
+                        J’ai commencé dans le web il y a {{ nb_years }} ans, en écrivant du code. Pendant des années, j’ai été
+                        <strong class="text-on-surface">développeuse PHP</strong>, jusqu’à un poste de senior dans l’équipe R&amp;D de Coffreo.
                     </p>
                     <p>
-                        Aujourd’hui, j’allie mes bases solides en ingénierie à une sensibilité de <strong class="text-on-surface">Product Designer</strong>
-                        pour concevoir des produits qui ne sont pas seulement fonctionnels, mais véritablement justes pour l’utilisateur.
-                        Ma double culture me permet de parler le langage des développeurs tout en pilotant la stratégie produit avec précision.
+                        En 2019, je suis passée côté produit comme <strong class="text-on-surface">Product Owner</strong>. Ce que le code m’avait appris m’a suivie :
+                        une fonctionnalité bien construite ne vaut rien si elle ne répond pas au bon besoin. Aujourd’hui, je cadre et je priorise
+                        en sachant ce que mes choix coûtent à l’équipe technique, et je parle le même langage qu’elle.
                     </p>
-                    <p>Pour moi, un projet réussi repose sur deux piliers :</p>
+                    <p>Deux choses comptent pour moi dans un projet :</p>
                     <ul class="flex flex-col gap-3">
                         <li class="rounded-xl border border-border bg-panel p-4 transition duration-300 ease-out motion-safe:hover:translate-x-1.5">
-                            <strong class="text-on-surface">Intelligence collective.</strong> Je crois fermement que la valeur du groupe dépasse la somme des talents.
-                            J’aime insuffler cette cohésion, ce dynamisme (et parfois cette touche d’humour) qui transforme un backlog en une réussite commune.
+                            <strong class="text-on-surface">L’équipe avant les individus.</strong> Une équipe qui se parle et qui rit de temps en temps
+                            livre mieux qu’une addition de bons profils. J’y fais attention autant qu’au backlog.
                         </li>
                         <li class="rounded-xl border border-border bg-panel p-4 transition duration-300 ease-out motion-safe:hover:translate-x-1.5">
-                            <strong class="text-on-surface">Évolution permanente.</strong> Curieuse de nature, je vois chaque défi comme un terrain d’apprentissage.
-                            Qu’il s’agisse d’optimiser un workflow ou de me former à de nouvelles méthodologies, je cherche toujours à donner du sens et de l’efficience à mes actions.
+                            <strong class="text-on-surface">Apprendre en continu.</strong> Curieuse de nature, je vois chaque défi comme un terrain d’apprentissage.
+                            Un nouvel outil, une méthode, un workflow à simplifier : j’aime comprendre comment les choses marchent, puis les améliorer.
                         </li>
                     </ul>
                     <p>
-                        <strong class="text-on-surface">Mon moteur ?</strong> Relever des challenges qui demandent autant de rigueur technique que d’ouverture d’esprit,
-                        pour continuer à grandir et faire grandir vos produits.
+                        <strong class="text-on-surface">Ce qui me motive :</strong> les sujets où il faut à la fois de la rigueur technique et de l’écoute.
                     </p>
                 </div>
             </div>
@@ -160,24 +158,50 @@
     {# À CÔTÉ DU TRAVAIL #}
     <section class="mx-auto max-w-[1240px] px-6 pb-24" aria-labelledby="home-side">
         <p class="mb-2 font-mono text-[13px] text-accent-text">À côté du travail</p>
-        <h2 id="home-side" class="mb-8 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Ce que je construis pour le plaisir</h2>
+        <h2 id="home-side" class="mb-8 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Ce que je fais pour le plaisir</h2>
         <div class="grid auto-rows-[220px] grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            <a class="row-span-2 flex flex-col justify-between gap-4 rounded-[14px] border border-border bg-panel p-6 text-on-surface hover:border-accent-text transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ path('app_arcade') }}">
+            {# Borne d’arcade : grande carte avec photo #}
+            <a class="group row-span-2 flex flex-col gap-4 rounded-[14px] border border-border bg-panel p-6 text-on-surface hover:border-accent-text transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ path('app_arcade') }}">
                 <span class="font-mono text-[13px] text-on-surface-muted">hardware · DIY</span>
-                <img class="min-h-0 w-full flex-1 rounded-[10px] bg-placeholder object-cover" src="{{ asset('images/pages/hero-arcade.webp') }}" alt="" loading="lazy">
-                <span class="text-2xl font-semibold text-title">Ma borne d’arcade</span>
+                <img class="min-h-0 w-full flex-1 rounded-[10px] bg-placeholder object-cover object-[center_45%]" src="{{ asset('images/home/side-arcade.webp') }}" alt="La borne d’arcade terminée, écran et boutons allumés" width="640" height="640" loading="lazy">
+                <div>
+                    <span class="block text-2xl font-semibold text-title">Ma borne d’arcade</span>
+                    <span class="mt-1 block text-on-surface-muted">Construite de A à Z : caisson en bois, câblage, déco et Recalbox.</span>
+                </div>
+                <span class="inline-flex items-center gap-2 font-medium text-accent-text group-hover:underline">
+                    Voir la construction {{ ux_icon('hugeicons:arrow-right-02', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
+                </span>
             </a>
-            <a class="flex flex-col justify-between rounded-[14px] border border-border bg-panel p-6 text-on-surface hover:border-accent-text transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ path('app_photos') }}">
-                <span class="font-mono text-[13px] text-on-surface-muted">galerie</span>
-                <span class="text-2xl font-semibold text-title">Mes photos</span>
+
+            {# Galeries : photo de couverture sous un voile bleu nuit #}
+            {% for gallery in [
+                { link: path('app_photos'), image: 'images/home/side-photos.webp', meta: '5 séries', title: 'Mes photos', text: 'Nature, villes, ciels et nuits' },
+                { link: path('app_creations'), image: 'images/home/side-creations.webp', meta: '5 techniques', title: 'Mes créations', text: 'Sculpture en argile' },
+            ] %}
+            <a class="group relative isolate flex flex-col justify-between overflow-hidden rounded-[14px] p-6 text-white transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ gallery.link }}">
+                <img class="absolute inset-0 -z-20 size-full object-cover transition duration-500 ease-out motion-safe:group-hover:scale-105" src="{{ asset(gallery.image) }}" alt="" width="640" height="640" loading="lazy">
+                <span class="absolute inset-0 -z-10 bg-linear-to-t from-[#0F2238]/95 via-[#0F2238]/70 to-[#0F2238]/25" aria-hidden="true"></span>
+                <span class="self-start rounded-md bg-[#0F2238]/70 px-2 py-0.5 font-mono text-[13px] text-[#7FCFD6]">{{ gallery.meta }}</span>
+                <div>
+                    <span class="flex items-center gap-2 text-2xl font-semibold">
+                        {{ gallery.title }} {{ ux_icon('hugeicons:arrow-right-02', { class: 'size-5 transition motion-safe:group-hover:translate-x-1', 'aria-hidden': 'true' }) }}
+                    </span>
+                    <span class="mt-1 block text-[#B8C6D1]">{{ gallery.text }}</span>
+                </div>
             </a>
-            <a class="flex flex-col justify-between rounded-[14px] border border-border bg-panel p-6 text-on-surface hover:border-accent-text transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ path('app_creations') }}">
-                <span class="font-mono text-[13px] text-on-surface-muted">galerie</span>
-                <span class="text-2xl font-semibold text-title">Mes créations</span>
-            </a>
-            <a class="flex flex-col justify-between rounded-[14px] bg-feature p-6 sm:col-span-2 text-white transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="https://github.com/thedarknine/portfolio" target="_blank" rel="noopener">
+            {% endfor %}
+
+            {# Sous le capot : mini-console #}
+            <a class="group flex flex-col justify-between gap-3 rounded-[14px] bg-feature p-6 sm:col-span-2 text-white transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="https://github.com/thedarknine/portfolio" target="_blank" rel="noopener">
                 <span class="font-mono text-[13px] text-band-accent">sous le capot</span>
-                <span class="text-[22px] font-bold">Ce site : Symfony, Tailwind et Docker</span>
+                <div>
+                    <p class="font-mono text-[15px] sm:text-[17px]"><span class="text-[#F59E0B]" aria-hidden="true">❯ </span>symfony · tailwind · docker<span class="ml-1 inline-block h-[18px] w-[9px] align-[-3px] bg-[#7FCFD6] motion-safe:animate-pulse" aria-hidden="true"></span></p>
+                    <p class="mt-2 text-[#B8C6D1]">Le code de ce site est consultable sur GitHub : architecture, tests, intégration continue. Une vitrine de ma façon de coder.</p>
+                </div>
+                <span class="inline-flex items-center gap-2 font-medium text-band-accent group-hover:underline">
+                    Voir le dépôt {{ ux_icon('hugeicons:arrow-up-right-01', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
+                    <span class="sr-only">(nouvel onglet)</span>
+                </span>
             </a>
         </div>
     </section>
