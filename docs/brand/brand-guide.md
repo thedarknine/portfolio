@@ -75,6 +75,8 @@ Le safran **n'apparaît jamais dans le logo** et **ne sert jamais de couleur de 
 | Texte secondaire | `#44596A` | Descriptions, légendes, métadonnées |
 | Bordure | `#E2E7EC` | Séparateurs, contours de cartes |
 | Bordure appuyée | `#D5DEE5` | Contour de la fiche profil et des pastilles |
+| Bordure de bouton | `#D5DBE4` | Contour des boutons secondaires |
+| Icône discrète | `#9FB0BE` | Icônes décoratives en tête de carte, libellés de la fiche profil |
 | Fond d'étiquette | `#E3F1F3` | Étiquettes de compétences (texte en Pétrole) |
 
 ### Fonds
@@ -85,6 +87,8 @@ Le safran **n'apparaît jamais dans le logo** et **ne sert jamais de couleur de 
 | Sombre | `#0F2238` | `#16304D` |
 
 En mode sombre, le texte courant est `#B8C6D1`, le texte secondaire `#9FB0BE`, les titres en blanc et les bordures `#24405F`.
+
+Les bandeaux sombres (en-tête, footer, hero des pages internes) utilisent `#0F2238` en mode clair. En mode sombre, le footer et le hero passent en `#0A1829`, un ton plus foncé que le fond de page, pour rester distincts.
 
 ### Dégradé du symbole
 
@@ -141,7 +145,7 @@ Police à chasse fixe, utilisée en petite taille (12 à 13 px) pour les surtitr
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 ```
 
-Pour la confidentialité et la performance, il est aussi possible d'auto-héberger les fichiers des polices.
+Pour la confidentialité et la performance, il est aussi possible d'auto-héberger les fichiers des polices. C'est le cas sur le portfolio : Figtree (400 à 700) et IBM Plex Mono sont servies depuis `assets/fonts/`.
 
 ---
 
@@ -150,12 +154,18 @@ Pour la confidentialité et la performance, il est aussi possible d'auto-héberg
 | Composant | Règle |
 |---|---|
 | **Bouton principal** | Fond safran, texte `#111111` en Medium, hauteur min. 48 px, rayon 10 px. Un seul par zone. |
-| **Bouton secondaire** | Contour 1,5 px Pétrole (blanc en sombre), texte de la même couleur, fond transparent. |
+| **Bouton secondaire** | Contour 1,5 px `#D5DBE4` (blanc à 40 % en sombre), texte Pétrole (blanc en sombre), fond transparent. |
+| **Icônes dans les boutons** | Hugeicons (stroke rounded), 18 px, placées **à gauche** du texte : loupe, enveloppe, maison, cookie, flèche… Même règle pour les liens d'action du footer. |
 | **Lien texte** | Cyan foncé en clair, cyan clair en sombre, en Medium, suivi d'une flèche « → ». |
-| **Navigation** | Liens en Pétrole, page active en Pétrole soulignée de safran (2 px), bouton Contact en safran. Zone cliquable min. 44 px. |
+| **En-tête** | Fond `#0F2238` dans les deux thèmes, bordure basse `#24405F`, logo blanc à 200 px. Sur l'accueil, il reste transparent au-dessus de la photo tant que la page n'a pas défilé. |
+| **Navigation** | Liens en blanc dans l'en-tête, page active soulignée de safran (2 px), bouton Contact en safran. Dans le menu mobile : liens en Pétrole (blanc en sombre), page active soulignée de safran avec la mention « page actuelle ». Zone cliquable min. 44 px. |
 | **Étiquette** | IBM Plex Mono 13 px, fond `#E3F1F3`, texte Pétrole, rayon 6 px. |
-| **Carte** | Contour `#E2E7EC`, rayon 14 px, numéro en IBM Plex Mono, lien en bas. |
-| **Élément mis en avant** (sombre) | Fond `#16304D`, bordure safran, badge safran avec texte `#111111`. |
+| **Carte** | Contour `#E2E7EC`, rayon 14 px, titre en Pétrole SemiBold, lien en bas. En tête de carte, une **icône Hugeicons de 28 px en `#9FB0BE`**, plutôt qu'un numéro. |
+| **Fiche / console** | En-tête de bloc un ton plus foncé que le corps : `#EEF2F5` sur blanc en clair, `#12283F` sur `#16304D` en sombre. La console des pages d'erreur suit la même logique : corps `#0F2238`, barre de titre `#0A1829`, invite ❯ en safran, liens et curseur en cyan clair. |
+| **Élément mis en avant** | Sur fond clair : bordure safran 1,5 px. Sur bandeau sombre : fond `#16304D`, bordure cyan clair 1,5 px. Badge « actuel » safran avec texte `#111111`. |
+| **Hero de l'accueil** | Photo plein cadre sous un dégradé bleu nuit (`#0F2238`), texte en blanc, mots clés en cyan clair. |
+| **Hero des pages internes** | Photo de la page sous un **voile uniforme** : `#0F2238` à 85 % en clair, `#0A1829` à 88 % en sombre. Pas de dégradé ni d'icône en filigrane. Fil d'Ariane façon terminal (invite safran, curseur cyan clair), surtitre en cyan clair. |
+| **Footer** | Fond `#0F2238` (`#0A1829` en sombre), texte `#B8C6D1`, titres de colonnes en IBM Plex Mono cyan clair, signature « © Nine ». |
 
 Rayons : 6 px pour les étiquettes, 10 px pour les boutons, 12 à 16 px pour les cartes et les blocs.
 

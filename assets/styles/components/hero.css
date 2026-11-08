@@ -38,27 +38,6 @@
     }
 }
 
-.page-hero__icon {
-    position: absolute;
-    top: 50%;
-    right: 40px;
-    width: auto;
-    height: 150%; /* larger than the hero and centred: it overflows evenly at the top and bottom, so the icon stays recognisable */
-    aspect-ratio: 1;
-    transform: translateY(-50%);
-    /* Solid colours (white at 8% over the hero background): a translucent colour would show
-       darker spots where the icon's strokes overlap. */
-    color: #22344a;
-
-    [data-theme="dark"] & {
-        color: #1e2b3a;
-    }
-
-    @media (width < 768px) {
-        right: -40px;
-    }
-}
-
 .page-hero__breadcrumb {
     color: #b8c6d1;
     background-color: rgb(255 255 255 / 4%);
