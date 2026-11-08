@@ -2,10 +2,12 @@
 
 > Rigoureuse, créative, digne de confiance.
 
-Ce guide décrit comment utiliser l'identité visuelle de Caroline Noyer : le logo, les couleurs, la typographie et les composants, sur le portfolio comme sur les autres supports.
+Ce guide décrit comment utiliser l'identité visuelle de Caroline Noyer : le logo, les couleurs, la typographie
+et les composants, sur le portfolio comme sur les autres supports.
 
 **Planche visuelle** : [Planche identité et page d'accueil](https://claude.ai/artifact/6SJECkx8N9rmtxKjsJbiKj)
 La planche est la référence visuelle de ce guide. Elle contient deux pages :
+
 - **Planche identité** : logo, couleurs, typographie et composants, en clair et en sombre ;
 - **Accueil** : la charte appliquée à la page d'accueil du portfolio.
 
@@ -15,18 +17,21 @@ En cas de doute entre ce document et la planche, les valeurs de ce document font
 
 ## 1. Le logo
 
-Le logo associe un **symbole** (le monogramme « CN » en forme de ruban) et un **logotype** (« Caroline » en Regular, « NOYER » en Bold).
+Le logo associe un **symbole** (le monogramme « CN » en forme de ruban) et un **logotype** (« Caroline » en Regular,
+« NOYER » en Bold).
 
 ### Fichiers
 
 | Fichier | Usage |
-|---|---|
+| --- | --- |
 | `logo-cnoyer.svg` | Version principale, sur fond clair |
 | `logo-cnoyer-white.svg` | Version pour fond sombre ou fond photo foncé |
 | `symbol-cnoyer.svg` | Symbole seul : avatar, pied de page, réseaux sociaux |
 | `favicon.svg` | Favicon du site ; s'adapte automatiquement au mode sombre |
 
-Le texte des SVG est vectorisé, donc la police n'a pas besoin d'être installée pour les afficher. Les fichiers n'ont pas de largeur fixe : on les dimensionne en CSS. Dans l'en-tête du site, le logo est affiché à **200 px** de large.
+Le texte des SVG est vectorisé, donc la police n'a pas besoin d'être installée pour les afficher. Les fichiers
+n'ont pas de largeur fixe : on les dimensionne en CSS. Dans l'en-tête du site, le logo est affiché à **200 px**
+de large.
 
 ### Zone de protection
 
@@ -53,7 +58,7 @@ Autour du logo, laisser un espace libre au moins égal à **la moitié de la hau
 ### Palette principale
 
 | Nom | Hex | Rôle |
-|---|---|---|
+| --- | --- | --- |
 | **Pétrole** | `#24506A` | « NOYER », titres, texte fort, liens de navigation, base du dégradé du symbole |
 | **Cyan** | `#0B8C9E` | « Caroline », mots mis en valeur dans les grands titres, pastilles décoratives |
 | **Cyan foncé** | `#097A8A` | Liens et petits libellés en cyan sur fond clair |
@@ -62,15 +67,17 @@ Autour du logo, laisser un espace libre au moins égal à **la moitié de la hau
 ### Accent
 
 | Nom | Hex | Rôle |
-|---|---|---|
+| --- | --- | --- |
 | **Safran** | `#F59E0B` | Fond des boutons d'action, bouton Contact, badge « actuel », bordure de l'élément mis en avant, soulignement de la page active |
 
-Le safran **n'apparaît jamais dans le logo** et **ne sert jamais de couleur de texte sur fond clair** : sur du blanc, un orange lisible tire forcément vers le brun. On l'emploie comme fond, bordure ou soulignement. Il guide l'action : on l'utilise **avec parcimonie**, en un ou deux points forts par écran.
+Le safran **n'apparaît jamais dans le logo** et **ne sert jamais de couleur de texte sur fond clair** : sur du
+blanc, un orange lisible tire forcément vers le brun. On l'emploie comme fond, bordure ou soulignement. Il guide
+l'action : on l'utilise **avec parcimonie**, en un ou deux points forts par écran.
 
 ### Neutres et texte
 
 | Nom | Hex | Rôle |
-|---|---|---|
+| --- | --- | --- |
 | Texte courant | `#2B3A47` | Paragraphes sur fond clair |
 | Texte secondaire | `#44596A` | Descriptions, légendes, métadonnées |
 | Bordure | `#E2E7EC` | Séparateurs, contours de cartes |
@@ -82,24 +89,26 @@ Le safran **n'apparaît jamais dans le logo** et **ne sert jamais de couleur de 
 ### Fonds
 
 | Mode | Fond principal | Fond secondaire |
-|---|---|---|
+| --- | --- | --- |
 | Clair | `#FFFFFF` | `#F4F6F8` |
 | Sombre | `#0F2238` | `#16304D` |
 
 En mode sombre, le texte courant est `#B8C6D1`, le texte secondaire `#9FB0BE`, les titres en blanc et les bordures `#24405F`.
 
-Les bandeaux sombres (en-tête, footer, hero des pages internes) utilisent `#0F2238` en mode clair. En mode sombre, le footer et le hero passent en `#0A1829`, un ton plus foncé que le fond de page, pour rester distincts.
+Les bandeaux sombres (en-tête, footer, hero des pages internes) utilisent `#0F2238` en mode clair. En mode sombre,
+le footer et le hero passent en `#0A1829`, un ton plus foncé que le fond de page, pour rester distincts.
 
 ### Dégradé du symbole
 
-Linéaire, du **Pétrole** `#24506A` (en bas à gauche) vers le **Cyan** `#0B8C9E` (en haut à droite). En mode sombre, le symbole passe en blanc uni.
+Linéaire, du **Pétrole** `#24506A` (en bas à gauche) vers le **Cyan** `#0B8C9E` (en haut à droite). En mode sombre,
+le symbole passe en blanc uni.
 
 ### Accessibilité : contrastes vérifiés
 
 Seuil WCAG AA : 4,5:1 pour le texte courant, 3:1 pour les grands textes et les éléments d'interface.
 
 | Combinaison | Contraste | Verdict |
-|---|---|---|
+| --- | --- | --- |
 | Pétrole sur blanc | 8,6:1 | Tout usage |
 | Texte courant `#2B3A47` sur blanc | 11,7:1 | Tout usage |
 | Texte secondaire `#44596A` sur `#F4F6F8` | 6,7:1 | Tout usage |
@@ -121,10 +130,11 @@ Règle à retenir : **sur un fond safran, on écrit toujours en foncé** (`#1111
 
 ### Figtree : la police principale
 
-Sans-serif douce et lisible, en licence libre (SIL Open Font License), disponible sur Google Fonts. Ses formes rondes et ouvertes font écho au ruban du symbole.
+Sans-serif douce et lisible, en licence libre (SIL Open Font License), disponible sur Google Fonts. Ses formes
+rondes et ouvertes font écho au ruban du symbole.
 
 | Usage | Graisse | Taille de référence |
-|---|---|---|
+| --- | --- | --- |
 | Titre principal (h1) | Bold 700, interlettrage −1,5 px | 40 à 68 px, fluide |
 | Titre de section (h2) | Bold 700, interlettrage −0,5 px | 28 à 36 px, fluide |
 | Titre de carte (h3) | SemiBold 600 | 20 à 22 px |
@@ -135,7 +145,9 @@ Sans-serif douce et lisible, en licence libre (SIL Open Font License), disponibl
 
 ### IBM Plex Mono : la police d'appoint
 
-Police à chasse fixe, utilisée en petite taille (12 à 13 px) pour les surtitres de section, les numéros, les dates, les étiquettes et la fiche profil. Humaniste et soignée, elle apporte la touche « développeuse » sans paraître sèche à côté de Figtree. Elle n'est jamais utilisée pour les titres ni pour le texte courant.
+Police à chasse fixe, utilisée en petite taille (12 à 13 px) pour les surtitres de section, les numéros, les dates,
+les étiquettes et la fiche profil. Humaniste et soignée, elle apporte la touche « développeuse » sans paraître sèche
+à côté de Figtree. Elle n'est jamais utilisée pour les titres ni pour le texte courant.
 
 ### Intégration
 
@@ -145,14 +157,15 @@ Police à chasse fixe, utilisée en petite taille (12 à 13 px) pour les surtitr
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 ```
 
-Pour la confidentialité et la performance, il est aussi possible d'auto-héberger les fichiers des polices. C'est le cas sur le portfolio : Figtree (400 à 700) et IBM Plex Mono sont servies depuis `assets/fonts/`.
+Pour la confidentialité et la performance, il est aussi possible d'auto-héberger les fichiers des polices. C'est le
+cas sur le portfolio : Figtree (400 à 700) et IBM Plex Mono sont servies depuis `assets/fonts/`.
 
 ---
 
 ## 4. Les composants
 
 | Composant | Règle |
-|---|---|
+| --- | --- |
 | **Bouton principal** | Fond safran, texte `#111111` en Medium, hauteur min. 48 px, rayon 10 px. Un seul par zone. |
 | **Bouton secondaire** | Contour 1,5 px `#D5DBE4` (blanc à 40 % en sombre), texte Pétrole (blanc en sombre), fond transparent. |
 | **Icônes dans les boutons** | Hugeicons (stroke rounded), 18 px, placées **à gauche** du texte : loupe, enveloppe, maison, cookie, flèche… Même règle pour les liens d'action du footer. |
@@ -217,5 +230,6 @@ Rayons : 6 px pour les étiquettes, 10 px pour les boutons, 12 à 16 px pour les
 Le style visuel suit les trois valeurs de la marque :
 
 - **Rigoureuse** : des mises en page aérées et alignées, peu d'effets, une hiérarchie claire.
-- **Créative** : la touche safran, la forme du symbole et les détails en police à chasse fixe apportent de la vie, sans en rajouter.
+- **Créative** : la touche safran, la forme du symbole et les détails en police à chasse fixe apportent de la vie,
+sans en rajouter.
 - **Digne de confiance** : le pétrole domine, les contrastes sont lisibles et le site reste accessible à tous.

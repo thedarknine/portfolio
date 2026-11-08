@@ -60,26 +60,26 @@
 
     {# POSITIONNEMENT #}
     <section class="bg-surface-alt-brand" aria-labelledby="home-positioning">
-    <div class="mx-auto max-w-[1240px] px-6 pt-22 pb-24">
-        <p class="mb-2 font-mono text-[13px] text-accent-text">Mon positionnement</p>
-        <h2 id="home-positioning" class="mb-8 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Penser le produit. Comprendre la technique. Faire le lien.</h2>
-        <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
-            {% for card in [
+        <div class="mx-auto max-w-[1240px] px-6 pt-22 pb-24">
+            <p class="mb-2 font-mono text-[13px] text-accent-text">Mon positionnement</p>
+            <h2 id="home-positioning" class="mb-8 text-title text-[clamp(28px,3.4vw,36px)] leading-[1.15] font-bold tracking-[-0.5px]">Penser le produit. Comprendre la technique. Faire le lien.</h2>
+            <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-5">
+                {% for card in [
                 { icon: 'hugeicons:route-01', title: 'Mon parcours', text: nb_years ~ ' ans dans le web, d’abord en développement, aujourd’hui au service du produit. Je connais les deux côtés de la table.', link: path('app_experience'), cta: 'Découvrir mon parcours' },
                 { icon: 'hugeicons:wrench-01', title: 'Mon expertise', text: 'J’aide les équipes à cadrer les besoins, à faire les bons choix techniques et à mieux travailler ensemble.', link: path('app_skills'), cta: 'Voir mes compétences' },
                 { icon: 'hugeicons:layers-01', title: 'Mon approche', text: 'J’aime comprendre, structurer et donner forme aux idées. En produit, en code ou en création, je cherche la simplicité.', link: path('app_projects'), cta: 'Voir mes réalisations' },
             ] %}
-            <article class="rounded-[14px] border border-border bg-panel p-7 transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
-                {{ ux_icon(card.icon, { class: 'mb-5 block size-7 text-icon-muted', 'aria-hidden': 'true' }) }}
-                <h3 class="mb-2 text-[22px] font-semibold text-title">{{ card.title }}</h3>
-                <p class="mb-5 text-on-surface-muted">{{ card.text }}</p>
-                <a class="inline-flex min-h-11 items-center gap-2 font-medium text-accent-text hover:underline" href="{{ card.link }}">
-                    {{ card.cta }} {{ ux_icon('hugeicons:arrow-right-02', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
-                </a>
-            </article>
-            {% endfor %}
+                <article class="rounded-[14px] border border-border bg-panel p-7 transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
+                    {{ ux_icon(card.icon, { class: 'mb-5 block size-7 text-icon-muted', 'aria-hidden': 'true' }) }}
+                    <h3 class="mb-2 text-[22px] font-semibold text-title">{{ card.title }}</h3>
+                    <p class="mb-5 text-on-surface-muted">{{ card.text }}</p>
+                    <a class="inline-flex min-h-11 items-center gap-2 font-medium text-accent-text hover:underline" href="{{ card.link }}">
+                        {{ card.cta }} {{ ux_icon('hugeicons:arrow-right-02', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
+                    </a>
+                </article>
+                {% endfor %}
+            </div>
         </div>
-    </div>
     </section>
 
     {# EXPÉRIENCES #}
