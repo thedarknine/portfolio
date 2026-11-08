@@ -16,8 +16,16 @@
  * BASE
  * ============================================================ */
 @layer base {
-    body {
+    /* Smooth scrolling for in-page links ("Retour en haut"), off when the user asks for less motion */
+    html {
         scroll-behavior: smooth;
+
+        @media (prefers-reduced-motion: reduce) {
+            scroll-behavior: auto;
+        }
+    }
+
+    body {
         font-family: var(--font-normal);
         font-size: 14px;
         color: var(--color-on-surface);

@@ -1,13 +1,48 @@
 /* ============================================================
  * FONTS
- * Redesign (see docs/style-guide.md):
- *   Space Grotesk : 3 weights (400, 500, 700) — headings, body, UI
+ * Brand (see docs/brand/brand-guide.md):
+ *   Figtree : 4 weights (400, 500, 600, 700) — headings, body, UI
+ * Previous redesign, removed once every template is migrated:
+ *   Space Grotesk : 3 weights (400, 500, 700)
  *   IBM Plex Mono : 2 weights (400, 500) — labels, chips, tags, metadata
  * Legacy, removed once every template is migrated:
  *   Oxygen : 2 weights (400, 700)
  *   League Spartan : 4 weights (400, 500, 600, 700)
  *   Inter : 2 weights (400, 700) — fallback only
  * ============================================================ */
+
+/* Figtree */
+@font-face {
+    font-display: swap;
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 400;
+    src: url("../fonts/figtree/figtree-latin-400.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 500;
+    src: url("../fonts/figtree/figtree-latin-500.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 600;
+    src: url("../fonts/figtree/figtree-latin-600.woff2") format("woff2");
+}
+
+@font-face {
+    font-display: swap;
+    font-family: "Figtree";
+    font-style: normal;
+    font-weight: 700;
+    src: url("../fonts/figtree/figtree-latin-700.woff2") format("woff2");
+}
 
 /* Space Grotesk */
 @font-face {

@@ -1,6 +1,6 @@
 /* ============================================================
  * COMPOSANTS — Boutons
- * Reference: docs/style-guide.md § Buttons
+ * Reference: docs/brand/brand-guide.md (safran primary, text #111 on safran)
  * ============================================================ */
 @layer components {
     .btn {
@@ -46,9 +46,10 @@
     }
 
     .btn--secondary {
-        color: var(--color-on-surface);
-        background-color: var(--color-panel);
-        border-color: var(--color-border);
+        color: var(--color-title);
+        background-color: transparent;
+        border-width: 1.5px;
+        border-color: var(--color-border-button);
 
         &:hover {
             border-color: var(--color-accent-text);
