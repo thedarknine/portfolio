@@ -56,15 +56,6 @@
         }
     }
 
-    .btn--strong {
-        color: var(--color-on-strong);
-        background-color: var(--color-strong);
-
-        &:hover {
-            opacity: 0.9;
-        }
-    }
-
     /* Equal-weight choices, e.g. cookie consent: accept and refuse look the same */
     .btn--outline {
         color: var(--color-accent-text);
@@ -79,22 +70,5 @@
     .btn--lg {
         min-height: 52px;
         padding: 0 28px;
-    }
-}
-
-/* ------------------------------------------------------------
- * Legacy — home hero social links, removed with the new home page
- * ------------------------------------------------------------ */
-.nine-btn-social {
-    @apply text-nine-sand-200 border-nine-gray-400 rounded-full border-2 text-shadow-lg;
-
-    transition: 0.5s;
-    transition-delay: 0.3s;
-
-    &:hover {
-        @apply rounded-full;
-
-        background: linear-gradient(to right bottom, var(--color-nine-blue-900) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-900) 100%);
-        border-color: var(--color-nine-cyan-500);
     }
 }

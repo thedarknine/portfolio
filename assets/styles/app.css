@@ -3,7 +3,6 @@
 
 @import "./fonts.css";
 @import "./base/theme.css";
-@import "./base/animations.css";
 @import "./components/theme-toggle.css";
 @import "./components/buttons.css";
 @import "./components/forms.css";
@@ -26,7 +25,7 @@
     }
 
     body {
-        font-family: var(--font-normal);
+        font-family: var(--font-sans);
         font-size: 14px;
         color: var(--color-on-surface);
         background-color: var(--color-surface);
@@ -36,13 +35,8 @@
     }
 }
 
-@utility nine-section-subheader {
-    @apply text-center text-sm uppercase tracking-widest text-on-surface-subheader mb-6;
-}
-
 /* ============================================================
  * UTILITAIRES
- * RENAME: préfixe nine- → u- pour les utilitaires génériques
  * ============================================================ */
 .container {
     width: 100%;
@@ -50,147 +44,6 @@
     padding-left: 1rem;
     margin-right: auto;
     margin-left: auto;
-}
-
-.util-smallcaps {
-    /* RENAME: .nine-smallcaps */
-    font-variant: small-caps;
-}
-
-.util-list-inline {
-    /* RENAME: .nine-list-inline */
-    padding-left: 0;
-    list-style: none;
-
-    .util-list-inline__item {
-        /* RENAME: .nine-list-inline-item */
-        display: inline-block;
-
-        &:not(:last-child) {
-            margin-right: 0.5rem;
-        }
-    }
-}
-
-/* ============================================================
- * COMPOSANTS — Gradient de marque
- * ============================================================ */
-.nine-bg-gradient {
-    /* RENAME: .nine-gradient */
-    background: linear-gradient(to right bottom, var(--color-nine-blue-900) 0%, var(--color-nine-cyan-500) 51%, var(--color-nine-blue-900) 100%);
-}
-
-.nine-border-gradient {
-    border-radius: 100%;
-    border: 6px solid transparent;
-    background: linear-gradient(45deg, var(--color-nine-blue-500), var(--color-nine-cyan-500)) border-box;
-}
-
-.card:hover {
-    border-image: linear-gradient(to right, var(--color-nine-cyan-500), var(--color-nine-blue-500)) 1;
-}
-
-/* ============================================================
- * ANIMATIONS
- * ============================================================ */
-
-[data-animate] {
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-/* ============================================================
- * COMPOSANTS — Page hero
- * ============================================================ */
-.nine-page-hero {
-    padding: 4.5rem 0 0;
-    overflow: hidden;
-
-    .nine-page-hero__label {
-        display: inline-block;
-        margin-bottom: 1rem;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-        opacity: 0.7;
-    }
-
-    h1.nine-page-hero__title {
-        margin-bottom: 2rem;
-        font-weight: 800;
-        line-height: 1.1;
-    }
-
-    p {
-        max-width: 600px;
-        font-size: 1.1rem;
-        line-height: 1.8;
-        opacity: 0.9;
-    }
-
-    .nine-page-hero__visual {
-        position: relative;
-        /*min-height: 280px;*/
-
-        @media (max-width: 767px) {
-            /*min-height: 200px;*/
-            margin: 0 -1rem;
-        }
-    }
-
-    .nine-hero-image-wrapper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-
-        img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-            display: block;
-
-            @media (min-width: 768px) {
-                clip-path: ellipse(100% 140% at 100% 12%);
-            }
-
-            @media (max-width: 767px) {
-                max-height: 220px;
-            }
-        }
-    }
-}
-
-/* ============================================================
- * COMPOSANTS — Page quote
- * ============================================================ */
-.nine-page-quote {
-    padding: 6rem 0;
-    text-align: center;
-
-    blockquote {
-        max-width: 900px;
-        margin: auto;
-        font-size: 2rem;
-        font-weight: 600;
-        line-height: 1.6;
-    }
-
-    .nine-page-quote__icon {
-        /* RENAME: .nine-quote-icon */
-        margin: 0 auto;
-
-        path {
-            opacity: 0.4;
-            fill: var(--color-nine-cyan-500);
-        }
-    }
-}
-
-/* ============================================================
- * COMPOSANTS — Page form
- * ============================================================ */
-.form-errors {
-    @apply mt-1 text-xs text-nine-red-600 list-none p-0;
 }
 
 /* ============================================================

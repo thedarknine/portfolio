@@ -16,7 +16,7 @@
                     {% set is_current = current_page.slug == page.slug %}
                     <li>
                         {% if page.slug == 'contact' %}
-                        <a class="ml-1 inline-flex min-h-11 items-center rounded-lg bg-strong px-4 text-on-strong transition-colors hover:opacity-90" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
+                        <a class="ml-1 inline-flex min-h-11 items-center rounded-lg bg-primary px-4 text-on-primary transition-colors hover:opacity-90" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
                         {% else %}
                         <a class="site-nav__link inline-flex min-h-11 items-center rounded-lg px-3 text-on-surface transition-colors hover:bg-panel" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
                         {% endif %}
