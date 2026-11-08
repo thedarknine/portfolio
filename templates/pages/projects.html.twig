@@ -20,13 +20,13 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
 
         <ul class="grid grid-cols-[repeat(auto-fill,minmax(min(460px,100%),1fr))] gap-5">
             {% for project in projects_list %}
-            <li class="flex flex-col rounded-[14px] border border-border bg-panel p-6 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] motion-safe:hover:-translate-y-1 md:p-7 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
+            <li class="flex flex-col rounded-[14px] border border-border bg-panel p-6 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(36_80_106/35%)] motion-safe:hover:-translate-y-1 md:p-7 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
                 <div class="mb-6">
                     <div class="mb-4 flex flex-col-reverse items-start gap-3 sm:flex-row sm:justify-between sm:gap-4">
                         <div class="flex min-w-0 items-center gap-3.5">
                             <img class="size-12 shrink-0 rounded-xl object-cover" src="{{ asset('images/projects/' ~ project.logo) }}" alt="" width="48" height="48" loading="lazy">
                             <div class="min-w-0">
-                                <h2 class="text-xl leading-tight font-bold">{{ project.name }}</h2>
+                                <h2 class="text-xl leading-tight font-semibold text-title">{{ project.name }}</h2>
                                 <p class="font-mono text-[13px] text-on-surface-muted">{{ project.period }}</p>
                             </div>
                         </div>
@@ -35,7 +35,7 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
                         {% endif %}
                     </div>
 
-                    <div class="text-on-surface-muted [&_strong]:font-medium [&_strong]:text-on-surface">{{ project.description|raw }}</div>
+                    <div class="text-on-surface-muted [&_strong]:font-medium [&_strong]:text-title">{{ project.description|raw }}</div>
 
                     {% if project.screenshots is not empty %}
                     <ul class="pswp9-gallery mt-5 flex flex-wrap gap-2" id="gallery-{{ loop.index }}" aria-label="Captures d’écran de {{ project.name }}">
@@ -48,7 +48,7 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
                                 target="_blank"
                                 aria-label="Agrandir la capture : {{ screenshot.description|default(project.name) }}">
                                 <img class="h-16 w-24 object-cover" src="{{ screenshot_url }}" alt="{{ screenshot.description }}" width="96" height="64" loading="lazy">
-                                <span class="absolute inset-0 flex items-center justify-center bg-[#172c49]/40 opacity-0 transition-opacity group-hover/thumb:opacity-100" aria-hidden="true">
+                                <span class="absolute inset-0 flex items-center justify-center bg-[#0f2238]/50 opacity-0 transition-opacity group-hover/thumb:opacity-100" aria-hidden="true">
                                     {{ ux_icon('hugeicons:search-add', { class: 'size-5 text-white' }) }}
                                 </span>
                             </a>
@@ -62,7 +62,7 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
                 <div class="mt-auto flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-t border-border pt-4 font-mono text-[12px]">
                     <ul class="flex flex-wrap gap-1.5">
                         {% for tag in project.tags %}
-                        <li class="rounded-md bg-surface px-2 py-0.5 text-on-surface-muted">#{{ tag }}</li>
+                        <li class="rounded-md bg-surface-alt-brand px-2 py-0.5 text-on-surface-muted">#{{ tag }}</li>
                         {% endfor %}
                     </ul>
                     {% if project.screenshots is not empty %}

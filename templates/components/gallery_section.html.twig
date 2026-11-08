@@ -7,7 +7,7 @@
         <div class="mb-8 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
             <div>
                 <p class="mb-2 font-mono text-[13px] text-accent-text">{{ '%02d'|format(index) }}</p>
-                <h2 id="gallery-{{ slug }}" class="text-[clamp(26px,3vw,32px)] leading-[1.15] font-bold tracking-[-0.5px]">{{ title }}</h2>
+                <h2 id="gallery-{{ slug }}" class="text-[clamp(26px,3vw,32px)] leading-[1.15] font-bold tracking-[-0.5px] text-title">{{ title }}</h2>
             </div>
             <p class="font-mono text-[13px] text-on-surface-muted">{{ items|length }} image{{ items|length > 1 ? 's' }}</p>
         </div>
@@ -22,7 +22,7 @@
                     aria-label="Agrandir : {{ item.alt }}">
                     <img class="block aspect-square w-full object-cover transition duration-500 ease-out motion-safe:group-hover:scale-[1.04]" src="{{ item.src }}" alt="{{ item.alt }}" loading="lazy">
                     {% if item.caption is defined and item.caption %}
-                    <span class="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#172c49]/85 to-transparent px-3 pt-8 pb-2.5 font-mono text-[12px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true">{{ item.caption }}</span>
+                    <span class="absolute inset-x-0 bottom-0 bg-linear-to-t from-[#0f2238]/85 to-transparent px-3 pt-8 pb-2.5 font-mono text-[12px] text-white opacity-0 transition-opacity duration-300 group-hover:opacity-100 group-focus-visible:opacity-100" aria-hidden="true">{{ item.caption }}</span>
                     {% endif %}
                 </a>
             </li>

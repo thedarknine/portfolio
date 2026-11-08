@@ -16,29 +16,29 @@ Mes compétences en product ownership, développement Symfony/PHP, UX design et 
 
             <div class="lg:sticky lg:top-28 lg:w-[300px] lg:shrink-0 lg:self-start">
                 <p class="mb-2 font-mono text-[13px] text-accent-text">{{ '%02d'|format(loop.index) }}</p>
-                <h2 id="skill-type-{{ type.slug }}" class="mb-4 text-[clamp(26px,3vw,32px)] leading-[1.15] font-bold tracking-[-0.5px]">{{ type.name }}</h2>
-                <div class="text-on-surface-muted [&_strong]:font-medium [&_strong]:text-on-surface">{{ type.description|raw }}</div>
+                <h2 id="skill-type-{{ type.slug }}" class="mb-4 text-[clamp(26px,3vw,32px)] leading-[1.15] font-bold tracking-[-0.5px] text-title">{{ type.name }}</h2>
+                <div class="text-on-surface-muted [&_strong]:font-medium [&_strong]:text-title">{{ type.description|raw }}</div>
             </div>
 
             <ul class="grid min-w-0 flex-1 grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] content-start gap-4">
                 {% for skill in skills %}
                 {% set level_label = skill.level >= 8 ? 'Expert' : (skill.level >= 6 ? 'Avancé' : 'Maîtrisé') %}
-                <li class="flex flex-col rounded-[14px] border border-border bg-panel p-5 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] motion-safe:hover:-translate-y-1 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
+                <li class="flex flex-col rounded-[14px] border border-border bg-panel p-5 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(36_80_106/35%)] motion-safe:hover:-translate-y-1 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
                     <div class="mb-4 flex items-center gap-3.5">
-                        <img class="size-11 shrink-0 rounded-[10px] bg-surface object-contain p-1.5" src="{{ asset('images/skills/' ~ skill.slug ~ '.png') }}" alt="" width="44" height="44" loading="lazy">
+                        <img class="size-11 shrink-0 rounded-[10px] bg-surface-alt-brand object-contain p-1.5" src="{{ asset('images/skills/' ~ skill.slug ~ '.png') }}" alt="" width="44" height="44" loading="lazy">
                         <div class="min-w-0">
-                            <h3 class="text-lg leading-tight font-bold">{{ skill.name|raw }}</h3>
+                            <h3 class="text-lg leading-tight font-semibold text-title">{{ skill.name|raw }}</h3>
                             <p class="font-mono text-[12px] text-accent-text">{{ level_label }}</p>
                         </div>
                     </div>
 
-                    <div class="mb-4 h-1.5 overflow-hidden rounded-full bg-surface" aria-hidden="true">
+                    <div class="mb-4 h-1.5 overflow-hidden rounded-full bg-surface-alt-brand" aria-hidden="true">
                         <div class="h-full rounded-full bg-linear-to-r from-level-start/40 to-level-end" style="width: {{ skill.level * 10 }}%"></div>
                     </div>
 
                     <p class="mt-auto flex items-center justify-between border-t border-border pt-3 font-mono text-[12px] text-on-surface-muted">
-                        <span class="text-nine-gray-400">pratique</span>
-                        <span class="text-on-surface">{{ skill.duration }}{{ skill.endYear is null ? ' · en cours' }}</span>
+                        <span class="text-icon-muted">pratique</span>
+                        <span class="text-title">{{ skill.duration }}{{ skill.endYear is null ? ' · en cours' }}</span>
                     </p>
                 </li>
                 {% endfor %}
