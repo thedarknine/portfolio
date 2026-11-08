@@ -2,7 +2,7 @@
 {# On the home page the header floats over the photo hero and turns opaque once the page scrolls (header_controller.js). #}
 {% set is_overlay = current_page.slug == 'home' %}
 <header
-    class="site-header {{ is_overlay ? 'site-header--overlay fixed inset-x-0' : 'sticky' }} top-0 z-40 border-b border-border bg-surface-header font-sans text-on-surface backdrop-blur transition-colors duration-200"
+    class="site-header {{ is_overlay ? 'site-header--overlay fixed inset-x-0' : 'sticky' }} top-0 z-40 border-b border-[#24405f] bg-surface-header font-sans text-white backdrop-blur transition-colors duration-200"
     {% if is_overlay %}{{ stimulus_controller('menu')|stimulus_controller('header') }}{% else %}{{ stimulus_controller('menu') }}{% endif %}>
     <div class="site-header__bar mx-auto flex max-w-[1240px] items-center justify-between gap-4 px-6 py-3.5">
         <a class="inline-flex min-h-11 items-center" href="{{ path('app_home') }}" aria-label="{{ owner_name }} — Accueil">
@@ -18,7 +18,7 @@
                         {% if page.slug == 'contact' %}
                         <a class="ml-1 inline-flex min-h-11 items-center rounded-lg bg-strong px-4 text-on-strong transition-colors hover:opacity-90" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
                         {% else %}
-                        <a class="inline-flex min-h-11 items-center rounded-lg px-3 transition-colors hover:bg-panel {{ is_current ? 'text-accent-text' : 'text-on-surface' }}" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
+                        <a class="site-nav__link inline-flex min-h-11 items-center rounded-lg px-3 text-on-surface transition-colors hover:bg-panel" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
                         {% endif %}
                     </li>
                     {% endfor %}
@@ -29,7 +29,7 @@
 
             <button
                 type="button"
-                class="site-header__menu-button inline-flex size-11 items-center justify-center rounded-[10px] bg-strong text-on-strong lg:hidden"
+                class="site-header__menu-button inline-flex size-11 items-center justify-center rounded-[10px] border-[1.5px] border-white text-white lg:hidden"
                 aria-label="Ouvrir le menu"
                 aria-haspopup="dialog"
                 {{ stimulus_target('menu', 'button') }}
