@@ -16,6 +16,7 @@
     /* Textes */
     --color-on-surface: #2b3a47;
     --color-on-surface-muted: #44596a;
+    --color-on-surface-subtle: #5b6f7f; /* captions, contrast 5.2:1 on white */
     --color-on-surface-footer: #b8c6d1;
 
     /* ------------------------------------------------------------------
@@ -70,6 +71,7 @@
 
     --color-on-surface: #b8c6d1;
     --color-on-surface-muted: #9fb0be;
+    --color-on-surface-subtle: #8c9dac; /* captions, contrast 4.8:1 on panel */
     --color-on-surface-footer: #b8c6d1;
 
     /* Redesign tokens — dark mode */

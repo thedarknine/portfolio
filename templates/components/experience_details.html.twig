@@ -40,6 +40,11 @@
     {% endif %}
 </div>
 
+{% if experience.summary %}
+{# Company context: small and lighter so the missions stay the focus #}
+<p class="-mt-2 mb-5 text-[14px] leading-normal text-on-surface-subtle">{{ experience.summary }}</p>
+{% endif %}
+
 {% if experience.items is not empty %}
 <ul class="mb-6 grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-x-8 gap-y-4">
     {% for item in experience.items %}
