@@ -41,6 +41,11 @@ class ExperienceLink
             pattern: '~^/.*$~',
             message: 'The URI must start with "/".',
         ),
+        // PDF links store a file name, served from docs.carolinenoyer.fr
+        new Assert\Regex(
+            pattern: '~^[\w.-]+\.pdf$~',
+            message: 'A PDF link must be a file name ending in ".pdf".',
+        ),
     ])]
     #[Assert\Length(max: 255, maxMessage: 'URL cannot exceed {{ limit }} characters.')]
     private ?string $url = null;
