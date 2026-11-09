@@ -44,7 +44,10 @@
 <ul class="mb-6 grid grid-cols-[repeat(auto-fit,minmax(min(320px,100%),1fr))] gap-x-8 gap-y-4">
     {% for item in experience.items %}
     <li>
-        <h3 class="mb-0.5 font-semibold text-title">{{ item.title }}</h3>
+        <h3 class="mb-0.5 flex items-center gap-2 font-semibold text-title">
+            {% if item.picto starts with 'hugeicons:' %}{{ ux_icon(item.picto, { class: 'size-5 shrink-0 text-icon-muted', 'aria-hidden': 'true' }) }}{% endif %}
+            {{ item.title }}
+        </h3>
         <p class="text-on-surface-muted">{{ item.details }}</p>
     </li>
     {% endfor %}

@@ -18,6 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -91,16 +92,10 @@ class ExperienceItemCrudController extends AbstractCrudController
             ->setHelp('Détaillez vos accomplissements majeurs pour ce point.')
             ->hideOnIndex(); // Masqué pour garder le tableau lisible
 
-        // Manage the picto (optional, can be an emoji or a short text)
-        yield TextField::new('picto', 'Picto')
-            ->setHelp('Exemple : Copier un emoji.')
-            ->formatValue(function ($value, $entity): string {
-                if (!$value) {
-                    return '<span class="text-muted">Aucun</span>';
-                }
-
-                return sprintf('<span class="">%s</span>', htmlspecialchars($value));
-            });
+        // Picto: a Hugeicons name picked from a curated list
+        yield ChoiceField::new('picto', 'Picto')
+            ->setChoices(ExperienceItem::PICTOS)
+            ->setHelp('Icône affichée devant le titre sur la page Expérience.');
 
         yield IntegerField::new('position', 'Ordre')
             ->setHelp('Permet de classer les détails au sein d\'une même expérience.')

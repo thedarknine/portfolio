@@ -37,7 +37,7 @@ class ExperienceItemValidationTest extends KernelTestCase
             ->setTitle('Développement Backend')
             ->setDetails('Conception d’API REST et optimisation des requêtes de la base de données.')
             ->setPosition(0)
-            ->setPicto('fa-code')
+            ->setPicto('hugeicons:laptop-programming')
             ->setExperience($this->createValidMockExperience());
 
         $errors = $this->validator->validate($experienceItem);
@@ -46,7 +46,7 @@ class ExperienceItemValidationTest extends KernelTestCase
         $this->assertSame('Développement Backend', $experienceItem->getTitle());
         $this->assertSame('Conception d’API REST et optimisation des requêtes de la base de données.', $experienceItem->getDetails());
         $this->assertSame(0, $experienceItem->getPosition());
-        $this->assertSame('fa-code', $experienceItem->getPicto());
+        $this->assertSame('hugeicons:laptop-programming', $experienceItem->getPicto());
     }
 
     /**
@@ -58,7 +58,7 @@ class ExperienceItemValidationTest extends KernelTestCase
             ->setTitle('Item sans détails')
             ->setDetails('')
             ->setPosition(1)
-            ->setPicto('fa-bug')
+            ->setPicto('hugeicons:check-list')
             ->setExperience($this->createValidMockExperience());
 
         $errors = $this->validator->validate($experienceItem);
@@ -76,13 +76,31 @@ class ExperienceItemValidationTest extends KernelTestCase
             ->setTitle('Item mal rangé')
             ->setDetails('Quelques détails...')
             ->setPosition(-5)
-            ->setPicto('fa-sort')
+            ->setPicto('hugeicons:task-01')
             ->setExperience($this->createValidMockExperience());
 
         $errors = $this->validator->validate($experienceItem);
 
         $this->assertGreaterThan(0, count($errors));
         $this->assertSame('position', $errors[0]->getPropertyPath());
+    }
+
+    /**
+     * Test that a picto outside the curated Hugeicons list is rejected.
+     */
+    public function testUnknownPictoTriggerViolation(): void
+    {
+        $experienceItem = new ExperienceItem()
+            ->setTitle('Item avec emoji')
+            ->setDetails('Quelques détails...')
+            ->setPosition(1)
+            ->setPicto('🚀')
+            ->setExperience($this->createValidMockExperience());
+
+        $errors = $this->validator->validate($experienceItem);
+
+        $this->assertCount(1, $errors);
+        $this->assertSame('picto', $errors[0]->getPropertyPath());
     }
 
     /**
