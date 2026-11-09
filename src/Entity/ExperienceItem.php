@@ -17,6 +17,7 @@ use App\Entity\Traits\TitleableTrait;
 use App\Repository\ExperienceItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ExperienceItemRepository::class)]
@@ -70,6 +71,8 @@ class ExperienceItem implements SortableEntityInterface
     #[Assert\Choice(choices: self::PICTOS, message: 'Picto must be one of the available icons.')]
     private ?string $picto = null;
 
+    // Positions are counted per experience, not across all items
+    #[Gedmo\SortableGroup]
     #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Experience is required.')]
