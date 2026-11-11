@@ -294,6 +294,8 @@ photo hero and the quote of the layout and adds:
   and a zoom icon on hover) that open in the PhotoSwipe lightbox (`.pswp9-gallery` / `.pswp9-link`).
 - Bordered footer in monospace: tags as `#tag` on `surface`, and the number of screenshots.
 - Same hover lift as the other cards.
+- Optional full-width card (`fullWidth`): spans the whole grid, screenshots become a 2 → 3 → 5 column grid of 16:10
+  thumbnails cropped from the top, each with its description as a monospace caption (used for the site timeline).
 
 ### Galleries
 

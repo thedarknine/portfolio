@@ -57,6 +57,10 @@ class Project
     #[Assert\Length(max: 255, maxMessage: 'Category cannot exceed {{ limit }} characters.')]
     private ?string $category = null;
 
+    /** Card spans the whole grid width, with larger screenshots (e.g. the portfolio timeline) */
+    #[ORM\Column(options: ['default' => false])]
+    private bool $fullWidth = false;
+
     /** @var Collection<int, ProjectTag> */
     #[ORM\ManyToMany(targetEntity: ProjectTag::class, inversedBy: 'projects')]
     #[ORM\JoinTable(name: 'project_project_tag')]
@@ -111,6 +115,18 @@ class Project
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function isFullWidth(): bool
+    {
+        return $this->fullWidth;
+    }
+
+    public function setFullWidth(bool $fullWidth): static
+    {
+        $this->fullWidth = $fullWidth;
 
         return $this;
     }

@@ -98,6 +98,10 @@ class ProjectCrudController extends AbstractCrudController
         yield BooleanField::new('published', 'Publié')
             ->setFormTypeOption('attr', ['checked' => true]);
 
+        yield BooleanField::new('fullWidth', 'Pleine largeur')
+            ->setHelp('La carte occupe toute la largeur de la grille, avec des captures plus grandes.')
+            ->hideOnIndex();
+
         yield TextField::new('period', 'Période')
             ->setHelp('Exemple : Janvier - Mars ou 6 mois')
             ->hideOnIndex();
