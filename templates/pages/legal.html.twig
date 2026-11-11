@@ -60,7 +60,7 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
                     le site <strong>carolinenoyer.fr</strong> est édité par :</p>
                 <dl class="legal-card">
                     <div>
-                        <dt>Editeur</dt>
+                        <dt>Éditeur</dt>
                         <dd>Caroline Noyer</dd>
                     </div>
                     <div>
@@ -105,15 +105,16 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
                 {{ _self.section_heading(legal_sections[2], 3) }}
                 <p>Tous les contenus du site (textes, graphismes, logos, code, icônes) sont la propriété exclusive de <strong>Caroline Noyer</strong>, sauf mention contraire.
                     Toute reproduction, modification ou diffusion partielle ou totale est <strong>interdite sans autorisation écrite préalable</strong>.</p>
+                <p>Le code source du site est consultable sur <a href="https://github.com/thedarknine/portfolio" target="_blank" rel="noopener">GitHub</a> à titre de démonstration : il reste soumis aux mêmes droits et n’est pas placé sous licence libre.</p>
             </section>
 
             <section aria-labelledby="{{ legal_sections[3].id }}">
                 {{ _self.section_heading(legal_sections[3], 4) }}
-                <p>Ce site est propulsé par l'écosystème Open-Source :
-                    <a href="https://symfony.com" target="_blank" rel="noopener">Symfony 8</a> et de nombreuses autres dépendances.</p>
+                <p>Ce site est construit avec <a href="https://symfony.com" target="_blank" rel="noopener">Symfony</a> et d’autres projets open source.</p>
                 <ul class="legal-list">
-                    <li><strong>Icônes</strong> : <a href="https://www.flaticon.com" target="_blank" rel="noopener">Huge Icons</a> Free, utilisées conformément à leur licence d'utilisation.</li>
-                    <li><strong>Illustrations</strong> : Certaines illustrations proviennent de <a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> et sont utilisées conformément à leur licence d'utilisation.</li>
+                    <li><strong>Icônes</strong> : <a href="https://hugeicons.com" target="_blank" rel="noopener">Hugeicons</a> (version gratuite), utilisées conformément à leur licence.</li>
+                    <li><strong>Polices</strong> : <a href="https://fonts.google.com/specimen/Figtree" target="_blank" rel="noopener">Figtree</a> et <a href="https://fonts.google.com/specimen/IBM+Plex+Mono" target="_blank" rel="noopener">IBM Plex Mono</a>, sous licence SIL Open Font License.</li>
+                    <li><strong>Illustrations</strong> : certaines illustrations proviennent d’<a href="https://unsplash.com" target="_blank" rel="noopener">Unsplash</a> et sont utilisées conformément à leur licence.</li>
                     <li><strong>Librairies</strong> :</li>
                 </ul>
                 <ul class="legal-libraries">
@@ -122,9 +123,9 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
                         { name: 'Twig', url: 'https://twig.symfony.com', role: 'Moteur de template' },
                         { name: 'Doctrine', url: 'https://www.doctrine-project.org', role: 'ORM' },
                         { name: 'Tailwind CSS', url: 'https://tailwindcss.com', role: 'Framework CSS' },
-                        { name: 'Animate.css', url: 'https://animate.style', role: 'Animations' },
                         { name: 'PhotoSwipe', url: 'https://photoswipe.com', role: "Galerie d'images" },
-                        { name: 'Matomo', url: 'https://matomo.org', role: 'Analytics' },
+                        { name: 'Altcha', url: 'https://altcha.org', role: 'Protection anti-robot' },
+                        { name: 'Matomo', url: 'https://matomo.org', role: 'Statistiques' },
                     ] %}
                     <li><a href="{{ library.url }}" target="_blank" rel="noopener">{{ library.name }}</a><span>{{ library.role }}</span></li>
                     {% endfor %}
@@ -140,15 +141,15 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
 
             <section aria-labelledby="{{ legal_sections[5].id }}">
                 {{ _self.section_heading(legal_sections[5], 6) }}
-                <p>Conformément au Règlement Général sur la Protection des Données (RGPD), les informations recueillies via le formulaire de contact (nom, adresse e-mail, message) sont uniquement utilisées pour traiter votre demande d'échange ou de collaboration.</p>
-                <p>Ces données ne sont jamais cédées ou vendues à des tiers et sont conservées pour une durée maximale de 3 ans à compter du dernier contact émanant de l'utilisateur. Conformément au RGPD, vous disposez d'un droit d'accès, de rectification, d'effacement, de limitation du traitement et d'opposition concernant les données vous concernant.</p>
+                <p>Les informations envoyées via le formulaire de contact (nom, adresse e-mail, sujet et message) sont traitées par <strong>Caroline Noyer</strong>, responsable du traitement, dans le seul but de répondre à votre demande. Ce traitement repose sur l’intérêt légitime à donner suite à un message que vous m’adressez volontairement.</p>
+                <p>Ces données ne sont ni cédées ni vendues à des tiers. Elles sont conservées au maximum 3 ans à compter de notre dernier échange. Pour protéger le formulaire contre les robots, une vérification <strong>Altcha</strong> est effectuée dans votre navigateur, sans cookie ni service tiers.</p>
+                <p>Conformément au Règlement général sur la protection des données (RGPD), vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation et d’opposition sur vos données. Pour l’exercer, écrivez-moi via le <a href="{{ path('app_contact') }}">formulaire de contact</a>. Si vous estimez, après m’avoir contactée, que vos droits ne sont pas respectés, vous pouvez adresser une réclamation à la <a href="https://www.cnil.fr/fr/plaintes" target="_blank" rel="noopener">CNIL</a>.</p>
             </section>
 
             <section aria-labelledby="{{ legal_sections[6].id }}">
                 {{ _self.section_heading(legal_sections[6], 7) }}
-                <p>Ce site utilise uniquement des cookies techniques nécessaires à son bon fonctionnement (par exemple, pour mémoriser votre préférence de thème sombre/clair). Aucun cookie tiers à des fins publicitaires ou de traçage analytique n'est déposé sans votre consentement.</p>
-                <p>Ce site utilise <strong>Matomo</strong> (auto-hébergé) pour des statistiques anonymes. Aucune donnée personnelle n’est partagée avec des tiers.
-                    Matomo est un outil d'analyse anonymisé sans suivi publicitaire. Les statistiques sont collectées via Matomo auto-hébergé avec anonymisation des adresses IP, conformément aux recommandations de la CNIL.</p>
+                <p>Ce site dépose uniquement deux cookies techniques, nécessaires à son fonctionnement et exemptés de consentement : l’un mémorise votre préférence de thème (clair ou sombre), l’autre votre choix concernant les statistiques. Aucun cookie publicitaire n’est utilisé.</p>
+                <p>Les statistiques de visite sont mesurées avec <strong>Matomo</strong>, auto-hébergé sur analytics.carolinenoyer.fr, avec anonymisation des adresses IP. Matomo n’est chargé <strong>qu’après votre accord</strong> dans le bandeau cookies, et aucune donnée n’est transmise à des tiers.</p>
                 <p>Vous pouvez modifier votre choix à tout moment :</p>
                 <p>
                     <button type="button" class="btn btn--secondary mt-1" data-consent-open>Gérer mes préférences cookies</button>
@@ -157,7 +158,7 @@ Mentions légales du site carolinenoyer.fr : informations sur l'éditeur, l'héb
 
             <section aria-labelledby="{{ legal_sections[7].id }}">
                 {{ _self.section_heading(legal_sections[7], 8) }}
-                <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, les juridictions françaises compétentes seront seules compétentes.</p>
+                <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, les tribunaux français sont seuls compétents.</p>
             </section>
         </div>
     </div>
