@@ -22,6 +22,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 /**
@@ -90,5 +91,17 @@ class EducationCrudController extends AbstractCrudController
 
         yield TextField::new('details', 'Description succincte / Acquis')
             ->hideOnIndex(); // Hide on index for a cleaner look, but show on forms and detail pages
+
+        yield TextareaField::new('takeaway', 'Ce que j\'en retiens')
+            ->setHelp('Optionnel : une ou deux phrases sur ce que la formation a apporté.')
+            ->hideOnIndex();
+
+        yield TextField::new('linkLabel', 'Libellé du lien')
+            ->setHelp('Optionnel (ex : Voir l\'étude de cas Lydia).')
+            ->hideOnIndex();
+
+        yield TextField::new('linkUrl', 'URL du lien')
+            ->setHelp('Optionnel : une URL complète ou un chemin du site (ex : /experience#stage-limos).')
+            ->hideOnIndex();
     }
 }

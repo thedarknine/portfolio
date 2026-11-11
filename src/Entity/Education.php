@@ -15,8 +15,10 @@ use App\Entity\Traits\TimeStampableTrait;
 use App\Entity\Traits\TitleableTrait;
 use App\Enum\EducationType;
 use App\Repository\EducationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 #[ORM\Table(name: 'education')]
 #[ORM\Entity(repositoryClass: EducationRepository::class)]
@@ -49,6 +51,22 @@ class Education
     #[ORM\Column(length: 100, nullable: true)]
     #[Assert\Length(max: 100, maxMessage: 'Mention cannot exceed {{ limit }} characters.')]
     private ?string $mention = null;
+
+    /** What the training brought, shown under the details on the education page */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $takeaway = null;
+
+    #[ORM\Column(length: 120, nullable: true)]
+    #[Assert\Length(max: 120, maxMessage: 'Link label cannot exceed {{ limit }} characters.')]
+    private ?string $linkLabel = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\AtLeastOneOf([
+        new Assert\Url(protocols: ['http', 'https'], message: 'URL format is invalid.'),
+        new Assert\Regex(pattern: '~^/.*$~', message: 'The URI must start with "/".'),
+    ])]
+    #[Assert\Length(max: 255, maxMessage: 'Link URL cannot exceed {{ limit }} characters.')]
+    private ?string $linkUrl = null;
 
     #[ORM\ManyToOne(inversedBy: 'education')]
     #[ORM\JoinColumn(nullable: false)]
@@ -136,5 +154,54 @@ class Education
         $this->school = $school;
 
         return $this;
+    }
+
+    public function getTakeaway(): ?string
+    {
+        return $this->takeaway;
+    }
+
+    public function setTakeaway(?string $takeaway): static
+    {
+        $this->takeaway = $takeaway;
+
+        return $this;
+    }
+
+    public function getLinkLabel(): ?string
+    {
+        return $this->linkLabel;
+    }
+
+    public function setLinkLabel(?string $linkLabel): static
+    {
+        $this->linkLabel = $linkLabel;
+
+        return $this;
+    }
+
+    public function getLinkUrl(): ?string
+    {
+        return $this->linkUrl;
+    }
+
+    public function setLinkUrl(?string $linkUrl): static
+    {
+        $this->linkUrl = $linkUrl;
+
+        return $this;
+    }
+
+    /**
+     * A link is shown only with both a label and a URL: reject one without the other.
+     */
+    #[Assert\Callback]
+    public function validateLink(ExecutionContextInterface $context): void
+    {
+        if ((null === $this->linkLabel) !== (null === $this->linkUrl)) {
+            $context->buildViolation('A link needs both a label and a URL.')
+                ->atPath(null === $this->linkLabel ? 'linkLabel' : 'linkUrl')
+                ->addViolation();
+        }
     }
 }
