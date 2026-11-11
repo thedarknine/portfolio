@@ -29,5 +29,38 @@ Mon parcours de formation : développement web, product management et UX. Les ba
     </section>
     {% endif %}
     {% endfor %}
+
+    {# EN CONTINU — self-taught learning, kept in the template (changes rarely) #}
+    <section class="border-t border-border" aria-labelledby="education-continuous">
+        <div class="mx-auto flex max-w-[1240px] flex-col gap-10 px-6 py-18 lg:flex-row lg:gap-14">
+            <div class="lg:sticky lg:top-28 lg:w-[300px] lg:shrink-0 lg:self-start">
+                <p class="mb-2 font-mono text-[13px] text-accent-text">03</p>
+                <h2 id="education-continuous" class="mb-4 text-[clamp(26px,3vw,32px)] leading-[1.15] font-bold tracking-[-0.5px] text-title">En continu</h2>
+                <p class="text-on-surface-muted">Ce que j’apprends par moi-même, en dehors des formations.</p>
+            </div>
+
+            <ul class="flex min-w-0 max-w-[760px] flex-1 flex-col gap-4">
+                {% for card in [
+                    { icon: 'hugeicons:test-tube', title: 'Des POC d’outils open source', text: 'Chez Leviia, j’ai mené des POC de Windshift et Outline pour remplacer OpenProject et Wiki.js, dont l’ergonomie datée ne répondait plus entièrement aux besoins de mon équipe.' },
+                    { icon: 'hugeicons:settings-02', title: 'Automatisation', text: 'n8n et NocoDB, appris seule en 2025 et mis en pratique chez Leviia pour automatiser le déploiement et le suivi des drives.' },
+                    { icon: 'hugeicons:laptop-programming', title: 'Ce site, mon laboratoire', text: 'J’y teste des pratiques full-stack : Symfony récent, Tailwind, Docker, tests automatisés, intégration continue et contrôle qualité.', link: { label: 'Voir le code', url: 'https://github.com/thedarknine/portfolio' } },
+                    { icon: 'hugeicons:layers-01', title: 'Un template Symfony sur Docker', text: 'Un modèle de projet prêt à l’emploi, que je réutilise pour démarrer mes projets.', link: { label: 'Voir le dépôt', url: 'https://github.com/thedarknine/symfony-docker-template' } },
+                ] %}
+                <li class="rounded-[14px] border border-border bg-panel p-6 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(36_80_106/35%)] motion-safe:hover:-translate-y-1 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
+                    {{ ux_icon(card.icon, { class: 'mb-4 block size-7 text-icon-muted', 'aria-hidden': 'true' }) }}
+                    <h3 class="mb-2 text-xl leading-snug font-semibold text-title">{{ card.title }}</h3>
+                    <p class="text-[15px] leading-relaxed text-on-surface-muted">{{ card.text }}</p>
+                    {% if card.link is defined %}
+                    <a class="mt-3 inline-flex min-h-11 items-center gap-2 font-medium text-accent-text hover:underline" href="{{ card.link.url }}" target="_blank" rel="noopener">
+                        {{ card.link.label }}
+                        {{ ux_icon('hugeicons:arrow-up-right-01', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
+                        <span class="sr-only">(nouvel onglet)</span>
+                    </a>
+                    {% endif %}
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </section>
 </div>
 {% endblock %}

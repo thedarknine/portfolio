@@ -3,7 +3,7 @@
 {# Projets — see docs/style-guide.md § Projects #}
 
 {% block meta_description %}
-Découvrez mes projets phares : applications SaaS, structuration de pôles produits, et solutions techniques menées en tant que Product Owner et développeuse PHP.
+Mes projets personnels et de R&D : l’évolution de mon site depuis 2008, des outils de génération web et PDF, des sites associatifs et des créations graphiques.
 {% endblock %}
 
 {% block importmap %}
@@ -14,17 +14,20 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
 {% block body %}
 <div class="font-sans text-base leading-relaxed text-on-surface">
     <section class="mx-auto max-w-[1240px] px-6 pt-18 pb-24" aria-label="Mes projets">
-        <p class="mb-10 max-w-[640px] text-lg text-on-surface-muted">
-            Un aperçu de mes travaux, mêlant génie logiciel et création graphique à travers les années.
+        <p class="mb-10 text-on-surface-muted">
+            Mes projets personnels et de R&amp;D, du code à la création graphique.
+            Mes projets en entreprise sont détaillés dans
+            <a class="font-medium text-accent-text underline underline-offset-2 hover:decoration-2" href="{{ path('app_experience') }}">mes études de cas</a> :
+            Timesheet, Exposé™, la refonte de l’app mobile…
         </p>
 
         <ul class="grid grid-cols-[repeat(auto-fill,minmax(min(460px,100%),1fr))] gap-5">
             {% for project in projects_list %}
-            <li class="flex flex-col rounded-[14px] border border-border bg-panel p-6 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(36_80_106/35%)] motion-safe:hover:-translate-y-1 md:p-7 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
+            <li class="{{ project.fullWidth ? 'col-span-full' }} flex flex-col rounded-[14px] border border-border bg-panel p-6 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(36_80_106/35%)] motion-safe:hover:-translate-y-1 md:p-7 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
                 <div class="mb-6">
                     <div class="mb-4 flex flex-col-reverse items-start gap-3 sm:flex-row sm:justify-between sm:gap-4">
                         <div class="flex min-w-0 items-center gap-3.5">
-                            <img class="size-12 shrink-0 rounded-xl object-cover" src="{{ asset('images/projects/' ~ project.logo) }}" alt="" width="48" height="48" loading="lazy">
+                            <img class="size-12 shrink-0 rounded-xl" src="{{ asset('images/projects/' ~ project.logo) }}" alt="" width="48" height="48" loading="lazy">
                             <div class="min-w-0">
                                 <h2 class="text-xl leading-tight font-semibold text-title">{{ project.name }}</h2>
                                 <p class="font-mono text-[13px] text-on-surface-muted">{{ project.period }}</p>
@@ -38,7 +41,7 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
                     <div class="text-on-surface-muted [&_strong]:font-medium [&_strong]:text-title">{{ project.description|raw }}</div>
 
                     {% if project.screenshots is not empty %}
-                    <ul class="pswp9-gallery mt-5 flex flex-wrap gap-2" id="gallery-{{ loop.index }}" aria-label="Captures d’écran de {{ project.name }}">
+                    <ul class="pswp9-gallery mt-5 {{ project.fullWidth ? 'grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5' : 'flex flex-wrap gap-2' }}" id="gallery-{{ loop.index }}" aria-label="Captures d’écran de {{ project.name }}">
                         {% for screenshot in project.screenshots %}
                         {% set screenshot_url = asset('images/projects/' ~ screenshot.filename) %}
                         <li>
@@ -47,11 +50,18 @@ Découvrez mes projets phares : applications SaaS, structuration de pôles produ
                                 href="{{ screenshot_url }}"
                                 target="_blank"
                                 aria-label="Agrandir la capture : {{ screenshot.description|default(project.name) }}">
+                                {% if project.fullWidth %}
+                                <img class="aspect-[16/10] w-full object-cover object-top" src="{{ screenshot_url }}" alt="{{ screenshot.description }}" width="288" height="180" loading="lazy">
+                                {% else %}
                                 <img class="h-16 w-24 object-cover" src="{{ screenshot_url }}" alt="{{ screenshot.description }}" width="96" height="64" loading="lazy">
+                                {% endif %}
                                 <span class="absolute inset-0 flex items-center justify-center bg-[#0f2238]/50 opacity-0 transition-opacity group-hover/thumb:opacity-100" aria-hidden="true">
                                     {{ ux_icon('hugeicons:search-add', { class: 'size-5 text-white' }) }}
                                 </span>
                             </a>
+                            {% if project.fullWidth and screenshot.description %}
+                            <p class="mt-1.5 font-mono text-[12px] text-on-surface-muted">{{ screenshot.description }}</p>
+                            {% endif %}
                         </li>
                         {% endfor %}
                     </ul>

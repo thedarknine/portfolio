@@ -3,7 +3,7 @@
 {# Photos — see docs/style-guide.md § Galleries #}
 
 {% block meta_description %}
-Ma galerie photo personnelle : paysages inspirants et instants capturés au fil du temps. Un regard différent sur le monde, en dehors du numérique.
+Mes photos, prises surtout en randonnée : ciels, nature et volcans d’Auvergne, nuits, villes et balades d’ici et d’ailleurs.
 {% endblock %}
 
 {% block importmap %}
@@ -13,13 +13,21 @@ Ma galerie photo personnelle : paysages inspirants et instants capturés au fil 
 
 {% block body %}
 <div class="font-sans text-base leading-relaxed text-on-surface">
+    <section class="mx-auto max-w-[1240px] px-6 pt-18" aria-label="Introduction">
+        <p class="text-on-surface-muted">
+            Des photos prises pour la plupart au fil de mes randonnées, avec un Canon 350D puis un 50D : des paysages, des ciels, et beaucoup de petites bêtes croisées en chemin.
+        </p>
+    </section>
+    {# Count the sections actually shown: a type without images is skipped #}
+    {% set shown = 0 %}
     {% for type in photos_data.types %}
     {% set items = [] %}
     {% for photo in photos_data.photos[type.slug] ?? [] %}
     {% set items = items|merge([{ src: asset('images/photos/' ~ type.slug ~ '/' ~ photo.filename), alt: photo.caption ?: type.name ~ ' — photo ' ~ loop.index, caption: photo.caption }]) %}
     {% endfor %}
     {% if items is not empty %}
-    {{ include('components/gallery_section.html.twig', { index: loop.index, slug: type.slug, title: type.name, items: items }) }}
+    {% set shown = shown + 1 %}
+    {{ include('components/gallery_section.html.twig', { index: shown, slug: type.slug, title: type.name, items: items }) }}
     {% endif %}
     {% endfor %}
 </div>

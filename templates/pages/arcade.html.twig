@@ -3,7 +3,7 @@
 {# Arcade — build log of the bartop, see docs/style-guide.md § Arcade #}
 
 {% block meta_description %}
-Mon projet ludique et expérimental : conception, assemblage et design pour le plaisir de créer et d'allier technique à créativité.
+La construction de ma borne d’arcade bartop, de la découpe du bois au câblage et à Recalbox, avec une déco Super Mario.
 {% endblock %}
 
 {% block importmap %}
@@ -17,12 +17,28 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
 
     {# INTRO #}
     <section class="mx-auto max-w-[1240px] px-6 pt-18 pb-16" aria-label="Le projet">
-        <div class="flex flex-col-reverse items-start gap-8 sm:flex-row sm:gap-12">
-            <div class="flex max-w-[720px] flex-1 flex-col gap-4 text-lg text-on-surface-muted">
-                <p>Tout est parti d’un magazine qui trainait sur une table au boulot, et hop pourquoi pas nous lancer dans la réalisation d’une borne. Ah oui ! Mais d’en avoir une à la maison ce serait encore mieux.</p>
+        <div class="flex flex-col items-start gap-8 lg:flex-row lg:gap-12">
+            <div class="flex max-w-[720px] flex-1 flex-col gap-4 text-on-surface-muted">
+                <p>Tout est parti d’un magazine qui traînait sur une table au boulot, et hop pourquoi pas nous lancer dans la réalisation d’une borne. Ah oui ! Mais d’en avoir une à la maison ce serait encore mieux.</p>
                 <p>Pour mon arcade perso, j’étais d’abord partie sur l’idée d’acheter un kit bartop prêt à monter. Cependant ceux de base, permettant de recevoir un écran jusqu’à 19", me paraissent insuffisamment larges pour jouer à deux. Quant aux versions XXL, les différents tarifs sont rédhibitoires. Je pèse le pour et le contre, j’évalue les budgets selon les modèles et le matériel que j’aimerais intégrer. Puis se rappellent à moi mes années de bricolage, et quoi de plus challengeant que de faire tout moi-même ! <strong class="font-medium text-title">Le défi est lancé.</strong></p>
             </div>
-            <img class="w-36 shrink-0 sm:w-48" src="{{ asset('images/arcade/cnoyer-arcade.png') }}" alt="" width="192" height="192">
+            <aside class="w-full max-w-[340px] shrink-0 self-start overflow-hidden rounded-2xl border border-border-strong bg-panel text-base text-on-surface" aria-label="Fiche technique de la borne">
+                <div class="border-b border-border bg-panel-head px-4 py-3 font-mono text-xs text-on-surface-muted">borne.yaml</div>
+                <dl class="grid grid-cols-[max-content_minmax(0,1fr)] gap-x-4 gap-y-2.5 px-4 pt-3 pb-4 font-mono text-[13px] text-title">
+                    <dt class="text-icon-muted">nom</dt>
+                    <dd>Nine Arcane Machine</dd>
+                    <dt class="text-icon-muted">format</dt>
+                    <dd>bartop 2 joueurs</dd>
+                    <dt class="text-icon-muted">écran</dt>
+                    <dd>24"</dd>
+                    <dt class="text-icon-muted">carte</dt>
+                    <dd>Raspberry Pi 3</dd>
+                    <dt class="text-icon-muted">émulateur</dt>
+                    <dd>Recalbox</dd>
+                    <dt class="text-icon-muted">commandes</dt>
+                    <dd>2 joysticks · 2 × 8 boutons</dd>
+                </dl>
+            </aside>
         </div>
     </section>
 
@@ -61,7 +77,7 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
                     <p class="max-w-[720px] text-on-surface-muted">
                         Je regarde ce qu’il se fait... Les plans pour bartop n’envahissent pas le web, et ne correspondent pas entièrement à ce que j’ai en tête.
                         Ok, alors allons-y pour un plan personnalisé. Je suis partie des plans mis à dispo par
-                        <a class="text-accent-text underline underline-offset-2" href="http://forum.hfsplay.fr/plans-prets-emploi/bartop-frankeez-version-t8468.html" target="_blank" rel="noopener">Frankeezz</a>.
+                        <a class="text-accent-text underline underline-offset-2" href="https://forum.hfsplay.fr/plans-prets-a-l-emploi-f215/bartop-frankeezz-xl-t17149.html" target="_blank" rel="noopener">Frankeezz</a>.
                         Je souhaite limiter au max la hauteur du control panel, tout en y insérant un tiroir pour un clavier.
                     </p>
                     {{ include('components/arcade_gallery.html.twig', { slug: 'at-the-beginning', items: photos['at-the-beginning'] ?? [], alt: 'Étape 1, les plans' }) }}
@@ -96,14 +112,28 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
             <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
                 {{ include('components/arcade_step_rail.html.twig', { number: 4 }) }}
                 <div class="min-w-0">
-                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold tracking-[-0.5px] text-title">Le design</h3>
-                    <p class="max-w-[720px] text-on-surface-muted">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez modernes malgré tout.</p>
-                    {{ include('components/arcade_gallery.html.twig', { slug: 'design', items: photos['design'] ?? [], alt: 'Étape 4, le design' }) }}
+                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold tracking-[-0.5px] text-title">Le matériel</h3>
+                    <p class="max-w-[720px] text-on-surface-muted">Place à l’électronique : un écran 24", un Raspberry Pi 3, deux joysticks et 2 × 8 boutons, à câbler et à loger dans la borne.</p>
+                    {% for part in [
+                        { slug: 'materiel', label: 'Matériel' },
+                        { slug: 'composants', label: 'Composants' },
+                    ] %}
+                    {{ include('components/arcade_gallery.html.twig', { slug: part.slug, items: photos[part.slug] ?? [], alt: 'Étape 4, le matériel : ' ~ part.label, label: part.label }) }}
+                    {% endfor %}
                 </div>
             </li>
 
             <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
                 {{ include('components/arcade_step_rail.html.twig', { number: 5 }) }}
+                <div class="min-w-0">
+                    <h3 class="mb-3 text-[26px] leading-[1.2] font-bold tracking-[-0.5px] text-title">Le design</h3>
+                    <p class="max-w-[720px] text-on-surface-muted">Retour en enfance, ma première console a été la NES. Ayant grandi entre les héros de Super Mario et Super Mario Kart, l’évidence a été de baser ma déco sur ce thème avec des design assez modernes malgré tout.</p>
+                    {{ include('components/arcade_gallery.html.twig', { slug: 'design', items: photos['design'] ?? [], alt: 'Étape 5, le design' }) }}
+                </div>
+            </li>
+
+            <li class="md:grid md:grid-cols-[112px_minmax(0,1fr)] md:gap-6">
+                {{ include('components/arcade_step_rail.html.twig', { number: 6 }) }}
                 <div class="min-w-0">
                     <h3 class="mb-3 text-[26px] leading-[1.2] font-bold tracking-[-0.5px] text-title">L’émulateur</h3>
                     <p class="max-w-[720px] text-on-surface-muted">
@@ -111,7 +141,7 @@ Mon projet ludique et expérimental : conception, assemblage et design pour le p
                         <a class="text-accent-text underline underline-offset-2" href="https://www.recalbox.com" target="_blank" rel="noopener">RecalBox</a>
                         viendra s’installer dans ma borne.
                     </p>
-                    {{ include('components/arcade_gallery.html.twig', { slug: 'recalbox', items: photos['recalbox'] ?? [], alt: 'Étape 5, l’émulateur' }) }}
+                    {{ include('components/arcade_gallery.html.twig', { slug: 'recalbox', items: photos['recalbox'] ?? [], alt: 'Étape 6, l’émulateur' }) }}
                 </div>
             </li>
         </ol>

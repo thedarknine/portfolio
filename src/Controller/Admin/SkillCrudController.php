@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -81,6 +81,9 @@ class SkillCrudController extends AbstractCrudController
 
         yield TextField::new('name', 'Nom')
             ->setHelp('Exemple : PHP, Symfony, Docker, Figma...');
+
+        yield TextField::new('slug', 'Slug')
+            ->setHelp('Exemple : php, symfony, docker, figma...');
 
         // Relation with SkillType (EasyAdmin will use the __toString() of SkillType)
         yield AssociationField::new('skillType', 'Catégorie')

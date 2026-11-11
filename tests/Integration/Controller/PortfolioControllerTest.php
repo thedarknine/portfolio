@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Controller;
@@ -28,7 +28,7 @@ class PortfolioControllerTest extends WebTestCase
     private KernelBrowser $client;
     private EntityManagerInterface $entityManager;
     private Filesystem $filesystem;
-    private string $publicImagesDir;
+    private string $imagesDir;
 
     protected function setUp(): void
     {
@@ -36,8 +36,10 @@ class PortfolioControllerTest extends WebTestCase
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
         $this->filesystem    = new Filesystem();
 
-        $projectDir            = static::getContainer()->getParameter('kernel.project_dir');
-        $this->publicImagesDir = $projectDir . '/public/images';
+        // Same directory as GalleryService in the test env (var/tests/images), never public/
+        $imagesDir = static::getContainer()->getParameter('app.images_dir');
+        \assert(\is_string($imagesDir));
+        $this->imagesDir = $imagesDir;
 
         $this->createRequiredPages();
         $this->setupFixturesForMediaPages();
@@ -47,9 +49,9 @@ class PortfolioControllerTest extends WebTestCase
     {
         // Clean all temporary directories after each test
         $foldersToRemove = [
-            $this->publicImagesDir . '/arcade/bartop',
-            $this->publicImagesDir . '/creations/sculptures',
-            $this->publicImagesDir . '/photos/paysages',
+            $this->imagesDir . '/arcade/bartop',
+            $this->imagesDir . '/creations/sculptures',
+            $this->imagesDir . '/photos/paysages',
         ];
 
         foreach ($foldersToRemove as $folder) {
@@ -253,7 +255,7 @@ class PortfolioControllerTest extends WebTestCase
         if (null === $arcadeRepo->findOneBy(['slug' => 'bartop'])) {
             $this->entityManager->persist(new ArcadeType()->setName('Bartop')->setSlug('bartop'));
         }
-        $arcadeDir = $this->publicImagesDir . '/arcade/bartop';
+        $arcadeDir = $this->imagesDir . '/arcade/bartop';
         $this->filesystem->mkdir($arcadeDir);
         $this->filesystem->touch($arcadeDir . '/cabinet.jpg');
 
@@ -271,7 +273,7 @@ class PortfolioControllerTest extends WebTestCase
         if (null === $creationRepo->findOneBy(['slug' => 'sculptures'])) {
             $this->entityManager->persist(new CreationType()->setName('Sculptures')->setSlug('sculptures'));
         }
-        $creationDir = $this->publicImagesDir . '/creations/sculptures';
+        $creationDir = $this->imagesDir . '/creations/sculptures';
         $this->filesystem->mkdir($creationDir);
         $this->filesystem->touch($creationDir . '/pot-argile.jpg');
 
@@ -289,7 +291,7 @@ class PortfolioControllerTest extends WebTestCase
         if (null === $photoRepo->findOneBy(['slug' => 'paysages'])) {
             $this->entityManager->persist(new PhotoType()->setName('Paysages')->setSlug('paysages'));
         }
-        $photoDir = $this->publicImagesDir . '/photos/paysages';
+        $photoDir = $this->imagesDir . '/photos/paysages';
         $this->filesystem->mkdir($photoDir);
         $this->filesystem->touch($photoDir . '/01-lever_de_soleil.jpg');
         $this->filesystem->touch($photoDir . '/sans_tiret.jpg');

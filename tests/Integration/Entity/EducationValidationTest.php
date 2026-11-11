@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -100,6 +100,49 @@ class EducationValidationTest extends KernelTestCase
     }
 
     /**
+     * A takeaway and a complete link are accepted.
+     */
+    public function testTakeawayAndLinkHaveNoViolation(): void
+    {
+        $education = $this->createValidEducation()
+            ->setTakeaway('Recherche utilisateur, prototypage et tests.')
+            ->setLinkLabel('Voir l’étude de cas')
+            ->setLinkUrl('/experience/po-coffreo/formation-product-designer');
+
+        $this->assertCount(0, $this->validator->validate($education));
+        $this->assertSame('Recherche utilisateur, prototypage et tests.', $education->getTakeaway());
+        $this->assertSame('Voir l’étude de cas', $education->getLinkLabel());
+    }
+
+    /**
+     * A link label without URL is rejected.
+     */
+    public function testLinkLabelWithoutUrlTriggerViolation(): void
+    {
+        $education = $this->createValidEducation()->setLinkLabel('Voir le stage');
+
+        $errors = $this->validator->validate($education);
+
+        $this->assertCount(1, $errors);
+        $this->assertSame('linkUrl', $errors[0]->getPropertyPath());
+    }
+
+    /**
+     * A link URL that is neither absolute nor a site path is rejected.
+     */
+    public function testInvalidLinkUrlTriggerViolation(): void
+    {
+        $education = $this->createValidEducation()
+            ->setLinkLabel('Voir le stage')
+            ->setLinkUrl('experience');
+
+        $errors = $this->validator->validate($education);
+
+        $this->assertGreaterThan(0, count($errors));
+        $this->assertSame('linkUrl', $errors[0]->getPropertyPath());
+    }
+
+    /**
      * Test getting the ID via Reflection.
      */
     public function testGetId(): void
@@ -111,5 +154,25 @@ class EducationValidationTest extends KernelTestCase
         $property->setValue($education, 45);
 
         $this->assertSame(45, $education->getId());
+    }
+
+    /**
+     * Build a valid education to test the optional takeaway and link.
+     */
+    private function createValidEducation(): Education
+    {
+        return new Education()
+            ->setTitle('Product Designer')
+            ->setSlug('product-designer')
+            ->setYear(2021)
+            ->setDetails('Formation Advanced')
+            ->setSchool(
+                new School()
+                    ->setName('The Design Crew')
+                    ->setSlug('the-design-crew')
+                    ->setCity('Paris')
+                    ->setDepartment(75),
+            )
+            ->setType(EducationType::cases()[0]);
     }
 }

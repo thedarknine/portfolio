@@ -6,8 +6,8 @@ declare(strict_types=1);
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Form;
@@ -32,7 +32,7 @@ class ContactType extends AbstractType
         $builder
             ->add('name', TextType::class, [
                 'label'       => false,
-                'attr'        => ['placeholder' => 'John Doe'],
+                'attr'        => ['placeholder' => 'John Doe', 'autocomplete' => 'name'],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Merci de renseigner votre nom.'),
                     new Assert\Length(min: 2),
@@ -40,20 +40,20 @@ class ContactType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'label'       => false,
-                'attr'        => ['placeholder' => 'john.doe@example.com'],
+                'attr'        => ['placeholder' => 'john.doe@example.com', 'autocomplete' => 'email'],
                 'constraints' => [
-                    new Assert\NotBlank(message: 'Merci de renseigner votre email.'),
-                    new Assert\Email(message: 'L\'adresse email n\'est pas valide.'),
+                    new Assert\NotBlank(message: 'Merci de renseigner votre adresse e-mail.'),
+                    new Assert\Email(message: 'L\'adresse e-mail n\'est pas valide.'),
                 ],
             ])
             ->add('subject', TextType::class, [
                 'label'       => false,
-                'attr'        => ['placeholder' => 'Demande de renseignements'],
+                'attr'        => ['placeholder' => 'Un poste de Product Owner, un projet, une question…'],
                 'constraints' => [new Assert\NotBlank(message: 'Merci de renseigner un sujet.')],
             ])
             ->add('message', TextareaType::class, [
                 'label'       => false,
-                'attr'        => ['placeholder' => 'Décrivez votre demande...', 'rows' => 6],
+                'attr'        => ['placeholder' => 'Quelques mots sur le contexte et ce que vous attendez de moi', 'rows' => 6],
                 'constraints' => [
                     new Assert\NotBlank(message: 'Merci de renseigner votre message.'),
                     new Assert\Length(min: 10, minMessage: 'Votre message est trop court.'),

@@ -41,19 +41,15 @@ Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline
 <div class="font-sans text-base leading-relaxed text-on-surface">
     <div class="mx-auto flex max-w-[1240px] flex-col gap-12 px-6 py-18 lg:flex-row lg:gap-16">
         <div class="lg:sticky lg:top-28 lg:w-[380px] lg:shrink-0 lg:self-start">
-            <p class="mb-2 font-mono text-[13px] text-accent-text">contact</p>
+            <p class="mb-2 font-mono text-[13px] text-accent-text">Contact</p>
             <h2 class="mb-6 text-[clamp(26px,3vw,32px)] leading-[1.15] font-bold tracking-[-0.5px] text-title">Écrivez-moi</h2>
             <div class="flex flex-col gap-4 text-on-surface-muted">
-                <p>Merci de votre visite sur mon portfolio.</p>
-                <p>
-                    Cette page est à votre disposition si vous souhaitez me contacter à propos de mon parcours,
-                    d'un projet présenté sur le site ou d'une opportunité professionnelle. J'apprécie également
-                    les échanges entre développeurs et les retours sur les réalisations que je partage.
-                </p>
-                <p>Je m'efforce de répondre à chaque demande dans les meilleurs délais.</p>
+                <p>Un projet, une opportunité, une question sur mon parcours ou une réalisation présentée ici : écrivez-moi.</p>
+                <p>J’aime aussi échanger sur le produit et la technique, entre PO, devs et designers.</p>
+                <p>Je réponds en général sous quelques jours.</p>
             </div>
 
-            {% set resources = page_manager.getPublishedResourceLinks() %}
+            {% set resources = page_manager.getPublishedResourceLinksInHero() %}
             {% if resources is not empty %}
             <p class="mt-10 mb-3 font-mono text-[13px] text-on-surface-muted">Ailleurs</p>
             <ul class="flex flex-wrap gap-2" aria-label="Réseaux et liens">
@@ -92,7 +88,7 @@ Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline
                 {{ form_start(form, { attr: { class: 'flex flex-col gap-6', novalidate: 'novalidate' } }) }}
                 <div class="grid gap-6 sm:grid-cols-2">
                     {{ _self.field(form.name, 'Nom') }}
-                    {{ _self.field(form.email, 'Email') }}
+                    {{ _self.field(form.email, 'Adresse e-mail') }}
                 </div>
                 {{ _self.field(form.subject, 'Sujet') }}
                 {{ _self.field(form.message, 'Message') }}

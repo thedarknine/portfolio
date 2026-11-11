@@ -31,4 +31,26 @@
         {% endif %}
     </ul>
     {% endif %}
+
+    {% if education.takeaway is not empty %}
+    <div class="mt-4">
+        <p class="mb-1 font-mono text-[12px] text-accent-text">ce que j’en retiens</p>
+        <p class="text-[15px] leading-relaxed text-on-surface-muted">{{ education.takeaway }}</p>
+    </div>
+    {% endif %}
+
+    {% if education.linkUrl is not empty and education.linkLabel is not empty %}
+    {% set is_external = education.linkUrl starts with 'http' %}
+    <a
+        class="mt-4 inline-flex min-h-11 items-center gap-2 font-medium text-accent-text hover:underline"
+        href="{{ education.linkUrl }}"
+        {% if is_external %}
+        target="_blank"
+        rel="noopener"
+        {% endif %}>
+        {{ education.linkLabel }}
+        {{ ux_icon(is_external ? 'hugeicons:arrow-up-right-01' : 'hugeicons:arrow-right-02', { class: 'size-[18px]', 'aria-hidden': 'true' }) }}
+        {% if is_external %}<span class="sr-only">(nouvel onglet)</span>{% endif %}
+    </a>
+    {% endif %}
 </article>

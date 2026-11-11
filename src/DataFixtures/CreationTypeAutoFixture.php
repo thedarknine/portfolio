@@ -14,8 +14,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $creationType0 = new CreationType();
         $creationType0->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $creationType0->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $creationType0->setName('Argile Mat');
-        $creationType0->setSlug('argile-mat');
+        $creationType0->setName('Argile mate');
+        $creationType0->setSlug('argile-mate');
         $creationType0->setPosition(1);
         $manager->persist($creationType0);
         $this->addReference('creationType_6', $creationType0);
@@ -23,8 +23,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $creationType1 = new CreationType();
         $creationType1->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $creationType1->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $creationType1->setName('Argile Ciré');
-        $creationType1->setSlug('argile-cire');
+        $creationType1->setName('Argile cirée');
+        $creationType1->setSlug('argile-ciree');
         $creationType1->setPosition(2);
         $manager->persist($creationType1);
         $this->addReference('creationType_7', $creationType1);
@@ -32,8 +32,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $creationType2 = new CreationType();
         $creationType2->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $creationType2->setUpdatedAt(new \DateTime('2026-05-24 22:39:04'));
-        $creationType2->setName('Argile Peint');
-        $creationType2->setSlug('argile-peint');
+        $creationType2->setName('Argile peinte');
+        $creationType2->setSlug('argile-peinte');
         $creationType2->setPosition(4);
         $manager->persist($creationType2);
         $this->addReference('creationType_8', $creationType2);
@@ -41,8 +41,8 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $creationType3 = new CreationType();
         $creationType3->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $creationType3->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $creationType3->setName('Argile Vernis');
-        $creationType3->setSlug('argile-vernis');
+        $creationType3->setName('Argile vernie');
+        $creationType3->setSlug('argile-vernie');
         $creationType3->setPosition(4);
         $manager->persist($creationType3);
         $this->addReference('creationType_9', $creationType3);
@@ -50,7 +50,7 @@ class CreationTypeAutoFixture extends Fixture implements FixtureGroupInterface
         $creationType4 = new CreationType();
         $creationType4->setCreatedAt(new \DateTime('2026-05-23 18:10:55'));
         $creationType4->setUpdatedAt(new \DateTime('2026-05-23 18:10:55'));
-        $creationType4->setName('Au tour');
+        $creationType4->setName('Tournage');
         $creationType4->setSlug('argile-tour');
         $creationType4->setPosition(5);
         $manager->persist($creationType4);

@@ -1,8 +1,9 @@
 {# Closing quote of inner pages — see docs/style-guide.md § Page quote #}
 {% if current_page.quote %}
-<section class="border-y border-border bg-panel font-sans">
-    <figure class="mx-auto max-w-[900px] px-6 py-22 text-center">
-        <p class="mb-2 text-[72px] leading-[0.6] font-bold text-cyan/35" aria-hidden="true">“</p>
+<section class="overflow-hidden border-y border-border bg-surface-alt-brand font-sans">
+    <figure class="relative isolate mx-auto max-w-[900px] px-6 py-22 text-center">
+        {# Large decorative quote mark behind the text: opacity on the whole icon so crossing strokes stay even #}
+        {{ ux_icon('gridicons:quote', { class: 'absolute -top-2 left-0 -z-10 text-cyan opacity-10', width: '200', height: '200', 'aria-hidden': 'true' }) }}
         <blockquote class="text-[clamp(24px,3vw,32px)] leading-[1.35] font-medium tracking-[-0.5px] text-title">
             <p>{{ current_page.quote }}</p>
         </blockquote>

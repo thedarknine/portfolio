@@ -231,9 +231,10 @@ Every inner page except the legal notice (`components/page_hero.html.twig`):
 
 ### Page quote
 
-Closing quote of inner pages (`components/page_quote.html.twig`), only when the page has one: `panel` band with
-`border` top and bottom, a 72 px opening quote mark in `accent-text` at 20 %, the quote centred in
-`clamp(24px, 3vw, 32px)`, weight 500.
+Closing quote of inner pages (`components/page_quote.html.twig`), only when the page has one: `surface-alt-brand`
+band (light grey in light mode, `#16304D` in dark mode) with `border` top and bottom, the quote centred in
+`clamp(24px, 3vw, 32px)`, weight 500, over a 200 px filled `gridicons:quote` icon in `cyan` at 10 % opacity,
+placed behind the text at the top left like an opening quote mark (an outline quote read as "66" at that size).
 
 ### Experience timeline
 
@@ -270,9 +271,9 @@ photo hero and the quote of the layout and adds:
 - One section per skill type, separated by a `border` rule. From 1024 px the type sits in a sticky 300 px column on
   the left (monospace index `01`, `h2`, description), the skills fill a grid of `minmax(240px, 1fr)` cards.
 - Skill card on `panel`: 44 px logo on a `surface` tile, name in bold, level label in `accent-text` monospace
-  (Expert from 8, Avancé from 6, Maîtrisé below), a 6 px level bar with the amber gradient (`level-start` at 40 %
-  to `level-end`) on `surface` (decorative, the label carries the meaning), and a monospace footer
-  "pratique · duration", with "en cours" when the skill has no end year.
+  (Expert from 8, Avancé from 6, Maîtrisé from 5, Notions below), a 6 px level bar with the amber gradient
+  (`level-start` at 40 % to `level-end`) on `surface` (decorative, the label carries the meaning), and a monospace
+  footer "pratique · duration", with "en cours" when the skill has no end year.
 - Same hover lift as the other cards; no entrance animation.
 
 ### Education
@@ -281,7 +282,9 @@ photo hero and the quote of the layout and adds:
   `h2`, the illustration from 1024 px only) and a list of cards up to 760 px wide.
 - Education card on `panel`: the year (26 px bold, `timeline-year`), an optional `highlight` chip "Mention …", the
   school logo on the shared `.logo-backdrop` tile, the diploma as `h3`, school and place in monospace, then a
-  bordered footer with the certification (`primary` dot) and the option (`level-end` dot).
+  bordered footer with the details (`primary` dot) and the option (`level-end` dot).
+- Optional "ce que j’en retiens" block below: a monospace `accent-text` label and the takeaway in muted text. Optional
+  text link after it (`accent-text`, Medium, arrow; up-right arrow and new tab for external URLs).
 - Same hover lift as the other cards.
 
 ### Projects
@@ -292,6 +295,8 @@ photo hero and the quote of the layout and adds:
   and a zoom icon on hover) that open in the PhotoSwipe lightbox (`.pswp9-gallery` / `.pswp9-link`).
 - Bordered footer in monospace: tags as `#tag` on `surface`, and the number of screenshots.
 - Same hover lift as the other cards.
+- Optional full-width card (`fullWidth`): spans the whole grid, screenshots become a 2 → 3 → 5 column grid of 16:10
+  thumbnails cropped from the top, each with its description as a monospace caption (used for the site timeline).
 
 ### Galleries
 

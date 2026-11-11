@@ -221,5 +221,6 @@ dependencies. Symfony upgrades are described in [UPDATE.md](UPDATE.md).
 
 ## License
 
-This project is personal: its text and visual content belong to me. The source code is shared
-for technical demonstration purposes.
+All rights reserved. This repository is public so that the code can be read as a showcase of my
+work; it is not open source. Its code, text and visual content may not be reused, copied or
+redistributed without my permission. See [LICENSE](LICENSE).
