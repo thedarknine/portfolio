@@ -270,9 +270,9 @@ photo hero and the quote of the layout and adds:
 - One section per skill type, separated by a `border` rule. From 1024 px the type sits in a sticky 300 px column on
   the left (monospace index `01`, `h2`, description), the skills fill a grid of `minmax(240px, 1fr)` cards.
 - Skill card on `panel`: 44 px logo on a `surface` tile, name in bold, level label in `accent-text` monospace
-  (Expert from 8, Avancé from 6, Maîtrisé below), a 6 px level bar with the amber gradient (`level-start` at 40 %
-  to `level-end`) on `surface` (decorative, the label carries the meaning), and a monospace footer
-  "pratique · duration", with "en cours" when the skill has no end year.
+  (Expert from 8, Avancé from 6, Maîtrisé from 5, Notions below), a 6 px level bar with the amber gradient
+  (`level-start` at 40 % to `level-end`) on `surface` (decorative, the label carries the meaning), and a monospace
+  footer "pratique · duration", with "en cours" when the skill has no end year.
 - Same hover lift as the other cards; no entrance animation.
 
 ### Education

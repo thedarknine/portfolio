@@ -22,7 +22,7 @@ Mes compétences en product ownership, développement Symfony/PHP, UX design et 
 
             <ul class="grid min-w-0 flex-1 grid-cols-[repeat(auto-fill,minmax(min(240px,100%),1fr))] content-start gap-4">
                 {% for skill in skills %}
-                {% set level_label = skill.level >= 8 ? 'Expert' : (skill.level >= 6 ? 'Avancé' : 'Maîtrisé') %}
+                {% set level_label = skill.level >= 8 ? 'Expert' : (skill.level >= 6 ? 'Avancé' : (skill.level >= 5 ? 'Maîtrisé' : 'Notions')) %}
                 <li class="flex flex-col rounded-[14px] border border-border bg-panel p-5 transition duration-300 ease-out hover:shadow-[0_16px_32px_-16px_rgb(36_80_106/35%)] motion-safe:hover:-translate-y-1 dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]">
                     <div class="mb-4 flex items-center gap-3.5">
                         <img class="size-11 shrink-0 rounded-[10px] bg-surface-alt-brand object-contain p-1.5" src="{{ asset('images/skills/' ~ skill.slug ~ '.png') }}" alt="" width="44" height="44" loading="lazy">
