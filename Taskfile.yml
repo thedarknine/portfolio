@@ -81,6 +81,11 @@ tasks:
         cmds:
             - task: symfony:cc
 
+    watch:
+        desc: Watch Tailwind CSS changes
+        cmds:
+            - task: symfony:watch
+
     test:
         desc: Run all the tests
         cmds:
