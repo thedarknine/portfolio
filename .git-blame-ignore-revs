@@ -2,3 +2,6 @@
 
 # Apply PHP-CS-Fixer rules globally
 4fd646a4ea9c7bade8e08d0b1a7064950b4966b0
+
+# Replace the MIT license header with the all-rights-reserved notice
+8540c86e47cce53aa3e46eb656a5ce236c02e2fa
