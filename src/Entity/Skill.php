@@ -20,6 +20,7 @@ use App\Repository\SkillRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
@@ -55,6 +56,8 @@ class Skill implements SortableEntityInterface
     #[ORM\Column]
     private bool $display = false;
 
+    // Positions are counted per skill type, not across all skills
+    #[Gedmo\SortableGroup]
     #[ORM\ManyToOne(inversedBy: 'skills')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: 'Skill type is required.')]
