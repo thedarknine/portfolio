@@ -82,6 +82,9 @@ class SkillCrudController extends AbstractCrudController
         yield TextField::new('name', 'Nom')
             ->setHelp('Exemple : PHP, Symfony, Docker, Figma...');
 
+        yield TextField::new('slug', 'Slug')
+            ->setHelp('Exemple : php, symfony, docker, figma...');
+
         // Relation with SkillType (EasyAdmin will use the __toString() of SkillType)
         yield AssociationField::new('skillType', 'Catégorie')
             ->setRequired(true)
