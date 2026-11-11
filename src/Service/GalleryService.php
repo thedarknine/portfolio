@@ -48,13 +48,16 @@ class GalleryService
             }
 
             $finder = new Finder();
-            $finder->files()->in($targetDir);
+            $finder->files()->in($targetDir)->sortByName(true);
 
             foreach ($finder as $file) {
                 $arcadesList[$slug][] = $file->getFileName();
             }
 
-            shuffle($arcadesList[$slug]);
+            // Build steps tell a chronology (sorted by file name); only the final result is shuffled
+            if ('final' === $slug) {
+                shuffle($arcadesList[$slug]);
+            }
         }
 
         return [
