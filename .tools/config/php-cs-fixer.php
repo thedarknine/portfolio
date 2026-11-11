@@ -25,13 +25,17 @@ $finder = (new PhpCsFixer\Finder())
     ->in($rootDir)
     ->exclude([
         '.docker',
+        // pnpm content-addressable store: ~46k files, too slow to walk through the Docker mount
+        '.pnpm-store',
         '.tools',
         'assets',
         'config',
+        'coverage',
         'node_modules',
         'public/assets',
         'public/build',
         'src/DataFixtures',
+        'tmp',
         'var',
         'vendor',
     ])
