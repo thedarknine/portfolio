@@ -69,6 +69,7 @@ class Project
 
     /** @var Collection<int, Screenshot> */
     #[ORM\OneToMany(targetEntity: Screenshot::class, mappedBy: 'project', cascade: ['persist'], orphanRemoval: true)]
+    #[ORM\OrderBy(['position' => 'ASC'])]
     #[Assert\Valid]
     private Collection $screenshots;
 

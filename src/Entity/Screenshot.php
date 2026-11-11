@@ -15,6 +15,7 @@ use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ScreenshotRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScreenshotRepository::class)]
@@ -39,6 +40,8 @@ class Screenshot implements SortableEntityInterface, \Stringable
     #[Assert\Length(max: 255, maxMessage: 'Description cannot exceed {{ limit }} characters.')]
     private ?string $description = null;
 
+    // Positions are counted per project, not across all screenshots
+    #[Gedmo\SortableGroup]
     #[ORM\ManyToOne(inversedBy: 'screenshots')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Project $project = null;
