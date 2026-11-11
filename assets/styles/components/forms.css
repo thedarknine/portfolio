@@ -37,7 +37,7 @@
             box-shadow 0.2s ease-out;
 
         &::placeholder {
-            color: var(--color-on-surface-muted);
+            color: var(--color-on-surface-subtle);
             opacity: 1;
         }
 
