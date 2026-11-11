@@ -281,7 +281,9 @@ photo hero and the quote of the layout and adds:
   `h2`, the illustration from 1024 px only) and a list of cards up to 760 px wide.
 - Education card on `panel`: the year (26 px bold, `timeline-year`), an optional `highlight` chip "Mention …", the
   school logo on the shared `.logo-backdrop` tile, the diploma as `h3`, school and place in monospace, then a
-  bordered footer with the certification (`primary` dot) and the option (`level-end` dot).
+  bordered footer with the details (`primary` dot) and the option (`level-end` dot).
+- Optional "ce que j’en retiens" block below: a monospace `accent-text` label and the takeaway in muted text. Optional
+  text link after it (`accent-text`, Medium, arrow; up-right arrow and new tab for external URLs).
 - Same hover lift as the other cards.
 
 ### Projects
