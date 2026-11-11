@@ -8,7 +8,8 @@ parameters:
     paths:
         - ../../bin/
         - ../../config/
-        - ../../public/
+        # Only the front controller: public/ also holds images and folders created by tests
+        - ../../public/index.php
         - ../../src/
         - ../../tests/
     excludePaths:
