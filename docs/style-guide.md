@@ -231,9 +231,10 @@ Every inner page except the legal notice (`components/page_hero.html.twig`):
 
 ### Page quote
 
-Closing quote of inner pages (`components/page_quote.html.twig`), only when the page has one: `panel` band with
-`border` top and bottom, a 72 px opening quote mark in `accent-text` at 20 %, the quote centred in
-`clamp(24px, 3vw, 32px)`, weight 500.
+Closing quote of inner pages (`components/page_quote.html.twig`), only when the page has one: `surface-alt-brand`
+band (light grey in light mode, `#16304D` in dark mode) with `border` top and bottom, the quote centred in
+`clamp(24px, 3vw, 32px)`, weight 500, over a 200 px filled `gridicons:quote` icon in `cyan` at 10 % opacity, placed behind the text at the top left
+like an opening quote mark (an outline quote read as "66" at that size).
 
 ### Experience timeline
 
