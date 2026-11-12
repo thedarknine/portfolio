@@ -78,7 +78,7 @@ html:has(.mobile-menu[open]) {
 }
 
 /*
- * Brand header: night blue in both themes (docs/brand/brand-guide.md).
+ * Brand header: night blue in both themes (docs/brand/BRAND-GUIDE.md).
  * The bar redefines the colour tokens locally so every utility class inside it reads on the
  * dark background; the mobile menu <dialog> sits outside the bar and keeps the theme tokens.
  */
