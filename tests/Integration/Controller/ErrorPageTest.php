@@ -17,7 +17,9 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\ErrorHandler\Exception\FlattenException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 /**
  * Renders the Twig error templates directly. Going through a request would need a second kernel without debug
@@ -62,9 +64,9 @@ class ErrorPageTest extends KernelTestCase
     private function renderErrorPage(string $template, int $statusCode, string $path): Crawler
     {
         $container = static::getContainer();
-        $container->get('request_stack')->push(Request::create($path));
+        $container->get(RequestStack::class)->push(Request::create($path));
 
-        $html = $container->get('twig')->render("bundles/TwigBundle/Exception/{$template}.html.twig", [
+        $html = $container->get(Environment::class)->render("bundles/TwigBundle/Exception/{$template}.html.twig", [
             'status_code' => $statusCode,
             'status_text' => Response::$statusTexts[$statusCode],
             'exception'   => FlattenException::createFromThrowable(new \RuntimeException(), $statusCode),

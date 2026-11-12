@@ -11,6 +11,22 @@ How to check a release before sending it to production, then deploy it to Hostin
 
 Run these steps on the branch to release, with the containers up (`task up`). Stop at the first failure.
 
+### 0. Update dependencies
+
+Run the following commands to check for outdated dependencies:
+
+```bash
+docker compose exec app composer outdated --direct
+docker compose exec app pnpm outdated
+```
+
+If there are updates available, run the following commands to update the dependencies:
+
+```bash
+task update
+task qa deep=1
+```
+
 ### 1. Quality checks
 
 ```bash
