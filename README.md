@@ -58,6 +58,15 @@ To log in to the back office, create an administrator (it asks for the email and
 task symfony:console -- app:create-user
 ```
 
+To change the password or the two-factor secret of an administrator later (in production, run them with
+`php bin/console ... --env=prod` on the server):
+
+```bash
+task symfony:console -- app:user:reset-password admin@example.com
+task symfony:console -- app:user:reset-2fa admin@example.com            # new secret, shown as a setup key and an otpauth URI
+task symfony:console -- app:user:reset-2fa admin@example.com --disable  # remove the two-factor authentication
+```
+
 - Website: <http://localhost:8000>, back office: <http://localhost:8000/backstage>
 - AdminNeo (database UI): <http://localhost:8089> (server `db`, credentials from `.env`)
 - Mailpit (emails sent by the site): <http://localhost:8025>
