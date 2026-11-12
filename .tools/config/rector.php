@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 use Rector\Caching\ValueObject\Storage\FileCacheStorage;
 use Rector\CodeQuality\Rector\Attribute\SortAttributeNamedArgsRector;
+use Rector\CodeQuality\Rector\Concat\DirnameDirConcatStringToDirectStringPathRector;
 use Rector\CodeQuality\Rector\FuncCall\SortCallLikeNamedArgsRector;
-use Rector\CodeQuality\Rector\Identical\FlipTypeControlToUseExclusiveTypeRector;
+use Rector\CodeQuality\Rector\If_\ExplicitNullableObjectInstanceRector;
 use Rector\Config\RectorConfig;
 use Rector\Set\ValueObject\SetList;
+use Rector\Symfony\CodeQuality\Rector\Class_\EventSubscriberToAttributeRector;
 
 // https://getrector.com/documentation
 $rootDir = __DIR__ . '/../..';
@@ -29,7 +31,14 @@ return RectorConfig::configure()
         $rootDir . '/src/DataFixtures/*AutoFixture.php',
         $rootDir . '/tests/bootstrap.php',
         // null === $x is kept: instanceof checks on nullable properties add nothing (and use FQCN instead of self)
-        FlipTypeControlToUseExclusiveTypeRector::class,
+        ExplicitNullableObjectInstanceRector::class,
+        // Front controller and preload file are Symfony recipe files: keep them as shipped
+        DirnameDirConcatStringToDirectStringPathRector::class => [
+            $rootDir . '/config/preload.php',
+            $rootDir . '/public/index.php',
+        ],
+        // TODO: move SitemapSubscriber to #[AsEventListener] (and its test) in a dedicated change
+        EventSubscriberToAttributeRector::class,
         // Named arguments keep the order chosen in the code
         SortAttributeNamedArgsRector::class,
         SortCallLikeNamedArgsRector::class,
