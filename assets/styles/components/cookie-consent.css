@@ -1,7 +1,7 @@
 /* ============================================================
  * COMPOSANTS — Cookie consent
  * Banner + preferences <dialog>, driven by consent_controller.js
- * Reference: docs/style-guide.md § Cookie consent
+ * Reference: docs/STYLE-GUIDE.md § Cookie consent
  * ============================================================ */
 @layer components {
     .cookie-banner {

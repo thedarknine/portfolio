@@ -219,7 +219,7 @@ dependencies. Symfony upgrades are described in [UPDATE.md](UPDATE.md).
 - Audits: `task utils:seo-audit` runs [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/),
   [Unlighthouse](https://unlighthouse.dev/) and [pa11y](https://pa11y.org/), reports in `.tools/reports/`;
   see also [PageSpeed Insights](https://pagespeed.web.dev/)
-- Design: [docs/style-guide.md](docs/style-guide.md)
+- Design: [docs/STYLE-GUIDE.md](docs/STYLE-GUIDE.md)
 
 ## License
 

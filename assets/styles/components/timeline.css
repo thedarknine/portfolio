@@ -2,7 +2,7 @@
  * COMPOSANTS — Experience timeline
  * From 768 px: a 112 px rail with the start year and the company
  * logo (or the arcade step number), joined by a dashed vertical line.
- * Reference: docs/style-guide.md § Experience timeline
+ * Reference: docs/STYLE-GUIDE.md § Experience timeline
  * ============================================================ */
 .logo-backdrop {
     /* Neutral backdrop that works for both dark and white company and school logos */
