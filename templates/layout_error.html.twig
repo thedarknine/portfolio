@@ -124,11 +124,11 @@
                             Gérer les cookies
                         </button>
                     </p>
-                    <ul class="flex flex-wrap gap-2" aria-label="Réseaux et liens">
+                    <ul class="flex flex-wrap gap-1" aria-label="Réseaux et liens">
                         {% for resource in page_manager.getPublishedResourceLinks() %}
                         <li>
                             <a
-                                class="inline-flex size-11 items-center justify-center rounded-[10px] border border-band-border text-white transition-colors hover:border-band-accent hover:text-band-accent"
+                                class="inline-flex size-11 items-center justify-center rounded-[10px] text-white transition-colors hover:text-band-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-band-accent"
                                 href="{{ resource.url }}"
                                 target="_blank"
                                 rel="noopener"
