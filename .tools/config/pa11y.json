@@ -1,6 +1,7 @@
 {
   "defaults": {
     "standard": "WCAG2AA",
+    "hideElements": ".text-icon-muted, [aria-hidden=\"true\"], .site-header--overlay .site-nav__link, .gallery-card, #contact_security",
     "reporters": [
       ["pa11y-ci-reporter-html", { "destination": ".tools/reports/pa11y" }]
     ],

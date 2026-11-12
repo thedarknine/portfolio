@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{# Homepage — see docs/style-guide.md #}
+{# Homepage — see docs/STYLE-GUIDE.md #}
 
 {% block body %}
 {% set current_experience = last_experiences|first %}
@@ -178,7 +178,7 @@
                 { link: path('app_photos'), image: 'images/home/side-photos.webp', meta: '5 séries', title: 'Mes photos', text: 'Nature, villes, ciels et nuits' },
                 { link: path('app_creations'), image: 'images/home/side-creations.webp', meta: '5 techniques', title: 'Mes créations', text: 'Sculpture en argile' },
             ] %}
-            <a class="group relative isolate flex flex-col justify-between overflow-hidden rounded-[14px] p-6 text-white transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ gallery.link }}">
+            <a class="gallery-card group relative isolate flex flex-col justify-between overflow-hidden rounded-[14px] p-6 text-white transition duration-300 ease-out motion-safe:hover:-translate-y-1 hover:shadow-[0_16px_32px_-16px_rgb(23_44_73/35%)] dark:hover:shadow-[0_16px_32px_-16px_rgb(0_0_0/60%)]" href="{{ gallery.link }}">
                 <img class="absolute inset-0 -z-20 size-full object-cover transition duration-500 ease-out motion-safe:group-hover:scale-105" src="{{ asset(gallery.image) }}" alt="" width="640" height="640" loading="lazy">
                 <span class="absolute inset-0 -z-10 bg-linear-to-t from-[#0F2238]/95 via-[#0F2238]/70 to-[#0F2238]/25" aria-hidden="true"></span>
                 <span class="self-start rounded-md bg-[#0F2238]/70 px-2 py-0.5 font-mono text-[13px] text-[#7FCFD6]">{{ gallery.meta }}</span>

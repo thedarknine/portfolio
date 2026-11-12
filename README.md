@@ -102,7 +102,7 @@ in the [template README](https://github.com/thedarknine/symfony-docker-template#
 ├── tasks/               # Task domains included by Taskfile.yml
 └── deploy.sh-prod       # Deployment script run on the production server
 assets/                  # JS, CSS (Tailwind) and locked icons, served by AssetMapper
-docs/                    # Style guide and migration notes
+docs/                    # Style guide, deployment guide and migration notes
 src/                     # Application code (DataFixtures/Testing is generated)
 templates/               # Twig templates
 tests/                   # Unit/, Integration/, UI/ (PHPUnit) and bash/ (Bats)
@@ -205,6 +205,8 @@ in November 2026: a database created before it only needs `doctrine:migrations:r
 `task symfony:build-prod` checks the production build in a temporary copy, without touching the
 working copy or the branches.
 
+The checks to run before and after a release are listed in [docs/DEPLOY.md](docs/DEPLOY.md).
+
 ## Updating
 
 `task update` pulls the Docker images, rebuilds the containers and updates the Composer and pnpm
@@ -217,7 +219,7 @@ dependencies. Symfony upgrades are described in [UPDATE.md](UPDATE.md).
 - Audits: `task utils:seo-audit` runs [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/),
   [Unlighthouse](https://unlighthouse.dev/) and [pa11y](https://pa11y.org/), reports in `.tools/reports/`;
   see also [PageSpeed Insights](https://pagespeed.web.dev/)
-- Design: [docs/style-guide.md](docs/style-guide.md)
+- Design: [docs/STYLE-GUIDE.md](docs/STYLE-GUIDE.md)
 
 ## License
 

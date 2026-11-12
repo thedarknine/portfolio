@@ -68,13 +68,14 @@ fi
 summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/pa11y/index.html" "Pa11y Report")"
 success_msgs+=("Pa11y report: $summary - Open in browser")
 
-# --ignore-regex='/^.*\/assets\/scripts\/typed\.js$/ exclude typed.js because Symfony has known bug with importmap
+# --ignore-regex: the crawler requests the importmap specifiers found in the JS (typed.js, the Stimulus
+# controllers) as plain URLs, which 404 in a browser-less crawl; the browser resolves them through the importmap
 display_subtitle "🕷️ [4/5] SiteOne Crawler..."
 docker compose exec app siteone-crawler --url=$URL \
     --device=desktop \
     --no-cache \
     --ignore-robots-txt \
-    --ignore-regex='/^.*\/assets\/scripts\/typed\.js$/' \
+    --ignore-regex='/^.*\/assets\/(scripts\/typed|controllers\/[a-z_]+_controller|@symfony\/stimulus-bundle\/controllers|@tito10047\/altcha-bundle\/altcha_controller)\.js$/' \
     --output-html-report="$REPORTS_DIR/siteone/report.html"
 
 summary="$(print_link "file://$PROJECT_ROOT/$REPORTS_DIR/siteone/report.html" "SiteOne Crawler Report")"

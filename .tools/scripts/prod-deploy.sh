@@ -60,10 +60,42 @@ display_success "Remote configuration verified"
 
 display_subtitle "🚀 Connecting to remote server ($REMOTE_USER@$REMOTE_HOST:$REMOTE_PORT)..."
 
+# Download the latest database dump made by deploy.sh on the server to .tools/export/prod/
+LOCAL_BACKUP_DIR="$PROJECT_ROOT/.tools/export/prod"
+
+fetch_db_backup() {
+    local remote_dump
+    display_subtitle "💾 Downloading the production database dump..."
+    remote_dump="$(ssh -i "$REMOTE_SSH_KEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" \
+        'ls -1t "$HOME"/backups/*/db_*.sql.gz 2>/dev/null | head -n 1')" || remote_dump=""
+    if [ -z "$remote_dump" ]; then
+        display_warning "No database dump found on the server, nothing downloaded."
+        return 0
+    fi
+    mkdir -p "$LOCAL_BACKUP_DIR"
+    if scp -q -i "$REMOTE_SSH_KEY" -P "$REMOTE_PORT" \
+        "$REMOTE_USER@$REMOTE_HOST:$remote_dump" "$LOCAL_BACKUP_DIR/"; then
+        display_info "Saved to .tools/export/prod/$(basename "$remote_dump")"
+    else
+        display_warning "Could not download $remote_dump"
+    fi
+}
+
 # Commande de déploiement sur le serveur distant
 REMOTE_DEPLOY_CMD="/home/${REMOTE_USER}/deploy.sh"
 
-if ! ssh -i "$REMOTE_SSH_KEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "$REMOTE_DEPLOY_CMD"; then
+deploy_status=0
+ssh -i "$REMOTE_SSH_KEY" -p "$REMOTE_PORT" "$REMOTE_USER@$REMOTE_HOST" "$REMOTE_DEPLOY_CMD" || deploy_status=$?
+
+# =====================================================================
+# COPIE LOCALE DU DUMP DE PROD
+# =====================================================================
+
+# deploy.sh dumps the database before anything else: keep a copy on this machine,
+# even when the deployment fails afterwards
+fetch_db_backup
+
+if [ "$deploy_status" -ne 0 ]; then
     display_error "Remote deployment failed"
     display_info "Attempting automatic rollback..."
 

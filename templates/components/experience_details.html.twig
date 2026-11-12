@@ -66,7 +66,10 @@
     {% if experience.skills is not empty %}
     <div class="experience-skills flex flex-wrap items-center gap-2">
         <span class="mr-1 font-mono text-[13px] text-on-surface-muted">stack</span>
+        {# Toggle only when some skills are hidden: its label below gives it an accessible name #}
+        {% if experience.skills|length > nb_displayed_skills %}
         <input type="checkbox" id="skills-toggle-{{ experience.id }}" class="peer sr-only">
+        {% endif %}
         {% for skill in experience.skills %}
         <img
             class="size-8 rounded-lg bg-surface-alt-brand object-contain p-1 {{ loop.index > nb_displayed_skills ? 'experience-skills__extra hidden peer-checked:inline-block' }}"

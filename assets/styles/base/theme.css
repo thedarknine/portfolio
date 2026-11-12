@@ -2,7 +2,7 @@
  * TOKENS DESIGN SYSTEM
  * ============================================================ */
 @theme {
-    /* Typo — brand (see docs/brand/brand-guide.md) */
+    /* Typo — brand (see docs/brand/BRAND-GUIDE.md) */
     --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 
@@ -22,7 +22,7 @@
     /* ------------------------------------------------------------------
      * SEMANTIC TOKENS — brand, light mode (default values)
      * ------------------------------------------------------------------ */
-    /* Brand palette — docs/brand/brand-guide.md */
+    /* Brand palette — docs/brand/BRAND-GUIDE.md */
     --color-surface-header: #0f2238; /* header stays night blue in both themes */
     --color-surface-alt-brand: #f4f6f8;
     --color-panel-head: #eef2f5; /* profil.yaml header */

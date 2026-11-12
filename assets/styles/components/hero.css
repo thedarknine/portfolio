@@ -3,7 +3,7 @@
  * Full-bleed photo with a night-blue gradient. The text column
  * redefines the colour tokens locally so it always reads on the
  * photo, in both themes. The profile card keeps the theme tokens.
- * Reference: docs/style-guide.md § Home hero
+ * Reference: docs/STYLE-GUIDE.md § Home hero
  * ============================================================ */
 .home-hero__overlay {
     background: rgb(15 34 56 / 82%);

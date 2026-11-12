@@ -17,6 +17,12 @@ tasks:
             - '{{.UI}} title "🔍 Running the SEO and accessibility audit ({{.target | default "dev"}})"'
             - 'bash {{.TOOLS_DIR}}/scripts/audit.sh {{.target | default "dev"}}'
 
+    og-images:
+        desc: Generate the Open Graph images of the pages from the SVG template (page=technical_name)
+        cmds:
+            - '{{.UI}} title "🖼️  Generating the Open Graph images"'
+            - 'bash {{.TOOLS_DIR}}/scripts/generate-og-images.sh {{.page | default ""}}'
+
     prune:
         desc: Prune the pnpm store and list the unused packages, files and exports with knip
         cmds:

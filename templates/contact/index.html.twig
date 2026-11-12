@@ -1,6 +1,6 @@
 {% extends 'layout.html.twig' %}
 
-{# Contact — see docs/style-guide.md § Contact and § Forms #}
+{# Contact — see docs/STYLE-GUIDE.md § Contact and § Forms #}
 
 {% block meta_description %}
 Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline Noyer, Technical Product Owner.
@@ -99,7 +99,7 @@ Vous souhaitez échanger sur un projet ou une collaboration ? Contactez Caroline
                     {{ form_widget(form.website) }}
                 </div>
 
-                {# Altcha proof-of-work check, see docs/style-guide.md § Forms #}
+                {# Altcha proof-of-work check, see docs/STYLE-GUIDE.md § Forms #}
                 <div class="field altcha-field">
                     {{ form_widget(form.security) }}
                     {{ form_errors(form.security) }}
