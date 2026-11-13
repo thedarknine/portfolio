@@ -125,6 +125,6 @@
         "symfony/css-selector": "8.1.*",
         "symfony/maker-bundle": "^1.68",
         "symfony/panther": "^2.4",
-        "vincentlanglet/twig-cs-fixer": "^3.14"
+        "vincentlanglet/twig-cs-fixer": "^4.1"
     }
 }
