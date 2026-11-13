@@ -111,3 +111,13 @@ Conventional Commits, enforced by the GrumPHP commit-msg hook and by commitlint 
 `style`, `test`; lower-case subject, 72 characters max, no final period; body lines of 100 characters max.
 The hooks run in the `app` container, so the containers must be running to commit.
 Never bypass hooks with `--no-verify`.
+Do not add AI attribution to commit messages: no `Co-Authored-By` trailer for an assistant, no session link,
+no "Generated with" line.
+
+## Releases
+
+Versions follow CalVer, `vYYYY.M.PATCH`: the year and month of the release, without leading zero, then a
+counter that starts at `0` each month and goes up for every new release or fix in the same month
+(`v2026.7.0`, then `v2026.7.1`, then `v2026.11.0`). `task prod:release` computes the version itself. Each release
+is an annotated git tag on the released commit of `main`, with a GitHub release; see
+[docs/DEPLOY.md](docs/DEPLOY.md) for the release procedure.
