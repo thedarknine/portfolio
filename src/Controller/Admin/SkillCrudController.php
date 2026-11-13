@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -39,6 +39,7 @@ class SkillCrudController extends AbstractCrudController
         return Skill::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -53,11 +54,13 @@ class SkillCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters->add(EntityFilter::new('skillType')->autocomplete());
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $actions = $this->addSortableActions($actions);
@@ -71,12 +74,16 @@ class SkillCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
 
         yield TextField::new('name', 'Nom')
             ->setHelp('Exemple : PHP, Symfony, Docker, Figma...');
+
+        yield TextField::new('slug', 'Slug')
+            ->setHelp('Exemple : php, symfony, docker, figma...');
 
         // Relation with SkillType (EasyAdmin will use the __toString() of SkillType)
         yield AssociationField::new('skillType', 'Catégorie')
@@ -85,7 +92,7 @@ class SkillCrudController extends AbstractCrudController
 
         yield TextField::new('logo', 'Logo')
             ->setHelp('Exemple : skills-sysadmin.png (doit être présent dans public/images/skills/)')
-            ->formatValue(function ($value, $entity) {
+            ->formatValue(function ($value, $entity): string {
                 // If no file is provided in the database, return a placeholder or empty string
                 if (!$value) {
                     return '<span class="text-muted">Aucun</span>';
@@ -95,7 +102,7 @@ class SkillCrudController extends AbstractCrudController
                 return sprintf(
                     '<img src="/images/skills/%s" class="bg-white rounded" style="max-height: 30px; max-width: 30px; object-fit: contain;" alt="%s">',
                     $value,
-                    htmlspecialchars($entity->getName()),
+                    htmlspecialchars((string) $entity->getName()),
                 );
             });
 

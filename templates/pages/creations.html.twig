@@ -1,9 +1,9 @@
 {% extends 'layout.html.twig' %}
 
-{# Créations #}
+{# Créations — see docs/STYLE-GUIDE.md § Galleries #}
 
 {% block meta_description %}
-Mes créations graphiques et visuelles : illustrations, designs UI et projets créatifs qui complètent mon expertise technique et produit.
+Mes créations en argile depuis 2010 : sculptures et pièces modelées, mates, cirées, peintes ou vernies, et mes essais au tour.
 {% endblock %}
 
 {% block importmap %}
@@ -12,27 +12,23 @@ Mes créations graphiques et visuelles : illustrations, designs UI et projets cr
 {% endblock %}
 
 {% block body %}
-{% for type in creations_data.types %}
-<section class="{% if loop.index is even %}bg-surface-alt{% else %}bg-surface{% endif %} py-10">
-    <div class="container">
-        <h2 class="my-10 text-2xl font-accent font-medium text-nine-cyan-500">{{ type.name }}</h2>
-        {% set listItemsCreations = creations_data.creations[type.slug] %}
-        <div class="grid grid-flow-row grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 pswp9-lightbox">
-            {% for creation in listItemsCreations %}
-            <div class="w-full h-full rounded overflow-hidden shadow-lg animate__animated" data-animate="animate__zoomIn" data-delay="{{ loop.index * 0.4 }}s">
-                <a
-                    href="{{ absolute_url('images/creations/' ~ type.slug ~ '/' ~ creation) }}"
-                    aria-label="{{ type.name }} | Création {{ creation }}"
-                    class="pswp9-link"
-                    data-pswp-width="1000"
-                    data-pswp-height="1000"
-                    target="_blank">
-                    <img src="{{ absolute_url('images/creations/' ~ type.slug ~ '/' ~ creation) }}" alt="{{ type.name }} | Création {{ creation }}" class="block w-full rounded-lg my-4 lg:my-0 object-center hover:scale-110 transition duration-500">
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-{% endfor %}
+<div class="font-sans text-base leading-relaxed text-on-surface">
+    <section class="mx-auto max-w-[1240px] px-6 pt-18" aria-label="Introduction">
+        <p class="text-on-surface-muted">
+            Je modèle l’argile depuis 2010, en autodidacte. Ce qui me plaît, c’est de travailler la matière avec les mains : un vrai moment de déconnexion, loin des écrans.
+        </p>
+    </section>
+    {# Count the sections actually shown: a type without images is skipped #}
+    {% set shown = 0 %}
+    {% for type in creations_data.types %}
+    {% set items = [] %}
+    {% for creation in creations_data.creations[type.slug] ?? [] %}
+    {% set items = items|merge([{ src: asset('images/creations/' ~ type.slug ~ '/' ~ creation), alt: type.name ~ ' — création ' ~ loop.index }]) %}
+    {% endfor %}
+    {% if items is not empty %}
+    {% set shown = shown + 1 %}
+    {{ include('components/gallery_section.html.twig', { index: shown, slug: type.slug, title: type.name, items: items }) }}
+    {% endif %}
+    {% endfor %}
+</div>
 {% endblock %}

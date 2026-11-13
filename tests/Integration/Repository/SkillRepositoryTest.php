@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Repository;
@@ -13,11 +13,12 @@ namespace App\Tests\Integration\Repository;
 use App\Entity\Skill;
 use App\Entity\SkillType;
 use App\Repository\SkillRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class SkillRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private SkillRepository $skillRepository;
 
     protected function setUp(): void
@@ -43,14 +44,14 @@ class SkillRepositoryTest extends KernelTestCase
      */
     public function testGetSkillsWithTypeOrdersByPosition(): void
     {
-        $type = (new SkillType())
+        $type = new SkillType()
             ->setName('Back-end')
             ->setSlug('back-end')
             ->setLogo('back-end.png')
             ->setDeleted(false);
         $this->entityManager->persist($type);
 
-        $skill2 = (new Skill())
+        $skill2 = new Skill()
             ->setName('PHP')
             ->setSlug('php')
             ->setLogo('php.png')
@@ -59,7 +60,7 @@ class SkillRepositoryTest extends KernelTestCase
             ->setSkillType($type)
             ->setLevel(75)
             ->setDisplay(true);
-        $skill1 = (new Skill())
+        $skill1 = new Skill()
             ->setName('Symfony')
             ->setSlug('symfony')
             ->setLogo('symfony.png')
@@ -85,17 +86,17 @@ class SkillRepositoryTest extends KernelTestCase
      */
     public function testGetSkillsByTypeFiltersCorrectly(): void
     {
-        $typeValid = (new SkillType())
+        $typeValid = new SkillType()
             ->setName('Front-end')
             ->setSlug('front-end')
             ->setLogo('front-end.png')
             ->setDeleted(false);
-        $typeDeleted = (new SkillType())
+        $typeDeleted = new SkillType()
             ->setName('Design')
             ->setSlug('design')
             ->setLogo('design.png')
             ->setDeleted(true);
-        $typeAutre = (new SkillType())
+        $typeAutre = new SkillType()
             ->setName('DevOps')
             ->setSlug('devops')
             ->setLogo('devops.png')
@@ -105,7 +106,7 @@ class SkillRepositoryTest extends KernelTestCase
         $this->entityManager->persist($typeDeleted);
         $this->entityManager->persist($typeAutre);
 
-        $skillValid = (new Skill())
+        $skillValid = new Skill()
             ->setName('Tailwind')
             ->setSlug('tailwind')
             ->setLogo('tailwind.png')
@@ -114,7 +115,7 @@ class SkillRepositoryTest extends KernelTestCase
             ->setSkillType($typeValid)
             ->setLevel(80)
             ->setDisplay(true);
-        $skillInDeletedType = (new Skill())
+        $skillInDeletedType = new Skill()
             ->setName('Photoshop')
             ->setSlug('photoshop')
             ->setLogo('photoshop.png')
@@ -123,7 +124,7 @@ class SkillRepositoryTest extends KernelTestCase
             ->setSkillType($typeDeleted)
             ->setLevel(70)
             ->setDisplay(true);
-        $skillAutreType = (new Skill())
+        $skillAutreType = new Skill()
             ->setName('Docker')
             ->setSlug('docker')
             ->setLogo('docker.png')
@@ -151,12 +152,12 @@ class SkillRepositoryTest extends KernelTestCase
      */
     public function testGetSkillsOrderByTypeStructuresArrayCorrectly(): void
     {
-        $typeBack = (new SkillType())
+        $typeBack = new SkillType()
             ->setName('Back-end')
             ->setSlug('back-end')
             ->setLogo('back-end.png')
             ->setDeleted(false);
-        $typeFront = (new SkillType())
+        $typeFront = new SkillType()
             ->setName('Front-end')
             ->setSlug('front-end')
             ->setLogo('front-end.png')
@@ -165,7 +166,7 @@ class SkillRepositoryTest extends KernelTestCase
         $this->entityManager->persist($typeFront);
 
         // Valid skills
-        $symfony = (new Skill())
+        $symfony = new Skill()
             ->setName('Symfony')
             ->setSlug('symfony')
             ->setLogo('symfony.png')
@@ -174,7 +175,7 @@ class SkillRepositoryTest extends KernelTestCase
             ->setSkillType($typeBack)
             ->setLevel(85)
             ->setDisplay(true);
-        $tailwind = (new Skill())
+        $tailwind = new Skill()
             ->setName('Tailwind v4')
             ->setSlug('tailwind-v4')
             ->setLogo('tailwind.png')
@@ -185,7 +186,7 @@ class SkillRepositoryTest extends KernelTestCase
             ->setDisplay(true);
 
         // Hidden skill (display = false -> should not appear)
-        $hiddenSkill = (new Skill())
+        $hiddenSkill = new Skill()
             ->setName('Vieux truc')
             ->setSlug('vieux-truc')
             ->setLogo('vieux-truc.png')

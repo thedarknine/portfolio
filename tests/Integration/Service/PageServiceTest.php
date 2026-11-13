@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Service;
@@ -13,6 +13,7 @@ namespace App\Tests\Integration\Service;
 use App\Service\PageService;
 use Carbon\Carbon;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class PageServiceTest extends KernelTestCase
 {
@@ -37,14 +38,13 @@ class PageServiceTest extends KernelTestCase
         // Assuming your fixtures created a page with the slug 'experience'
         $page = $this->pageService->getActivePageBySlug('experience');
 
-        $this->assertNotNull($page);
         $this->assertSame('experience', $page->getSlug());
     }
 
     public function testGetActivePageBySlugThrowsNotFound(): void
     {
         // Verify that the expected exception is thrown if the page does not exist
-        $this->expectException(\Symfony\Component\HttpKernel\Exception\NotFoundHttpException::class);
+        $this->expectException(NotFoundHttpException::class);
 
         $this->pageService->getActivePageBySlug('slug-qui-n-existe-pas');
     }
@@ -53,7 +53,6 @@ class PageServiceTest extends KernelTestCase
     {
         $pages = $this->pageService->getPublishedPages();
 
-        $this->assertIsArray($pages);
         $this->assertNotEmpty($pages);
 
         foreach ($pages as $page) {
@@ -65,7 +64,6 @@ class PageServiceTest extends KernelTestCase
     {
         $pages = $this->pageService->getPublishedPagesInHeader();
 
-        $this->assertIsArray($pages);
         $this->assertNotEmpty($pages);
 
         foreach ($pages as $page) {

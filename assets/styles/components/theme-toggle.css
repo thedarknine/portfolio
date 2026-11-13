@@ -1,73 +1,69 @@
 /* ============================================================
  * COMPOSANTS — Theme toggle
+ * Original sun / moon switch, adapted to the light header.
+ * The <button class="theme-switch"> around it carries the 44 px
+ * touch target and role="switch" (theme_controller.js).
  * ============================================================ */
 .theme-toggle {
     position: relative;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
     width: 68px;
     height: 32px;
-    border-radius: 16px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
     padding: 3px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    background: var(--color-placeholder);
     box-shadow:
-        0 2px 12px rgba(245, 158, 11, 0.2),
-        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        0 2px 12px rgb(245 158 11 / 20%),
+        inset 0 1px 0 rgb(255 255 255 / 50%);
     transition:
         background 0.4s ease,
         border-color 0.4s ease,
         box-shadow 0.4s ease;
-    flex-shrink: 0;
 }
 
 [data-theme="dark"] .theme-toggle {
-    background: rgba(15, 15, 40, 0.4);
-    border-color: rgba(129, 140, 248, 0.3);
+    background: rgb(15 15 40 / 40%);
+    border-color: rgb(129 140 248 / 30%);
     box-shadow:
-        0 2px 12px rgba(129, 140, 248, 0.25),
-        inset 0 1px 0 rgba(255, 255, 255, 0.08);
-}
-
-.theme-toggle:hover {
-    outline: 1.5px solid rgba(255, 255, 255, 0.25);
-    outline-offset: 2px;
+        0 2px 12px rgb(129 140 248 / 25%),
+        inset 0 1px 0 rgb(255 255 255 / 8%);
 }
 
 .toggle-thumb {
     position: absolute;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
+    z-index: 1;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255, 255, 255, 0.9);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 95%);
     box-shadow:
-        0 1px 6px rgba(245, 158, 11, 0.35),
-        0 0 0 1px rgba(255, 255, 255, 0.6);
-    transform: translateX(0px);
+        0 1px 6px rgb(245 158 11 / 35%),
+        0 0 0 1px rgb(255 255 255 / 60%);
+    transform: translateX(0);
     transition:
         transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
         background 0.4s ease,
         box-shadow 0.4s ease;
-    z-index: 1;
 }
 
 [data-theme="dark"] .toggle-thumb {
     transform: translateX(36px);
-    background: rgba(30, 27, 75, 0.9);
+    background: rgb(30 27 75 / 90%);
     box-shadow:
-        0 1px 6px rgba(129, 140, 248, 0.45),
-        0 0 0 1px rgba(129, 140, 248, 0.3);
+        0 1px 6px rgb(129 140 248 / 45%),
+        0 0 0 1px rgb(129 140 248 / 30%);
 }
 
 .icon-sun,
 .icon-moon {
     position: absolute;
+    display: inline-flex;
     width: 16px;
     height: 16px;
     transition:
@@ -80,6 +76,7 @@
     opacity: 1;
     transform: rotate(0deg);
 }
+
 .icon-moon {
     color: #818cf8;
     opacity: 0;
@@ -90,6 +87,7 @@
     opacity: 0;
     transform: rotate(90deg);
 }
+
 [data-theme="dark"] .icon-moon {
     opacity: 1;
     transform: rotate(0deg);
@@ -99,21 +97,24 @@
     position: absolute;
     inset: 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
     padding: 0 6px;
     pointer-events: none;
 }
 
 .track-icon {
+    display: inline-flex;
     width: 14px;
     height: 14px;
     transition: opacity 0.3s ease;
 }
+
 .track-sun {
     color: #f59e0b;
     opacity: 0;
 }
+
 .track-moon {
     color: #818cf8;
     opacity: 0.6;
@@ -122,6 +123,32 @@
 [data-theme="dark"] .track-sun {
     opacity: 0.6;
 }
+
 [data-theme="dark"] .track-moon {
     opacity: 0;
+}
+
+.theme-switch {
+    cursor: pointer;
+    background: none;
+
+    &:focus-visible {
+        outline: 2px solid var(--color-accent-text);
+        outline-offset: 2px;
+    }
+
+    &:hover .theme-toggle {
+        outline: 1.5px solid var(--color-accent-text);
+        outline-offset: 2px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-switch .theme-toggle,
+    .theme-switch .toggle-thumb,
+    .theme-switch .icon-sun,
+    .theme-switch .icon-moon,
+    .theme-switch .track-icon {
+        transition: none;
+    }
 }

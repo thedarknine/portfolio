@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -20,6 +22,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 /**
@@ -32,6 +35,7 @@ class EducationCrudController extends AbstractCrudController
         return Education::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -42,6 +46,7 @@ class EducationCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
@@ -53,6 +58,7 @@ class EducationCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -81,11 +87,21 @@ class EducationCrudController extends AbstractCrudController
                 'Universitaire' => EducationType::UNIVERSITARY,
                 'Professionnel' => EducationType::PROFESSIONAL,
             ])
-            ->formatValue(function ($value, $entity) {
-                return $value instanceof EducationType ? $value->getLabel() : $value;
-            });
+            ->formatValue(fn ($value, $entity) => $value instanceof EducationType ? $value->getLabel() : $value);
 
         yield TextField::new('details', 'Description succincte / Acquis')
             ->hideOnIndex(); // Hide on index for a cleaner look, but show on forms and detail pages
+
+        yield TextareaField::new('takeaway', 'Ce que j\'en retiens')
+            ->setHelp('Optionnel : une ou deux phrases sur ce que la formation a apporté.')
+            ->hideOnIndex();
+
+        yield TextField::new('linkLabel', 'Libellé du lien')
+            ->setHelp('Optionnel (ex : Voir l\'étude de cas Lydia).')
+            ->hideOnIndex();
+
+        yield TextField::new('linkUrl', 'URL du lien')
+            ->setHelp('Optionnel : une URL complète ou un chemin du site (ex : /experience#stage-limos).')
+            ->hideOnIndex();
     }
 }

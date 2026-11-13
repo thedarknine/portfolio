@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -31,7 +31,7 @@ class ResourceLinkValidationTest extends KernelTestCase
      */
     public function testValidResourceLinkHasNoViolation(): void
     {
-        $resource = (new ResourceLink())
+        $resource = new ResourceLink()
             ->setTitle('Documentation Symfony')
             ->setSlug('documentation-symfony')
             ->setUrl('https://symfony.com/doc/current/index.html')
@@ -53,7 +53,7 @@ class ResourceLinkValidationTest extends KernelTestCase
      */
     public function testInvalidUrlFormatTriggerViolation(): void
     {
-        $resource = (new ResourceLink())
+        $resource = new ResourceLink()
             ->setTitle('Lien cassé')
             ->setSlug('lien-casse')
             ->setUrl('not-a-valid-url')
@@ -72,7 +72,7 @@ class ResourceLinkValidationTest extends KernelTestCase
      */
     public function testNegativePositionTriggerViolation(): void
     {
-        $resource = (new ResourceLink())
+        $resource = new ResourceLink()
             ->setTitle('Lien mal rangé')
             ->setSlug('lien-mal-rangé')
             ->setUrl('https://carolinenoyer.fr')
@@ -95,7 +95,6 @@ class ResourceLinkValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($resource);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($resource, 42);
 
         $this->assertSame(42, $resource->getId());

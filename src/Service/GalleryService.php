@@ -4,12 +4,15 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Service;
 
+use App\Entity\ArcadeType;
+use App\Entity\CreationType;
+use App\Entity\PhotoType;
 use App\Repository\ArcadeTypeRepository;
 use App\Repository\CreationTypeRepository;
 use App\Repository\PhotoTypeRepository;
@@ -19,18 +22,15 @@ use Symfony\Component\Finder\Finder;
 class GalleryService
 {
     public function __construct(
-        private ArcadeTypeRepository $arcadeTypeRepository,
-        private CreationTypeRepository $creationTypeRepository,
-        private PhotoTypeRepository $photoTypeRepository,
-        #[Autowire(param: 'app.images_dir')] private string $imagesDir,
+        private readonly ArcadeTypeRepository $arcadeTypeRepository,
+        private readonly CreationTypeRepository $creationTypeRepository,
+        private readonly PhotoTypeRepository $photoTypeRepository,
+        #[Autowire(param: 'app.images_dir')] private readonly string $imagesDir,
     ) {
     }
 
     /**
-     * @return array{
-     *  types: array<int, \App\Entity\ArcadeType>,
-     *  items: array<string, array<int, string>>
-     * }
+     * @return array{types: array<int, ArcadeType>, items: array<string, array<int, string>>}
      */
     public function getArcadeGallery(): array
     {
@@ -48,13 +48,16 @@ class GalleryService
             }
 
             $finder = new Finder();
-            $finder->files()->in($targetDir);
+            $finder->files()->in($targetDir)->sortByName(true);
 
             foreach ($finder as $file) {
                 $arcadesList[$slug][] = $file->getFileName();
             }
 
-            shuffle($arcadesList[$slug]);
+            // Build steps tell a chronology (sorted by file name); only the final result is shuffled
+            if ('final' === $slug) {
+                shuffle($arcadesList[$slug]);
+            }
         }
 
         return [
@@ -64,10 +67,7 @@ class GalleryService
     }
 
     /**
-     * @return array{
-     *  types: array<int, \App\Entity\CreationType>,
-     *  creations: array<string, array<int, string>>
-     * }
+     * @return array{types: array<int, CreationType>, creations: array<string, array<int, string>>}
      */
     public function getCreationsGallery(): array
     {
@@ -101,10 +101,7 @@ class GalleryService
     }
 
     /**
-     * @return array{
-     *  types: array<int, \App\Entity\PhotoType>,
-     *  photos: array<string, list<array{filename: string, caption: string}>>
-     * }
+     * @return array{types: array<int, PhotoType>, photos: array<string, list<array{filename: string, caption: string}>>}
      */
     public function getPhotosGallery(): array
     {

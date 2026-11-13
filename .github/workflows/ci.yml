@@ -1,114 +1,112 @@
-name: Portfolio CI
+# Runs the same tasks as locally: GitHub-hosted runners have Docker, so the job builds the
+# image, starts the stack with "task up" and runs "task qa" in the app container.
+# Mutation and UI tests are left out (slow): run them locally with "task qa deep=1".
+name: CI
 
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main", "develop" ]
+on:  # yamllint disable-line rule:truthy
+    pull_request:
+    push:
+        branches: [main, develop]
+
+# A new push on the same branch or pull request cancels the previous run
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
 
 permissions:
-  contents: read
+    contents: read
 
 jobs:
-  symfony-tests:
-    runs-on: ubuntu-latest
+    qa:
+        name: QA - cs, lint, quality, tests, arch
+        runs-on: ubuntu-latest
+        timeout-minutes: 30
+        env:
+            # Adds the CI override with the image layer cache (takes precedence over .env)
+            COMPOSE_FILE: docker-compose.yaml:docker-compose.dev.yaml:docker-compose.ci.yaml
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+              with:
+                  # Full history: gitleaks scans every commit (lint:secrets)
+                  fetch-depth: 0
 
-    services:
-        mysql:
-          image: mysql:8.0
-          env:
-            MYSQL_ALLOW_EMPTY_PASSWORD: yes
-            MYSQL_DATABASE: portfolio
-          ports:
-            - 3306:3306
-          options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-          
-    env:
-      APP_ENV: test
-      DEFAULT_URI: https://localhost
-      DATABASE_URL: "mysql://root@127.0.0.1:3306/portfolio?serverVersion=8.0"
-      MAILER_DSN: "null://default"
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+            # BuildKit builder able to read and write the GitHub Actions cache
+            - name: Set up Docker Buildx
+              uses: docker/setup-buildx-action@v4
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
+            # Exposes the cache URL and token to "docker compose build" (only available to actions otherwise)
+            - name: Expose the GitHub Actions runtime
+              uses: crazy-max/ghaction-github-runtime@v4
 
-    #  To automatically get bug fixes and new Php versions for shivammathur/setup-php,
-    # change this to (see https://github.com/shivammathur/setup-php#bookmark-versioning):
-    # uses: shivammathur/setup-php@v2    
-    - name: Setup PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: '8.4'
-        extensions: mbstring, xml, ctype, iconv, intl, pdo_mysql
-        tools: composer:v2
+            - name: Install Task
+              uses: go-task/setup-task@v2
+              with:
+                  version: 3.x
 
-    - name: Copy .env.test
-      run: php -r "file_exists('.env') || copy('.env.test', '.env');"
+            # The checkout belongs to the runner user: the app container must use the same ids
+            - name: Use the runner user in the app container
+              run: |
+                  echo "HOST_UID=$(id -u)" >> "$GITHUB_ENV"
+                  echo "HOST_GID=$(id -g)" >> "$GITHUB_ENV"
 
-    - name: Get Composer Cache Directory
-      id: composer-cache
-      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+            - name: Start the containers
+              run: task up
 
-    - name: Cache Composer packages
-      uses: actions/cache@v4
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-composer-
+            - name: Install dependencies
+              run: task symfony:install
 
-    - name: Install Dependencies
-      run: composer install --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-    
-    - name: Cache importmap vendors
-      uses: actions/cache@v4
-      with:
-        path: assets/vendor
-        key: ${{ runner.os }}-importmap-${{ hashFiles('**/composer.lock') }}
+            # Portfolio-only: the test fixtures are generated from the dev database (composer pipeline:fixtures),
+            # so it needs the schema and the committed fixtures first.
+            # Migrations rather than the entities: checks that they replay on an empty database,
+            # then that they match the entities (a forgotten migration fails here)
+            - name: Set up the dev database
+              run: |
+                  task db:create
+                  task db:migrate
+                  task symfony:console -- doctrine:schema:validate
+                  task --yes db:fixtures
 
-    - name: Install importmap vendors
-      run: php bin/console importmap:install
-    
-    - name: Cache Tailwind binary
-      uses: actions/cache@v4
-      with:
-        path: var/tailwind
-        key: ${{ runner.os }}-tailwind-${{ hashFiles('**/composer.lock') }}
+            - name: Run the QA suite
+              run: task qa
 
-    - name: Build Tailwind CSS
-      run: php bin/console tailwind:build --env=test
+            # Only for what goes to production: pull requests to main and pushes on main
+            - name: Check the production build
+              if: github.base_ref == 'main' || github.ref == 'refs/heads/main'
+              run: task symfony:build-prod
 
-    - name: Validate Symfony configuration
-      run: |
-        php bin/console lint:container
-        php bin/console lint:twig templates/
-        php bin/console lint:yaml config/
+            - name: Show the container logs
+              if: failure()
+              run: docker compose logs
 
-    - name: Create Test Directories
-      run: mkdir -p var/tests/images
+    commitlint:
+        name: Conventional commits
+        # Release pull requests (develop -> main) are skipped: their commits were checked on their own pull
+        # request into develop, and the oldest ones predate the commit rules
+        if: github.event_name == 'pull_request' && github.head_ref != 'develop'
+        runs-on: ubuntu-latest
+        timeout-minutes: 10
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v7
+              with:
+                  fetch-depth: 0
 
-    - name: Clear Symfony Cache
-      run: php bin/console cache:clear --env=test
+            - name: Install pnpm
+              uses: pnpm/action-setup@v6
 
-    - name: Execute PHP-CS-Fixer (Linter)
-      run: vendor/bin/php-cs-fixer fix --dry-run --diff  --config=.tools/.php-cs-fixer.php
-       
-    - name: Run PHPStan
-      run: vendor/bin/phpstan analyse --configuration=.tools/phpstan.neon
+            - name: Install Node.js
+              uses: actions/setup-node@v7
+              with:
+                  node-version: lts/*
+                  cache: pnpm
 
-    - name: Create Database
-      run: php bin/console doctrine:database:create --env=test --if-not-exists
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
 
-    - name: Create Database Schema from Entities
-      run: php bin/console doctrine:schema:create --env=test
-
-    - name: Validate Doctrine Schema
-      run: php bin/console doctrine:schema:validate --skip-sync --env=test
-
-    - name: Load Fixtures
-      run: php bin/console doctrine:fixtures:load --no-interaction --env=test
-
-    - name: Run PHPUnit Tests
-      run: vendor/bin/phpunit --configuration .tools/phpunit.xml --exclude-group=UI
+            - name: Check the commit messages of the pull request
+              run: >-
+                  pnpm exec commitlint --config .tools/config/commitlint.config.cjs
+                  --from ${{ github.event.pull_request.base.sha }}
+                  --to ${{ github.event.pull_request.head.sha }}
+                  --verbose

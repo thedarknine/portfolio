@@ -11,6 +11,7 @@ twig:
         owner_role: '%app.owner_role%'
         owner_description: '%app.owner_description%'
         cv_url: '%app.cv_url%'
+        site_version: '%app.version%'
 
 when@test:
     twig:

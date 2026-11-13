@@ -1,0 +1,67 @@
+# https://taskfile.dev
+version: '3'
+
+# UI_NESTED hides the success box when the task is called by another one (restart)
+
+tasks:
+    build:
+        desc: Build the containers
+        cmds:
+            - '{{.UI}} subtitle "🐳 Building the containers"'
+            - '{{.COMPOSE}} build || { {{.UI}} error "Build failed."; exit 1; }'
+            - '{{.UI}} success "Containers built."'
+
+    up:
+        desc: Build and start the containers
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🐳 Starting the containers"'
+            - >-
+              {{.COMPOSE}} up -d --build
+              || { {{.UI}} error "Containers failed to start."
+              "A host port may already be used: change it in .env, then run task init again."; exit 1; }
+            - '{{.UI}} success "Containers started."'
+
+    down:
+        desc: Stop the containers (keeps the database volume)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🐳 Stopping the containers"'
+            - '{{.COMPOSE}} down'
+            - '{{.UI}} success "Containers stopped."'
+
+    restart:
+        desc: Restart the containers
+        cmds:
+            - task: down
+              vars: { NESTED: '1' }
+            - task: up
+              vars: { NESTED: '1' }
+            - '{{.UI}} success "Containers restarted."'
+
+    reset:
+        desc: Stop the containers and delete the database data
+        prompt: This deletes all the database data. Continue?
+        cmds:
+            - '{{.UI}} subtitle "🐳 Removing the containers and the database data"'
+            - '{{.COMPOSE}} down -v'
+            # The data lives in a bind mount (.docker/mysql/data) that "down -v" keeps: empty it from a
+            # throwaway container, which owns the files whatever the host user (.gitkeep is kept)
+            - "{{.COMPOSE}} run --rm --no-deps --entrypoint sh db -c 'rm -rf /var/lib/mysql/*'"
+            - '{{.UI}} success "Containers and database data removed."'
+
+    ps:
+        desc: List the containers
+        cmds:
+            - '{{.COMPOSE}} ps'
+
+    logs:
+        desc: 'Follow logs (all services, or one: task docker:logs -- db)'
+        cmds:
+            - '{{.COMPOSE}} logs -f {{.CLI_ARGS}}'
+
+    shell:
+        desc: Open a shell in the PHP container
+        interactive: true
+        cmds:
+            - '{{.EXEC}} bash'

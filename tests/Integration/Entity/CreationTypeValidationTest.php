@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -29,7 +29,7 @@ class CreationTypeValidationTest extends KernelTestCase
      */
     public function testValidCreationTypeHasNoViolation(): void
     {
-        $creationType = (new CreationType())
+        $creationType = new CreationType()
             ->setName('Céramique')
             ->setSlug('ceramique')
             ->setPosition(0);
@@ -47,7 +47,7 @@ class CreationTypeValidationTest extends KernelTestCase
      */
     public function testBlankNameTriggerViolation(): void
     {
-        $creationType = (new CreationType())
+        $creationType = new CreationType()
             ->setName('')
             ->setPosition(1);
 
@@ -62,7 +62,7 @@ class CreationTypeValidationTest extends KernelTestCase
      */
     public function testNegativePositionTriggerViolation(): void
     {
-        $creationType = (new CreationType())
+        $creationType = new CreationType()
             ->setName('Sculpture')
             ->setSlug('sculpture')
             ->setPosition(-1);
@@ -82,7 +82,6 @@ class CreationTypeValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($creationType);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($creationType, 12);
 
         $this->assertSame(12, $creationType->getId());

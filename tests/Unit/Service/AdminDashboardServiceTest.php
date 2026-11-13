@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Unit\Service;
@@ -71,7 +71,6 @@ class AdminDashboardServiceTest extends TestCase
         $service = $this->createService();
         $stats   = $service->getStats();
 
-        $this->assertIsArray($stats);
         $this->assertEquals(15, $stats['projects']);
         $this->assertEquals(5, $stats['publicPages']);
         $this->assertEquals(42, $stats['technologiesCount']);

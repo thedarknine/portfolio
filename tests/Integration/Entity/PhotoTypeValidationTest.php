@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -31,7 +31,7 @@ class PhotoTypeValidationTest extends KernelTestCase
      */
     public function testValidPhotoTypeHasNoViolation(): void
     {
-        $photoType = (new PhotoType())
+        $photoType = new PhotoType()
             ->setName('Argentique')
             ->setSlug('argentique')
             ->setPosition(0);
@@ -49,7 +49,7 @@ class PhotoTypeValidationTest extends KernelTestCase
      */
     public function testBlankNameTriggerViolation(): void
     {
-        $photoType = (new PhotoType())
+        $photoType = new PhotoType()
             ->setName('')
             ->setPosition(1);
 
@@ -64,7 +64,7 @@ class PhotoTypeValidationTest extends KernelTestCase
      */
     public function testNegativePositionTriggerViolation(): void
     {
-        $photoType = (new PhotoType())
+        $photoType = new PhotoType()
             ->setName('Paysages')
             ->setSlug('paysages')
             ->setPosition(-1);
@@ -84,7 +84,6 @@ class PhotoTypeValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($photoType);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($photoType, 32);
 
         $this->assertSame(32, $photoType->getId());

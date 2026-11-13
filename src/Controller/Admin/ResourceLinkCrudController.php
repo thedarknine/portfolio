@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -38,6 +38,7 @@ class ResourceLinkCrudController extends AbstractCrudController
         return ResourceLink::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -48,6 +49,7 @@ class ResourceLinkCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $actions = $this->addSortableActions($actions);
@@ -61,6 +63,7 @@ class ResourceLinkCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -75,7 +78,7 @@ class ResourceLinkCrudController extends AbstractCrudController
 
         yield UrlField::new('url', 'Lien URL')
             ->setHelp('Exemple : https://github.com/carolinenoyer')
-            ->formatValue(function ($value) {
+            ->formatValue(function ($value): ?string {
                 if (!$value) {
                     return null;
                 }
@@ -86,7 +89,7 @@ class ResourceLinkCrudController extends AbstractCrudController
         // Use IconableTrait: display the CSS class with a small preview of the FontAwesome icon
         yield TextField::new('icon', 'Classe Icône')
             ->setHelp('Exemple : flowbite:linkedin-solid (<a href="https://ux.symfony.com/icons" target="_blank">Voir la documentation</a>)')
-            ->formatValue(function ($value) {
+            ->formatValue(function ($value): string {
                 if (!$value) {
                     return '<span class="text-muted">Aucune</span>';
                 }

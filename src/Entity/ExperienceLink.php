@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Entity;
@@ -40,6 +40,11 @@ class ExperienceLink
         new Assert\Regex(
             pattern: '~^/.*$~',
             message: 'The URI must start with "/".',
+        ),
+        // PDF links store a file name, served from docs.carolinenoyer.fr
+        new Assert\Regex(
+            pattern: '~^[\w.-]+\.pdf$~',
+            message: 'A PDF link must be a file name ending in ".pdf".',
         ),
     ])]
     #[Assert\Length(max: 255, maxMessage: 'URL cannot exceed {{ limit }} characters.')]

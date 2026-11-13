@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Entity;
@@ -15,11 +15,12 @@ use App\Entity\Traits\SortableTrait;
 use App\Entity\Traits\TimeStampableTrait;
 use App\Repository\ScreenshotRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ScreenshotRepository::class)]
 #[ORM\HasLifecycleCallbacks()]
-class Screenshot implements SortableEntityInterface
+class Screenshot implements SortableEntityInterface, \Stringable
 {
     use TimeStampableTrait;
     use SortableTrait;
@@ -39,6 +40,8 @@ class Screenshot implements SortableEntityInterface
     #[Assert\Length(max: 255, maxMessage: 'Description cannot exceed {{ limit }} characters.')]
     private ?string $description = null;
 
+    // Positions are counted per project, not across all screenshots
+    #[Gedmo\SortableGroup]
     #[ORM\ManyToOne(inversedBy: 'screenshots')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Project $project = null;

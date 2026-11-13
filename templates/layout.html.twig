@@ -12,6 +12,7 @@
 
         <link rel="shortcut icon" type="image/x-icon" href="{{ absolute_url(asset('images/global/favicon.ico')) }}">
         <link rel="apple-touch-icon" sizes="180x180" href="{{ absolute_url(asset('images/global/apple-touch-icon.png')) }}">
+        <link rel="icon" type="image/svg+xml" href="{{ absolute_url(asset('images/global/favicon.svg')) }}">
         <link rel="icon" type="image/png" sizes="32x32" href="{{ absolute_url(asset('images/global/favicon-32x32.png')) }}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{ absolute_url(asset('images/global/favicon-16x16.png')) }}">
 
@@ -24,30 +25,44 @@
         <link rel="preload" as="image" href="{{ absolute_url(asset('images/volcans-cnoyer.webp')) }}" fetchpriority="high">
         {% endif %}
 
+        {# Branded card generated per page by "task utils:og-images", the portrait on the home page #}
+        {% set has_og_card = current_page.technicalName is defined and current_page.technicalName != 'home' %}
+        {% set og_image = has_og_card
+            ? asset('images/og/og-' ~ current_page.technicalName ~ '.png')
+            : asset('images/cnoyer-product-owner.webp') %}
+
         {# Open Graph / Facebook #}
         <meta property="og:type" content="website">
         <meta property="og:url" content="{{ absolute_url(app.request.uri) }}">
         <meta property="og:title" content="{{ block('meta_title') }}">
         <meta property="og:description" content="{{ block('meta_description') }}">
-        <meta property="og:image" content="{{ absolute_url(asset('images/cnoyer-product-owner.webp')) }}">
+        <meta property="og:image" content="{{ absolute_url(og_image) }}">
+        {% if has_og_card %}
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+        {% endif %}
+        <meta property="og:image:alt" content="{{ block('meta_title') }}">
         <meta property="og:site_name" content="{{ site_name }}">
 
         {# Twitter #}
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:title" content="{{ block('meta_title') }}">
         <meta name="twitter:description" content="{{ block('meta_description') }}">
-        <meta name="twitter:image" content="{{ absolute_url(asset('images/cnoyer-product-owner.webp')) }}">
+        <meta name="twitter:image" content="{{ absolute_url(og_image) }}">
 
         {% block jsonld %}
+        {# One Person for the whole site, with a stable @id that every page refers to #}
+        {% set json_flags = constant('JSON_UNESCAPED_UNICODE') b-or constant('JSON_UNESCAPED_SLASHES') %}
+        {% set person_id = url('app_home') ~ '#person' %}
         <script type="application/ld+json">
         {
             "@context": "https://schema.org",
             "@type": "Person",
-            "@id": "{{ absolute_url(app.request.uri) }}#person",
-            "name": "{{ owner_name }}",
-            "jobTitle": "{{ owner_role }}",
-            "description": "{{ owner_description }}",
-            "url": "{{ absolute_url(app.request.uri) }}",
+            "@id": {{ person_id|json_encode(json_flags)|raw }},
+            "name": {{ owner_name|json_encode(json_flags)|raw }},
+            "jobTitle": {{ owner_role|json_encode(json_flags)|raw }},
+            "description": {{ owner_description|json_encode(json_flags)|raw }},
+            "url": {{ url('app_home')|json_encode(json_flags)|raw }},
             "sameAs": [
                 "https://github.com/thedarknine",
                 "https://www.linkedin.com/in/carolinenoyer"
@@ -58,27 +73,19 @@
         {% if current_page.slug != 'home' and current_page.slug != 'contact' %}
         <script type="application/ld+json">
         {
-        "@context": "https://schema.org",
-        "@type": "WebPage",
-        "@id": "{{ absolute_url(app.request.uri) }}#webpage",
-        "url": "{{ absolute_url(app.request.uri) }}",
-        "name": "{{ owner_name }} — {{ current_page.tagline }}",
-        "description": "{{ current_page.subtitle }}",
-        "primaryImageOfPage": {
-            "@type": "ImageObject",
-            "url": "{{ absolute_url(asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp')) }}"
-        },
-        "about": {
-            "@id": "{{ absolute_url(app.request.uri) }}#person"
-        },
-        "author": {
-            "@type": "Person",
-            "name": "{{ owner_name }}"
-        },
-        "creator": {
-            "@type": "Person",
-            "name": "{{ owner_name }}"
-        }
+            "@context": "https://schema.org",
+            "@type": "WebPage",
+            "@id": {{ (absolute_url(app.request.uri) ~ '#webpage')|json_encode(json_flags)|raw }},
+            "url": {{ absolute_url(app.request.uri)|json_encode(json_flags)|raw }},
+            "name": {{ (owner_name ~ ' — ' ~ current_page.title)|json_encode(json_flags)|raw }},
+            "description": {{ current_page.subtitle|json_encode(json_flags)|raw }},
+            "primaryImageOfPage": {
+                "@type": "ImageObject",
+                "url": {{ absolute_url(asset('images/pages/hero-' ~ current_page.technicalName ~ '.webp'))|json_encode(json_flags)|raw }}
+            },
+            "about": { "@id": {{ person_id|json_encode(json_flags)|raw }} },
+            "author": { "@id": {{ person_id|json_encode(json_flags)|raw }} },
+            "creator": { "@id": {{ person_id|json_encode(json_flags)|raw }} }
         }
         </script>
         {% endif %}
@@ -94,30 +101,10 @@
         {{ importmap('app', { nonce: csp_nonce('script') }) }}
         {% endblock %}
 
-        {# Start Matomo #}
-        {% if app.environment == 'prod' %}
-        <script>
-            var _paq = window._paq = window._paq || [];
-            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-            _paq.push(["setDoNotTrack", true]);
-            _paq.push(['trackPageView']);
-            _paq.push(['enableLinkTracking']);
-            (function() {
-                var u="https://analytics.carolinenoyer.fr/";
-                _paq.push(['setTrackerUrl', u+'matomo.php']);
-                _paq.push(['setSiteId', '1']);
-                var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-                g.async=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
-            })();
-        </script>
-        {% endif %}
-        {# End Matomo Code #}
     </head>
     <body>
         <div class="main" id="{{ current_page.slug ?? 'home' }}">
             {{ include('components/header.html.twig') }}
-
-            {{ include('components/menu_mobile.html.twig') }}
 
             <main>
                 {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
@@ -133,6 +120,8 @@
         </div>
 
         {{ include('components/footer.html.twig') }}
+        {# Matomo is loaded by consent_controller.js once the visitor accepts #}
+        {{ include('components/cookie_consent.html.twig') }}
 
     </body>
 </html>

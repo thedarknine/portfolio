@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -24,10 +26,11 @@ use Symfony\Component\Routing\Attribute\Route;
 #[AdminDashboard(routePath: '/backstage', routeName: 'admin')]
 class DashboardController extends AbstractDashboardController
 {
-    public function __construct(private AdminDashboardService $dashboard)
+    public function __construct(private readonly AdminDashboardService $dashboard)
     {
     }
 
+    #[\Override]
     public function index(): Response
     {
         return $this->render('admin/dashboard.html.twig', [
@@ -35,6 +38,7 @@ class DashboardController extends AbstractDashboardController
         ]);
     }
 
+    #[\Override]
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -42,6 +46,7 @@ class DashboardController extends AbstractDashboardController
             ->setDefaultColorScheme('dark');
     }
 
+    #[\Override]
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Tableau de bord', 'fa fa-home');
@@ -80,6 +85,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Retour au site', 'fa fa-arrow-left', 'app_home');
     }
 
+    #[\Override]
     public function configureAssets(): Assets
     {
         return parent::configureAssets()

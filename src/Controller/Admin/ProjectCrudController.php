@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -32,7 +32,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 class ProjectCrudController extends AbstractCrudController
 {
     public function __construct(
-        private AdminUrlGenerator $adminUrlGenerator,
+        private readonly AdminUrlGenerator $adminUrlGenerator,
     ) {
     }
 
@@ -41,6 +41,7 @@ class ProjectCrudController extends AbstractCrudController
         return Project::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -51,6 +52,7 @@ class ProjectCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
@@ -62,6 +64,7 @@ class ProjectCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -77,7 +80,7 @@ class ProjectCrudController extends AbstractCrudController
 
         yield TextField::new('logo', 'Fichier Logo')
             ->setHelp('Exemple : logo-project.png (dans public/images/projects/)')
-            ->formatValue(function ($value, $entity) {
+            ->formatValue(function ($value, $entity): string {
                 if (!$value) {
                     return '<span class="text-muted">Aucun</span>';
                 }
@@ -85,7 +88,7 @@ class ProjectCrudController extends AbstractCrudController
                 return sprintf(
                     '<img src="/images/projects/%s" class="bg-white rounded" style="max-height: 30px; max-width: 30px; object-fit: contain;" alt="%s">',
                     $value,
-                    htmlspecialchars($entity->getName()),
+                    htmlspecialchars((string) $entity->getName()),
                 );
             });
 
@@ -94,6 +97,10 @@ class ProjectCrudController extends AbstractCrudController
 
         yield BooleanField::new('published', 'Publié')
             ->setFormTypeOption('attr', ['checked' => true]);
+
+        yield BooleanField::new('fullWidth', 'Pleine largeur')
+            ->setHelp('La carte occupe toute la largeur de la grille, avec des captures plus grandes.')
+            ->hideOnIndex();
 
         yield TextField::new('period', 'Période')
             ->setHelp('Exemple : Janvier - Mars ou 6 mois')

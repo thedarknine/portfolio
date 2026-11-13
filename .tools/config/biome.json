@@ -1,0 +1,73 @@
+{
+    "$schema": "../../node_modules/@biomejs/biome/configuration_schema.json",
+    "root": false,
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true
+    },
+    "files": {
+        "includes": [
+            "assets/**",
+            "!assets/vendor/**",
+            "!assets/icons/**",
+            "!assets/controllers/csrf_protection_controller.js"
+        ]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineWidth": 200
+    },
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "preset": "recommended",
+            "complexity": {
+                "noImportantStyles": "off"
+            },
+            "style": {
+                "noUselessElse": "error"
+            },
+            "correctness": {
+                "noUnusedImports": "error"
+            }
+        }
+    },
+    "css": {
+        "formatter": {
+            "quoteStyle": "double"
+        },
+        "parser": {
+            "tailwindDirectives": true
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "single",
+            "trailingCommas": "all",
+            "semicolons": "always",
+            "arrowParentheses": "always",
+            "bracketSpacing": true
+        }
+    },
+    "assist": {
+        "enabled": true,
+        "actions": {
+            "source": {
+                "organizeImports": "on"
+            }
+        }
+    },
+    "overrides": [
+        {
+            "includes": [
+                "*.twig"
+            ],
+            "formatter": {
+                "indentWidth": 4
+            }
+        }
+    ]
+}

@@ -1,0 +1,97 @@
+# https://taskfile.dev
+version: '3'
+
+# UI_NESTED hides the success box of each quality check when run from quality:all
+# rector only shows the changes by default: add fix=1 to apply them (task quality:rector fix=1)
+
+tasks:
+    all:
+        desc: Run all quality checks - phpstan, deptrac, rector, audit
+        vars:
+            START: { sh: date +%s }
+        cmds:
+            - '{{.UI}} title "🔍 Running all quality checks"'
+            - task: phpstan
+              vars: { NESTED: '1' }
+            - task: deptrac
+              vars: { NESTED: '1' }
+            - task: rector
+              vars: { NESTED: '1', NO_REFACTOR: '{{.NO_REFACTOR}}' }
+            - task: audit
+              vars: { NESTED: '1' }
+            - '{{.UI}} elapsed {{.START}}'
+            - '{{.UI}} success "All quality checks passed."'
+
+    phpstan:
+        desc: Analyse PHP code with PHPStan (task quality:phpstan -- --generate-baseline)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔬 Analysing PHP code with PHPStan"'
+            # The Symfony extension reads the compiled dev container
+            - >-
+              {{.EXEC}} bin/console cache:warmup --env=dev --quiet
+              || { {{.UI}} error "Symfony cache warmup failed."; exit 1; }
+            - >-
+              {{.EXEC}} vendor/bin/phpstan analyse --memory-limit=512M
+              --configuration={{.CONFIG_DIR}}/phpstan.neon {{.CLI_ARGS}}
+              || { {{.UI}} error "PHPStan found issues."; exit 1; }
+            - '{{.UI}} success "PHPStan analysis completed."'
+
+    deptrac:
+        desc: Check the dependencies between layers with Deptrac
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🧱 Checking the layer dependencies with Deptrac"'
+            - >-
+              {{.EXEC}} vendor/bin/deptrac analyse --config-file={{.CONFIG_DIR}}/deptrac.yaml
+              --cache-file={{.TOOLS_DIR}}/cache/.deptrac.cache
+              || { {{.UI}} error "Deptrac found violations."; exit 1; }
+            - '{{.UI}} success "Deptrac analysis completed."'
+
+    rector:
+        desc: Check code upgrades and refactorings with Rector (fix=1)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        vars:
+            # NO_REFACTOR is set by "task qa": fix=1 then only shows the changes
+            APPLY: '{{if and .fix (not .NO_REFACTOR)}}1{{end}}'
+        cmds:
+            - '{{.UI}} subtitle "🛠️ {{if .APPLY}}Applying{{else}}Checking{{end}} Rector refactorings"'
+            # withSymfonyContainerXml reads the compiled dev container
+            - >-
+              {{.EXEC}} bin/console cache:warmup --env=dev --quiet
+              || { {{.UI}} error "Symfony cache warmup failed."; exit 1; }
+            - >-
+              {{.EXEC}} vendor/bin/rector process --config {{.CONFIG_DIR}}/rector.php
+              {{if not .APPLY}}--dry-run{{end}} {{.CLI_ARGS}}
+              || { {{.UI}} error "Rector found changes." "Apply them with: task quality:rector fix=1"; exit 1; }
+            - '{{.UI}} success "Rector {{if .APPLY}}refactorings applied{{else}}found nothing to change{{end}}."'
+
+    audit:
+        desc: Check the Composer and pnpm dependencies for known vulnerabilities
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🛡️ Auditing the dependencies"'
+            # Also reports abandoned Composer packages
+            - >-
+              {{.EXEC}} composer audit
+              || { {{.UI}} error "Composer audit failed." "Update: task symfony:composer -- update <package>"; exit 1; }
+            # Only the runtime dependencies block: the dev tools (lighthouse, pa11y, eslint...) never reach production.
+            # Full report: task symfony:pnpm -- audit
+            - >-
+              {{.EXEC}} pnpm audit --prod
+              || { {{.UI}} error "pnpm audit failed." "Update: task symfony:pnpm -- update <package>"; exit 1; }
+            - '{{.UI}} success "No known vulnerabilities."'
+
+    grumphp:
+        desc: Run the GrumPHP pre-commit checks on the whole project
+        cmds:
+            - '{{.UI}} subtitle "🐘 Running GrumPHP checks"'
+            - '{{.EXEC}} vendor/bin/grumphp run {{.CLI_ARGS}} || { {{.UI}} error "GrumPHP checks failed."; exit 1; }'
+            - '{{.UI}} success "GrumPHP checks passed."'
+
+    hooks:
+        desc: Reinstall the GrumPHP git hooks - composer install already does it
+        cmds:
+            - '{{.UI}} subtitle "🪝 Installing the git hooks"'
+            - '{{.EXEC}} vendor/bin/grumphp git:init || { {{.UI}} error "Git hooks installation failed."; exit 1; }'
+            - '{{.UI}} success "Git hooks installed." "Commits run the GrumPHP checks: keep the containers up."'

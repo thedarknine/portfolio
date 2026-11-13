@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Controller;
@@ -13,11 +13,12 @@ namespace App\Tests\Integration\Controller;
 use App\Entity\PageInfo;
 use App\Enum\PageCategory;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class HomeControllerTest extends WebTestCase
 {
-    private $client;
+    private KernelBrowser $client;
     private EntityManagerInterface $entityManager;
 
     protected function setUp(): void
@@ -25,7 +26,7 @@ class HomeControllerTest extends WebTestCase
         $this->client        = static::createClient();
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
 
-        $projectDir = static::getContainer()->getParameter('kernel.project_dir');
+        static::getContainer()->getParameter('kernel.project_dir');
 
         $this->createRequiredPages();
     }
@@ -70,7 +71,7 @@ class HomeControllerTest extends WebTestCase
         // Example to force a page in the navigation list if your test database is empty:
         $pageRepo = $this->entityManager->getRepository(PageInfo::class);
         if (null === $pageRepo->findOneBy(['technicalName' => 'experience'])) {
-            $page = (new PageInfo())
+            $page = new PageInfo()
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
                 ->setCategory(PageCategory::CAREER)

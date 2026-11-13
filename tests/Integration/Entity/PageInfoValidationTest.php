@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -13,6 +13,7 @@ namespace App\Tests\Integration\Entity;
 use App\Entity\PageInfo;
 use App\Enum\PageCategory;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -33,9 +34,9 @@ class PageInfoValidationTest extends KernelTestCase
     public function testValidPageInfoHasNoViolation(): void
     {
         $enumCases       = PageCategory::cases();
-        $defaultCategory = !empty($enumCases) ? $enumCases[0] : null;
+        $defaultCategory = $enumCases[0];
 
-        $page = (new PageInfo())
+        $page = new PageInfo()
             ->setTitle('Expérience')
             ->setSlug('experience')
             ->setTechnicalName('experience')
@@ -62,7 +63,7 @@ class PageInfoValidationTest extends KernelTestCase
      */
     public function testBlankFieldsTriggerViolations(): void
     {
-        $page = (new PageInfo())
+        $page = new PageInfo()
             ->setTitle('Page Vide')
             ->setSlug('page-vide')
             ->setTechnicalName('')
@@ -76,7 +77,7 @@ class PageInfoValidationTest extends KernelTestCase
 
         $this->assertGreaterThan(0, count($errors));
 
-        $paths = array_map(fn ($e) => $e->getPropertyPath(), iterator_to_array($errors));
+        $paths = array_map(fn (ConstraintViolationInterface $e): string => $e->getPropertyPath(), iterator_to_array($errors));
         $this->assertContains('technicalName', $paths);
         $this->assertContains('subtitle', $paths);
     }
@@ -87,9 +88,9 @@ class PageInfoValidationTest extends KernelTestCase
     public function testNegativePositionTriggerViolation(): void
     {
         $enumCases       = PageCategory::cases();
-        $defaultCategory = !empty($enumCases) ? $enumCases[0] : null;
+        $defaultCategory = $enumCases[0];
 
-        $page = (new PageInfo())
+        $page = new PageInfo()
             ->setTitle('Page Mal Rangée')
             ->setSlug('page-mal-rangee')
             ->setTechnicalName('mal-rangee')
@@ -115,7 +116,6 @@ class PageInfoValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($page);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($page, 88);
 
         $this->assertSame(88, $page->getId());
@@ -209,7 +209,7 @@ class PageInfoValidationTest extends KernelTestCase
 
     private function createValidPage(): PageInfo
     {
-        return (new PageInfo())
+        return new PageInfo()
             ->setTitle('Accueil')
             ->setSlug(uniqid('page-', true))
             ->setTechnicalName(uniqid('page-', true))

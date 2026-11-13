@@ -1,0 +1,36 @@
+# Weekly update pull requests. Minor and patch updates are grouped into one pull request per
+# ecosystem to limit the noise; major updates get their own pull request.
+# Dependabot reads this file on the default branch (main) but targets develop, like every change:
+# updates reach main through the usual develop -> main pull request, validated by the CI.
+version: 2
+updates:
+    - package-ecosystem: github-actions
+      directory: /
+      target-branch: develop
+      schedule:
+          interval: weekly
+      commit-message:
+          prefix: ci
+
+    - package-ecosystem: composer
+      directory: /
+      target-branch: develop
+      schedule:
+          interval: weekly
+      commit-message:
+          prefix: build
+      groups:
+          composer-minor-patch:
+              update-types: [minor, patch]
+
+    # pnpm projects use the npm ecosystem (pnpm-lock.yaml is supported)
+    - package-ecosystem: npm
+      directory: /
+      target-branch: develop
+      schedule:
+          interval: weekly
+      commit-message:
+          prefix: build
+      groups:
+          npm-minor-patch:
+              update-types: [minor, patch]

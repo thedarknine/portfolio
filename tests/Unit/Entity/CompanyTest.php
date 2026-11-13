@@ -1,17 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Unit\Entity;
 
 use App\Entity\Company;
 use App\Entity\Experience;
+use App\Entity\Skill;
+use App\Entity\SkillType;
 use PHPUnit\Framework\TestCase;
 
 class CompanyTest extends TestCase
@@ -25,9 +29,7 @@ class CompanyTest extends TestCase
         $experience->setCompany($company);
 
         // Force add to company's collection if entity doesn't do it in setCompany
-        if (method_exists($company, 'addExperience')) {
-            $company->addExperience($experience);
-        }
+        $company->addExperience($experience);
 
         $this->assertSame($company, $experience->getCompany());
 
@@ -41,13 +43,11 @@ class CompanyTest extends TestCase
 
     public function testSkillTypeRemoveSkillClearsRelation(): void
     {
-        $type  = new \App\Entity\SkillType();
-        $skill = new \App\Entity\Skill();
+        $type  = new SkillType();
+        $skill = new Skill();
 
         $skill->setSkillType($type);
-        if (method_exists($type, 'addSkill')) {
-            $type->addSkill($skill);
-        }
+        $type->addSkill($skill);
 
         $type->removeSkill($skill);
 

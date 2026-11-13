@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -13,6 +15,7 @@ namespace App\Tests\Integration\Entity;
 use App\Entity\Project;
 use App\Entity\ProjectTag;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
+use Symfony\Component\Validator\ConstraintViolationInterface;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -32,7 +35,7 @@ class ProjectTagValidationTest extends KernelTestCase
      */
     public function testValidProjectTagHasNoViolation(): void
     {
-        $tag = (new ProjectTag())
+        $tag = new ProjectTag()
             ->setName('Backend')
             ->setSlug('backend')
             ->setPosition(0);
@@ -49,7 +52,7 @@ class ProjectTagValidationTest extends KernelTestCase
      */
     public function testBlankNameTriggersViolation(): void
     {
-        $tag = (new ProjectTag())
+        $tag = new ProjectTag()
             ->setName('')
             ->setSlug('backend')
             ->setPosition(0);
@@ -58,7 +61,7 @@ class ProjectTagValidationTest extends KernelTestCase
 
         $this->assertGreaterThan(0, count($errors));
 
-        $paths = array_map(fn ($e) => $e->getPropertyPath(), iterator_to_array($errors));
+        $paths = array_map(fn (ConstraintViolationInterface $e): string => $e->getPropertyPath(), iterator_to_array($errors));
         $this->assertContains('name', $paths);
     }
 
@@ -70,7 +73,7 @@ class ProjectTagValidationTest extends KernelTestCase
      */
     public function testNameTooLongTriggersViolation(): void
     {
-        $tag = (new ProjectTag())
+        $tag = new ProjectTag()
             ->setName(str_repeat('X', 121))
             ->setSlug('backend')
             ->setPosition(0);
@@ -79,7 +82,7 @@ class ProjectTagValidationTest extends KernelTestCase
 
         $this->assertGreaterThan(0, count($errors));
 
-        $paths = array_map(fn ($e) => $e->getPropertyPath(), iterator_to_array($errors));
+        $paths = array_map(fn (ConstraintViolationInterface $e): string => $e->getPropertyPath(), iterator_to_array($errors));
         $this->assertContains('name', $paths);
     }
 
@@ -88,13 +91,13 @@ class ProjectTagValidationTest extends KernelTestCase
      */
     public function testMissingPositionTriggersViolation(): void
     {
-        $tag = (new ProjectTag())
+        $tag = new ProjectTag()
             ->setName('Backend')
             ->setSlug('backend');
 
         $errors = $this->validator->validate($tag);
 
-        $paths = array_map(fn ($e) => $e->getPropertyPath(), iterator_to_array($errors));
+        $paths = array_map(fn (ConstraintViolationInterface $e): string => $e->getPropertyPath(), iterator_to_array($errors));
         $this->assertContains('position', $paths);
     }
 
@@ -103,14 +106,14 @@ class ProjectTagValidationTest extends KernelTestCase
      */
     public function testNegativePositionTriggersViolation(): void
     {
-        $tag = (new ProjectTag())
+        $tag = new ProjectTag()
             ->setName('Backend')
             ->setSlug('backend')
             ->setPosition(-1);
 
         $errors = $this->validator->validate($tag);
 
-        $paths = array_map(fn ($e) => $e->getPropertyPath(), iterator_to_array($errors));
+        $paths = array_map(fn (ConstraintViolationInterface $e): string => $e->getPropertyPath(), iterator_to_array($errors));
         $this->assertContains('position', $paths);
     }
 
@@ -126,7 +129,7 @@ class ProjectTagValidationTest extends KernelTestCase
 
     public function testCanBePublished(): void
     {
-        $tag = (new ProjectTag())->setPublished(true);
+        $tag = new ProjectTag()->setPublished(true);
 
         $this->assertTrue($tag->isPublished());
     }
@@ -140,7 +143,6 @@ class ProjectTagValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($tag);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($tag, 42);
 
         $this->assertSame(42, $tag->getId());
@@ -189,7 +191,7 @@ class ProjectTagValidationTest extends KernelTestCase
 
     public function testToStringReturnsName(): void
     {
-        $tag = (new ProjectTag())->setName('Frontend');
+        $tag = new ProjectTag()->setName('Frontend');
 
         $this->assertSame('Frontend', (string) $tag);
     }

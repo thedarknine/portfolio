@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -32,7 +32,7 @@ class SkillTypeValidationTest extends KernelTestCase
      */
     public function testValidSkillTypeHasNoViolation(): void
     {
-        $skillType = (new SkillType())
+        $skillType = new SkillType()
             ->setName('Développement Back-End')
             ->setSlug('developpement-back-end')
             ->setDescription('Compétences liées aux architectures serveurs et API.')
@@ -72,7 +72,7 @@ class SkillTypeValidationTest extends KernelTestCase
      */
     public function testNegativePositionTriggerViolation(): void
     {
-        $skillType = (new SkillType())
+        $skillType = new SkillType()
             ->setName('Design UX/UI')
             ->setSlug('design-ux-ui')
             ->setPosition(-2);
@@ -92,7 +92,6 @@ class SkillTypeValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($skillType);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($skillType, 404);
 
         $this->assertSame(404, $skillType->getId());

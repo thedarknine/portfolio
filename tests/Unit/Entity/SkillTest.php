@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Unit\Entity;
@@ -29,21 +29,16 @@ class SkillTest extends TestCase
         // 1. Add test
         $skill->addExperience($experience);
         $this->assertTrue($skill->getExperiences()->contains($experience));
-        // If your Experience entity has a getSkills() or contains() method:
-        if (method_exists($experience, 'getSkills')) {
-            $this->assertTrue($experience->getSkills()->contains($skill), 'The skill should have been added to the experience.');
-        }
+        $this->assertTrue($experience->getSkills()->contains($skill), 'The skill should have been added to the experience.');
 
         // 2. Remove test
         $skill->removeExperience($experience);
         $this->assertFalse($skill->getExperiences()->contains($experience));
 
-        if (method_exists($experience, 'getSkills')) {
-            $this->assertFalse(
-                $experience->getSkills()->contains($skill),
-                'Skill should have been removed from the experience as well.',
-            );
-        }
+        $this->assertFalse(
+            $experience->getSkills()->contains($skill),
+            'Skill should have been removed from the experience as well.',
+        );
     }
 
     /**

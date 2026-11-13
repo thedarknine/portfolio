@@ -1,17 +1,10 @@
 {% extends 'layout_error.html.twig' %}
 
-{% block title %}Page non trouvée — 404{% endblock %}
-
-{% block status_badge %}throw new PageNotFoundException(){% endblock %}
-
-{% block number %}404{% endblock %}
-
-{% block tagline %}Page introuvable{% endblock %}
-
-{% block hero_title %}Perdu dans le code ?{% endblock %}
-
-{% block hero_desc %}
-Le lien que vous avez suivi a peut-être été refactorisé,
-ou l'objet que vous cherchez n'a pas encore été modelé.
-Ne restez pas dans l'ombre du code.
-{% endblock %}
+{% set error = {
+    code: '404',
+    label: 'page introuvable',
+    title: 'Cette page s’est perdue en chemin.',
+    lead: 'Le lien a peut-être changé, ou la page n’a jamais existé. Le reste du site, lui, est bien là.',
+    command: 'cd',
+    output: 'cd: aucun fichier ou dossier de ce nom',
+} %}

@@ -4,19 +4,20 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Repository;
 
 use App\Entity\ResourceLink;
 use App\Repository\ResourceLinkRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ResourceLinkRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private ResourceLinkRepository $resourceLinkRepository;
 
     protected function setUp(): void
@@ -43,7 +44,7 @@ class ResourceLinkRepositoryTest extends KernelTestCase
     public function testFindAllAsArrayReturnsSortedArrays(): void
     {
         // 1. Insert 3 resource links in random order
-        $linkLinkedIn = (new ResourceLink())
+        $linkLinkedIn = new ResourceLink()
             ->setTitle('LinkedIn')
             ->setSlug('linkedin')
             ->setUrl('https://linkedin.com/in/mon-profil')
@@ -51,7 +52,7 @@ class ResourceLinkRepositoryTest extends KernelTestCase
             ->setPosition(2)
             ->setInHero(true);
 
-        $linkGitHub = (new ResourceLink())
+        $linkGitHub = new ResourceLink()
             ->setTitle('GitHub')
             ->setSlug('github')
             ->setUrl('https://github.com/mon-pseudo')
@@ -59,7 +60,7 @@ class ResourceLinkRepositoryTest extends KernelTestCase
             ->setPosition(1)
             ->setInHero(true);
 
-        $linkAutre = (new ResourceLink())
+        $linkAutre = new ResourceLink()
             ->setTitle('Site Externe')
             ->setSlug('site-externe')
             ->setUrl('https://example.com')
@@ -77,9 +78,6 @@ class ResourceLinkRepositoryTest extends KernelTestCase
 
         // 3. Assertions
         $this->assertCount(3, $results);
-
-        // Validate that Doctrine did not hydrate objects (expected return : array)
-        $this->assertIsArray($results[0], 'Each row must be an associative array.');
 
         // Check sorting ASC on the 'position' field (GitHub [1] -> LinkedIn [2] -> Site Externe [3])
         $this->assertSame('GitHub', $results[0]['title'], 'The link positioned at 1 (GitHub) must be first.');

@@ -1,11 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -18,6 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
@@ -39,6 +42,7 @@ class ExperienceItemCrudController extends AbstractCrudController
         return ExperienceItem::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -53,11 +57,13 @@ class ExperienceItemCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureFilters(Filters $filters): Filters
     {
         return $filters->add(EntityFilter::new('experience')->autocomplete());
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $actions = $this->addSortableActions($actions);
@@ -71,6 +77,7 @@ class ExperienceItemCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -87,19 +94,13 @@ class ExperienceItemCrudController extends AbstractCrudController
             ->setHelp('Détaillez vos accomplissements majeurs pour ce point.')
             ->hideOnIndex(); // Masqué pour garder le tableau lisible
 
-        // Manage the picto (optional, can be an emoji or a short text)
-        yield TextField::new('picto', 'Picto')
-            ->setHelp('Exemple : Copier un emoji.')
-            ->formatValue(function ($value, $entity) {
-                if (!$value) {
-                    return '<span class="text-muted">Aucun</span>';
-                }
-
-                return sprintf('<span class="">%s</span>', htmlspecialchars($value));
-            });
+        // Picto: a Hugeicons name picked from a curated list
+        yield ChoiceField::new('picto', 'Picto')
+            ->setChoices(ExperienceItem::PICTOS)
+            ->setHelp('Icône affichée devant le titre sur la page Expérience.');
 
         yield IntegerField::new('position', 'Ordre')
-            ->setHelp('Permet de classer les détails au sein d\'une même expérience.')
+            ->setHelp('Ordre au sein de l\'expérience, en commençant à 0.')
             ->hideOnIndex();
     }
 }

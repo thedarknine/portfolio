@@ -4,20 +4,22 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Controller;
 
+use App\Controller\SecurityController;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityControllerTest extends WebTestCase
 {
-    private $client;
+    private KernelBrowser $client;
     private EntityManagerInterface $entityManager;
 
     protected function setUp(): void
@@ -155,7 +157,7 @@ class SecurityControllerTest extends WebTestCase
     {
         // 1. Instantiate the controller directly (without going through the Kernel)
         $container  = static::getContainer();
-        $controller = $container->get(\App\Controller\SecurityController::class);
+        $controller = $container->get(SecurityController::class);
 
         // 2. Expect the LogicException from Symfony to be thrown
         $this->expectException(\LogicException::class);
@@ -172,7 +174,7 @@ class SecurityControllerTest extends WebTestCase
     {
         $passwordHasher = static::getContainer()->get(UserPasswordHasherInterface::class);
 
-        $admin = (new User())
+        $admin = new User()
             ->setEmail('studiotest@carolinenoyer.fr')
             ->setRoles(['ROLE_ADMIN']);
 

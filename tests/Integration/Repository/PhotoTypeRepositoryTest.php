@@ -4,19 +4,20 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Repository;
 
 use App\Entity\PhotoType;
 use App\Repository\PhotoTypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PhotoTypeRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private PhotoTypeRepository $photoTypeRepository;
 
     protected function setUp(): void
@@ -43,9 +44,9 @@ class PhotoTypeRepositoryTest extends KernelTestCase
     public function testGetPhotoTypesOrdersByPositionAscending(): void
     {
         // Insert photo types in random order to test the QueryBuilder
-        $type2 = (new PhotoType())->setName('Portraits')->setSlug('portraits')->setPosition(2);
-        $type1 = (new PhotoType())->setName('Paysages')->setSlug('paysages')->setPosition(1);
-        $type3 = (new PhotoType())->setName('Macro')->setSlug('macro')->setPosition(3);
+        $type2 = new PhotoType()->setName('Portraits')->setSlug('portraits')->setPosition(2);
+        $type1 = new PhotoType()->setName('Paysages')->setSlug('paysages')->setPosition(1);
+        $type3 = new PhotoType()->setName('Macro')->setSlug('macro')->setPosition(3);
 
         $this->entityManager->persist($type2);
         $this->entityManager->persist($type1);

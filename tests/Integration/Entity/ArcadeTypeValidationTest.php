@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Entity;
@@ -29,7 +29,7 @@ class ArcadeTypeValidationTest extends KernelTestCase
      */
     public function testValidArcadeTypeHasNoViolation(): void
     {
-        $arcadeType = (new ArcadeType())
+        $arcadeType = new ArcadeType()
             ->setName('Borne Bartop')
             ->setSlug('borne-bartop')
             ->setPosition(1);
@@ -47,7 +47,7 @@ class ArcadeTypeValidationTest extends KernelTestCase
      */
     public function testBlankNameTriggerViolation(): void
     {
-        $arcadeType = (new ArcadeType())
+        $arcadeType = new ArcadeType()
             ->setName('')
             ->setPosition(2);
 
@@ -66,7 +66,6 @@ class ArcadeTypeValidationTest extends KernelTestCase
 
         $reflection = new \ReflectionClass($arcadeType);
         $property   = $reflection->getProperty('id');
-        $property->setAccessible(true);
         $property->setValue($arcadeType, 3);
 
         $this->assertSame(3, $arcadeType->getId());

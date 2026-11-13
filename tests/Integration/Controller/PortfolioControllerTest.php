@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Controller;
@@ -19,15 +19,16 @@ use App\Entity\PhotoType;
 use App\Enum\PageCategory;
 use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
+use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\Filesystem\Filesystem;
 
 class PortfolioControllerTest extends WebTestCase
 {
-    private $client;
+    private KernelBrowser $client;
     private EntityManagerInterface $entityManager;
     private Filesystem $filesystem;
-    private string $publicImagesDir;
+    private string $imagesDir;
 
     protected function setUp(): void
     {
@@ -35,8 +36,10 @@ class PortfolioControllerTest extends WebTestCase
         $this->entityManager = static::getContainer()->get('doctrine.orm.entity_manager');
         $this->filesystem    = new Filesystem();
 
-        $projectDir            = static::getContainer()->getParameter('kernel.project_dir');
-        $this->publicImagesDir = $projectDir . '/public/images';
+        // Same directory as GalleryService in the test env (var/tests/images), never public/
+        $imagesDir = static::getContainer()->getParameter('app.images_dir');
+        \assert(\is_string($imagesDir));
+        $this->imagesDir = $imagesDir;
 
         $this->createRequiredPages();
         $this->setupFixturesForMediaPages();
@@ -46,9 +49,9 @@ class PortfolioControllerTest extends WebTestCase
     {
         // Clean all temporary directories after each test
         $foldersToRemove = [
-            $this->publicImagesDir . '/arcade/bartop',
-            $this->publicImagesDir . '/creations/sculptures',
-            $this->publicImagesDir . '/photos/paysages',
+            $this->imagesDir . '/arcade/bartop',
+            $this->imagesDir . '/creations/sculptures',
+            $this->imagesDir . '/photos/paysages',
         ];
 
         foreach ($foldersToRemove as $folder) {
@@ -105,14 +108,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageIsSuccessful(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Tech Corp')
             ->setSlug('tech-corp')
             ->setLogo('tech-corp.png')
             ->setCity('Tech City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setSlug('senior-developer')
             ->setDescription('A great experience')
@@ -147,14 +150,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageWithNonExistentPageSlugReturns404(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Tech Corp')
             ->setSlug('tech-corp')
             ->setLogo('tech-corp.png')
             ->setCity('Tech City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setSlug('senior-developer')
             ->setDescription('A great experience')
@@ -177,14 +180,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageRendersCorrectTemplate(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Tech Corp')
             ->setSlug('tech-corp')
             ->setLogo('tech-corp.png')
             ->setCity('Tech City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Senior Developer')
             ->setSlug('senior-developer')
             ->setDescription('A great experience')
@@ -210,14 +213,14 @@ class PortfolioControllerTest extends WebTestCase
     public function testExperienceSlugPageBreadcrumbData(): void
     {
         // Create a company and experience for testing
-        $company = (new Company())
+        $company = new Company()
             ->setName('Acme Corporation')
             ->setSlug('acme-corporation')
             ->setLogo('acme-corporation.png')
             ->setCity('Acme City')
             ->setDepartment(63);
 
-        $experience = (new Experience())
+        $experience = new Experience()
             ->setTitle('Frontend Developer')
             ->setSlug('frontend-developer')
             ->setDescription('Building amazing UIs')
@@ -250,15 +253,15 @@ class PortfolioControllerTest extends WebTestCase
 
         // IF case: "bartop" type will have its directory and a file
         if (null === $arcadeRepo->findOneBy(['slug' => 'bartop'])) {
-            $this->entityManager->persist((new ArcadeType())->setName('Bartop')->setSlug('bartop'));
+            $this->entityManager->persist(new ArcadeType()->setName('Bartop')->setSlug('bartop'));
         }
-        $arcadeDir = $this->publicImagesDir . '/arcade/bartop';
+        $arcadeDir = $this->imagesDir . '/arcade/bartop';
         $this->filesystem->mkdir($arcadeDir);
         $this->filesystem->touch($arcadeDir . '/cabinet.jpg');
 
         // ELSE case: "dossier-fantome-arcade" type will not have a physical directory
         if (null === $arcadeRepo->findOneBy(['slug' => 'dossier-fantome-arcade'])) {
-            $this->entityManager->persist((new ArcadeType())->setName('Fantome')->setSlug('dossier-fantome-arcade'));
+            $this->entityManager->persist(new ArcadeType()->setName('Fantome')->setSlug('dossier-fantome-arcade'));
         }
 
         // ==========================================
@@ -268,15 +271,15 @@ class PortfolioControllerTest extends WebTestCase
 
         // IF case: "sculptures" type will have its directory and a file
         if (null === $creationRepo->findOneBy(['slug' => 'sculptures'])) {
-            $this->entityManager->persist((new CreationType())->setName('Sculptures')->setSlug('sculptures'));
+            $this->entityManager->persist(new CreationType()->setName('Sculptures')->setSlug('sculptures'));
         }
-        $creationDir = $this->publicImagesDir . '/creations/sculptures';
+        $creationDir = $this->imagesDir . '/creations/sculptures';
         $this->filesystem->mkdir($creationDir);
         $this->filesystem->touch($creationDir . '/pot-argile.jpg');
 
         // ELSE case: "dossier-fantome-creations" type will not have a physical directory
         if (null === $creationRepo->findOneBy(['slug' => 'dossier-fantome-creations'])) {
-            $this->entityManager->persist((new CreationType())->setName('Fantome')->setSlug('dossier-fantome-creations'));
+            $this->entityManager->persist(new CreationType()->setName('Fantome')->setSlug('dossier-fantome-creations'));
         }
 
         // ==========================================
@@ -286,16 +289,16 @@ class PortfolioControllerTest extends WebTestCase
 
         // IF case: "paysages" type will have its directory and files
         if (null === $photoRepo->findOneBy(['slug' => 'paysages'])) {
-            $this->entityManager->persist((new PhotoType())->setName('Paysages')->setSlug('paysages'));
+            $this->entityManager->persist(new PhotoType()->setName('Paysages')->setSlug('paysages'));
         }
-        $photoDir = $this->publicImagesDir . '/photos/paysages';
+        $photoDir = $this->imagesDir . '/photos/paysages';
         $this->filesystem->mkdir($photoDir);
         $this->filesystem->touch($photoDir . '/01-lever_de_soleil.jpg');
         $this->filesystem->touch($photoDir . '/sans_tiret.jpg');
 
         // ELSE case: "dossier-fantome-photos" type will not have a physical directory
         if (null === $photoRepo->findOneBy(['slug' => 'dossier-fantome-photos'])) {
-            $this->entityManager->persist((new PhotoType())->setName('Fantome')->setSlug('dossier-fantome-photos'));
+            $this->entityManager->persist(new PhotoType()->setName('Fantome')->setSlug('dossier-fantome-photos'));
         }
 
         $this->entityManager->flush();
@@ -310,7 +313,7 @@ class PortfolioControllerTest extends WebTestCase
         // Example to force a page in the navigation list if your test database is empty:
         $pageRepo = $this->entityManager->getRepository(PageInfo::class);
         if (null === $pageRepo->findOneBy(['technicalName' => 'experience'])) {
-            $page = (new PageInfo())
+            $page = new PageInfo()
                 ->setTitle('Expérience')
                 ->setTechnicalName('experience')
                 ->setCategory(PageCategory::CAREER)

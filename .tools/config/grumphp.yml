@@ -1,0 +1,74 @@
+# https://github.com/phpro/grumphp/blob/v2.x/doc/tasks.md
+# Hooks run on the host and call GrumPHP inside the app container (containers must be running).
+grumphp:
+    stop_on_failure: true
+    process_timeout: 120
+
+    git_hook_variables:
+        EXEC_GRUMPHP_COMMAND: docker compose exec -T app php
+
+    tasks:
+        composer:
+            no_check_publish: true
+
+        git_blacklist:
+            regexp_type: "P"
+            keywords:
+                - '\bdd\('  # "P" regexp: matches "dd(" but not "->add("
+                - 'dump\('
+                - 'var_dump\('
+                - 'die\('
+                - 'exit;'
+            triggered_by: [php, twig]
+
+        # Coding standards and static analysis on staged files only
+        phpcsfixer:
+            config: .tools/config/php-cs-fixer.php
+            config_contains_finder: true
+            allow_risky: true
+            diff: true
+            triggered_by: [php]
+
+        twigcsfixer:
+            config: .tools/config/twig-cs-fixer.php
+            paths: [templates]
+            triggered_by: [twig]
+
+        phpstan:
+            configuration: .tools/config/phpstan.neon
+            memory_limit: 512M
+            use_grumphp_paths: true
+            # Excluded from (or not in) phpstan.neon paths: if it is the only staged PHP file, PHPStan fails
+            # with "No files found"; deleted files are passed too and fail with "Path does not exist"
+            ignore_patterns: ['#^config/reference\.php$#', '#^src/DataFixtures/#', '#^migrations/#']
+            triggered_by: [php]
+
+        phpunit:
+            config_file: .tools/config/phpunit.xml
+            always_execute: false
+
+        # Conventional commits, checked in the commit-msg hook.
+        # Kept in sync with .tools/config/commitlint.config.cjs (CI).
+        git_commit_message:
+            enforce_capitalized_subject: false
+            max_subject_width: 72
+            max_body_width: 100
+            type_scope_conventions:
+                types:
+                    - build
+                    - chore
+                    - ci
+                    - docs
+                    - feat
+                    - fix
+                    - perf
+                    - refactor
+                    - revert
+                    - style
+                    - test
+
+        shell:
+            scripts:
+                - .tools/scripts/pre-commit.sh
+            metadata:
+                priority: 100

@@ -4,19 +4,20 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Repository;
 
 use App\Entity\ArcadeType;
 use App\Repository\ArcadeTypeRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class ArcadeTypeRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private ArcadeTypeRepository $arcadeTypeRepository;
 
     protected function setUp(): void
@@ -46,9 +47,9 @@ class ArcadeTypeRepositoryTest extends KernelTestCase
     public function testGetArcadeTypesOrdersByPositionAscending(): void
     {
         // Insert in random order to validate ASC sorting by QueryBuilder
-        $arcade2 = (new ArcadeType())->setName('Bartop')->setSlug('bartop')->setPosition(2);
-        $arcade1 = (new ArcadeType())->setName('Pincab')->setSlug('pincab')->setPosition(1);
-        $arcade3 = (new ArcadeType())->setName('Cocktail')->setSlug('cocktail')->setPosition(3);
+        $arcade2 = new ArcadeType()->setName('Bartop')->setSlug('bartop')->setPosition(2);
+        $arcade1 = new ArcadeType()->setName('Pincab')->setSlug('pincab')->setPosition(1);
+        $arcade3 = new ArcadeType()->setName('Cocktail')->setSlug('cocktail')->setPosition(3);
 
         $this->entityManager->persist($arcade2);
         $this->entityManager->persist($arcade1);

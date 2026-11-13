@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Repository;
@@ -13,11 +13,12 @@ namespace App\Tests\Integration\Repository;
 use App\Entity\PageInfo;
 use App\Enum\PageCategory;
 use App\Repository\PageInfoRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class PageInfoRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private PageInfoRepository $pageInfoRepository;
 
     protected function setUp(): void
@@ -61,9 +62,6 @@ class PageInfoRepositoryTest extends KernelTestCase
 
         // 3. Assertions
         $this->assertCount(3, $results);
-
-        // Verify that the results are arrays and not objects
-        $this->assertIsArray($results[0], 'The result of getArrayResult should be a raw array');
 
         // Validate the ASC order based on position (Projets [pos 1] -> Arcade [pos 2] -> Photos [pos 3])
         $this->assertSame('projets', $results[0]['slug'], 'The page "Projets" (position 1) should be first.');
@@ -122,7 +120,7 @@ class PageInfoRepositoryTest extends KernelTestCase
 
     public function testFindChildrenPagesReturnsPublishedChildrenOfGivenParent(): void
     {
-        $parent           = $this->createPage('parent-page', 'parent-page', PageCategory::CAREER, null);
+        $parent           = $this->createPage('parent-page', 'parent-page', PageCategory::CAREER);
         $publishedChild   = $this->createPage('published-child', 'published-child', PageCategory::CAREER, $parent);
         $unpublishedChild = $this->createPage('unpublished-child', 'unpublished-child', PageCategory::CAREER, $parent, false);
 
@@ -133,7 +131,7 @@ class PageInfoRepositoryTest extends KernelTestCase
 
         $result = $this->pageInfoRepository->findChildrenPages(published: true, parentId: $parent->getId());
 
-        $slugs = array_map(fn (PageInfo $page) => $page->getSlug(), $result);
+        $slugs = array_map(fn (PageInfo $page): ?string => $page->getSlug(), $result);
 
         $this->assertContains($publishedChild->getSlug(), $slugs);
         $this->assertNotContains($unpublishedChild->getSlug(), $slugs);
@@ -141,7 +139,7 @@ class PageInfoRepositoryTest extends KernelTestCase
 
     public function testFindChildrenPagesIncludesUnpublishedWhenPublishedFalse(): void
     {
-        $parent           = $this->createPage('parent-page-2', 'parent-page-2', PageCategory::CAREER, null);
+        $parent           = $this->createPage('parent-page-2', 'parent-page-2', PageCategory::CAREER);
         $unpublishedChild = $this->createPage('unpublished-child-2', 'unpublished-child-2', PageCategory::CAREER, $parent, false);
 
         $this->entityManager->persist($parent);
@@ -150,15 +148,15 @@ class PageInfoRepositoryTest extends KernelTestCase
 
         $result = $this->pageInfoRepository->findChildrenPages(published: false, parentId: $parent->getId());
 
-        $slugs = array_map(fn (PageInfo $page) => $page->getSlug(), $result);
+        $slugs = array_map(fn (PageInfo $page): ?string => $page->getSlug(), $result);
 
         $this->assertContains($unpublishedChild->getSlug(), $slugs);
     }
 
     public function testFindChildrenPagesReturnsAllChildrenWhenParentIdIsNull(): void
     {
-        $parent1 = $this->createPage('parent-a', 'parent-a', PageCategory::CAREER, null);
-        $parent2 = $this->createPage('parent-b', 'parent-b', PageCategory::CAREER, null);
+        $parent1 = $this->createPage('parent-a', 'parent-a', PageCategory::CAREER);
+        $parent2 = $this->createPage('parent-b', 'parent-b', PageCategory::CAREER);
         $child1  = $this->createPage('child-of-a', 'child-of-a', PageCategory::CAREER, $parent1);
         $child2  = $this->createPage('child-of-b', 'child-of-b', PageCategory::CAREER, $parent2);
 
@@ -168,9 +166,9 @@ class PageInfoRepositoryTest extends KernelTestCase
         $this->entityManager->persist($child2);
         $this->entityManager->flush();
 
-        $result = $this->pageInfoRepository->findChildrenPages(published: true, parentId: null);
+        $result = $this->pageInfoRepository->findChildrenPages(published: true);
 
-        $slugs = array_map(fn (PageInfo $page) => $page->getSlug(), $result);
+        $slugs = array_map(fn (PageInfo $page): ?string => $page->getSlug(), $result);
 
         $this->assertContains($child1->getSlug(), $slugs);
         $this->assertContains($child2->getSlug(), $slugs);
@@ -178,7 +176,7 @@ class PageInfoRepositoryTest extends KernelTestCase
 
     public function testFindChildrenPagesReturnsEmptyArrayWhenParentHasNoChildren(): void
     {
-        $parent = $this->createPage('lonely-parent', 'lonely-parent', PageCategory::CAREER, null);
+        $parent = $this->createPage('lonely-parent', 'lonely-parent', PageCategory::CAREER);
 
         $this->entityManager->persist($parent);
         $this->entityManager->flush();
@@ -195,7 +193,7 @@ class PageInfoRepositoryTest extends KernelTestCase
         ?PageInfo $parent = null,
         bool $published = true,
     ): PageInfo {
-        return (new PageInfo())
+        return new PageInfo()
             ->setTitle($title)
             ->setTechnicalName($slug)
             ->setSlug($slug)

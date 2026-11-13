@@ -1,374 +1,231 @@
-# Caroline Noyer - Portfolio & Lab 🚀
+# Caroline Noyer - Portfolio & Lab
 
-Bienvenue sur le dépôt de mon site personnel et portfolio (**carolinenoyer.fr**).
+Source code of my personal website and portfolio, [carolinenoyer.fr](https://carolinenoyer.fr).
 
-Ce projet va bien au-delà d'une simple vitrine : c'est un véritable **laboratoire technique** qui me sert de
-terrain d'expérimentation pour appliquer les meilleures pratiques de développement web full-stack, de
-l'architecture backend au design moderne, en passant par l'automatisation de la qualité de code.
+More than a showcase, it is my technical lab: the place where I apply and test full-stack practices,
+from the backend architecture to the design and the code quality automation. It is built on my
+[symfony-docker-template](https://github.com/thedarknine/symfony-docker-template) (Docker, Taskfile,
+QA tools, git hooks, CI), extended with the tools and the deployment specific to this site.
 
----
+## Stack
 
-## 🛠️ Stack Technique
+- **Symfony 8.1** on **PHP 8.4** (FPM, Alpine)
+- **Twig**, **Symfony UX** Icons, **AssetMapper** and **Tailwind CSS v4** (standalone binary)
+- **Doctrine ORM 3** and Migrations on **MariaDB 11.8**, the production engine and version
+- **EasyAdmin 5** back office, secured with a login form, Google Authenticator 2FA and a rate limiter
+- **Altcha** anti-spam on the contact form, **Symfony Mailer** caught by **Mailpit** in development
+- **Gedmo** extensions (sluggable, timestampable, sortable), **Carbon**, **Presta Sitemap**
+- **NelmioSecurityBundle** (CSP and security headers)
+- Front libraries through the importmap: animate.css, typed.js, PhotoSwipe
 
-### Backend & Base de données
+| Service   | Container           | Image                           | Host port     | Environment |
+| --------- | ------------------- | ------------------------------- | ------------- | ----------- |
+| `app`     | `portfolio-app`     | PHP 8.4 FPM Alpine (custom)     | -             | all         |
+| `engine`  | `portfolio-server`  | `nginx:1.30-alpine`             | `APP_PORT`    | all         |
+| `db`      | `portfolio-db`      | `mariadb:11.8`                  | `DB_PORT`     | dev         |
+| `adm`     | `portfolio-adm`     | `adminneoorg/adminneo`          | `ADM_PORT`    | dev         |
+| `mailpit` | `portfolio-mailpit` | `axllent/mailpit`               | `MAIL_PORT`   | dev         |
+| `chrome`  | `portfolio-chrome`  | `seleniarm/standalone-chromium` | -             | dev         |
 
-* **PHP >= 8.4** (Utilisation native des nouveautés du langage, modernisation et typage strict)
-* **Symfony 8.0.x** (Architecture découplée avec contrôleurs optimisés, gestion des assets via AssetMapper)
-* **Doctrine ORM 3.x** & **MySQL** (Gestion stricte des entités, migrations et fixtures)
+The MariaDB data is stored in `.docker/mysql/data` and its logs in `.docker/volumes/logs/mysql`
+(both git-ignored).
 
-### Frontend
+## Requirements
 
-* **Tailwind CSS v4** (Design moderne basé sur le *Glassmorphism*, animations CSS fluides via `animate.css`
-et transitions soignées)
-* **Twig 3.x** (Moteur de templates structuré pour une intégration propre des composants)
+- Docker with the Compose plugin (`docker compose`)
+- [Task](https://taskfile.dev/installation/) (`brew install go-task` on macOS)
+- `jq` and `lsof`, used by the health checks (`brew install jq lsof` on macOS)
+- Optional: [Bats](https://github.com/bats-core/bats-core) for `task test:bash`, Node.js for `task utils:seo-audit`
 
-### DevOps & Outillage
-
-* **Docker & Docker Compose** (Environnement multi-conteneurs : `app` (PHP), `db` (MySQL), et `engine` (Nginx))
-* **Makefile** (Point d'entrée unique et automatisé pour toutes les commandes du projet)
-
----
-
-## 📐 Qualité de Code & Automatisation
-
-Pour garantir la maintenabilité et la robustesse de l'application, une suite complète d'outils d'analyse
-statique et d'automatisation est intégrée via **GrumPHP** (les configurations sont centralisées dans le
-dossier `.tools/`).
-
-Le projet intègre notamment :
-
-* **PHPStan 2.x** (Analyse statique avec configuration stricte pour Doctrine)
-* **PHP-CS-Fixer** (Respect des standards de code PSR-12 / PER)
-* **Twig-CS-Fixer** (Linter et formateur pour les fichiers de templates)
-* **Rector** (Refactoring automatisé pour le maintien du code aux normes de PHP 8.4)
-* **Deptrac** (Analyse des dépendances architecturales et étanchéité des couches)
-* **Infection** (Mutation Testing pour valider la pertinence et la force des tests)
-* **PHPArkitect** (Validation automatique des règles de design architectural)
-* **Biome** & **Linters Node** (Formatage et linting ultra-rapide des assets front avec ESLint)
-* **Checkmake** (Linter intégré pour valider la syntaxe et la propreté du `Makefile`)
-
----
-
-## 🧰 Commandes du Makefile
-
-Le projet est entièrement piloté par un `Makefile` situé à la racine. Il sert d'interface unique pour
-orchestrer les conteneurs Docker, le serveur de développement et les outils de QA.
-
-*(Cette section sera automatiquement écrasée et mise à jour textuellement lors de l'exécution de la commande `make readme`)*
-
-<!-- MAKEFILE:START -->
-```bash
-
-  Portfolio (dev)
-  ───────────────────────────────────────────────────────────────────────────────
-
-  Usage:
-    make <target> [OPTION=value]
-
-  Available targets:
-    cs-makefile               Lint Makefile with checkmake                   
-
-  DOCKER
-    build                     Docker build                                   
-    up                        Run Docker containers                          
-    down                      Stop Docker containers                         
-    destroy                   Stop and remove Docker containers              
-    restart                   Docker restart                                 FORCE=1 to destroy and rebuild
-    shell                     Run a shell in the PHP container               
-    logs                      Show Docker logs                               LOGS_SERVICE=app|db|nginx
-    update-project            Update docker, composer and pnpm dependencies in a safe way  
-    check-project             Check project security audit                   
-
-  CHECKERS
-    doctor                    Check system requirements and project health   
-    check-tools               Check if required CLI tools are installed      
-    check-docker              Check Docker is running                        
-    check-containers          Check if Docker containers are running         
-    check-ports               Check if required ports are available or used by this project  
-    check-env                 Check .env file                                
-    check-dependencies        Check if PHP dependencies - vendor directory - are installed  
-    check-tools-directory     Check if tools configuration directory exists  
-
-  AUDIT
-    audit                     Run audit                                      AUDIT_ENV=prod|dev
-
-  DEVELOPMENT
-    cc                        Run bin/console cache:clear from docker        CC_ENV=prod|dev|test
-    composer-clear            Clear Composer cache and reinstall dependencies  
-    pnpm-clear                Clear pnpm cache and reinstall dependencies    
-    pnpm-prune                Prune unused packages                          
-    clean                     Clean temporary files: cache, coverage, logs, public build  
-    clean-build               Clean only build artifacts                     
-    clean-cache               Clean only cache and logs                      
-    clean-test                Clean PHPUnit cache and code coverage          
-    watch                     Watch Tailwind CSS changes and re-build        
-    secret                    Generate a new APP_SECRET and display it       
-    migration                 Run Doctrine migrations                        
-    fixtures                  Load Doctrine fixtures                         
-    cs                        Check all coding standards: PHP, Twig, CSS     CS_TARGET=all|php|yaml|twig|front
-    cs-php                    PHP CS Fixer                                   PHP_FIX=1 to actually fix
-    cs-yaml                   Validate YAML files                            
-    cs-twig                   Twig CS Fixer                                  TWIG_FIX=1 to actually fix
-    cs-front                  Run linters for CSS and JS                     FRONT_FIX=1 to actually fix
-    cs-fix                    Fix all coding standards: PHP, Twig, CSS       
-    lint                      Run all linting checks                         
-    lint-shell                Run shellcheck on shell scripts                
-    lint-docker               Validate Dockerfiles with hadolint             
-    lint-md                   Validate Markdown files with markdownlint      
-
-  TESTS
-    pre-commit                Run pre-commit checks                          
-    grum-install              Install GrumPHP hooks                          
-    grum-run                  Run GrumPHP checks                             
-    qa                        Run complete Quality Assurance suite: Lint, Static Analysis, Tests  
-    test                      Run PHPUnit tests without UI tests             
-    test-bash                 Run Bats tests                                 
-    qa-analyse                Run static analysis                            
-    qa-rector                 Run Rector                                     REC_FIX=1 to actually fix
-    test-mutation             Run Infection                                  
-    test-arch                 Run phparkitect                                
-    test-ui                   Run PHPUnit tests for UI group                 
-    cover                     Run PHPUnit tests with coverage                
-
-  ENVIRONMENT
-    db-dump                   Dump database                                  FILES_CLEAN=1 to clean previous
-    deploy                    Full production deployment - build + push to remote  
-    prod-build                Build and commit assets to production branch   
-    prod-deploy               Deploy to remote server - requires assets already built  
-    dev                       Switch back to development environment         
-
-  HELP
-    readme                    Update README.md Makefile section              
-    readme-check              Check if README.md is up to date               
-    help                      Show this help message                         
-
-  Examples:
-    make test.             # Run PHPUnit tests (excluding UI)
-    make cover.            # Run tests with coverage
-    make cs-php PHP_FIX=1  # Fix PHP coding standards
-    make qa                # Run full QA suite
-    make deploy            # Deploy to production
-    make dev               # Restore development environment
-
-```
-<!-- MAKEFILE:END -->
-
----
-
-## 🧠 Cheat Sheet
-
-Cette section regroupe les workflows, commandes natives Symfony/Docker et paquets utiles à conserver pour
-l'initialisation ou la maintenance de projets similaires.
-
-### 🛠️ Initialisation d'un nouveau projet (Dans Docker)
+## Getting started
 
 ```bash
-   # Configure Git identity inside the container
-    git config --global user.email "you@example.com"
-    git config --global user.name "Your Name"
-
-    # Ignore formatting commits (CS Fixer) in git blame
-    git config blame.ignoreRevsFile .git-blame-ignore-revs
-
-    # Check system requirements
-    symfony check:requirements
-
-    # Create project in a temporary folder and move it to root
-    symfony new tmp --version="8.0.*"
-    mv tmp/* . 
-    # Note: Remember to check and merge hidden files (e.g., .gitignore, .env)
-
-    # Initialize frontend
-    php bin/console tailwind:init
-    # php bin/console importmap:require jquery
+git clone git@github.com:thedarknine/portfolio.git
+cd portfolio
+task init
 ```
 
-### 🗄️ Gestion de la Base de données
+`task init` asks for the project name, slug and host ports (Enter keeps the defaults), then
+builds and starts the containers, installs the dependencies, creates the database and checks
+the project health. It can be run again at any time.
+
+To start from real content, import a dump of the production database (see `task db:dump` and
+the AdminNeo import), or load the fixtures with `task db:fixtures`.
+
+To log in to the back office, create an administrator (it asks for the email and the password):
 
 ```bash
-    # Classic migration workflow
-    make migration  # Runs make:migration + doctrine:migrations:migrate
-
-    # Run the automated fixtures pipeline (Custom composer script)
-    composer run pipeline:fixtures
-    # This script generates test fixtures, drops the test database, recreates it, and loads the fixtures cleanly.
-
-    # Complete database reset with purge and fixtures loading
-    php bin/console doctrine:database:drop --force
-    php bin/console doctrine:database:create
-    php bin/console doctrine:schema:update --force
-    php bin/console doctrine:fixtures:load
+task symfony:console -- app:create-user
 ```
 
-### 🧪 Environnement de Tests & CI
-
-#### Préparation de la base de test (.env.test)
-
-S'assurer d'avoir la variable adaptée (ex: `DATABASE_URL="mysql://test:test@127.0.0.1:3306/portfolio_test?serverVersion=8.1.0&charset=utf8mb4"`).
+To change the password or the two-factor secret of an administrator later (in production, run them with
+`php bin/console ... --env=prod` on the server):
 
 ```bash
-    # Manual connection to the DB container to initialize access
-    docker compose exec db mysql -p
-
-    # SQL commands to execute if necessary :
-    CREATE USER 'test'@'%' IDENTIFIED BY 'test';
-    CREATE DATABASE portfolio_integration_test;
-    GRANT ALL PRIVILEGES ON portfolio_integration_test.* TO 'test'@'%';
-    FLUSH PRIVILEGES;
-
-    # Initialize schema and fixtures for test environment
-    php bin/console doctrine:schema:update --force --env=test
-    php bin/console doctrine:fixtures:load --env=test
+task symfony:console -- app:user:reset-password admin@example.com
+task symfony:console -- app:user:reset-2fa admin@example.com            # new secret, shown as a setup key and an otpauth URI
+task symfony:console -- app:user:reset-2fa admin@example.com --disable  # remove the two-factor authentication
 ```
 
-#### Exécution des tests
+- Website: <http://localhost:8000>, back office: <http://localhost:8000/backstage>
+- AdminNeo (database UI): <http://localhost:8089> (server `db`, credentials from `.env`)
+- Mailpit (emails sent by the site): <http://localhost:8025>
+
+Run `task` to list all the available tasks.
+
+## Configuration
+
+`.env` holds the defaults and is committed. Local values and **every secret** go in `.env.local`,
+which is git-ignored and must never be committed:
+
+| Variable                                      | Used for                                                     |
+| --------------------------------------------- | ------------------------------------------------------------ |
+| `APP_SECRET`                                  | Symfony secret (`task utils:secret` generates one)           |
+| `EASYADMIN_USER` / `EASYADMIN_PASSWORD`       | Back office account                                          |
+| `ALTCHA_SECRET`                               | Altcha anti-spam challenge                                   |
+| `MAILER_DSN`                                  | Production mailer                                            |
+| `DATABASE_URL`                                | Production database (Hostinger MariaDB)                      |
+| `REMOTE_HOST` / `REMOTE_USER` / `REMOTE_PORT` | Production server, used by `task prod:deploy`                |
+| `REMOTE_SSH_KEY`                              | Path of the SSH key for the production server                |
+| `HOST_UID` / `HOST_GID`                       | Linux only: ids of the `app` user (then `task docker:build`) |
+
+The other variables of `.env` (`PROJECT_SLUG`, ports, image versions, `DB_*`) are documented
+in the [template README](https://github.com/thedarknine/symfony-docker-template#configuration).
+
+## Project structure
 
 ```bash
-    # Generate a new test
-    php bin/console make:test WebTestCase PageControllerTest    
-
-    # Run PHPUnit test suite
-    php bin/phpunit
-
-    # Run tests with HTML coverage report generation
-    make cover  # Runs PHPUnit and generates the report in the coverage/ folder (php bin/phpunit --coverage-html coverage)
-
-    # Run mutation tests (Infection)
-    make test-mutation
-
-    # Run End-to-End / interface tests (Panther + Chrome Driver via BDI)
-    make test-ui
+.docker/
+├── mysql/               # MariaDB config, data (git-ignored)
+├── nginx/default.conf   # Nginx virtual host
+├── php/php.ini          # PHP settings
+├── install-tools.sh     # System packages, PHP extensions and QA tools of the image
+└── php.Dockerfile       # PHP-FPM image
+.github/                 # CI workflow and Dependabot
+.tools/
+├── cache/               # Caches of the QA tools (git-ignored)
+├── config/              # Configuration of every QA tool
+├── export/              # Database dumps (git-ignored)
+├── reports/             # SEO and accessibility audit reports (git-ignored)
+├── scripts/             # Init, help, pre-commit, build, deployment and audit scripts
+├── tasks/               # Task domains included by Taskfile.yml
+└── deploy.sh-prod       # Deployment script run on the production server
+assets/                  # JS, CSS (Tailwind) and locked icons, served by AssetMapper
+docs/                    # Style guide, deployment guide and migration notes
+src/                     # Application code (DataFixtures/Testing is generated)
+templates/               # Twig templates
+tests/                   # Unit/, Integration/, UI/ (PHPUnit) and bash/ (Bats)
+AGENTS.md                # Conventions for AI coding agents
+UPDATE.md                # How to update the dependencies and Symfony
 ```
 
-### 🔍 Outils avancés de Quality Assurance
+## Tasks
+
+`Taskfile.yml` wraps every command, run in the `app` container. Arguments after `--` go to the
+underlying command (`task symfony:console -- make:entity`). Tasks marked `fix=1` only check by
+default and apply the fixes with `fix=1`.
+
+| Domain     | Tasks                                                                                                |
+| ---------- | ---------------------------------------------------------------------------------------------------- |
+| Shortcuts  | `init`, `up`, `down`, `restart`, `cc`, `test`, `health`, `qa`, `update`                              |
+| `docker:`  | `build`, `up`, `down`, `restart`, `reset`, `ps`, `logs`, `shell`                                     |
+| `symfony:` | `install`, `build-prod`, `composer`, `pnpm`, `console`, `cc`, `tailwind`, `watch`, `icons`           |
+| `db:`      | `create`, `diff`, `migrate`, `reset`, `fixtures`, `dump` (`clean=1`)                                 |
+| `test:`    | `prepare`, `all`, `unit`, `integration`, `ui`, `coverage`, `mutation`, `arch`, `bash`                |
+| `cs:`      | `all`, `php`, `twig`, `front` (`fix=1`)                                                              |
+| `lint:`    | `all`, `yaml`, `markdown` (`fix=1`), `shell`, `docker`, `secrets`                                    |
+| `quality:` | `all`, `phpstan`, `deptrac`, `rector` (`fix=1`), `audit`, `grumphp`, `hooks`                         |
+| `check:`   | `health`, `tools`, `docker`, `env`, `directories`, `ports`, `containers`, `dependencies`, `database` |
+| `clean:`   | `all`, `build`, `cache`, `test`, `composer`, `pnpm`                                                  |
+| `utils:`   | `secret`, `seo-audit` (`target=dev\|prod`), `prune`                                                  |
+| `prod:`    | `release`, `build`, `deploy`, `dev`                                                                  |
+
+## Code quality and tests
+
+| Tool                                                | Task                            | Checks                                                             |
+| --------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------ |
+| PHP CS Fixer, Twig CS Fixer                         | `cs:php`, `cs:twig`             | PHP and Twig coding standards                                      |
+| Biome                                               | `cs:front`                      | JS and CSS                                                         |
+| yamllint, markdownlint, shellcheck, shfmt, hadolint | `lint:*`                        | YAML, Markdown, shell scripts, Dockerfile                          |
+| gitleaks                                            | `lint:secrets`                  | Secrets in the git history                                         |
+| PHPStan (level 6)                                   | `quality:phpstan`               | Static analysis, with the Symfony, Doctrine and PHPUnit extensions |
+| Deptrac                                             | `quality:deptrac`               | Dependencies between the layers                                    |
+| Rector                                              | `quality:rector`                | PHP, Symfony, Doctrine and PHPUnit upgrades                        |
+| `composer audit`, `pnpm audit`                      | `quality:audit`                 | Known vulnerabilities in the dependencies                          |
+| PHPUnit                                             | `test:unit`, `test:integration` | Unit tests, kernel and database tests                              |
+| PHPUnit + Panther                                   | `test:ui`                       | Navigation in a real browser (`UI` suite, needs Chromium)          |
+| Infection                                           | `test:mutation`                 | Mutation testing                                                   |
+| PHPArkitect                                         | `test:arch`                     | Architecture rules                                                 |
+| Bats                                                | `test:bash`                     | Shell scripts, run on the host                                     |
+
+`task qa` runs cs, lint, quality, the tests and the architecture rules before committing.
+`task qa deep=1` adds the mutation and UI tests, which are slow. `task qa fix=1` applies the
+coding standards fixes, never the Rector refactorings (`task quality:rector fix=1`).
+
+The integration tests read a test database loaded with generated fixtures: `task test:prepare`
+(run by the test tasks) generates `src/DataFixtures/Testing` from the dev database, then
+recreates and loads the test database.
+
+### Git hooks
+
+GrumPHP installs the git hooks on `composer install`. They run in the `app` container, so
+**the containers must be running to commit**: `pre-commit` checks the staged files, and
+`commit-msg` enforces [Conventional Commits](https://www.conventionalcommits.org/).
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs on pull requests and on pushes to `main` and `develop`:
+
+- **QA**: starts the stack, installs the dependencies, creates the dev database from the schema
+  and its fixtures, then runs `task qa` (without the mutation and UI tests). On pull requests to
+  `main`, it also checks the production build (`task symfony:build-prod`).
+- **Conventional commits** (pull requests): commitlint checks every commit.
+
+Dependabot opens weekly pull requests on `develop` for the GitHub Actions, Composer and pnpm
+dependencies.
+
+## Deployment
+
+The site is hosted on **Hostinger** (Premium Web Hosting, MariaDB 11.8). Two subdomains serve the
+static files, outside this repository:
+
+- `docs.carolinenoyer.fr`: documents (resume, reports, articles)
+- `medias.carolinenoyer.fr`: images, allowed in the Content Security Policy
+
+Branches: features on `cno_*` branches, merged into `develop`, then `main`. Releases are made
+from `main` and tagged with a CalVer version (`v2026.11.0`).
 
 ```bash
-    # Run everything at once via Makefile
-    make qa
-
-    # Deptrac (Analysis of architectural dependencies and layers)
-    composer require --dev qossmic/deptrac-shim
-    vendor/bin/deptrac init
-    vendor/bin/deptrac analyse --config-file=deptrac.yaml
-    vendor/bin/deptrac debug:layer --config-file=.tools/deptrac.yaml
-
-    # Rector (Analysis of refactoring rules / Dry-run)
-    composer require --dev rector/rector
-    vendor/bin/rector process --dry-run --config .tools/rector.php
+task prod:release
 ```
 
-### 🏗️ Backoffice & Sécurité (EasyAdmin)
+The release is built on this machine from a clean git export of `main` (no dev dependencies,
+minified assets), the production database and `.env.local` are saved to `.tools/export/prod/`,
+then the site goes into maintenance, the build is copied to the server with rsync, the
+migrations run, and the site comes back. A smoke test checks the result before the version is
+tagged and released on GitHub. Each step is described in [docs/DEPLOY.md](docs/DEPLOY.md).
 
-```bash
-    # Installation and initialization of Dashboard and CRUDs
-    composer require easycorp/easyadmin-bundle
-    php bin/console make:admin:dashboard
-    php bin/console make:admin:crud
+`task symfony:build-prod` checks the production build in a temporary copy, without touching the
+working copy or the branches.
 
-    # Securing access
-    php bin/console make:user
-    php bin/console make:security:form-login
+The checks to run before and after a release, and the rollback, are in [docs/DEPLOY.md](docs/DEPLOY.md).
 
-    # Managing sortable fields
-    composer require gedmo/doctrine-extensions
-    composer require stof/doctrine-extensions-bundle
-```
+## Updating
 
-### 🚀 Optimisation Frontend (AssetMapper & Tailwind)
+`task update` pulls the Docker images, rebuilds the containers and updates the Composer and pnpm
+dependencies. Symfony upgrades are described in [UPDATE.md](UPDATE.md).
 
-```bash
-    # Run Tailwind watcher in background to compile on the fly
-    make watch
+## Resources
 
-    # Compilation and minification of assets managed via AssetMapper
-    php bin/console asset-map:compile
-```
+- Icons: [UX Icons](https://ux.symfony.com/icons) (`task symfony:console -- ux:icons:search fa7-solid pdf`,
+  then `ux:icons:import`), [IconStack](https://iconstack.io/), [HugeIcons](https://hugeicons.com/)
+- Audits: `task utils:seo-audit` runs [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/),
+  [Unlighthouse](https://unlighthouse.dev/) and [pa11y](https://pa11y.org/), reports in `.tools/reports/`;
+  see also [PageSpeed Insights](https://pagespeed.web.dev/)
+- Design: [docs/STYLE-GUIDE.md](docs/STYLE-GUIDE.md)
 
-## 📦 Inventaire des Dépendances
+## License
 
-### Packages Standards
-
-* `logger` & `symfony/twig-bundle` : Logs et moteur de rendu.
-* `symfony/asset` & `symfony/asset-mapper` : Gestion moderne des assets sans Node.js.
-* `symfony/twig-pack` & `twig/intl-extra` : Extensions Twig avancées (dates, filtres internationaux).
-* `symfonycasts/tailwind-bundle` : Intégration transparente de Tailwind CSS.
-* `symfony/ux-icons` : Icônes SVG via AssetMapper.
-* `symfony/orm-pack` & `doctrine/doctrine-migrations-bundle` : Persistance de données.
-* `gedmo/doctrine-extensions` : Ajout de comportements (Sluggable, Timestampable).
-* `nesbot/carbon` : Manipulation avancée et fluide des dates.
-* `symfony/mailer` : Envoi d'emails.
-* `tito10047/altcha-bundle` : Protection anti-spam via Altcha.
-* `easycorp/easyadmin-bundle` : Moteur de Backoffice fluide et moderne (v5).
-* `scheb/2fa-google-authenticator` : Authentification à deux facteurs via Google Authenticator.
-* `symfony/rate-limiter` : Limitation des tentatives de connexion.
-* `presta/sitemap-bundle` : Génération automatique des sitemaps XML.
-
-### Packages de Développement / QA
-
-* `symfony/maker-bundle` : Générateur de code de l'écosystème.
-* `phpunit/phpunit` & `symfony/test-pack` : Framework de tests.
-* `dama/doctrine-test-bundle` : Isolation des tests en base de données via des transactions.
-* `friendsofphp/php-cs-fixer` & `vincentlanglet/twig-cs-fixer` : Linters et formateurs de code PHP/Twig.
-* `phpstan/phpstan` & `phpstan/phpstan-doctrine` : Analyse statique rigoureuse.
-* `phpro/grumphp` : Gestionnaire de Git Hooks pour valider le code avant le commit.
-* `doctrine/doctrine-fixtures-bundle` : Génération de fausses données pour le développement.
-* `infection/infection` : Outil de mutation testing.
-* `phparkitect/phparkitect` : Validation des règles de design architectural.
-* `deptrac/deptrac` : Contrôle de l'étanchéité des couches logicielles.
-* `symfony/panther` & `dbrekelmans/bdi` : Tests End-to-End et UI avec un vrai navigateur (Chrome Driver).
-
-## 🎨 Librairies Frontend & Linters d'intégration
-
-* ESLint → JS
-* Biome → CSS/Tailwind
-
-```bash
-    # Add and declaration of UI/Animation libraries via AssetMapper
-    php bin/console importmap:require animate.css
-    php bin/console importmap:require typed.js
-    php bin/console importmap:require photoswipe
-    php bin/console importmap:require photoswipe/lightbox
-
-    # Linters tools Node (ESLint, Biome)
-    pnpm add -D eslint @eslint/js globals 
-    pnpm exec eslint --init
-    pnpm add -D @biomejs/biome
-    pnpm add -D eslint-plugin-tailwindcss
-    pnpm add -D @html-eslint/parser
-```
-
-## 🎨 Ressources Graphiques & Icônes
-
-* Package [UX Icons](https://ux.symfony.com/icons) : Icônes SVG via AssetMapper.
-
-```bash
-    php bin/console importmap:require @symfony/ux-icons
-    php bin/console debug:config ux_icons
-
-    # Search icons
-    symfony console ux:icons:search flowbite pdf
-    symfony console ux:icons:search fa7-solid pdf
-    symfony console ux:icons:search fa7-brands github
-
-    # Import icons
-    symfony console ux:icon:import fa7-solid:file-pdf
-```
-
-* [IconStack](https://iconstack.io/) — Découverte et gestion de sets d'icônes.
-* [HugeIcons](https://hugeicons.com/icons/stroke-rounded?search=inst) — Icônes filaires haut de gamme.
-
-## 📊 Librairies d'audit SEO
-
-* lighthouse
-* unlighthouse
-* pa11y pa11y-ci
-
-* [Lighthouse](https://developer.chrome.com/docs/lighthouse/overview/) — Audit d'accessibilité et performance.
-* [PageSpeed Insights](https://pagespeed.web.dev/) — Analyse de la performance des pages web.
-
----
-
-## 📝 Licence
-
-Ce projet est personnel et son contenu textuel/visuel m'appartient. Le code source est partagé à des fins de
-démonstration technique.
+All rights reserved. This repository is public so that the code can be read as a showcase of my
+work; it is not open source. Its code, text and visual content may not be reused, copied or
+redistributed without my permission. See [LICENSE](LICENSE).

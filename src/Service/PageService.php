@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Service;
@@ -14,6 +14,7 @@ use App\Entity\PageInfo;
 use App\Repository\PageInfoRepository;
 use App\Repository\ResourceLinkRepository;
 use Carbon\Carbon;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -21,10 +22,15 @@ class PageService
 {
     public const CAREER_START_DATE = '2006-10-01';
 
+    /** Set to false after the first failed query, so the rest of the request uses the fallback without retrying. */
+    private bool $databaseAvailable = true;
+
     public function __construct(
-        private PageInfoRepository $pageInfoRepository,
-        private ResourceLinkRepository $resourceLinkRepository,
-        private ParameterBagInterface $params,
+        private readonly PageInfoRepository $pageInfoRepository,
+        private readonly ResourceLinkRepository $resourceLinkRepository,
+        private readonly ParameterBagInterface $params,
+        private readonly FallbackNavigation $fallbackNavigation,
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -57,7 +63,10 @@ class PageService
      */
     public function getPublishedRootPages(): array
     {
-        return $this->pageInfoRepository->findRootPages();
+        return $this->queryOrFallback(
+            fn (): array => $this->pageInfoRepository->findRootPages(),
+            fn (): array => $this->fallbackNavigation->getRootPages(),
+        );
     }
 
     /**
@@ -70,7 +79,10 @@ class PageService
             $filters['inHeader'] = $inHeader;
         }
 
-        return $this->pageInfoRepository->findAllAsArray($filters);
+        return $this->queryOrFallback(
+            fn (): array => $this->pageInfoRepository->findAllAsArray($filters),
+            fn (): array => $this->fallbackNavigation->getPagesAsArray($inHeader),
+        );
     }
 
     /**
@@ -86,7 +98,10 @@ class PageService
      */
     public function getPublishedRootPagesInHeader(): array
     {
-        return $this->pageInfoRepository->findPublishedRootPagesInHeader();
+        return $this->queryOrFallback(
+            fn (): array => $this->pageInfoRepository->findPublishedRootPagesInHeader(),
+            fn (): array => $this->fallbackNavigation->getRootPages(inHeader: true),
+        );
     }
 
     /**
@@ -99,7 +114,10 @@ class PageService
             $filters['inHero'] = $inHero;
         }
 
-        return $this->resourceLinkRepository->findAllAsArray($filters);
+        return $this->queryOrFallback(
+            fn (): array => $this->resourceLinkRepository->findAllAsArray($filters),
+            fn (): array => $this->fallbackNavigation->getResourceLinksAsArray($inHero),
+        );
     }
 
     /**
@@ -127,5 +145,33 @@ class PageService
     public function getImagesDir(): string
     {
         return $this->params->get('app.images_dir');
+    }
+
+    /**
+     * Run a navigation query, or return the fallback navigation when the query fails (database down, in practice).
+     * Any exception is caught, not only Doctrine's: the Service layer must not depend on Doctrine (deptrac), and a
+     * degraded menu is better than a page that cannot render. The failure is logged as an error.
+     *
+     * @template T
+     *
+     * @param callable(): T $query
+     * @param callable(): T $fallback
+     *
+     * @return T
+     */
+    private function queryOrFallback(callable $query, callable $fallback): mixed
+    {
+        if (!$this->databaseAvailable) {
+            return $fallback();
+        }
+
+        try {
+            return $query();
+        } catch (\Exception $exception) {
+            $this->databaseAvailable = false;
+            $this->logger->error('Navigation query failed: the fallback pages are used.', ['exception' => $exception]);
+
+            return $fallback();
+        }
     }
 }

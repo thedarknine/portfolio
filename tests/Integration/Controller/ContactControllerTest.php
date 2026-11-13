@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Controller;
@@ -19,7 +19,7 @@ final class ContactControllerTest extends WebTestCase
     // GET /contact — Display page
     public function testContactPageLoads(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('GET', '/contact');
 
         $this->assertResponseIsSuccessful();
@@ -29,11 +29,11 @@ final class ContactControllerTest extends WebTestCase
     // POST valide — Email sent + flash success + redirection
     public function testValidSubmitSendsEmailAndRedirects(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
 
         $mailerMock = $this->createMock(MailerInterface::class);
         $mailerMock->expects($this->once())->method('send');
-        static::getContainer()->set(MailerInterface::class, $mailerMock);
+        self::getContainer()->set(MailerInterface::class, $mailerMock);
 
         $client->request('POST', '/contact', [
             'contact' => [
@@ -47,13 +47,38 @@ final class ContactControllerTest extends WebTestCase
 
         $this->assertResponseRedirects('/contact');
         $client->followRedirect();
-        $this->assertSelectorExists('.alert-success');
+        $this->assertSelectorExists('.alert--success');
+    }
+
+    // POST with the honeypot filled in — Fake success, no email sent
+    public function testHoneypotSubmitIsDroppedSilently(): void
+    {
+        $client = self::createClient();
+
+        $mailerMock = $this->createMock(MailerInterface::class);
+        $mailerMock->expects($this->never())->method('send');
+        self::getContainer()->set(MailerInterface::class, $mailerMock);
+
+        $client->request('POST', '/contact', [
+            'contact' => [
+                'name'     => 'Spam Bot',
+                'email'    => 'bot@example.com',
+                'subject'  => 'Offre exceptionnelle',
+                'message'  => 'Message de robot suffisamment long.',
+                'website'  => 'https://spam.example.com',
+                'security' => 'mocked-altcha-payload',
+            ],
+        ]);
+
+        $this->assertResponseRedirects('/contact');
+        $client->followRedirect();
+        $this->assertSelectorExists('.alert--success');
     }
 
     // POST without data — Flash error, no redirection
     public function testEmptySubmitShowsErrorFlashAndStaysOnPage(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('POST', '/contact', [
             'contact' => [
                 'name'    => '',
@@ -63,7 +88,7 @@ final class ContactControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorExists('.text-nine-red-600');
+        $this->assertSelectorExists('.field__error');
         // Not 200 (should be 422 for unprocessable entity, since Symfony 6.2 it validates the form before processing)
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
     }
@@ -71,7 +96,7 @@ final class ContactControllerTest extends WebTestCase
     // POST invalid email — No redirection, form re-displayed
     public function testInvalidEmailStaysOnPage(): void
     {
-        $client = static::createClient();
+        $client = self::createClient();
         $client->request('POST', '/contact', [
             'contact' => [
                 'name'    => 'Test',
@@ -81,11 +106,10 @@ final class ContactControllerTest extends WebTestCase
             ],
         ]);
 
-        $this->assertSelectorExists('.text-nine-red-600');
+        $this->assertSelectorExists('.field__error');
         // Not 200 (should be 422 for unprocessable entity, since Symfony 6.2 it validates the form before processing)
         $this->assertResponseStatusCodeSame(Response::HTTP_UNPROCESSABLE_ENTITY);
         $this->assertSelectorNotExists('[data-flash="success"]');
-        $this->assertSelectorExists('.text-nine-red-600');
-        $this->assertSelectorTextContains('.text-nine-red-600', 'Merci de compléter les champs.');
+        $this->assertSelectorTextContains('.alert--error', 'Merci de compléter les champs.');
     }
 }

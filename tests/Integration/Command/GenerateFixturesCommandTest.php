@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Command;
@@ -14,6 +14,7 @@ use App\Entity\Company;
 use App\Entity\Experience;
 use App\Entity\Skill;
 use App\Entity\SkillType;
+use Doctrine\ORM\EntityManagerInterface;
 use PHPUnit\Framework\Attributes\DataProvider;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -22,7 +23,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 class GenerateFixturesCommandTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private string $companyFixturePath;
     private string $experienceFixturePath;
     private string $projectFixturePath;
@@ -76,11 +77,14 @@ class GenerateFixturesCommandTest extends KernelTestCase
         $commandTester->assertCommandIsSuccessful();
 
         // Clean up after the test if the directory was created specifically for the test
-        if ($expectedSubFolder && isset($filesystem)) {
-            $filesystem->remove($targetDir);
+        if ($expectedSubFolder) {
+            new Filesystem()->remove($kernel->getProjectDir() . $expectedSubFolder);
         }
     }
 
+    /**
+     * @return array<string, array{string, ?string}>
+     */
     public static function provideFixtureGroups(): array
     {
         return [
@@ -117,10 +121,10 @@ class GenerateFixturesCommandTest extends KernelTestCase
      */
     public function testExecuteGeneratesFixtureWithDependencies(): void
     {
-        $company = (new Company())->setName('Atelier Clay')->setSlug('atelier-clay')->setLogo('logo.png')->setCity('Orléans')->setDepartment(45);
+        $company = new Company()->setName('Atelier Clay')->setSlug('atelier-clay')->setLogo('logo.png')->setCity('Orléans')->setDepartment(45);
         $this->entityManager->persist($company);
 
-        $experience = (new Experience())->setTitle('Web Dev')->setSlug('web-dev')->setDescription('Description')->setCompany($company)->setStartDate(new \DateTime('2020-01-01'))->setEndDate(new \DateTime('2021-01-01'));
+        $experience = new Experience()->setTitle('Web Dev')->setSlug('web-dev')->setDescription('Description')->setCompany($company)->setStartDate(new \DateTime('2020-01-01'))->setEndDate(new \DateTime('2021-01-01'));
         $this->entityManager->persist($experience);
         $this->entityManager->flush();
 
@@ -148,16 +152,16 @@ class GenerateFixturesCommandTest extends KernelTestCase
      */
     public function testExecuteGeneratesManyToManyRelations(): void
     {
-        $type = (new SkillType())->setName('Back')->setSlug('back')->setLogo('back.png')->setDeleted(false);
+        $type = new SkillType()->setName('Back')->setSlug('back')->setLogo('back.png')->setDeleted(false);
         $this->entityManager->persist($type);
 
-        $skill = (new Skill())->setName('Symfony')->setSlug('symfony')->setLogo('symfony.png')->setPosition(1)->setSkillType($type)->setStartYear(2020)->setLevel(5)->setDisplay(true);
+        $skill = new Skill()->setName('Symfony')->setSlug('symfony')->setLogo('symfony.png')->setPosition(1)->setSkillType($type)->setStartYear(2020)->setLevel(5)->setDisplay(true);
         $this->entityManager->persist($skill);
 
-        $company = (new Company())->setName('Atelier Clay')->setSlug('atelier-clay')->setLogo('atelier-clay.png')->setCity('Orléans')->setDepartment(45);
+        $company = new Company()->setName('Atelier Clay')->setSlug('atelier-clay')->setLogo('atelier-clay.png')->setCity('Orléans')->setDepartment(45);
         $this->entityManager->persist($company);
 
-        $experience = (new Experience())->setCompany($company)->setTitle('Web Developer')->setSlug('web-developer')->setStartDate(new \DateTime('2020-01-01'))->setEndDate(new \DateTime('2025-01-01'))->setDescription('Description de l\'expérience');
+        $experience = new Experience()->setCompany($company)->setTitle('Web Developer')->setSlug('web-developer')->setStartDate(new \DateTime('2020-01-01'))->setEndDate(new \DateTime('2025-01-01'))->setDescription('Description de l\'expérience');
         $experience->addSkill($skill);
 
         $this->entityManager->persist($experience);
@@ -184,7 +188,7 @@ class GenerateFixturesCommandTest extends KernelTestCase
      */
     public function testExecuteProcessesOnlySingleValidEntityProvidedAsArgument(): void
     {
-        $company = (new Company())
+        $company = new Company()
             ->setName('Atelier Terre')
             ->setSlug('atelier-terre')
             ->setLogo('logo.png')

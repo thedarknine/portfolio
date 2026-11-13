@@ -1,18 +1,32 @@
+# The project root is the web root on Hostinger: only public/ may ever be served.
 DirectoryIndex public/index.php
+ErrorDocument 503 /maintenance.html
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
-    # 1. Force le HTTPS
+    # 1. Force HTTPS
     RewriteCond %{HTTPS} !=on
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # 2. Laisse passer les fichiers réels
-    RewriteCond %{REQUEST_FILENAME} -f [OR]
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^ - [L]
+    # 2. Let the SSL certificate renewal through
+    RewriteRule ^\.well-known/ - [L]
 
-    # 3. Redirige discrètement vers le sous-dossier public
-    RewriteCond %{REQUEST_URI} !^/public/
+    # 3. Maintenance: while maintenance.flag exists (created by task prod:maintenance state=on),
+    #    every request gets a 503 and the static page public/maintenance.html, without Symfony
+    RewriteCond %{DOCUMENT_ROOT}/maintenance.flag -f
+    RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+    RewriteRule ^ - [R=503,L]
+
+    # 4. Already inside public/: let public/.htaccess handle it
+    RewriteRule ^public/ - [L]
+
+    # 5. Everything else goes to public/, nothing outside it is ever served
+    #    (var/log, vendor, src, config, composer.json...)
     RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# If mod_rewrite is ever missing, serve nothing rather than the project root
+<IfModule !mod_rewrite.c>
+    Require all denied
 </IfModule>

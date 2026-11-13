@@ -4,21 +4,22 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Repository;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 class UserRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private UserRepository $userRepository;
 
     protected function setUp(): void
@@ -45,7 +46,7 @@ class UserRepositoryTest extends KernelTestCase
     public function testUpgradePasswordSuccessfully(): void
     {
         // 1. Creating a user with an initial password
-        $user = (new User())
+        $user = new User()
             ->setEmail('dev@example.com')
             ->setRoles(['ROLE_ADMIN'])
             ->setPassword('old_hash_123');

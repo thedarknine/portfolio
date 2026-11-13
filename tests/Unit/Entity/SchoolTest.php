@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Unit\Entity;
@@ -24,9 +24,7 @@ class SchoolTest extends TestCase
         // 1. Establish relation in both directions
         $education->setSchool($school);
 
-        if (method_exists($school, 'addEducation')) {
-            $school->addEducation($education);
-        }
+        $school->addEducation($education);
 
         $this->assertSame($school, $education->getSchool());
 

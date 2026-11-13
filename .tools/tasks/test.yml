@@ -1,0 +1,96 @@
+# https://taskfile.dev
+version: '3'
+
+# PHPUnit suites (phpunit.xml): Unit, Integration and UI; without --testsuite, Unit and Integration run.
+# Unit and integration tests read the test database: test:prepare loads it with the test fixtures.
+
+vars:
+    PHPUNIT: '{{.EXEC}} vendor/bin/phpunit -c {{.CONFIG_DIR}}/phpunit.xml'
+
+tasks:
+    prepare:
+        desc: Generate the test fixtures and reset the test database
+        cmds:
+            - task: :check:containers
+              vars: { NESTED: '1' }
+            - '{{.UI}} subtitle "🎬 Preparing the test database"'
+            - >-
+              {{.EXEC}} bin/console cache:clear --env=test
+              || { {{.UI}} error "Test cache clear failed."; exit 1; }
+            # Leftovers of another group (Testing/Unit...) break the loader: start from an empty folder
+            - rm -rf src/DataFixtures/Testing
+            # Generates the fixtures, recreates the test database and loads them (see composer.json)
+            - >-
+              {{.EXEC}} composer pipeline:fixtures
+              || { {{.UI}} error "Test database preparation failed."; exit 1; }
+
+    all:
+        desc: Run the Unit and Integration suites (task test:all -- --filter Home)
+        cmds:
+            - task: prepare
+            - '{{.UI}} subtitle "🧪 Running all the tests"'
+            - >-
+              {{.PHPUNIT}} --testsuite=Unit,Integration {{.CLI_ARGS}}
+              || { {{.UI}} error "Some tests failed."; exit 1; }
+            - '{{.UI}} success "All tests passed."'
+
+    unit:
+        desc: Run the Unit suite - tests/Unit
+        cmds:
+            - '{{.UI}} subtitle "🧪 Running the unit tests"'
+            - '{{.PHPUNIT}} --testsuite=Unit {{.CLI_ARGS}} || { {{.UI}} error "Some unit tests failed."; exit 1; }'
+            - '{{.UI}} success "Unit tests passed."'
+
+    integration:
+        desc: Run the Integration suite - tests/Integration
+        cmds:
+            - task: prepare
+            - '{{.UI}} subtitle "🧪 Running the integration tests"'
+            - >-
+              {{.PHPUNIT}} --testsuite=Integration {{.CLI_ARGS}}
+              || { {{.UI}} error "Some integration tests failed."; exit 1; }
+            - '{{.UI}} success "Integration tests passed."'
+
+    ui:
+        desc: Run the UI suite - tests/UI, needs the chrome container
+        cmds:
+            - '{{.UI}} subtitle "🧪 Running the UI tests"'
+            - '{{.PHPUNIT}} --testsuite=UI {{.CLI_ARGS}} || { {{.UI}} error "Some UI tests failed."; exit 1; }'
+            - '{{.UI}} success "UI tests passed."'
+
+    coverage:
+        desc: Generate the HTML code coverage report in var/coverage/
+        cmds:
+            - task: prepare
+            - '{{.UI}} subtitle "📊 Generating the code coverage report"'
+            - >-
+              {{.PHPUNIT}} --testsuite=Unit,Integration --coverage-html var/coverage --coverage-text
+              || { {{.UI}} error "Coverage generation failed."; exit 1; }
+            - '{{.UI}} success "Coverage report generated." "Open var/coverage/index.html"'
+
+    mutation:
+        desc: Run the mutation tests with Infection - UI suite excluded in infection.json
+        cmds:
+            # The integration tests read the test database
+            - task: prepare
+            - '{{.UI}} subtitle "🧬 Running the mutation tests with Infection"'
+            - >-
+              {{.EXEC}} vendor/bin/infection --configuration={{.CONFIG_DIR}}/infection.json --threads=4 {{.CLI_ARGS}}
+              || { {{.UI}} error "Infection failed: initial tests failing or escaped mutants."; exit 1; }
+            - '{{.UI}} success "Mutation tests passed."'
+
+    arch:
+        desc: Check the architecture rules with PHPArkitect
+        cmds:
+            - '{{.UI}} subtitle "🔬 Checking the architecture rules with PHPArkitect"'
+            - >-
+              {{.EXEC}} vendor/bin/phparkitect check --config={{.CONFIG_DIR}}/phparkitect.php
+              || { {{.UI}} error "PHPArkitect found violations."; exit 1; }
+            - '{{.UI}} success "Architecture rules respected."'
+
+    bash:
+        desc: Run the Bats tests of the shell scripts - needs bats on the host
+        cmds:
+            - '{{.UI}} subtitle "🧪 Running the Bats tests"'
+            - 'bats tests/bash/ || { {{.UI}} error "Some Bats tests failed."; exit 1; }'
+            - '{{.UI}} success "Bats tests passed."'

@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\EventSubscriber;
@@ -21,8 +21,8 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class SitemapSubscriber implements EventSubscriberInterface
 {
     public function __construct(
-        private PageInfoRepository $pageInfoRepository,
-        private ExperienceLinkRepository $experienceLinkRepository,
+        private readonly PageInfoRepository $pageInfoRepository,
+        private readonly ExperienceLinkRepository $experienceLinkRepository,
     ) {
     }
 

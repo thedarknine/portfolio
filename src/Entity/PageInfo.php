@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Entity;
@@ -184,7 +184,7 @@ class PageInfo implements SortableEntityInterface
     public function getPublishedChildren(): array
     {
         return $this->children
-            ->filter(fn (self $child) => $child->isPublished())
+            ->filter(fn (self $child): bool => $child->isPublished())
             ->toArray();
     }
 

@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Tests\Integration\Repository;
@@ -14,11 +14,12 @@ use App\Entity\Education;
 use App\Entity\School;
 use App\Enum\EducationType;
 use App\Repository\EducationRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class EducationRepositoryTest extends KernelTestCase
 {
-    private ?\Doctrine\ORM\EntityManagerInterface $entityManager;
+    private ?EntityManagerInterface $entityManager;
     private EducationRepository $educationRepository;
 
     protected function setUp(): void
@@ -45,14 +46,14 @@ class EducationRepositoryTest extends KernelTestCase
     public function testGetEducationsWithSchoolOrdersByYearDescending(): void
     {
         // 1. Create and persist schools first (foreign key constraint)
-        $school1 = (new School())
+        $school1 = new School()
             ->setName('Université d\'Orléans')
             ->setSlug('univ-orleans')
             ->setCity('Orléans')
             ->setDepartment(45)
             ->setLogo('orleans.jpeg');
 
-        $school2 = (new School())
+        $school2 = new School()
             ->setName('Autre École')
             ->setSlug('autre-ecole')
             ->setCity('Paris')
@@ -63,7 +64,7 @@ class EducationRepositoryTest extends KernelTestCase
         $this->entityManager->persist($school2);
 
         // 2. Create educations (in reverse chronological order)
-        $educationAncien = (new Education())
+        $educationAncien = new Education()
             ->setTitle('DEUG MIAS')
             ->setSlug('deug-mias')
             ->setDetails('Mathématiques, informatique et applications aux sciences')
@@ -71,7 +72,7 @@ class EducationRepositoryTest extends KernelTestCase
             ->setYear(2004)
             ->setSchool($school1);
 
-        $educationRecent = (new Education())
+        $educationRecent = new Education()
             ->setTitle('Master Big Data / Web')
             ->setSlug('master-big-data-web')
             ->setDetails('Big Data et Web')

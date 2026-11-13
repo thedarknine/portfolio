@@ -4,8 +4,8 @@
  * This file is part of Portfolio project.
  * (c) Caroline Noyer <studio@carolinenoyer.fr>
  *
- * This source file is subject to the MIT license that is bundled
- * with this source code in the file LICENSE.
+ * This source file is proprietary, all rights reserved.
+ * See the LICENSE file bundled with this source code.
  */
 
 namespace App\Controller\Admin;
@@ -15,6 +15,7 @@ use App\Entity\ExperienceLink;
 use App\Entity\PageInfo;
 use App\Enum\LinkType;
 use App\Repository\PageInfoRepository;
+use Doctrine\ORM\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -36,6 +37,7 @@ class ExperienceLinkCrudController extends AbstractCrudController
         return ExperienceLink::class;
     }
 
+    #[\Override]
     public function configureCrud(Crud $crud): Crud
     {
         return $crud
@@ -46,6 +48,7 @@ class ExperienceLinkCrudController extends AbstractCrudController
         ;
     }
 
+    #[\Override]
     public function configureActions(Actions $actions): Actions
     {
         $cancelAction = Action::new('cancel', 'Annuler', 'fa fa-times')
@@ -57,6 +60,7 @@ class ExperienceLinkCrudController extends AbstractCrudController
             ->add(Crud::PAGE_NEW, $cancelAction);
     }
 
+    #[\Override]
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
@@ -66,10 +70,10 @@ class ExperienceLinkCrudController extends AbstractCrudController
             ->setRequired(true)
             ->setFormTypeOption(
                 'choice_label',
-                fn (Experience $experience) => $experience->getDisplayName(),
+                fn (Experience $experience): string => $experience->getDisplayName(),
             )
             ->formatValue(
-                fn (?Experience $experience) => $experience?->getDisplayName(),
+                fn (?Experience $experience): ?string => $experience?->getDisplayName(),
             );
 
         yield TextField::new('title', 'Titre')
@@ -103,15 +107,11 @@ class ExperienceLinkCrudController extends AbstractCrudController
             ->setHelp('Requis sauf si le type de lien est "Détail" (dans ce cas, sélectionnez une page ci-dessous).');
 
         yield AssociationField::new('page', 'Page liée')
-            ->setFormTypeOption('choice_label', function (PageInfo $page) {
-                return $page->getParent()
-                    ? $page->getParent()->getTitle() . ' > ' . $page->getTitle()
-                    : $page->getTitle();
-            })
-            ->setFormTypeOption('query_builder', function (PageInfoRepository $repository) {
-                return $repository->createQueryBuilder('p')
-                    ->orderBy('p.position', 'ASC');
-            })
+            ->setFormTypeOption('choice_label', fn (PageInfo $page): ?string => $page->getParent()
+                ? $page->getParent()->getTitle() . ' > ' . $page->getTitle()
+                : $page->getTitle())
+            ->setFormTypeOption('query_builder', fn (PageInfoRepository $repository): QueryBuilder => $repository->createQueryBuilder('p')
+                ->orderBy('p.position', 'ASC'))
             ->setHelp('Uniquement requis si le type de lien est "Détail".');
     }
 }

@@ -1,0 +1,90 @@
+# https://taskfile.dev
+version: '3'
+
+# UI_NESTED hides the success box of each linter when run from lint:all
+
+vars:
+    SHELL_FILES: '.docker/*.sh {{.TOOLS_DIR}}/scripts/*.sh'
+    MARKDOWN_GLOBS: '"**/*.md" "#node_modules" "#vendor" "#var" "#.pnpm-store"'
+    YAML_FILES: '{{.TOOLS_DIR}}/ config/ Taskfile.yml docker-compose*.yaml pnpm-workspace.yaml'  # .github/
+
+tasks:
+    all:
+        desc: Run all linters - yaml, markdown, shell, docker, secrets
+        vars:
+            START: { sh: date +%s }
+        cmds:
+            - '{{.UI}} title "🔍 Running all linters"'
+            - task: yaml
+              vars: { NESTED: '1' }
+            - task: markdown
+              vars: { NESTED: '1' }
+            - task: shell
+              vars: { NESTED: '1' }
+            - task: docker
+              vars: { NESTED: '1' }
+            - task: secrets
+              vars: { NESTED: '1' }
+            - '{{.UI}} elapsed {{.START}}'
+            - '{{.UI}} success "All linters passed."'
+
+    yaml:
+        desc: Validate YAML files with yamllint
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔭 Validating YAML files with yamllint"'
+            # Portfolio-only: Symfony also checks the config syntax (tags, constants)
+            - >-
+              {{.EXEC}} bin/console lint:yaml config/
+              || { {{.UI}} error "Symfony YAML linting failed."; exit 1; }
+            - >-
+              {{.EXEC}} yamllint -c {{.CONFIG_DIR}}/yamllint.yaml {{.YAML_FILES}}
+              || { {{.UI}} error "YAML linting failed."; exit 1; }
+            - '{{.UI}} success "YAML linting completed."'
+
+    markdown:
+        desc: Validate Markdown files with markdownlint (fix=1)
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "📝 {{if .fix}}Fixing{{else}}Validating{{end}} Markdown files with markdownlint"'
+            - >-
+              {{.EXEC}} pnpm exec markdownlint-cli2 --config {{.CONFIG_DIR}}/markdownlint-cli2.yaml
+              {{if .fix}}--fix{{end}} {{.MARKDOWN_GLOBS}}
+              || { {{.UI}} error "Markdown linting failed." "Fix with: task lint:markdown fix=1"; exit 1; }
+            - '{{.UI}} success "Markdown linting completed."'
+
+    shell:
+        desc: Check shell scripts with shellcheck and shfmt
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🐚 Checking shell scripts with shellcheck and shfmt"'
+            - >-
+              {{.EXEC}} sh -c "shellcheck -x {{.SHELL_FILES}}"
+              || { {{.UI}} error "shellcheck found issues."; exit 1; }
+            - >-
+              {{.EXEC}} sh -c "shfmt -d -i 4 {{.SHELL_FILES}}"
+              || { {{.UI}} error "shfmt found formatting issues." "Fix with: shfmt -w -i 4 <file>"; exit 1; }
+            - '{{.UI}} success "Shell scripts checked."'
+
+    docker:
+        desc: Validate the Compose configuration and the Dockerfiles with hadolint
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🐳 Validating the Compose configuration and the Dockerfiles"'
+            - >-
+              {{.COMPOSE}} config --quiet
+              || { {{.UI}} error "Invalid Compose configuration."; exit 1; }
+            - >-
+              {{.EXEC}} sh -c "hadolint --config {{.CONFIG_DIR}}/hadolint.yaml .docker/*.Dockerfile"
+              || { {{.UI}} error "hadolint found issues."; exit 1; }
+            - '{{.UI}} success "Dockerfile validation completed."'
+
+    secrets:
+        desc: Scan git history for secrets with gitleaks
+        env: { UI_NESTED: '{{.NESTED}}' }
+        cmds:
+            - '{{.UI}} subtitle "🔐 Scanning git history for secrets with gitleaks"'
+            - >-
+              {{.EXEC}} gitleaks git --no-banner -v -c {{.CONFIG_DIR}}/gitleaks.toml .
+              || { {{.UI}} error "gitleaks found potential secrets."; exit 1; }
+            - '{{.UI}} success "No secrets found."'
