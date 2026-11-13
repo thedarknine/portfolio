@@ -81,7 +81,9 @@ jobs:
 
     commitlint:
         name: Conventional commits
-        if: github.event_name == 'pull_request'
+        # Release pull requests (develop -> main) are skipped: their commits were checked on their own pull
+        # request into develop, and the oldest ones predate the commit rules
+        if: github.event_name == 'pull_request' && github.head_ref != 'develop'
         runs-on: ubuntu-latest
         timeout-minutes: 10
         steps:
