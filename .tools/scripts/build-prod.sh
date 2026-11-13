@@ -1,12 +1,14 @@
 #!/bin/sh
-# Checks that the project builds for production, in a temporary copy so the working copy keeps
-# its dev dependencies. Called by "task symfony:build-prod", inside the app container.
-# Deployment itself goes through "task prod:release" (prod-build.sh), which runs the same build steps.
+# Builds the project for production in a separate copy, so the working copy keeps its dev dependencies.
+# Runs inside the app container.
+#   - "task symfony:build-prod" (and the CI) checks the build of the working copy: build-prod.sh [build dir]
+#   - "task prod:build" builds a release from a git export:              build-prod.sh <build dir> <source dir>
 set -eu
 
 BUILD_DIR="${1:-/tmp/prod-build}"
+SOURCE_DIR="${2:-.}"
 
-echo "📁 Copying the project to $BUILD_DIR"
+echo "📁 Copying $SOURCE_DIR to $BUILD_DIR"
 rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 tar -c \
@@ -16,7 +18,7 @@ tar -c \
     --exclude=./var/cache \
     --exclude=./var/log \
     --exclude=./vendor \
-    . | tar -x -C "$BUILD_DIR"
+    -C "$SOURCE_DIR" . | tar -x -C "$BUILD_DIR"
 cd "$BUILD_DIR"
 
 export APP_ENV=prod

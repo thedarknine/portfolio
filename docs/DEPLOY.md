@@ -7,6 +7,7 @@ How to check a release before sending it to production, then deploy it to Hostin
 - [What happens at each step](#what-happens-at-each-step)
 - [After deploying](#after-deploying)
 - [Rolling back](#rolling-back)
+- [First release](#first-release)
 - [Other commands](#other-commands)
 - [Checklist](#checklist)
 
@@ -88,8 +89,8 @@ Reports are written to `.tools/reports/`.
 ## Deploying
 
 > [!NOTE]
-> This section describes the target procedure. It replaces the `production` branch flow (`prod:build`,
-> `prod:deploy`, `prod:dev`), which stays available until the first release made this way succeeds.
+> The previous flow, through the `production` branch, stays available as `prod-legacy:release` until the first
+> release made this way succeeds. Before that first release, follow [First release](#first-release).
 
 ```bash
 task prod:release
@@ -116,7 +117,7 @@ on its own (`task prod:<step>`).
 ### 1. Checks — `prod:check`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | This machine |
 | **Does** | Checks that the working copy is on `main`, has no uncommitted change and matches `origin/main`, and that the server answers over SSH. Computes the version (see below), shows it with the commit to release, and asks for a confirmation. |
 | **Changes** | Nothing |
@@ -129,7 +130,7 @@ format (`2026.11.0`, `v2026.07.0`, `v2026.11`), another month or a skipped numbe
 ### 2. Build — `prod:build`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | The `app` container |
 | **Does** | Exports the current commit with `git archive` into `tmp/release/<sha>/` (untracked and ignored files are never included), installs the Composer dependencies without the dev ones, installs the importmap vendors, builds the minified Tailwind CSS and compiles the assets. Then keeps only the files listed below and writes a `REVISION` file (version, commit, date). |
 | **Changes** | Creates `tmp/release/<sha>/` (ignored by git). The working copy, its `vendor/` and its dev assets are not touched. |
@@ -146,7 +147,7 @@ Everything else (`.docker/`, `.git/`, `.tools/`, `assets/`, `docs/`, `tests/`, t
 ### 3. Backup — `prod:backup`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | The server, streamed to this machine over SSH |
 | **Does** | Dumps the production database (`mysqldump`, gzip) and copies the production `.env.local`, both written directly to `.tools/export/prod/<date>/` on this machine. Checks that the dump is a valid, non-empty gzip file. |
 | **Changes** | Creates `.tools/export/prod/<date>/` (ignored by git). Nothing is written on the server. |
@@ -158,7 +159,7 @@ Everything else (`.docker/`, `.git/`, `.tools/`, `assets/`, `docs/`, `tests/`, t
 ### 4. Maintenance on — `prod:maintenance state=on`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | The server |
 | **Does** | Creates `maintenance.flag` at the root of `public_html`. While it exists, the root `.htaccess` answers every request with a `503` status and the static page `public/maintenance.html`, without starting Symfony. |
 | **Changes** | Visitors see the maintenance page. Search engines treat a `503` as temporary. |
@@ -167,9 +168,9 @@ Everything else (`.docker/`, `.git/`, `.tools/`, `assets/`, `docs/`, `tests/`, t
 ### 5. Upload — `prod:upload`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | This machine, towards the server |
-| **Does** | Copies `tmp/release/<sha>/` into `public_html` with `rsync --delete`. Files that exist on the server but not in the release are deleted, except the protected paths listed below. |
+| **Does** | Copies `tmp/release/<sha>/dist/` into `public_html` with `rsync --delete`. `task prod:upload dry=1` only lists what would change. Files that exist on the server but not in the release are deleted, except the protected paths listed below. |
 | **Changes** | The code of the site on the server. |
 | **On failure** | The site stays in maintenance: run the upload again, or [roll back](#rolling-back). |
 
@@ -185,7 +186,7 @@ Protected paths, never sent nor deleted:
 ### 6. Finalise — `prod:finalize`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | The server |
 | **Does** | Runs the Doctrine migrations, clears and warms up the production cache, then dumps the sitemap. |
 | **Changes** | The database schema (if the release has migrations), `var/cache/prod/`, `public/sitemap*.xml`. |
@@ -194,7 +195,7 @@ Protected paths, never sent nor deleted:
 ### 7. Maintenance off — `prod:maintenance state=off`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | The server |
 | **Does** | Deletes `maintenance.flag`: the site is served again. |
 | **Changes** | Visitors see the new release. |
@@ -203,7 +204,7 @@ Protected paths, never sent nor deleted:
 ### 8. Smoke test — `prod:smoke`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | This machine |
 | **Does** | Requests the home page, an inner page and the sitemap, which must answer `200`. Requests `/.env`, `/.env.local`, `/composer.json`, `/var/log/prod.log` and `/vendor/autoload.php`, which must answer `403` or `404`. Checks, through `prod:status`, that the version online is the one released. |
 | **Changes** | Nothing |
@@ -212,7 +213,7 @@ Protected paths, never sent nor deleted:
 ### 9. Tag — `prod:tag`
 
 | | |
-|---|---|
+| --- | --- |
 | **Runs on** | This machine |
 | **Does** | Creates the annotated tag of the version on the released commit, pushes it to `origin`, then creates the GitHub release with `gh release create <version> --generate-notes`: GitHub lists the pull requests merged since the previous version under "What's changed". |
 | **Changes** | A new git tag and a GitHub release: the record of what is online, and the starting point of a rollback. |
@@ -248,10 +249,44 @@ gunzip -c .tools/export/prod/<date>/db.sql.gz | ssh <server> 'mysql -u <user> -p
 
 List the releases with `git tag --list 'v*' --sort=-creatordate`.
 
+## First release
+
+The first release replaces a server that was deployed with git. Do these steps once, in this order.
+
+1. **Maintenance page.** Check that the server honours the flag: `task prod:maintenance state=on`, open the site
+   (it must show the maintenance page with a `503` status), then `task prod:maintenance state=off`.
+2. **Upload dry run.** `task prod:check`, `task prod:build`, then `task prod:upload dry=1`. Read the list of files
+   to delete: only leftovers of the old deployment may appear (`.git/`, `.docker/`, `.tools/`, `tests/`,
+   `docs/`...). Anything else must be added to the protected paths of `.tools/scripts/release.sh` first.
+3. **Migrations rehearsal.** The migrations were squashed into a baseline in November 2026, after the last
+   deployment: the production database already has the baseline schema, but not as a migration. Rehearse on a
+   copy: `task prod:backup`, import `db.sql.gz` into the local database, mark the baseline as executed, run the
+   other migrations and validate the schema:
+
+   ```bash
+   task symfony:console -- doctrine:migrations:version 'DoctrineMigrations\Version20261103080725' --add -n
+   task symfony:console -- doctrine:migrations:migrate -n
+   task symfony:console -- doctrine:schema:validate
+   ```
+
+   If the schema is not in sync, stop and fix the difference before releasing.
+4. **Release, step by step.** Run the steps one by one instead of `task prod:release`, so the baseline can be
+   marked on the server between the upload and the migrations (the old code on the server does not know it):
+   `prod:check`, `prod:build`, `prod:backup`, `prod:maintenance state=on`, `prod:upload`, then in `task prod:shell`:
+
+   ```bash
+   php bin/console doctrine:migrations:version 'DoctrineMigrations\Version20261103080725' --add -n --env=prod
+   ```
+
+   then `prod:finalize`, `prod:maintenance state=off`, `prod:smoke` and `prod:tag`.
+5. **Clean-up.** Once the release is online: delete the `production` branch (local and `origin`), the
+   `prod-legacy` tasks and their scripts (`prod-build.sh`, `prod-deploy.sh`, `dev.sh`, `.tools/deploy.sh-prod`,
+   `tests/bash/dev.bats`), and `~/deploy.sh` on the server.
+
 ## Other commands
 
 | Command | Does |
-|---|---|
+| --- | --- |
 | `task prod:status` | Shows the version online, read from the `REVISION` file on the server |
 | `task prod:shell` | Opens an SSH session in `public_html` |
 | `task prod:logs` | Shows the end of `var/log/prod.log` on the server |

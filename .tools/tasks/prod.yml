@@ -1,34 +1,80 @@
 # https://taskfile.dev
 version: '3'
 
-# Portfolio-only: Hostinger deployment.
-# prod:build commits the built assets to the production branch, prod:deploy pushes it to the server,
-# prod:dev switches back to main. The remote side runs .tools/deploy.sh-prod, copied to the user folder.
-# Needs REMOTE_* and DB_* variables in .env.local.
+# Portfolio-only: production release to Hostinger. See docs/DEPLOY.md.
+# Every step runs .tools/scripts/release.sh. Needs the REMOTE_* variables in .env.local.
+
+vars:
+    RELEASE: 'bash {{.TOOLS_DIR}}/scripts/release.sh'
 
 tasks:
     release:
-        desc: Full production deployment - build, deploy, back to development
-        cmds:
-            - '{{.UI}} title "🚀 Starting the full production deployment"'
-            # Runs even if build or deploy fails, so the working copy never stays on the production branch
-            - defer: { task: dev }
-            - task: build
-            - task: deploy
-            - '{{.UI}} success "Full production deployment completed!"'
-
-    build:
-        desc: Build the assets and commit them to the production branch
-        cmds:
-            - 'bash {{.TOOLS_DIR}}/scripts/prod-build.sh'
-
-    deploy:
-        desc: Deploy the production branch to the server - needs prod:build first
+        desc: Release main to production - the version is computed (version=vYYYY.M.PATCH to check it)
         interactive: true
         cmds:
-            - 'bash {{.TOOLS_DIR}}/scripts/prod-deploy.sh'
+            - '{{.RELEASE}} release {{.version}}'
 
-    dev:
-        desc: Switch back to the development environment
+    check:
+        desc: Check main, the containers and the server, compute the version and ask for a confirmation
+        interactive: true
         cmds:
-            - 'bash {{.TOOLS_DIR}}/scripts/dev.sh'
+            - '{{.RELEASE}} check {{.version}}'
+
+    build:
+        desc: Build the release in tmp/release/ from a clean git export (ref=<tag or commit>)
+        cmds:
+            - '{{.RELEASE}} build {{.ref}}'
+
+    backup:
+        desc: Save the production database and .env.local to .tools/export/prod/
+        cmds:
+            - '{{.RELEASE}} backup'
+
+    maintenance:
+        desc: Turn the maintenance page on or off (state=on|off)
+        requires:
+            vars: [state]
+        cmds:
+            - '{{.RELEASE}} maintenance {{.state}}'
+
+    upload:
+        desc: Upload the built release to the server with rsync (dry=1 only lists the changes)
+        cmds:
+            - '{{.RELEASE}} upload {{.dry}}'
+
+    finalize:
+        desc: Run the migrations, warm up the cache and dump the sitemap on the server
+        cmds:
+            - '{{.RELEASE}} finalize'
+
+    smoke:
+        desc: Check the public pages, the hidden files and the version online
+        cmds:
+            - '{{.RELEASE}} smoke {{.version}}'
+
+    tag:
+        desc: Tag the released commit and create the GitHub release
+        cmds:
+            - '{{.RELEASE}} tag'
+
+    rollback:
+        desc: Rebuild and upload a released version (version=vYYYY.M.PATCH)
+        interactive: true
+        cmds:
+            - '{{.RELEASE}} rollback {{.version}}'
+
+    status:
+        desc: Show the version online
+        cmds:
+            - '{{.RELEASE}} status'
+
+    shell:
+        desc: Open an SSH session in the web root of the server
+        interactive: true
+        cmds:
+            - '{{.RELEASE}} shell'
+
+    logs:
+        desc: Show the end of the production log (lines=50)
+        cmds:
+            - '{{.RELEASE}} logs {{.lines}}'

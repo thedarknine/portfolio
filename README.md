@@ -192,29 +192,23 @@ static files, outside this repository:
 - `docs.carolinenoyer.fr`: documents (resume, reports, articles)
 - `medias.carolinenoyer.fr`: images, allowed in the Content Security Policy
 
-Branches: features on `cno_*` branches, merged into `develop`, then `main`. The `production`
-branch is what the server pulls: `main` plus the compiled assets.
+Branches: features on `cno_*` branches, merged into `develop`, then `main`. Releases are made
+from `main` and tagged with a CalVer version (`v2026.11.0`).
 
 ```bash
 task prod:release
 ```
 
-1. `prod:build` (from `main`): builds Tailwind, the importmap and the assets in `prod`, merges
-   `main` into `production`, commits the compiled assets and pushes `production`.
-2. `prod:deploy`: connects over SSH (`REMOTE_*` from `.env.local`) and runs `~/deploy.sh` on the
-   server, a copy of `.tools/deploy.sh-prod`: it backs up the site and the database, resets the
-   site to `origin/production`, installs the dependencies without the dev ones, warms the cache and
-   dumps the sitemap. If it fails, the `production` branch is rolled back.
-3. `prod:dev`: restores the development dependencies, cache and assets, even after a failure.
-
-The deployment does not run the migrations: apply them on the server by hand when needed
-(`php bin/console doctrine:migrations:migrate`). The migrations were squashed into one baseline
-in November 2026: a database created before it only needs `doctrine:migrations:rollup` once.
+The release is built on this machine from a clean git export of `main` (no dev dependencies,
+minified assets), the production database and `.env.local` are saved to `.tools/export/prod/`,
+then the site goes into maintenance, the build is copied to the server with rsync, the
+migrations run, and the site comes back. A smoke test checks the result before the version is
+tagged and released on GitHub. Each step is described in [docs/DEPLOY.md](docs/DEPLOY.md).
 
 `task symfony:build-prod` checks the production build in a temporary copy, without touching the
 working copy or the branches.
 
-The checks to run before and after a release are listed in [docs/DEPLOY.md](docs/DEPLOY.md).
+The checks to run before and after a release, and the rollback, are in [docs/DEPLOY.md](docs/DEPLOY.md).
 
 ## Updating
 

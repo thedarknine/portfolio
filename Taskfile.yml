@@ -51,6 +51,9 @@ includes:
     prod:
         taskfile: ./.tools/tasks/prod.yml
 
+    prod-legacy:
+        taskfile: ./.tools/tasks/prod-legacy.yml
+
 tasks:
     default:
         cmds:
