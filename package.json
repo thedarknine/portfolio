@@ -12,9 +12,9 @@
     "knip": "^6.45.1",
     "lighthouse": "^13.6.0",
     "markdownlint-cli2": "^0.24.1",
-    "pa11y": "^9.1.1",
-    "pa11y-ci": "^4.1.1",
-    "pa11y-ci-reporter-html": "^8.1.1",
+    "pa11y": "^10",
+    "pa11y-ci": "^5",
+    "pa11y-ci-reporter-html": "^9",
     "unlighthouse": "^0.19"
   },
   "dependencies": {
