@@ -66,3 +66,12 @@ tasks:
               {{.EXEC}} bin/console ux:icons:lock {{.CLI_ARGS}}
               || { {{.UI}} error "Icons lock failed."; exit 1; }
             - '{{.UI}} success "Icons saved in assets/icons/."'
+
+    outdated:
+        desc: List the outdated direct dependencies (Composer and pnpm)
+        cmds:
+            - '{{.UI}} subtitle "🔍 Checking for outdated dependencies"'
+            - '{{.EXEC}} composer outdated --direct'
+            # pnpm exits with 1 when something is outdated: that is the expected result here
+            - '{{.EXEC}} pnpm outdated || true'
+            - '{{.UI}} success "Outdated dependencies checked."'
