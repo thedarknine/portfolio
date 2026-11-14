@@ -1,5 +1,5 @@
 #!/bin/bash
-# Generate the Open Graph images (1200x630 PNG) of the pages from the SVG template.
+# Generate the Open Graph images (1200x630 layout rendered at 2x, 2400x1260 PNG, sharp on high-density screens) of the pages from the SVG template.
 #
 # Usage: bash .tools/scripts/generate-og-images.sh [technical_name]
 #   Without argument, generates an image for every page of the "page" table.
@@ -153,7 +153,7 @@ docker run --rm \
         && fc-list | grep -qi 'figtree.*\.ttf' || { echo 'Figtree font not loaded' >&2; exit 1; }
         for svg in $WORK_DIR/*.svg; do
             name=\$(basename \"\$svg\" .svg)
-            rsvg-convert -w 1200 -h 630 \"\$svg\" -o $OUTPUT_DIR/\$name.png || exit 1
+            rsvg-convert -w 2400 -h 1260 \"\$svg\" -o $OUTPUT_DIR/\$name.png || exit 1
         done
     " || {
     display_error "Rendering failed."

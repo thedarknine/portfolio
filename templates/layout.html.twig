@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% if app.environment == 'dev' %}[DEV] {% endif %}
-            {% if current_page.slug == 'home' %}
+            {% if current_page.technicalName == 'home' %}
             {{ owner_name }} — {% block meta_title %}{{ owner_role }}{% endblock %}
             {% else %}
             {{ current_page.title }} | {{ owner_name }}
@@ -21,12 +21,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="canonical" href="{{ absolute_url(app.request.uri) }}">
 
-        {% if current_page.slug == 'home' %}
+        {% if current_page.technicalName == 'home' %}
         <link rel="preload" as="image" href="{{ absolute_url(asset('images/volcans-cnoyer.webp')) }}" fetchpriority="high">
         {% endif %}
 
-        {# Branded card generated per page by "task utils:og-images", the portrait on the home page #}
-        {% set has_og_card = current_page.technicalName is defined and current_page.technicalName != 'home' %}
+        {# Branded card generated per page by "task utils:og-images". The home page gets one once its unpublished
+           "home" page exists in the database (HomeController), the portrait until then #}
+        {% set has_og_card = current_page.technicalName is defined
+            and (current_page.technicalName != 'home' or (current_page.createdAt ?? null) is not null) %}
         {% set og_image = has_og_card
             ? asset('images/og/og-' ~ current_page.technicalName ~ '.png')
             : asset('images/cnoyer-product-owner.webp') %}
@@ -38,11 +40,17 @@
         <meta property="og:description" content="{{ block('meta_description') }}">
         <meta property="og:image" content="{{ absolute_url(og_image) }}">
         {% if has_og_card %}
-        <meta property="og:image:width" content="1200">
-        <meta property="og:image:height" content="630">
+        <meta property="og:image:width" content="2400">
+        <meta property="og:image:height" content="1260">
         {% endif %}
         <meta property="og:image:alt" content="{{ block('meta_title') }}">
         <meta property="og:site_name" content="{{ site_name }}">
+        {# Publish date read by LinkedIn: only pages stored in the database have one #}
+        {% set page_published = current_page.createdAt ?? null %}
+        {% if page_published %}
+        <meta name="publish_date" property="og:publish_date" content="{{ page_published|date('c') }}">
+        <meta property="article:modified_time" content="{{ (current_page.updatedAt ?? page_published)|date('c') }}">
+        {% endif %}
 
         {# Twitter #}
         <meta name="twitter:card" content="summary_large_image">
@@ -70,7 +78,7 @@
             "knowsAbout": ["Symfony", "PHP", "Tailwind CSS", "UX/UI Design", "Product Ownership"]
         }
         </script>
-        {% if current_page.slug != 'home' and current_page.slug != 'contact' %}
+        {% if current_page.technicalName != 'home' and current_page.slug != 'contact' %}
         <script type="application/ld+json">
         {
             "@context": "https://schema.org",
@@ -103,17 +111,17 @@
 
     </head>
     <body>
-        <div class="main" id="{{ current_page.slug ?? 'home' }}">
+        <div class="main" id="{{ current_page.technicalName == 'home' ? 'home' : current_page.slug }}">
             {{ include('components/header.html.twig') }}
 
             <main>
-                {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
+                {% if current_page.technicalName != 'home' and current_page.technicalName != 'legal' %}
                 {{ include('components/page_hero.html.twig') }}
                 {% endif %}
 
                 {% block body %}{% endblock %}
 
-                {% if current_page.slug != 'home' and current_page.technicalName != 'legal' %}
+                {% if current_page.technicalName != 'home' and current_page.technicalName != 'legal' %}
                 {{ include('components/page_quote.html.twig') }}
                 {% endif %}
             </main>
