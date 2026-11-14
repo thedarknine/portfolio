@@ -8,7 +8,7 @@ No API Platform, no Messenger.
 ## Repository conventions
 
 - Everything in the repository is written in English: code, comments, docs, commit messages.
-- Branches: `cno_<topic>` from `develop`; `develop` → `main` → `production` (deployment only).
+- Branches: `cno_<topic>` from `develop`; `develop` → `main`; releases are made from `main` (see docs/DEPLOY.md).
 - Every command runs in the Docker `app` container through Task: run `task` for the list,
   never `symfony serve`. Use `task symfony:console -- <command>` and
   `task symfony:composer -- <command>` instead of calling `bin/console` or `composer` on the host.
