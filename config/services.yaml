@@ -17,7 +17,8 @@ parameters:
     app.owner_description: 'Développeur web devenu Product Owner technique, je structure des produits SaaS alignés sur les besoins métiers et techniques. Découvrez mon parcours et mes réalisations.'
     app.cv_url: 'https://docs.carolinenoyer.fr/cnoyer-cv-productowner.pdf'
     # Version shown in the footer and the profile card: bump it with each release tag
-    app.version: 'v2026.7'
+    # Set by the release build (task prod:build writes APP_VERSION to the .env of the release)
+    app.version: '%env(APP_VERSION)%'
 
 services:
     # default configuration for services in *this* file

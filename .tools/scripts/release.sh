@@ -162,6 +162,8 @@ cmd_build() {
     done
     printf 'version=%s\ncommit=%s\nbuilt=%s\n' "${version:-unreleased}" "$sha" "$(date '+%Y-%m-%d %H:%M:%S')" \
         >"$dir/dist/REVISION"
+    # Version shown in the footer (app.version): the server's .env.local does not set it
+    printf '\nAPP_VERSION=%s\n' "${version:-unreleased}" >>"$dir/dist/.env"
     rm -rf "$dir/src" "$dir/build"
 
     state_set SHA "$sha"
