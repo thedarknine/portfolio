@@ -106,33 +106,6 @@ print_link() {
 }
 
 # =====================================================================
-# CHECKS (production deployment)
-# =====================================================================
-
-check_on_main_branch() {
-    local current_branch
-    current_branch=$(git rev-parse --abbrev-ref HEAD)
-    [ "$current_branch" = "main" ] || {
-        display_error "You must be on 'main' branch (current: $current_branch)"
-        exit 1
-    }
-}
-
-check_production_branch_exists() {
-    git show-ref --quiet refs/heads/production || {
-        display_error "Production branch does not exist"
-        exit 1
-    }
-}
-
-check_no_uncommitted_changes() {
-    git diff-index --quiet HEAD -- || {
-        display_error "You have uncommitted changes"
-        exit 1
-    }
-}
-
-# =====================================================================
 # COMMAND MODE (only when executed, not when sourced)
 # =====================================================================
 

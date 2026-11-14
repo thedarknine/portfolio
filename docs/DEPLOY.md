@@ -356,5 +356,7 @@ content tables of production with the local ones. `user` (the production passwor
   baseline was marked as executed on the server between the upload and the migrations
   (`doctrine:migrations:version 'DoctrineMigrations\Version20261103080725' --add`), after a rehearsal on a copy
   of the production database. The content was then published from the local database.
+- **Legacy flow removed (November 2026):** the `production` branch, the `prod-legacy` tasks, their scripts and
+  `~/deploy.sh` on the server were deleted once two releases had gone through `prod:release`.
 - **Maintenance page on LiteSpeed:** Hostinger's LiteSpeed does not apply the rewrite rules to error documents,
   so the root `.htaccess` points `ErrorDocument 503` to the real path, `/public/maintenance.html`.

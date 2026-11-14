@@ -109,8 +109,7 @@ in the [template README](https://github.com/thedarknine/symfony-docker-template#
 ├── export/              # Database dumps (git-ignored)
 ├── reports/             # SEO and accessibility audit reports (git-ignored)
 ├── scripts/             # Init, help, pre-commit, build, deployment and audit scripts
-├── tasks/               # Task domains included by Taskfile.yml
-└── deploy.sh-prod       # Deployment script run on the production server
+└── tasks/               # Task domains included by Taskfile.yml
 assets/                  # JS, CSS (Tailwind) and locked icons, served by AssetMapper
 docs/                    # Style guide, deployment guide and migration notes
 src/                     # Application code (DataFixtures/Testing is generated)
