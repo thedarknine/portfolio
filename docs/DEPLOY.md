@@ -31,8 +31,7 @@ branch.
 Run the following commands to check for outdated dependencies:
 
 ```bash
-docker compose exec app composer outdated --direct
-docker compose exec app pnpm outdated
+task symfony:outdated
 ```
 
 If there are updates available, run the following commands to update the dependencies:
