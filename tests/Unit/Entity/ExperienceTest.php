@@ -239,7 +239,7 @@ class ExperienceTest extends TestCase
             ->setCompany(null);
 
         $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Experience must have a company to generate display name');
+        $this->expectExceptionMessageIsOrContains('Experience must have a company to generate display name');
 
         $experience->getDisplayName();
     }

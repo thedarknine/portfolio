@@ -161,7 +161,7 @@ class SecurityControllerTest extends WebTestCase
 
         // 2. Expect the LogicException from Symfony to be thrown
         $this->expectException(\LogicException::class);
-        $this->expectExceptionMessage('This method can be blank - it will be intercepted by the logout key on your firewall.');
+        $this->expectExceptionMessageIsOrContains('This method can be blank - it will be intercepted by the logout key on your firewall.');
 
         // 3. Call the method directly
         $controller->logout();
