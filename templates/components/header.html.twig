@@ -1,6 +1,6 @@
 {% set is_dark = app.request.cookies.get('theme', 'light') == 'dark' %}
 {# On the home page the header floats over the photo hero and turns opaque once the page scrolls (header_controller.js). #}
-{% set is_overlay = current_page.slug == 'home' %}
+{% set is_overlay = current_page.technicalName == 'home' %}
 <header
     class="site-header {{ is_overlay ? 'site-header--overlay fixed inset-x-0' : 'sticky' }} top-0 z-40 border-b border-[#24405f] bg-surface-header font-sans text-white backdrop-blur transition-colors duration-200"
     {% if is_overlay %}{{ stimulus_controller('menu')|stimulus_controller('header') }}{% else %}{{ stimulus_controller('menu') }}{% endif %}>
@@ -16,9 +16,9 @@
                     {% set is_current = current_page.slug == page.slug %}
                     <li>
                         {% if page.slug == 'contact' %}
-                        <a class="ml-1 inline-flex min-h-11 items-center rounded-lg bg-primary px-4 text-on-primary transition-colors hover:opacity-90" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
+                        <a class="ml-1 inline-flex min-h-11 items-center rounded-lg bg-primary px-4 text-on-primary transition-colors hover:opacity-90" href="{{ page.technicalName == 'home' ? path('app_home') : '/' ~ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
                         {% else %}
-                        <a class="site-nav__link inline-flex min-h-11 items-center rounded-lg px-3 text-on-surface transition-colors hover:bg-panel" href="/{{ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
+                        <a class="site-nav__link inline-flex min-h-11 items-center rounded-lg px-3 text-on-surface transition-colors hover:bg-panel" href="{{ page.technicalName == 'home' ? path('app_home') : '/' ~ page.slug }}" {% if is_current %}aria-current="page"{% endif %}>{{ page.title }}</a>
                         {% endif %}
                     </li>
                     {% endfor %}

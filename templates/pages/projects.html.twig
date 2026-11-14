@@ -7,8 +7,8 @@ Mes projets personnels et de R&D : l’évolution de mon site depuis 2008, des o
 {% endblock %}
 
 {% block importmap %}
-{{ parent() }}
-{{ importmap('gallery') }}
+{# One import map for the page: a second importmap() call would print a script without the CSP nonce #}
+{{ importmap(['app', 'gallery'], { nonce: csp_nonce('script') }) }}
 {% endblock %}
 
 {% block body %}

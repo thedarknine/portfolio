@@ -7,8 +7,8 @@ Mes créations en argile depuis 2010 : sculptures et pièces modelées, mates, c
 {% endblock %}
 
 {% block importmap %}
-{{ parent() }}
-{{ importmap('gallery') }}
+{# One import map for the page: a second importmap() call would print a script without the CSP nonce #}
+{{ importmap(['app', 'gallery'], { nonce: csp_nonce('script') }) }}
 {% endblock %}
 
 {% block body %}

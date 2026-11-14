@@ -1,6 +1,7 @@
 # The project root is the web root on Hostinger: only public/ may ever be served.
 DirectoryIndex public/index.php
-ErrorDocument 503 /maintenance.html
+# Real path of the page: LiteSpeed does not apply the rewrite rules below to error documents
+ErrorDocument 503 /public/maintenance.html
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
@@ -15,7 +16,7 @@ ErrorDocument 503 /maintenance.html
     # 3. Maintenance: while maintenance.flag exists (created by task prod:maintenance state=on),
     #    every request gets a 503 and the static page public/maintenance.html, without Symfony
     RewriteCond %{DOCUMENT_ROOT}/maintenance.flag -f
-    RewriteCond %{REQUEST_URI} !^/maintenance\.html$
+    RewriteCond %{REQUEST_URI} !^/public/maintenance\.html$
     RewriteRule ^ - [R=503,L]
 
     # 4. Already inside public/: let public/.htaccess handle it
