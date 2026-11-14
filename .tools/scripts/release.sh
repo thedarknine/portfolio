@@ -162,6 +162,8 @@ cmd_build() {
     done
     printf 'version=%s\ncommit=%s\nbuilt=%s\n' "${version:-unreleased}" "$sha" "$(date '+%Y-%m-%d %H:%M:%S')" \
         >"$dir/dist/REVISION"
+    # Version shown in the footer (app.version): the server's .env.local does not set it
+    printf '\nAPP_VERSION=%s\n' "${version:-unreleased}" >>"$dir/dist/.env"
     rm -rf "$dir/src" "$dir/build"
 
     state_set SHA "$sha"
@@ -187,11 +189,36 @@ cmd_backup() {
     display_success "Backup saved to ${dir#"$PROJECT_ROOT"/}"
 }
 
+# Pauses or starts the UptimeRobot monitor (API v3), so the maintenance page does not raise a DOWN alert.
+# Optional: needs UPTIME_API_KEY (main API key) and UPTIME_MONITOR_ID in .env.local. A failure only warns.
+uptime_monitor() {
+    local action=$1
+    if [ -z "${UPTIME_API_KEY:-}" ] || [ -z "${UPTIME_MONITOR_ID:-}" ]; then
+        display_warning "UptimeRobot monitor not ${action}ed: UPTIME_API_KEY or UPTIME_MONITOR_ID missing from .env.local"
+        return 0
+    fi
+    if curl -fsS -o /dev/null -X POST -H "Authorization: Bearer $UPTIME_API_KEY" -H 'Accept: application/json' \
+        -H 'Content-Type: application/json' -d '{}' \
+        "https://api.uptimerobot.com/v3/monitors/$UPTIME_MONITOR_ID/$action"; then
+        echo "   UptimeRobot monitor: $action"
+    else
+        display_warning "Could not $action the UptimeRobot monitor $UPTIME_MONITOR_ID" "Do it by hand on uptimerobot.com"
+    fi
+}
+
 cmd_maintenance() {
     require_remote_config
     case "${1:-}" in
-    on) display_subtitle "🚧 Maintenance on" && remote maintenance on ;;
-    off) display_subtitle "✅ Maintenance off" && remote maintenance off ;;
+    on)
+        display_subtitle "🚧 Maintenance on"
+        uptime_monitor pause
+        remote maintenance on
+        ;;
+    off)
+        display_subtitle "✅ Maintenance off"
+        remote maintenance off
+        uptime_monitor start
+        ;;
     *) fail "Usage: maintenance on|off" ;;
     esac
 }

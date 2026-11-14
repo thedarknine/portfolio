@@ -73,7 +73,7 @@
                                 <nav aria-label="Pages du site">
                                     <ul class="mb-3.5 flex flex-wrap gap-x-5 gap-y-1">
                                         {% for page in page_manager.getPublishedRootPages() %}
-                                        {% if page.category.value != 'about' and page.slug != 'contact' %}
+                                        {% if page.category.value != 'about' and page.slug != 'contact' and page.technicalName != 'home' %}
                                         <li>
                                             <a class="inline-flex min-h-8 items-center text-[#7fcfd6] underline decoration-[#7fcfd6]/35 underline-offset-4 hover:decoration-[#7fcfd6]" href="/{{ page.slug }}" title="{{ page.title }}">{{ page.slug }}/</a>
                                         </li>

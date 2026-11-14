@@ -4,12 +4,14 @@ How to check a release before sending it to production, then deploy it to Hostin
 
 - [Before deploying](#before-deploying)
 - [Deploying](#deploying)
+- [Release step by step](#release-step-by-step)
 - [What happens at each step](#what-happens-at-each-step)
 - [After deploying](#after-deploying)
 - [Rolling back](#rolling-back)
-- [First release](#first-release)
+- [Publishing content changes](#publishing-content-changes)
 - [Other commands](#other-commands)
 - [Checklist](#checklist)
+- [History](#history)
 
 ## Before deploying
 
@@ -88,10 +90,6 @@ Reports are written to `.tools/reports/`.
 
 ## Deploying
 
-> [!NOTE]
-> The previous flow, through the `production` branch, stays available as `prod-legacy:release` until the first
-> release made this way succeeds. Before that first release, follow [First release](#first-release).
-
 ```bash
 task prod:release
 ```
@@ -99,15 +97,51 @@ task prod:release
 Versions follow CalVer, `vYYYY.M.PATCH` (see [AGENTS.md](../AGENTS.md#releases)). The version is computed from
 the date and the existing tags: `v2026.11.0` for the first release of November 2026, `v2026.11.1` for the next
 one in the same month. The release shows it and asks for a confirmation before going on.
-
-`task prod:release version=v2026.11.0` is still accepted, to state the expected version explicitly: the release
+`task prod:release version=v2026.11.1` is still accepted, to state the expected version explicitly: the release
 stops if it does not match the computed one.
 
 The release is built on this machine from a clean commit of `main`, then copied to the server with rsync. The
 server never runs git or Composer: it only receives a ready-to-serve copy of the site, then runs the migrations
 and warms up the cache. The working copy never changes branch.
 
-Needs the `REMOTE_*` variables in `.env.local` and the SSH key in `REMOTE_SSH_KEY`.
+### Requirements
+
+- **`.env.local`:** `REMOTE_HOST`, `REMOTE_USER`, `REMOTE_PORT`, `REMOTE_SSH_KEY` (a leading `~` is accepted),
+  and optionally `UPTIME_API_KEY` (UptimeRobot main API key) and `UPTIME_MONITOR_ID`, to pause the monitor during
+  the maintenance. Without them, the release warns and the monitor reports the maintenance as a downtime.
+- **SSH key in the macOS keychain,** so the passphrase is not asked at every command. Once, in `~/.ssh/config`:
+
+  ```text
+  Host *
+      AddKeysToAgent yes
+      UseKeychain yes
+  ```
+
+  then `ssh-add --apple-use-keychain ~/.ssh/<key>`.
+- **GitHub CLI logged in** (`gh auth status`), for the GitHub release.
+- **Containers up** (`task up`): the build runs in the `app` container.
+
+## Release step by step
+
+`task prod:release` chains the steps below. Run them one by one instead when a release needs a manual action
+between two steps (a data fix, a migration to mark), or to check each step. Stop at the first failure: until
+step 7, visitors see the maintenance page, and the database is saved by step 3.
+
+| # | Command | What to check |
+| --- | --- | --- |
+| 1 | `task prod:check` | The version proposed and the commit are the expected ones. Answer `y`. |
+| 2 | `task prod:build` | `cat tmp/release/*/dist/REVISION` shows the version. `dist/` only holds the release files. |
+| 3 | `task prod:backup` | `.tools/export/prod/<date>-<version>/` holds `db.sql.gz` and `env.local`. |
+| — | `task prod:upload dry=1` | Optional: the files that would be sent or deleted. No protected path may appear. |
+| 4 | `task prod:maintenance state=on` | The UptimeRobot monitor is paused. The site shows the maintenance page. |
+| 5 | `task prod:upload` | Silent when it succeeds. `task prod:status` shows the new version. |
+| 6 | `task prod:finalize` | The migrations run (or "No migrations to execute"), the cache and the sitemap are rebuilt. |
+| 7 | `task prod:maintenance state=off` | The new site is online, the monitor is started again. Browse a few pages, the admin, the contact form. |
+| 8 | `task prod:smoke` | Every line is green, the version online is the released one. |
+| 9 | `task prod:tag` | The tag and the GitHub release exist. Only once the site is checked. |
+
+If a step fails after step 4, fix the problem and run the failed step again, or [roll back](#rolling-back). To
+serve the site again as it is, run `task prod:maintenance state=off`.
 
 ## What happens at each step
 
@@ -161,7 +195,7 @@ Everything else (`.docker/`, `.git/`, `.tools/`, `assets/`, `docs/`, `tests/`, t
 | | |
 | --- | --- |
 | **Runs on** | The server |
-| **Does** | Creates `maintenance.flag` at the root of `public_html`. While it exists, the root `.htaccess` answers every request with a `503` status and the static page `public/maintenance.html`, without starting Symfony. |
+| **Does** | Pauses the UptimeRobot monitor (when `UPTIME_*` is set), then creates `maintenance.flag` at the root of `public_html`. While it exists, the root `.htaccess` answers every request with a `503` status and the static page `public/maintenance.html`, without starting Symfony. |
 | **Changes** | Visitors see the maintenance page. Search engines treat a `503` as temporary. |
 | **On failure** | Nothing changed: run the release again. |
 
@@ -197,7 +231,7 @@ Protected paths, never sent nor deleted:
 | | |
 | --- | --- |
 | **Runs on** | The server |
-| **Does** | Deletes `maintenance.flag`: the site is served again. |
+| **Does** | Deletes `maintenance.flag`: the site is served again. Starts the UptimeRobot monitor again. |
 | **Changes** | Visitors see the new release. |
 | **On failure** | Delete the file by hand (`task prod:shell`, then `rm maintenance.flag`). |
 
@@ -221,15 +255,22 @@ Protected paths, never sent nor deleted:
 
 ## After deploying
 
-- **Audit:** `task utils:seo-audit target=prod`, for the real Lighthouse scores and security headers.
+- **Audit:** `task utils:seo-audit target=prod`, for the real Lighthouse scores and security headers. Pa11y
+  must pass.
+- **Browser console:** no Content Security Policy error on the home page, a gallery page (Projets, Photos) and
+  the contact page. The CSP only applies in production: every `<script>` must carry the nonce
+  (`csp_nonce('script')`), and a page needs a single `importmap()` call listing all its entry points.
 - **Backup:** the new folder in `.tools/export/prod/` holds `db.sql.gz` and `env.local`.
 - **Open Graph:** check the preview of the home page and of an inner page in the
-  [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/).
+  [LinkedIn Post Inspector](https://www.linkedin.com/post-inspector/), which also refreshes LinkedIn's cache.
+  After a change to a page title, tagline or subtitle, regenerate its card first (`task utils:og-images
+  page=<technical name>`).
 - **Structured data:** check two pages in the [Schema.org validator](https://validator.schema.org/): the Person
   `@id` must be the same on both.
 - **Error alerts:** after a change to the mailer or Monolog configuration, run a failing command on the server
-  (`php bin/console cache:clear test-alert`) and check that the alert email arrives.
-- **Uptime:** the UptimeRobot monitor stayed up during the deployment.
+  (`task prod:shell`, then `php bin/console cache:clear test-alert --env=prod`). The command error is expected:
+  check that the alert email arrives.
+- **Uptime:** the UptimeRobot monitor is active again, without a downtime alert.
 
 ## Rolling back
 
@@ -244,44 +285,49 @@ Migrations are not reverted. If the failed release changed the database schema, 
 while the site is still in maintenance:
 
 ```bash
-gunzip -c .tools/export/prod/<date>/db.sql.gz | ssh <server> 'mysql -u <user> -p <database>'
+scp -P "$REMOTE_PORT" .tools/export/prod/<date>-<version>/db.sql.gz "$REMOTE_USER@$REMOTE_HOST:"
+task prod:shell
+gunzip -c ~/db.sql.gz | mysql -u <DB_USER> -p <DB_NAME> && rm ~/db.sql.gz
 ```
+
+`DB_USER` and `DB_NAME` are in the `.env.local` of the server, the password is asked.
 
 List the releases with `git tag --list 'v*' --sort=-creatordate`.
 
-## First release
+## Publishing content changes
 
-The first release replaces a server that was deployed with git. Do these steps once, in this order.
+Content (pages, experiences, projects, skills...) is edited in the local admin, then published by replacing the
+content tables of production with the local ones. `user` (the production password and 2FA secret) and
+`doctrine_migration_versions` are never replaced. Release the code first, so both schemas match.
 
-1. **Maintenance page.** Check that the server honours the flag: `task prod:maintenance state=on`, open the site
-   (it must show the maintenance page with a `503` status), then `task prod:maintenance state=off`.
-2. **Upload dry run.** `task prod:check`, `task prod:build`, then `task prod:upload dry=1`. Read the list of files
-   to delete: only leftovers of the old deployment may appear (`.git/`, `.docker/`, `.tools/`, `tests/`,
-   `docs/`...). Anything else must be added to the protected paths of `.tools/scripts/release.sh` first.
-3. **Migrations rehearsal.** The migrations were squashed into a baseline in November 2026, after the last
-   deployment: the production database already has the baseline schema, but not as a migration. Rehearse on a
-   copy: `task prod:backup`, import `db.sql.gz` into the local database, mark the baseline as executed, run the
-   other migrations and validate the schema:
+1. **Compare.** `task prod:backup` and `task db:dump`, then compare the two dumps table by table: anything that
+   only exists in production would be lost. Bring it back into the local database first.
+2. **Export the local content,** data only, with explicit column lists (the column order differs between the
+   local and production schemas):
 
    ```bash
-   task symfony:console -- doctrine:migrations:version 'DoctrineMigrations\Version20261103080725' --add -n
-   task symfony:console -- doctrine:migrations:migrate -n
-   task symfony:console -- doctrine:schema:validate
+   docker compose exec -T db mariadb-dump -uroot -p"$DB_ROOT_PASS" --no-create-info --complete-insert \
+       --skip-triggers --ignore-table="$DB_NAME.user" --ignore-table="$DB_NAME.doctrine_migration_versions" \
+       "$DB_NAME" > tmp/content.sql
    ```
 
-   If the schema is not in sync, stop and fix the difference before releasing.
-4. **Release, step by step.** Run the steps one by one instead of `task prod:release`, so the baseline can be
-   marked on the server between the upload and the migrations (the old code on the server does not know it):
-   `prod:check`, `prod:build`, `prod:backup`, `prod:maintenance state=on`, `prod:upload`, then in `task prod:shell`:
+   Then add at the top of `tmp/content.sql`: `SET FOREIGN_KEY_CHECKS = 0;`, `START TRANSACTION;` and a
+   `DELETE FROM` for each exported table, and at the end `COMMIT;` and `SET FOREIGN_KEY_CHECKS = 1;`.
+3. **Rehearse locally:** import the production `db.sql.gz` into the local database, then `tmp/content.sql`, run
+   `doctrine:schema:validate`, browse the site and log in to the admin with the production password. Restore the
+   local database afterwards from the `task db:dump` file.
+4. **Publish:** `task prod:backup`, `task prod:maintenance state=on`, copy `tmp/content.sql` to the server (`scp`),
+   then in `task prod:shell`:
 
    ```bash
-   php bin/console doctrine:migrations:version 'DoctrineMigrations\Version20261103080725' --add -n --env=prod
+   mysql -u <DB_USER> -p <DB_NAME> < ~/content.sql
+   php bin/console cache:clear --env=prod
+   php bin/console presta:sitemaps:dump --env=prod
+   rm ~/content.sql
    ```
 
-   then `prod:finalize`, `prod:maintenance state=off`, `prod:smoke` and `prod:tag`.
-5. **Clean-up.** Once the release is online: delete the `production` branch (local and `origin`), the
-   `prod-legacy` tasks and their scripts (`prod-build.sh`, `prod-deploy.sh`, `dev.sh`, `.tools/deploy.sh-prod`,
-   `tests/bash/dev.bats`), and `~/deploy.sh` on the server.
+   and `task prod:maintenance state=off`, `task prod:smoke`. Regenerate the Open Graph cards of the pages whose
+   texts changed, and release them with the next version.
 
 ## Other commands
 
@@ -299,5 +345,16 @@ The first release replaces a server that was deployed with git. Do these steps o
 - [ ] `task prod:release` completed, smoke test green, version tagged and GitHub release created
 - [ ] Backup present in `.tools/export/prod/<date>/`
 - [ ] `task utils:seo-audit target=prod` reviewed
+- [ ] No CSP error in the browser console (home, a gallery page, contact)
 - [ ] Open Graph and structured data checked
 - [ ] UptimeRobot monitor up
+
+## History
+
+- **v2026.11.0 (13 November 2026), first rsync release.** It replaced a server deployed with git through the
+  `production` branch. The migrations had been squashed into a baseline after the previous deployment, so the
+  baseline was marked as executed on the server between the upload and the migrations
+  (`doctrine:migrations:version 'DoctrineMigrations\Version20261103080725' --add`), after a rehearsal on a copy
+  of the production database. The content was then published from the local database.
+- **Maintenance page on LiteSpeed:** Hostinger's LiteSpeed does not apply the rewrite rules to error documents,
+  so the root `.htaccess` points `ErrorDocument 503` to the real path, `/public/maintenance.html`.

@@ -87,6 +87,7 @@ which is git-ignored and must never be committed:
 | `DATABASE_URL`                                | Production database (Hostinger MariaDB)                      |
 | `REMOTE_HOST` / `REMOTE_USER` / `REMOTE_PORT` | Production server, used by `task prod:deploy`                |
 | `REMOTE_SSH_KEY`                              | Path of the SSH key for the production server                |
+| `UPTIME_API_KEY` / `UPTIME_MONITOR_ID`        | UptimeRobot main API key and monitor, paused during releases |
 | `HOST_UID` / `HOST_GID`                       | Linux only: ids of the `app` user (then `task docker:build`) |
 
 The other variables of `.env` (`PROJECT_SLUG`, ports, image versions, `DB_*`) are documented

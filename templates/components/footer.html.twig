@@ -30,8 +30,9 @@
                 </ul>
             </div>
 
-            <a class="shrink-0" href="{{ path('app_home') }}" aria-label="Accueil">
-                <img class="size-16" src="{{ asset('images/global/symbol.svg') }}" alt="" width="64" height="64">
+            {# The image alt names the link (an aria-label with an empty alt fails WCAG H30.2 in Pa11y) #}
+            <a class="shrink-0" href="{{ path('app_home') }}">
+                <img class="size-16" src="{{ asset('images/global/symbol.svg') }}" alt="{{ owner_name }} — Accueil" width="64" height="64">
             </a>
 
             <nav class="flex w-full flex-col gap-10 lg:grid lg:w-auto lg:min-w-0 lg:flex-[1_1_480px] lg:grid-cols-[repeat(auto-fit,minmax(150px,1fr))] lg:gap-8" aria-label="Plan du site">
@@ -42,7 +43,7 @@
                         {% for page in column.pages %}
                         {% if page.category.value == column.category %}
                         <li>
-                            <a class="flex min-h-10 items-center text-white transition-colors hover:text-band-accent" href="/{{ page.slug }}">{{ page.title }}</a>
+                            <a class="flex min-h-10 items-center text-white transition-colors hover:text-band-accent" href="{{ page.technicalName == 'home' ? path('app_home') : '/' ~ page.slug }}">{{ page.title }}</a>
                         </li>
                         {% endif %}
                         {% endfor %}
