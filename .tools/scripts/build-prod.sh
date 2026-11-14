@@ -13,6 +13,11 @@ rm -rf "$BUILD_DIR"
 mkdir -p "$BUILD_DIR"
 tar -c \
     --exclude=./.git \
+    --exclude=./.docker/volumes \
+    --exclude=./.tools/cache \
+    --exclude=./.tools/export \
+    --exclude=./.tools/reports \
+    --exclude=./tmp \
     --exclude=./node_modules \
     --exclude=./public/assets \
     --exclude=./var/cache \

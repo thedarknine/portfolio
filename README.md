@@ -85,7 +85,7 @@ which is git-ignored and must never be committed:
 | `ALTCHA_SECRET`                               | Altcha anti-spam challenge                                   |
 | `MAILER_DSN`                                  | Production mailer                                            |
 | `DATABASE_URL`                                | Production database (Hostinger MariaDB)                      |
-| `REMOTE_HOST` / `REMOTE_USER` / `REMOTE_PORT` | Production server, used by `task prod:deploy`                |
+| `REMOTE_HOST` / `REMOTE_USER` / `REMOTE_PORT` | Production server, used by the `prod:` tasks                 |
 | `REMOTE_SSH_KEY`                              | Path of the SSH key for the production server                |
 | `UPTIME_API_KEY` / `UPTIME_MONITOR_ID`        | UptimeRobot main API key and monitor, paused during releases |
 | `HOST_UID` / `HOST_GID`                       | Linux only: ids of the `app` user (then `task docker:build`) |
@@ -125,20 +125,20 @@ UPDATE.md                # How to update the dependencies and Symfony
 underlying command (`task symfony:console -- make:entity`). Tasks marked `fix=1` only check by
 default and apply the fixes with `fix=1`.
 
-| Domain     | Tasks                                                                                                |
-| ---------- | ---------------------------------------------------------------------------------------------------- |
-| Shortcuts  | `init`, `up`, `down`, `restart`, `cc`, `test`, `health`, `qa`, `update`                              |
-| `docker:`  | `build`, `up`, `down`, `restart`, `reset`, `ps`, `logs`, `shell`                                     |
-| `symfony:` | `install`, `build-prod`, `composer`, `pnpm`, `console`, `cc`, `tailwind`, `watch`, `icons`           |
-| `db:`      | `create`, `diff`, `migrate`, `reset`, `fixtures`, `dump` (`clean=1`)                                 |
-| `test:`    | `prepare`, `all`, `unit`, `integration`, `ui`, `coverage`, `mutation`, `arch`, `bash`                |
-| `cs:`      | `all`, `php`, `twig`, `front` (`fix=1`)                                                              |
-| `lint:`    | `all`, `yaml`, `markdown` (`fix=1`), `shell`, `docker`, `secrets`                                    |
-| `quality:` | `all`, `phpstan`, `deptrac`, `rector` (`fix=1`), `audit`, `grumphp`, `hooks`                         |
-| `check:`   | `health`, `tools`, `docker`, `env`, `directories`, `ports`, `containers`, `dependencies`, `database` |
-| `clean:`   | `all`, `build`, `cache`, `test`, `composer`, `pnpm`                                                  |
-| `utils:`   | `secret`, `seo-audit` (`target=dev\|prod`), `prune`                                                  |
-| `prod:`    | `release`, `build`, `deploy`, `dev`                                                                  |
+| Domain     | Tasks                                                                                                                             |
+| ---------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| Shortcuts  | `init`, `up`, `down`, `restart`, `cc`, `test`, `health`, `qa`, `update`                                                           |
+| `docker:`  | `build`, `up`, `down`, `restart`, `reset`, `ps`, `logs`, `shell`                                                                  |
+| `symfony:` | `install`, `build-prod`, `composer`, `pnpm`, `console`, `cc`, `tailwind`, `watch`, `icons`, `outdated`                            |
+| `db:`      | `create`, `diff`, `migrate`, `reset`, `fixtures`, `dump` (`clean=1`)                                                              |
+| `test:`    | `prepare`, `all`, `unit`, `integration`, `ui`, `coverage`, `mutation`, `arch`, `bash`                                             |
+| `cs:`      | `all`, `php`, `twig`, `front` (`fix=1`)                                                                                           |
+| `lint:`    | `all`, `yaml`, `markdown` (`fix=1`), `shell`, `docker`, `secrets`                                                                 |
+| `quality:` | `all`, `phpstan`, `deptrac`, `rector` (`fix=1`), `audit`, `grumphp`, `hooks`                                                      |
+| `check:`   | `health`, `tools`, `docker`, `env`, `directories`, `ports`, `containers`, `dependencies`, `database`                              |
+| `clean:`   | `all`, `build`, `cache`, `test`, `composer`, `pnpm`                                                                               |
+| `utils:`   | `secret`, `seo-audit` (`target=dev\|prod`), `prune`                                                                               |
+| `prod:`    | `release`, `check`, `build`, `backup`, `maintenance`, `upload`, `finalize`, `smoke`, `tag`, `rollback`, `status`, `shell`, `logs` |
 
 ## Code quality and tests
 
