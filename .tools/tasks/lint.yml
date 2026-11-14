@@ -5,7 +5,7 @@ version: '3'
 
 vars:
     SHELL_FILES: '.docker/*.sh {{.TOOLS_DIR}}/scripts/*.sh'
-    MARKDOWN_GLOBS: '"**/*.md" "#node_modules" "#vendor" "#var" "#.pnpm-store"'
+    MARKDOWN_GLOBS: '"**/*.md" "#node_modules" "#vendor" "#var" "#.pnpm-store" "#tmp"'
     YAML_FILES: '{{.TOOLS_DIR}}/ config/ Taskfile.yml docker-compose*.yaml pnpm-workspace.yaml'  # .github/
 
 tasks:
