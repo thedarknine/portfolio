@@ -1,13 +1,13 @@
 {
   "packageManager": "pnpm@12.16.1",
   "devDependencies": {
-    "@biomejs/biome": "^2.6.7",
+    "@biomejs/biome": "^2.6.8",
     "@commitlint/cli": "21.2.4",
     "@eslint/js": "^10.0.1",
     "@html-eslint/eslint-plugin": "^0.68.0",
     "@html-eslint/parser": "^0.68.0",
     "@unlighthouse/cli": "^0.19.1",
-    "eslint": "^10.14.0",
+    "eslint": "^10.15.0",
     "globals": "^17.14.0",
     "knip": "^6.45.1",
     "lighthouse": "^13.6.0",
